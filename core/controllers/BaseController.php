@@ -4,6 +4,9 @@ namespace core\controllers;
 
 class BaseController
 {
+    protected $view;
+    protected $model;
+
     protected function setView(string $nameView): void
     {
         $this->view = new $nameView();
