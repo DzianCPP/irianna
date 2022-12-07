@@ -2,13 +2,14 @@
 
 namespace core\controllers;
 
+use core\views\AppView;
+
 class AppController extends BaseController
 {
-    private const VIEW_NAME = "core\\views\\app\\AppView";
-
     public function index(): void
     {
-        $this->setView($this->VIEW_NAME);
-        $this->view->render("main.html.twig");
+        $this->setView(AppView::class);
+        $data = ["author" => "IriAnna", "title" => "IriANNA"];
+        $this->view->render("main.html.twig", $data);
     }
 }
