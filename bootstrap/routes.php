@@ -14,5 +14,11 @@ return [
         'controller' => LoginController::class,
         'action' => 'index',
         'method' => 'GET'
+    ],
+
+    'login/login' => [
+        'controller' => LoginController::class,
+        'action' => 'login',
+        'method' => 'POST'
     ]
 ];

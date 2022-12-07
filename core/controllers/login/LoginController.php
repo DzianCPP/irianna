@@ -16,5 +16,7 @@ class LoginController extends BaseController
 
     public function login(): void
     {
+        http_response_code(401);
+        return;
     }
 }
