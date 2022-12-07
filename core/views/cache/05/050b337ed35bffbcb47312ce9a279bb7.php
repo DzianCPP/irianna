@@ -64,11 +64,18 @@ class __TwigTemplate_8b09f654ac8694bc8c0f2764b32819fe extends Template
             <div class=\"col-xs-10 col-sm-8 col-md-6 col-xl-4\">
                 <div class=\"input-group w-100 mb-2\">
                     <span class=\"input-group-text w-25\">Login</span>
-                    <input type=\"text\" class=\"form-control\" aria-label=\"Sizing example input\" aria-describedby=\"inputGroup-sizing-default\">
+                    <input
+                        type=\"text\"
+                        class=\"form-control\"
+                        aria-label=\"Sizing example input\"
+                        aria-describedby=\"inputGroup-sizing-default\">
                 </div>
                 <div class=\"input-group w-100 mb-2\">
                     <span class=\"input-group-text w-25\">Password</span>
-                    <input type=\"text\" class=\"form-control\" aria-label=\"Sizing example input\"
+                    <input
+                        type=\"text\"
+                        class=\"form-control\"
+                        aria-label=\"Sizing example input\"
                         aria-describedby=\"inputGroup-sizing-default\">
                 </div>
                 <div class=\"input-group w-100 mb-2\">
