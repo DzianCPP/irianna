@@ -10,15 +10,27 @@ return [
         'method' => 'GET'
     ],
 
-    '/buses/create' => [
+    'buses/create' => [
         'controller' => BusesController::class,
         'action' => 'create',
         'method' => 'POST'
     ],
 
-    '/buses' => [
+    'buses' => [
         'controller' => BusesController::class,
         'action' => 'read',
         'method' => 'GET'
+    ],
+
+    'buses/delete' => [
+        'controller' => BusesController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
+    ],
+
+    'buses/update' => [
+        'controller' => BusesController::class,
+        'action' => 'update',
+        'method' => 'PUT'
     ]
 ];
