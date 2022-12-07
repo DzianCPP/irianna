@@ -2,4 +2,4 @@
 /vendor/
 /ApacheFolder/
 .env
-/core/views/templates/cache/
+/core/views/cache/
