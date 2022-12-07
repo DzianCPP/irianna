@@ -1,0 +1,29 @@
+{
+    "name": "dzian/irianna",
+    "autoload": {
+        "psr-4": {
+            "core\\": "core/",
+            "core\\application\\": "core/application",
+            "core\\controllers\\": "core/controllers",
+            "core\\models\\": "core/models",
+            "core\\view\\": "core/view",
+            "system\\": "system/",
+            "database\\migrations\\": "database/migrations",
+            "database\\": "database/",
+            "database\\migrationHistory\\": "database/migrationHistory",
+            "database\\seeds\\users\\": "database/seeds/users"
+        }
+    },
+    "authors": [
+        {
+            "name": "DzianCPP",
+            "email": "ocherkiprozaika@gmail.com"
+        }
+    ],
+     "require": {
+        "vlucas/phpdotenv": "^5.5",
+      "ext-pdo": "*",
+        "twig/twig": "^3.2",
+        "twig/cache-extra": "^3.4"
+    }
+}
