@@ -1,6 +1,7 @@
 <?php
 
 use core\controllers\AppController;
+use core\controllers\login\LoginController;
 
 return [
     '' => [
@@ -8,4 +9,10 @@ return [
         'action' => 'index',
         'method' => 'GET'
     ],
+
+    'login' => [
+        'controller' => LoginController::class,
+        'action' => 'index',
+        'method' => 'GET'
+    ]
 ];
