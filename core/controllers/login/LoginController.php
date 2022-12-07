@@ -13,4 +13,8 @@ class LoginController extends BaseController
         $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Login"];
         $this->view->render("login/login.html.twig", $data);
     }
+
+    public function login(): void
+    {
+    }
 }
