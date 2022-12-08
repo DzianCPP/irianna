@@ -2,6 +2,7 @@
 
 use core\controllers\AppController;
 use core\controllers\login\LoginController;
+use core\controllers\register\RegisterController;
 
 return [
     '' => [
@@ -19,6 +20,18 @@ return [
     'login/login' => [
         'controller' => LoginController::class,
         'action' => 'login',
+        'method' => 'POST'
+    ],
+
+    'registration' => [
+        'controller' => RegisterController::class,
+        'action' => 'index',
+        'method' => 'GET'
+    ],
+
+    'register' => [
+        'controller' => RegisterController::class,
+        'action' => 'register',
         'method' => 'POST'
     ]
 ];

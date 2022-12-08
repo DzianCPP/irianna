@@ -6,6 +6,7 @@
             "core\\application\\": "core/application",
             "core\\controllers\\": "core/controllers",
             "core\\controllers\\login\\": "core/controllers/login",
+            "core\\controllers\\register\\": "core/controllers/register",
             "core\\models\\": "core/models",
             "core\\views\\": "core/views",
             "core\\views\\login\\": "core/views/login",
