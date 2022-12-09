@@ -5,7 +5,7 @@ use core\controllers\login\LoginController;
 use core\controllers\register\RegisterController;
 
 return [
-    '' => [
+    'admin' => [
         'controller' => AppController::class,
         'action' => 'index',
         'method' => 'GET'
