@@ -16,6 +16,8 @@ class LoginController extends BaseController
 
     public function login(): void
     {
+        $json_string = file_get_contents("php://input");
+
         http_response_code(401);
         return;
     }

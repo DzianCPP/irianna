@@ -2,8 +2,9 @@ let loginBtn = document.getElementById("login-btn");
 loginBtn.addEventListener("click", login);
 
 async function login() {
+    document.cookie = "logged=0";
     let _login = document.getElementById("login").value;
-    let _password = document.getElementById("pass").value1;
+    let _password = document.getElementById("password").value;
     let url = "/login/login";
     let data = {
         login: _login,
@@ -17,13 +18,13 @@ async function login() {
 
     let response = await fetch(url, postRequest);
 
-    if (response.status === 300) {
-        window.location = "/main/";
+    if (response.status === 200) {
+        document.cookie = "logged=1";
+        window.location = "/admin/";
     }
 
     if (response.status === 401) {
         document.getElementById("login").style.color = "red";
-        document.getElementById("pass").innerHTML = "";
     }
 
 }
