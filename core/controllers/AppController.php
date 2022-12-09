@@ -9,7 +9,7 @@ class AppController extends BaseController
 {
     public function index(): void
     {
-        if (isset($_COOKIE['logged']) && $_COOKIE['logged'] === 1) {
+        if (isset($_COOKIE['logged']) && $_COOKIE['logged'] === "1") {
             $this->setView(AppView::class);
             $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "IriANNA"];
             $this->view->render("main.html.twig", $data);

@@ -4,9 +4,12 @@ namespace core\controllers\register;
 
 use core\controllers\BaseController;
 use core\views\register\RegisterView;
+use core\models\admins\AdminsModel;
 
 class RegisterController extends BaseController
 {
+    private AdminsModel $adminsModel;
+
     public function index(): void
     {
         $this->setView(RegisterView::class);
@@ -16,5 +19,8 @@ class RegisterController extends BaseController
 
     public function register(): void
     {
+        $this->adminsModel = new AdminsModel();
+        $data = [];
+        $this->adminsModel->insertAdmin($data);
     }
 }

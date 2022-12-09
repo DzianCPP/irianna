@@ -18,7 +18,7 @@ async function login() {
 
     let response = await fetch(url, postRequest);
 
-    if (response.status === 200) {
+    if (response.status === 205) {
         document.cookie = "logged=1";
         window.location = "/admin/";
     }
