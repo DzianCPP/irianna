@@ -4,7 +4,7 @@ namespace core\models;
 
 class Validator
 {
-    private string $nameRegEx = "/^[a-z ,.'-]+$/i";
+    private string $loginRegExp = "/^[a-z ,.'-]+$/i";
 
     public function makeDataSafe(array $data): array
     {
@@ -27,9 +27,9 @@ class Validator
         return htmlspecialchars($data);
     }
 
-    public function userDataValid(string $email, string $name): bool
+    public function userDataValid(string $email, string $login): bool
     {
-        if (!$this->nameValid($name) || !$this->emailValid($email)) {
+        if (!$this->loginValid($login) || !$this->emailValid($email)) {
             return false;
         }
 
@@ -49,12 +49,15 @@ class Validator
         return true;
     }
 
-    private function nameValid(string $name): bool
+    private function loginValid(string $login): bool
     {
-        $firstName = substr($name, 0, strpos($name, " ", 0));
-        $lastName = ltrim(substr($name, strpos($name, " ", 0), strlen($name)));
+        $login = trim($login);
 
-        if (!preg_match($this->nameRegEx, $firstName) || !preg_match($this->nameRegEx, $lastName)) {
+        // if (!preg_match($this->nameRegEx, $login)) {
+        //     return false;
+        // }
+
+        if (!filter_var($login, FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => $this->loginRegExp]])) {
             return false;
         }
 

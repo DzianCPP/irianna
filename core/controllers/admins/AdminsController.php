@@ -80,7 +80,8 @@ class AdminsController extends BaseController
     public function create(): void
     {
         $newAdmin = json_decode(file_get_contents("php://input"), true);
-        $a = "b";
+        $this->setModel(AdminsModel::class);
+        $this->model->insertAdmin($newAdmin);
     }
 
     public function setPrivilege(array $admin): void

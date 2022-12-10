@@ -20,14 +20,14 @@ class Model
 
     public function insert(array $params, array $fields, string $tableName): bool
     {
-        if (!$this->validator->userDataValid($params['email'], $params['name'])) {
+        if (!$this->validator->userDataValid($params['email'], $params['login'])) {
             return false;
         }
 
         $tableFields = $this->getTableFields($fields);
         $values = $this->getValues($params);
         $sqlQuery = "INSERT INTO ${tableName} (${tableFields})
-                    VALUES (${values})";
+                    VALUES (${values}, false)";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
             return false;
