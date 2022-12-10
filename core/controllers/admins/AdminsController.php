@@ -77,6 +77,12 @@ class AdminsController extends BaseController
         }
     }
 
+    public function create(): void
+    {
+        $newAdmin = json_decode(file_get_contents("php://input"), true);
+        $a = "b";
+    }
+
     public function setPrivilege(array $admin): void
     {
         if ($admin['login'] === $_ENV['SUPER_ADMIN'] && $admin['password'] === $_ENV['SUPER_PASS']) {

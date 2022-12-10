@@ -36,16 +36,10 @@ return [
         'method' => 'POST'
     ],
 
-    'registration' => [
+    'register' => [
         'controller' => RegisterController::class,
         'action' => 'index',
         'method' => 'GET'
-    ],
-
-    'register' => [
-        'controller' => RegisterController::class,
-        'action' => 'register',
-        'method' => 'POST'
     ],
 
     'admins' => [
@@ -64,5 +58,11 @@ return [
         'controller' => AdminsController::class,
         'action' => 'edit',
         'method' => 'GET'
+    ],
+
+    'admins/create' => [
+        'controller' => AdminsController::class,
+        'action' => 'create',
+        'method' => 'POST'
     ]
 ];
