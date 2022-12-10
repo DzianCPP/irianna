@@ -30,7 +30,8 @@ class AdminsController extends BaseController
                 'pages' => $pages,
                 'countAdmins' => count($admins),
                 'title' => 'IriANNA',
-                'author' => 'IriANNA'
+                'author' => 'IriANNA',
+                'login' => $_COOKIE['login']
             ];
 
             if (count($admins) === 0) {

@@ -12,27 +12,12 @@
     </head>
     <body>
         {% block content %}{% endblock %}
-        {% block logout %}
-        {% endblock %}
         <div id="footer">
             {% block footer %}
-                    <footer class="bg-dark text-white fixed-bottom">
-                        <div class="row w-100">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1"></div>
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1">
-                                <p>{{ author }}</p>
-                            </div>
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1"></div>
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1"></div>
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1"></div>
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1"></div>
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1"></div>
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1"></div>
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1"></div>
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1">
-                                <button type="button" class="btn btn-secondary w-auto mt-1" id="logout-btn">Выйти</button>
-                            </div>
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-xl-1"></div>
+                    <footer class="bg-light text-center text-lg-start fixed-bottom">
+                        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                            © 2023 Copyright:
+                            <a class="text-dark" href="#">ИриАННА</a>
                         </div>
                     </footer>
             {% endblock %}

@@ -10,7 +10,7 @@ class AppController extends BaseController
     {
         if ($this->isLogged()) {
             $this->setView(AppView::class);
-            $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "IriANNA"];
+            $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Панель управления", "login" => $_COOKIE['login']];
             $this->view->render("main.html.twig", $data);
         } else {
             header("Location: " . "/login");
