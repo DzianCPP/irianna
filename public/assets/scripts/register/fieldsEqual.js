@@ -8,6 +8,7 @@ function fieldsEqual() {
 
     if (email.value != repeatEmail.value) {
         error.innerHTML = "Адреса почтовых ящиков должны совпадать";
+        document.getElementById("register-btn").disabled = true;
         return false;
     } else {
         error.innerHTML = "";
@@ -15,6 +16,7 @@ function fieldsEqual() {
 
     if (password.value != repeatPassword.value) {
         error.innerHTML = "Пароли должны совпадать";
+        document.getElementById("register-btn").disabled = true;
         return false;
     } else {
         error.innerHTML = "";
