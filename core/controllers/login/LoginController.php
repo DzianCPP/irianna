@@ -5,14 +5,17 @@ namespace core\controllers\login;
 use core\controllers\BaseController;
 use core\views\login\LoginView;
 use core\models\admins\AdminsModel;
+use core\controllers\admins\AdminsController;
 
 class LoginController extends BaseController
 {
+    private AdminsController $adminsController;
+
     public function index(): void
     {
         if (!$this->isLogged()) {
             $this->setView(LoginView::class);
-            $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Login"];
+            $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Войти в систему"];
             $this->view->render("login/login.html.twig", $data);
         } else {
             header("Location: " . "/admin");
@@ -31,7 +34,9 @@ class LoginController extends BaseController
 
         foreach ($admins as $admin) {
             if ($admin['login'] == $requested_admin['login'] && $admin['password'] == $requested_admin['password']) {
-                setcookie("logged", "1", time() + 300, "/", $_SERVER['host'], false, false);
+                setcookie("logged", "1", time() + 28800, "/");
+                $adminsController = new AdminsController();
+                $adminsController->setPrivilege($admin);
                 http_response_code(205);
                 return;
             }
@@ -43,7 +48,7 @@ class LoginController extends BaseController
     public function logout(): void
     {
         if ($this->isLogged()) {
-            setcookie("logged", "0", time() + 300, "/", $_SERVER['host'], false, false);
+            setcookie("logged", "0", time() + 300, "/");
             http_response_code(205);
             return;
         } else {

@@ -3,6 +3,7 @@
 use core\controllers\AppController;
 use core\controllers\login\LoginController;
 use core\controllers\register\RegisterController;
+use core\controllers\admins\AdminsController;
 
 return [
     'admin' => [
@@ -45,5 +46,23 @@ return [
         'controller' => RegisterController::class,
         'action' => 'register',
         'method' => 'POST'
+    ],
+
+    'admins' => [
+        'controller' => AdminsController::class,
+        'action' => 'show',
+        'method' => 'GET'
+    ],
+
+    'admins/delete' => [
+        'controller' => AdminsController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
+    ],
+
+    'admins/edit' => [
+        'controller' => AdminsController::class,
+        'action' => 'edit',
+        'method' => 'GET'
     ]
 ];

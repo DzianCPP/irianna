@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="container-xs container-sm container-md container-xl pt-5 w-100">
+    {% if admins|length > 0 %}
+    <div class="row w-auto">
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+            <div class="table-responsive">
+                {% use 'components/adminsTable.html.twig' %}
+                {% block table %}
+                {{ parent() }}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+    </div>
+
+    <div class="row w-100">
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+            <div>
+                <a class="btn btn-success w-auto mb-1" id="delete-all">
+                    Delete selected admins
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+    </div>
+
+    {% else %}
+    <div class="row w-100">
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+            <div>
+                <h1 class="h1 w-100 m-1">{{ 'No user found' }}</h1>
+            </div>
+        </div>
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+    </div>
+    {% endif %}
+
+    {% if admins|length > 1 %}
+    {% use 'components/adminsPagination.html.twig' %}
+    {% block pagination %}
+    {{ parent() }}
+    {% endblock %}
+    {% endif %}
+</div>
+<script type="text/javascript" src="/assets/scripts/selectAll.js"></script>
+<script type="text/javascript" src="/assets/scripts/admins/deleteAll.js"></script>
+
+{% endblock %}

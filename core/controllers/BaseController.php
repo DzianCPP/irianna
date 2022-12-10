@@ -14,7 +14,7 @@ class BaseController
 
     protected function setModel(string $nameModel): void
     {
-        $this->users = new $nameModel();
+        $this->model = new $nameModel();
     }
 
     protected function isLogged(): bool

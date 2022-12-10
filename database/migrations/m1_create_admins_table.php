@@ -14,6 +14,7 @@ class m1_create_admins_table extends BaseMigration
 
         $sqlQuery = "CREATE TABLE admins_table(
                         id int(20) NOT NULL AUTO_INCREMENT,
+                        email varchar(255) NOT NULL,
                         login varchar(255) NOT NULL,
                         password varchar(255) default NULL,
                         super_admin bool NOT NULL,

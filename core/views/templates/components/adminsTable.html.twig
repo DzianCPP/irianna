@@ -1,0 +1,26 @@
+{% block table %}
+<table class="table table-sm table-hover" id="all-users-table">
+    <tr>
+        <th scope="col"><input type="checkbox" id="check-all"></th>
+        <th scope="col">ID</th>
+        <th scope="col">Login</th>
+        <th scope="col">Super Admin</th>
+        <th scope="col"></th>
+    </tr>
+    {% for admin in admins %}
+    <tr>
+        <td><input name="select-user" type="checkbox" value="{{admin.id}}"></td>
+        <td>{{admin.id}}</td>
+        <td>{{admin.login}}</td>
+        <td>{% if admin.super_admin > 0 %}{{ 'Yes' }}{% else %}{{ 'No' }}{% endif %}</td>
+        <td>
+            <div class="btn-group-horizontal">
+                <a class="btn btn-success" href="/admins/edit/{{admin.id}}"">Edit</a>
+                    <a class=" btn btn-dark" id="{{admin.id}}" onclick="sendDeleteRequest(this.id)">
+                    Delete</a>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

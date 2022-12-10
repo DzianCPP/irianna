@@ -1,0 +1,112 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container-xs container-sm container-md container-xl pt-5">
+    <div class="row w-100 mt-5">
+        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+        <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
+            <h1 class="h1 w-100 m-1" id="main-page-h1">{{ message|upper }}</h1>
+        </div>
+        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+    </div>
+
+    <form class="form">
+        <div class="row w-auto mt-2">
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+            <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
+                <div class="input-group">
+                    <label class="input-group-text w-25" for="email">Почта</label>
+                    <input type="email" class="form-control w-75" name="new-email" id="email"
+                        placeholder="Введите новый email" value="{{ admin.email }}">
+                </div>
+            </div>
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+        </div>
+
+        <div class="row w-auto mt-2">
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+            <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
+                <div class="input-group">
+                    <label class="input-group-text w-25" for="login">Логин</label>
+                    <input type="text" class="form-control w-75" name="new-login" id="login"
+                        placeholder="Введите новый логин" value="{{ admin.login }}">
+                </div>
+            </div>
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+        </div>
+
+        <div class="row w-auto mt-2">
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+            <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
+                <div class="input-group">
+                    <label class="input-group-text w-25" for="password">Пароль</label>
+                    <input type="password" class="form-control w-75" name="new-password" id="password"
+                        placeholder="Введите новый пароль" value="{{ admin.password }}">
+                </div>
+            </div>
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+        </div>
+
+        <div class="row w-auto mt-2">
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+            <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
+                <div class="input-group">
+                    <label class="input-group-text w-25" for="gender">Gender</label>
+                    <select name="gender" id="gender" class="btn btn-success dropdown-toggle w-75">
+                        {% for key, value in genders %}
+                        <option {% if user.gender==key %} {{ 'selected="selected"' }} {% endif %} value="{{ key }}">
+                            {{ value }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+
+        <div class="row w-auto mt-2 mb-2">
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+            <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
+                <div class="input-group">
+                    <label class="input-group-text w-25" for="status">Status</label>
+                    <select name="status" class="btn btn-success dropdown-toggle w-75" id="status">
+                        {% for key, value in statuses %}
+                        <option {% if user.status==key %} {{ 'selected="selected"' }} {% endif %} value="{{ key }}">
+                            {{ value }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+
+        <div class="row w-auto">
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+            <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
+                <button type="button" class="btn btn-success w-100" id="submit-button" value="submit" disabled>
+                    Submit
+                </button>
+            </div>
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+        </div>
+
+        <div>
+            <input type="hidden" value="{{ user.userID }}" name="user-id" id="user-id">
+        </div>
+
+        <div class="row w-100">
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+            <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
+                <div class="alert mt-1" id="error-field-div">
+                    <p id="error-field"></p>
+                </div>
+            </div>
+            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
+        </div>
+    </form>
+
+    <script type="text/javascript" src="/assets/scripts/formValid.js"></script>
+    <script type="text/javascript" src="/assets/scripts/users/edit.js"></script>
+</div>
+{% endblock %}

@@ -6,7 +6,7 @@ use core\models\Model;
 
 class AdminsModel extends Model
 {
-    protected array $fields = ['login', 'password', 'super_admin'];
+    protected array $fields = ['email', 'login', 'password', 'super_admin'];
 
     public function getAllAdmins(): array
     {
