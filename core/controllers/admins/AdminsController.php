@@ -85,6 +85,16 @@ class AdminsController extends BaseController
         $this->model->insertAdmin($newAdmin);
     }
 
+    public function update(): void
+    {
+        $jsonString = file_get_contents("php://input");
+        $admin = json_decode($jsonString, true);
+        $this->setModel(AdminsModel::class);
+        if (!$this->model->editAdmin($admin)) {
+            http_response_code(400);
+        }
+    }
+
     public function setPrivilege(array $admin): void
     {
         if ($admin['login'] === $_ENV['SUPER_ADMIN'] && $admin['password'] === $_ENV['SUPER_PASS']) {

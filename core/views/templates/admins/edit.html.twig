@@ -55,8 +55,8 @@
                 <div class="input-group">
                     <label class="input-group-text w-75" for="super-admin">Супер Админ</label>
                     <select name="super-admin" id="super-admin" class="btn btn-success dropdown-toggle w-25" {% if admin.login == 'sadmin' %} {{ 'disabled' }} {% endif %}>
-                        <option value="false">Нет</option>
-                        <option value="true">Да</option>
+                        <option value="0">Нет</option>
+                        <option value="1">Да</option>
                     </select>
                 </div>
             </div>

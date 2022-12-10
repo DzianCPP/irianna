@@ -64,5 +64,11 @@ return [
         'controller' => AdminsController::class,
         'action' => 'create',
         'method' => 'POST'
+    ],
+
+    'admins/update' => [
+        'controller' => AdminsController::class,
+        'action' => 'update',
+        'method' => 'PUT'
     ]
 ];

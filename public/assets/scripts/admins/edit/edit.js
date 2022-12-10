@@ -7,7 +7,7 @@ async function sendPutRequest() {
     let superAdmin = document.getElementById("super-admin").value;
     let _id = document.getElementById("id").value;
 
-    let url = "/user/update";
+    let url = "/admins/update";
 
     let newAdminInfo = {
         email: newEmail,

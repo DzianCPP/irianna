@@ -62,9 +62,9 @@ class Model
             WHERE ${colName}={$params[$colName]}
         ";
         $query = $this->conn->prepare($sqlQuery);
-        unset($params['userID']);
+        unset($params['id']);
 
-        if (!$this->validator->userDataValid($params['email'], $params['name'])) {
+        if (!$this->validator->userDataValid($params['email'], $params['login'])) {
             return false;
         }
 
