@@ -2,7 +2,6 @@ let logoutBtn = document.getElementById("logout-btn");
 logoutBtn.addEventListener("click", logout);
 
 async function logout() {
-    document.cookie = "logged=0";
     let url = "/admin/";
 
     let getRequest = {

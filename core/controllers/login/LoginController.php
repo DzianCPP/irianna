@@ -26,6 +26,7 @@ class LoginController extends BaseController
 
         foreach ($admins as $admin) {
             if ($admin['login'] == $requested_admin['login'] && $admin['password'] == $requested_admin['password']) {
+                setcookie("logged", "1");
                 http_response_code(205);
                 return;
             }

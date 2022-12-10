@@ -11,6 +11,12 @@ return [
         'method' => 'GET'
     ],
 
+    '' => [
+        'controller' => AppController::class,
+        'action' => 'index',
+        'method' => 'GET'
+    ],
+
     'login' => [
         'controller' => LoginController::class,
         'action' => 'index',
