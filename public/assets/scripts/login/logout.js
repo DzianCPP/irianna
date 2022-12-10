@@ -2,15 +2,15 @@ let logoutBtn = document.getElementById("logout-btn");
 logoutBtn.addEventListener("click", logout);
 
 async function logout() {
-    let url = "/admin/";
+    let url = "/login/logout";
 
     let getRequest = {
-        method: "GET"
+        method: "POST"
     };
 
     let response = await fetch(url, getRequest);
 
-    if (response.status === 200) {
-        window.location = "/admin/";
+    if (response.status === 205) {
+        location.reload(true);
     }
 }

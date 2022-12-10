@@ -29,6 +29,12 @@ return [
         'method' => 'POST'
     ],
 
+    'login/logout' => [
+        'controller' => LoginController::class,
+        'action' => 'logout',
+        'method' => 'POST'
+    ],
+
     'registration' => [
         'controller' => RegisterController::class,
         'action' => 'index',

@@ -10,9 +10,14 @@ class LoginController extends BaseController
 {
     public function index(): void
     {
-        $this->setView(LoginView::class);
-        $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Login"];
-        $this->view->render("login/login.html.twig", $data);
+        if (!$this->isLogged()) {
+            $this->setView(LoginView::class);
+            $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Login"];
+            $this->view->render("login/login.html.twig", $data);
+        } else {
+            header("Location: " . "/admin");
+            exit;
+        }
     }
 
     public function login(): void
@@ -22,16 +27,28 @@ class LoginController extends BaseController
 
         $admins = $adminsModel->getAllAdmins();
 
-        $requested_admin = json_decode($json_string);
+        $requested_admin = json_decode($json_string, true);
 
         foreach ($admins as $admin) {
             if ($admin['login'] == $requested_admin['login'] && $admin['password'] == $requested_admin['password']) {
-                setcookie("logged", "1");
+                setcookie("logged", "1", time() + 300, "/", $_SERVER['host'], false, false);
                 http_response_code(205);
                 return;
             }
         }
         http_response_code(401);
         return;
+    }
+
+    public function logout(): void
+    {
+        if ($this->isLogged()) {
+            setcookie("logged", "0", time() + 300, "/", $_SERVER['host'], false, false);
+            http_response_code(205);
+            return;
+        } else {
+            http_response_code(500);
+            return;
+        }
     }
 }

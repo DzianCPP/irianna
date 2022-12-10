@@ -16,4 +16,13 @@ class BaseController
     {
         $this->users = new $nameModel();
     }
+
+    protected function isLogged(): bool
+    {
+        if (isset($_COOKIE['logged']) && $_COOKIE['logged'] === "1") {
+            return true;
+        }
+
+        return false;
+    }
 }

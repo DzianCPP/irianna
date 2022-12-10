@@ -18,7 +18,7 @@ async function login() {
     let response = await fetch(url, postRequest);
 
     if (response.status === 205) {
-        window.location = "/admin/";
+        location.reload(true);
     }
 
     if (response.status === 401) {
