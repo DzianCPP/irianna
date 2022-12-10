@@ -1,3 +1,4 @@
+document.addEventListener("mouseover", formFilled);
 let loginField = document.getElementById("login");
 loginField.addEventListener("keyup", formFilled);
 let passwordField = document.getElementById("password");
