@@ -21,7 +21,7 @@ function formFilled() {
     registerBtn.disabled = true;
 
     for (let input of inputs) {
-        if (input.value.length > 0) {
+        if (input.value.length > 3) {
             registerBtn.disabled = false;
         } else {
             registerBtn.disabled = true;
