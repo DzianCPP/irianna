@@ -5,12 +5,12 @@ function deleteAll() {
     let allCheckboxes = document.getElementsByName("select-user");
     let checkedAdminsIds = getCheckedUsers(allCheckboxes);
 
-    if (confirm("Вы уверены в этом?")) {
+    if (confirm("Вы уверены, что хотите удалить выбранных администраторов?")) {
         let url = "/admins/delete";
 
         let users = {};
 
-        for (var i = 0; i < checkedUsersIds.length; i++) {
+        for (var i = 0; i < checkedAdminsIds.length; i++) {
             var key = "admin" + i;
             Object.defineProperty(users, key, {
                 value: checkedAdminsIds[i],

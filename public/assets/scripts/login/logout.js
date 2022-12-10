@@ -1,5 +1,4 @@
-let logoutBtn = document.getElementById("logout-btn");
-logoutBtn.addEventListener("click", logout);
+document.getElementById("logout-btn").addEventListener("click", logout);
 
 async function logout() {
     let url = "/login/logout";

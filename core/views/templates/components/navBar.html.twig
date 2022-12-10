@@ -6,20 +6,20 @@
             aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse flex-grow-1 text-right" id="navbarScroll">
-            <ul class="navbar-nav ms-auto me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <div class="text-center collapse navbar-collapse flex-grow-1 text-right" id="navbarScroll">
+            <ul class="navbar-nav ms-auto me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 170px;">
                 <li class="nav-item">
-                    <p class="nav-text nav-link text-light rounded bg-dark">Привет, {{ login }}</p>
+                    <p class="btn btn-dark rounded text-light text-center m-1">Привет, {{ login }}</p>
                 </li>
                 <li class="nav-item">
-                    <p class="nav-link" id="clock">Link</p>
+                    <p class="btn rounded text-dark text-center m-1" id="clock"></p>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link bg-success rounded text-light {% if login != 'sadmin' %} {{ 'disabled' }} {% endif %}" href="/admins" tabindex="-1" aria-disabled="true">Admins</a>
+                    <a class="btn btn-success rounded text-light text-center m-1 {% if login != 'sadmin' %} {{ 'disabled' }} {% endif %}" href="/admins" tabindex="-1" aria-disabled="true">Admins</a>
+                    <a class="btn btn-outline-success rounded text-dark text-center m-1" id="logout-btn">Выйти</a>
+                    <a class="btn btn-success rounded text-light text-center m-1" href="/admin" id="logout-btn">Главная</a>
                 </li>
             </ul>
-                <button class="btn btn-outline-secondary" id="logout-btn">Выйти</button>
-                <a class="btn btn-outline-success" href="/admin" id="logout-btn">Главная</a>
         </div>
     </div>
 </nav>
