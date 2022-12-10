@@ -51,41 +51,21 @@
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
             <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
                 <div class="input-group">
-                    <label class="input-group-text w-25" for="gender">Gender</label>
-                    <select name="gender" id="gender" class="btn btn-success dropdown-toggle w-75">
-                        {% for key, value in genders %}
-                        <option {% if user.gender==key %} {{ 'selected="selected"' }} {% endif %} value="{{ key }}">
-                            {{ value }}
-                        </option>
-                        {% endfor %}
+                    <label class="input-group-text w-75" for="super-admin">Супер Админ</label>
+                    <select name="super-admin" id="super-admin" class="btn btn-success dropdown-toggle w-25" {% if admin.login == 'sadmin' %} {{ 'disabled' }} {% endif %}>
+                        <option value="false">Нет</option>
+                        <option value="true">Да</option>
                     </select>
                 </div>
             </div>
-        </div>
-        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
-
-        <div class="row w-auto mt-2 mb-2">
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
-            <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
-                <div class="input-group">
-                    <label class="input-group-text w-25" for="status">Status</label>
-                    <select name="status" class="btn btn-success dropdown-toggle w-75" id="status">
-                        {% for key, value in statuses %}
-                        <option {% if user.status==key %} {{ 'selected="selected"' }} {% endif %} value="{{ key }}">
-                            {{ value }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
         </div>
-        <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
 
-        <div class="row w-auto">
+        <div class="row w-auto mt-2">
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
             <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
                 <button type="button" class="btn btn-success w-100" id="submit-button" value="submit" disabled>
-                    Submit
+                    Сохранить
                 </button>
             </div>
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>

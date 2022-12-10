@@ -5,7 +5,7 @@ function deleteAll() {
     let allCheckboxes = document.getElementsByName("select-user");
     let checkedAdminsIds = getCheckedUsers(allCheckboxes);
 
-    if (confirm("Are you sure you want to delete these admins?")) {
+    if (confirm("Вы уверены в этом?")) {
         let url = "/admins/delete";
 
         let users = {};
