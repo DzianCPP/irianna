@@ -19,6 +19,11 @@ class CountriesModel extends Model
         return $this->getRecordBy("id", $id, self::TABLE_NAME);
     }
 
+    public function getCountryByName(string $name): array
+    {
+        return $this->getRecordBy("name", $name, self::TABLE_NAME);
+    }
+
     public function insertCountry(array $params = []): bool
     {
         if ($params === []) {
