@@ -1,23 +1,22 @@
 <?php
 
-namespace core\models\admins;
+namespace core\models\countries;
 
 use core\models\Model;
 
-class AdminsModel extends Model
+class CountriesModel extends Model
 {
-    protected array $fields = ['email', 'login', 'password', 'super_admin'];
-    private const TABLE_NAME = "admins_table";
+    protected array $fields = ['name', 'is_active'];
+    private const TABLE_NAME = "countries_table";
 
-
-    public function getAllAdmins(): array
+    public function getAllCountries(): array
     {
         return $this->selectAll(self::TABLE_NAME);
     }
 
     public function getAdminById(int $id): array
     {
-        return $this->getRecordBy("id", $id, self::TABLE_NAME);
+        return $this->getRecordBy("id", $id, "admins_table");
     }
 
     public function insertAdmin(array $params = []): bool
@@ -28,7 +27,7 @@ class AdminsModel extends Model
             $params = $this->validator->makeDataSafe($params);
         }
 
-        if (!$this->insert($params, $this->fields, self::TABLE_NAME)) {
+        if (!$this->insert($params, $this->fields, 'admins_table')) {
             return false;
         }
 
@@ -39,7 +38,7 @@ class AdminsModel extends Model
     {
         $params = $this->validator->makeDataSafe($newUserData);
 
-        if (!$this->update(self::TABLE_NAME, $this->fields, $params, "id")) {
+        if (!$this->update("admins_table", $this->fields, $params, "id")) {
             return false;
         }
 
@@ -48,7 +47,7 @@ class AdminsModel extends Model
 
     public function deleteAdmin(array $ids): bool
     {
-        if (!$this->delete("id", $ids, self::TABLE_NAME)) {
+        if (!$this->delete("id", $ids, "admins_table")) {
             return false;
         }
 
