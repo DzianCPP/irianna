@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container-xs container-sm container-md container-xl w-100">
+    {% use 'components/navBar.html.twig' %} {% block nav %} {{ parent() }} {% endblock %}
+    <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+        <p class="h1 m-auto text-center mt-5 mb-3">{{ message|upper }}</p>
+    </div>
+
+    {% use 'components/dashboard.html.twig' %}{% block dashboard %} {{ parent() }} {% endblock %}
+
+</div>
+{% endblock %}
