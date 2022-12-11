@@ -4,6 +4,7 @@ use core\controllers\AppController;
 use core\controllers\login\LoginController;
 use core\controllers\register\RegisterController;
 use core\controllers\admins\AdminsController;
+use core\controllers\countries\CountriesController;
 
 return [
     'admin' => [
@@ -21,6 +22,12 @@ return [
     'login' => [
         'controller' => LoginController::class,
         'action' => 'index',
+        'method' => 'GET'
+    ],
+
+    'notfound' => [
+        'controller' => AppController::class,
+        'action' => 'notFound',
         'method' => 'GET'
     ],
 
@@ -68,6 +75,36 @@ return [
 
     'admins/update' => [
         'controller' => AdminsController::class,
+        'action' => 'update',
+        'method' => 'PUT'
+    ],
+
+    'countries' => [
+        'controller' => CountriesController::class,
+        'action' => 'show',
+        'method' => 'GET'
+    ],
+
+    'countries/delete' => [
+        'controller' => CountriesController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
+    ],
+
+    'countries/edit' => [
+        'controller' => CountriesController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'countries/create' => [
+        'controller' => CountriesController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'countries/update' => [
+        'controller' => CountriesController::class,
         'action' => 'update',
         'method' => 'PUT'
     ]

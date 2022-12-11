@@ -19,13 +19,11 @@ class AppController extends BaseController
         }
     }
 
-    public static function notFound(): void
+    public function notFound(): void
     {
-        if (parent::isLogged()) {
-            parent::setView(NotFoundView::class);
-            $data = ["author" => "IriAnna", "title" => "IriAnna", "message" => "404 Страница не найдена", "login" => $_COOKIE['login']];
-            http_response_code(404);
-            parent::$view->render("notFound/404.html.twig", $data);
-        }
+        $this->setView(NotFoundView::class);
+        $data = ["author" => "IriAnna", "title" => "IriAnna", "message" => "404 Страница не найдена"];
+        http_response_code(404);
+        $this->view->render("notFound/404.html.twig", $data);
     }
 }

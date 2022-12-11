@@ -5,6 +5,8 @@ namespace core\controllers\countries;
 use core\controllers\BaseController;
 use core\views\countries\CountriesView;
 use core\models\countries\CountriesModel;
+use core\controllers\AppController;
+
 
 class CountriesController extends BaseController
 {
@@ -40,7 +42,8 @@ class CountriesController extends BaseController
             }
 
             if ($page > $pages || $page < 1) {
-                \core\controllers\AppController::notFound();
+                $appController = new AppController();
+                $appController->notFound();
                 return;
             }
 

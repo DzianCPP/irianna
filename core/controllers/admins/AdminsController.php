@@ -5,6 +5,7 @@ namespace core\controllers\admins;
 use core\controllers\BaseController;
 use core\views\admins\AdminsView;
 use core\models\admins\AdminsModel;
+use core\controllers\AppController;
 
 class AdminsController extends BaseController
 {
@@ -40,7 +41,8 @@ class AdminsController extends BaseController
             }
 
             if ($page > $pages || $page < 1) {
-                \core\controllers\AppController::notFound();
+                $appController = new AppController();
+                $appController->notFound();
                 return;
             }
 
