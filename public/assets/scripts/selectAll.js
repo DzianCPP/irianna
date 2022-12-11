@@ -3,7 +3,7 @@ $(document).ready(function() {
 });
 
 function selectAll() {
-    let checkboxes = document.getElementsByName("select-user");
+    let checkboxes = document.getElementsByName("select");
     let checkAllBox = document.getElementById("check-all");
 
     if (checkAllBox.checked) {

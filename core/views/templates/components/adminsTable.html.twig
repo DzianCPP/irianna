@@ -1,5 +1,5 @@
 {% block table %}
-<table class="table table-sm table-hover text-center" id="all-users-table">
+<table class="table table-sm table-hover text-center" id="table">
     <tr>
         <th scope="col"><input type="checkbox" id="check-all"></th>
         <th scope="col">id</th>
@@ -9,7 +9,7 @@
     </tr>
     {% for admin in admins %}
     <tr>
-        <td><input name="select-user" type="checkbox" value="{{admin.id}}"></td>
+        <td><input name="select" type="checkbox" value="{{admin.id}}"></td>
         <td>{{admin.id}}</td>
         <td>{{admin.login}}</td>
         <td>{% if admin.super_admin > 0 %}{{ 'Да' }}{% else %}{{ 'Нет' }}{% endif %}</td>

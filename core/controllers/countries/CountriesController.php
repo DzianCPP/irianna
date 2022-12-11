@@ -54,6 +54,22 @@ class CountriesController extends BaseController
         }
     }
 
+    public function new(string $countryName = '', int $is_active = 0): void
+    {
+        $this->setView(CountriesView::class);
+        $this->setModel(CountriesModel::class);
+        $data = [
+            'name' => $countryName,
+            'is_active' => $is_active,
+            'title' => 'IriANNA',
+            'author' => 'IriANNA',
+            'message' => 'Добавить страну',
+            'login' => $_COOKIE['login']
+        ];
+
+        $this->view->render("countries/new.html.twig", $data);
+    }
+
     public function edit(): void
     {
         $this->setModel(AdminsModel::class);
@@ -83,9 +99,9 @@ class CountriesController extends BaseController
 
     public function create(): void
     {
-        $newAdmin = json_decode(file_get_contents("php://input"), true);
-        $this->setModel(AdminsModel::class);
-        $this->model->insertAdmin($newAdmin);
+        $newCountry = json_decode(file_get_contents("php://input"), true);
+        $this->setModel(CountriesModel::class);
+        $this->model->insertCountry($newCountry);
     }
 
     public function update(): void

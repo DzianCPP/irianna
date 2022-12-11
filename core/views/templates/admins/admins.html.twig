@@ -41,7 +41,7 @@
     {% endif %}
 
     {% if admins|length > 1 %}
-    {% use 'components/adminsPagination.html.twig' %}
+    {% use 'components/pagination.html.twig' %}
     {% block pagination %}
     {{ parent() }}
     {% endblock %}

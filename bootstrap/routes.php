@@ -85,6 +85,12 @@ return [
         'method' => 'GET'
     ],
 
+    'countries/new' => [
+        'controller' => CountriesController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
     'countries/delete' => [
         'controller' => CountriesController::class,
         'action' => 'delete',

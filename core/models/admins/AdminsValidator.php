@@ -1,8 +1,8 @@
 <?php
 
-namespace core\models;
+namespace core\models\admins;
 
-class Validator
+class AdminsValidator
 {
     private string $loginRegExp = "/^[a-z ,.'-]+$/i";
 
