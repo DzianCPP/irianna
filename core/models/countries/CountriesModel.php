@@ -14,12 +14,12 @@ class CountriesModel extends Model
         return $this->selectAll(self::TABLE_NAME);
     }
 
-    public function getAdminById(int $id): array
+    public function getCountryById(int $id): array
     {
-        return $this->getRecordBy("id", $id, "admins_table");
+        return $this->getRecordBy("id", $id, self::TABLE_NAME);
     }
 
-    public function insertAdmin(array $params = []): bool
+    public function insertCountry(array $params = []): bool
     {
         if ($params === []) {
             $params = $this->validator->makeDataSafe($_POST);
@@ -27,34 +27,34 @@ class CountriesModel extends Model
             $params = $this->validator->makeDataSafe($params);
         }
 
-        if (!$this->insert($params, $this->fields, 'admins_table')) {
+        if (!$this->insert($params, $this->fields, self::TABLE_NAME)) {
             return false;
         }
 
         return true;
     }
 
-    public function editAdmin($newUserData): bool
+    public function editCountry($newUserData): bool
     {
         $params = $this->validator->makeDataSafe($newUserData);
 
-        if (!$this->update("admins_table", $this->fields, $params, "id")) {
+        if (!$this->update(self::TABLE_NAME, $this->fields, $params, "id")) {
             return false;
         }
 
         return true;
     }
 
-    public function deleteAdmin(array $ids): bool
+    public function deleteCountry(array $ids): bool
     {
-        if (!$this->delete("id", $ids, "admins_table")) {
+        if (!$this->delete("id", $ids, self::TABLE_NAME)) {
             return false;
         }
 
         return true;
     }
 
-    public function seedAdmins(array $data): bool
+    public function seedCountries(array $data): bool
     {
         $params = [
             'login' => $data['login'],
@@ -62,7 +62,7 @@ class CountriesModel extends Model
             'super_admin' => $data['super_admin']
         ];
 
-        if (!$this->insertAdmin($params)) {
+        if (!$this->insertCountry($params)) {
             return false;
         }
 

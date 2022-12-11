@@ -5,15 +5,18 @@ namespace database\migrations;
 use core\application\Database;
 use PDO;
 
-class m2_add_super_admin extends BaseMigration
+class m3_create_countries_table extends BaseMigration
 {
     public function up(): bool
     {
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "INSERT INTO admins_table(email, login, password, super_admin)
-                    VALUES ('dzian.cpp@gmail.com', 'sadmin', 'spass', true)";
+        $sqlQuery = "CREATE TABLE countries_table(
+                        id int(20) NOT NULL AUTO_INCREMENT,
+                        name varchar(255) NOT NULL DEFAULT ' ',
+                        is_active int(1) NOT NULL DEFAULT '1',
+                        PRIMARY KEY(id))";
 
         $query = $conn->prepare($sqlQuery);
 
@@ -29,7 +32,7 @@ class m2_add_super_admin extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "DELETE FROM admins_table WHERE login='sadmin'";
+        $sqlQuery = "DROP TABLE countries_table";
 
         $query = $conn->prepare($sqlQuery);
 
