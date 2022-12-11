@@ -3,6 +3,7 @@
 namespace core\controllers;
 
 use core\views\AppView;
+use core\views\NotFoundView;
 
 class AppController extends BaseController
 {
@@ -21,7 +22,7 @@ class AppController extends BaseController
     public static function notFound(): void
     {
         if (parent::isLogged()) {
-            parent::setView(NotFOundView::class);
+            parent::setView(NotFoundView::class);
             $data = ["author" => "IriAnna", "title" => "IriAnna", "message" => "404 Страница не найдена", "login" => $_COOKIE['login']];
             http_response_code(404);
             parent::$view->render("notFound/404.html.twig", $data);

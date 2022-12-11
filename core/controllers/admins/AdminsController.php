@@ -40,7 +40,7 @@ class AdminsController extends BaseController
             }
 
             if ($page > $pages || $page < 1) {
-                $this->notFound();
+                \core\controllers\AppController::notFound();
                 return;
             }
 
@@ -134,17 +134,5 @@ class AdminsController extends BaseController
         }
 
         return $page;
-    }
-
-    private function notFound(): void
-    {
-        $data = [
-            'title' => 'Add User App',
-            'author' => 'Author: DzianCPP',
-            'message' => '404: page not found'
-        ];
-        $this->view->render("404.html.twig", $data);
-        http_response_code(404);
-        return;
     }
 }
