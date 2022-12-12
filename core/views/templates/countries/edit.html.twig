@@ -13,13 +13,14 @@
     </div>
 
     <form class="form">
+        
         <div class="row w-auto mt-2">
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
             <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
                 <div class="input-group">
-                    <label class="input-group-text w-25" for="email">Почта</label>
-                    <input type="email" class="form-control w-75" name="new-email" id="email"
-                        placeholder="Введите новый email" value="{{ admin.email }}">
+                    <label class="input-group-text w-25" for="name">Название</label>
+                    <input type="text" class="form-control w-75" name="new-name" id="name"
+                        placeholder="Введите новый логин" value="{{ country.name }}">
                 </div>
             </div>
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
@@ -29,39 +30,21 @@
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
             <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
                 <div class="input-group">
-                    <label class="input-group-text w-25" for="login">Логин</label>
-                    <input type="text" class="form-control w-75" name="new-login" id="login"
-                        placeholder="Введите новый логин" value="{{ admin.login }}">
-                </div>
-            </div>
-            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
-        </div>
-
-        <div class="row w-auto mt-2">
-            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
-            <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
-                <div class="input-group">
-                    <label class="input-group-text w-25" for="password">Пароль</label>
-                    <input type="password" class="form-control w-75" name="new-password" id="password"
-                        placeholder="Введите новый пароль" value="{{ admin.password }}">
-                </div>
-            </div>
-            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
-        </div>
-
-        <div class="row w-auto mt-2">
-            <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
-            <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
-                <div class="input-group">
-                    <label class="input-group-text w-75" for="super-admin">Супер Админ</label>
-                    <select name="super-admin" id="super-admin" class="btn btn-success dropdown-toggle w-25" {% if admin.login == 'sadmin' %} {{ 'disabled' }} {% endif %}>
-                        <option value="0" {% if admin.super_admin == 0 %} {{ 'selected="selected"' }} {% endif %}>
-                            Да
-                        </option>
-                        <option value="1" {% if admin.super_admin == 1 %} {{ 'selected="selected"' }} {% endif %}>
-                            Да
-                        </option>
-                    </select>
+                    <label class="input-group-text w-25" for="super-admin">Статус</label>
+                <select name="is-active" id="is-active" class="btn btn-success dropdown-toggle w-75">
+                    <option value="0"
+                        {% if country.is_active == 0 %}
+                            {{ 'selected="selected"' }}
+                        {% endif %}>
+                        Не активна
+                    </option>
+                    <option value="1"
+                        {% if country.is_active== 1 %}
+                            {{ 'selected="selected"' }}
+                        {% endif %}>
+                        Активна
+                    </option>
+                </select>
                 </div>
             </div>
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>

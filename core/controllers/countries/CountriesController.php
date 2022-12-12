@@ -72,10 +72,10 @@ class CountriesController extends BaseController
 
     public function edit(): void
     {
-        $this->setModel(AdminsModel::class);
-        $this->setView(AdminsView::class);
+        $this->setModel(CountriesModel::class);
+        $this->setView(CountriesView::class);
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $country = $this->model->getAdminById($id)[0];
+        $country = $this->model->get(['column' => 'id', 'value' => $id])[0];
         $data = [
             'country' => $country,
             'title' => 'IriANNA',

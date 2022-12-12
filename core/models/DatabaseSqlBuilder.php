@@ -17,11 +17,11 @@ class DatabaseSqlBuilder
         $this->conn = $this->database->getConnection();
     }
 
-    public function insert(array $recordInfo, array $fields, string $tableName): bool
+    public function insert(array $recordInfo, array $columns, string $tableName): bool
     {
-        $tableFields = $this->getTableFields($fields);
+        $tableColumns = $this->getTableFields($columns);
         $values = $this->getValues($recordInfo);
-        $sqlQuery = "INSERT INTO ${tableName} (${tableFields})
+        $sqlQuery = "INSERT INTO ${tableName} (${tableColumns})
                     VALUES (${values})";
         $query = $this->conn->prepare($sqlQuery);
         if (!$query->execute()) {
@@ -35,9 +35,9 @@ class DatabaseSqlBuilder
     {
         $sqlQuery = "SELECT * FROM $tableName";
         if ($columnValue != []) {
-            $field = $columnValue['field'];
+            $column = $columnValue['column'];
             $value = $columnValue['value'];
-            $sqlQuery .= " WHERE ${field}=${value}";
+            $sqlQuery .= " WHERE ${column}=${value}";
         }
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();

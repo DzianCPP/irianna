@@ -25,10 +25,10 @@ class LoginController extends BaseController
 
     public function login(): void
     {
-        $adminsModel = new AdminsModel();
+        $this->setModel(AdminsModel::class);
         $json_string = file_get_contents("php://input");
 
-        $admins = $adminsModel->getAllAdmins();
+        $admins = $this->model->get();
 
         $requested_admin = json_decode($json_string, true);
 

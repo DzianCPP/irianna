@@ -2,58 +2,35 @@
 
 namespace core\models\admins;
 
-class AdminsValidator
+use core\models\Validator;
+
+class AdminsValidator extends Validator
 {
-    private string $loginRegExp = "/^[a-z ,.'-]+$/i";
+    private string $textRegExp = "/^[a-z ,.'-]+$/i";
 
-    public function makeDataSafe(array $data): array
+    public function isDataSafe(string $text = "", string $email = "", int|float $number = 0): bool
     {
-        $userData = [];
-        $keys = array_keys($data);
-        $i = 0;
-        foreach ($data as $dataElement) {
-            $userData[$keys[$i]] = $this->makeStringSafe($dataElement);
-            ++$i;
-        }
+        $countryName = $text;
 
-        return $userData;
-    }
-
-    private function makeStringSafe($data): string
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-
-        return htmlspecialchars($data);
-    }
-
-    public function userDataValid(string $email, string $login): bool
-    {
-        if (!$this->loginValid($login) || !$this->emailValid($email)) {
+        if ($countryName === "") {
             return false;
         }
 
-        return true;
-    }
-
-    private function emailValid(string $email): bool
-    {
-        if (empty($email)) {
+        if (!$this->textValid($countryName)) {
             return false;
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $is_active = $number;
+
+        if (!is_numeric($is_active) || $is_active > 1 || $is_active < 0) {
             return false;
         }
 
-        return true;
-    }
+        if ($email == "") {
+            return false;
+        }
 
-    private function loginValid(string $login): bool
-    {
-        $login = trim($login);
-
-        if (!filter_var($login, FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => $this->loginRegExp]])) {
+        if (!$this->emailValid($email)) {
             return false;
         }
 

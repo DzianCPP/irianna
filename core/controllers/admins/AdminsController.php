@@ -15,7 +15,7 @@ class AdminsController extends BaseController
     {
         if ($this->isLogged() && $this->isSuperAdmin()) {
             $this->setModel(AdminsModel::class);
-            $admins = $this->model->getAllAdmins();
+            $admins = $this->model->get();
             $this->setView(AdminsView::class);
             $page = $this->getPage();
             $pages = (int)ceil(count($admins) / self::PER_PAGE);
@@ -58,7 +58,7 @@ class AdminsController extends BaseController
         $this->setModel(AdminsModel::class);
         $this->setView(AdminsView::class);
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $admin = $this->model->getAdminById($id)[0];
+        $admin = $this->model->get($id)[0];
         $data = [
             'admin' => $admin,
             'title' => 'IriANNA',
@@ -74,7 +74,7 @@ class AdminsController extends BaseController
         $ids = json_decode($jsonString, true);
         if (count($ids) > 0) {
             $this->setModel(AdminsModel::class);
-            if (!$this->model->deleteAdmin($ids)) {
+            if (!$this->model->delete(['column' => 'id', 'values' => $ids])) {
                 http_response_code(500);
             }
         }
@@ -82,9 +82,8 @@ class AdminsController extends BaseController
 
     public function create(): void
     {
-        $newAdmin = json_decode(file_get_contents("php://input"), true);
         $this->setModel(AdminsModel::class);
-        $this->model->insertAdmin($newAdmin);
+        $this->model->create();
     }
 
     public function update(): void
@@ -92,7 +91,7 @@ class AdminsController extends BaseController
         $jsonString = file_get_contents("php://input");
         $admin = json_decode($jsonString, true);
         $this->setModel(AdminsModel::class);
-        if (!$this->model->editAdmin($admin)) {
+        if (!$this->model->update($admin)) {
             http_response_code(400);
         }
     }

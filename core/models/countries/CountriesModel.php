@@ -40,11 +40,11 @@ class CountriesModel extends Model implements ModelInterface
         $newCountryInfo = json_decode(file_get_contents("php://input"), true);
         $newCountryInfo = $this->validator->makeDataSafe($newCountryInfo);
 
-        if (!$this->validator->isDataSafe($newCountryInfo['name'], number: $newCountryInfo['is_active'])) {
+        if (!$this->validator->isDataSafe(number: $newCountryInfo['is_active'])) {
             return false;
         }
 
-        if (!$this->sqlBuilder->insert(recordInfo: $newCountryInfo, fields: $this->fields, tableName: self::TABLE_NAME)) {
+        if (!$this->databaseSqlBuilder->insert(recordInfo: $newCountryInfo, columns: $this->fields, tableName: self::TABLE_NAME)) {
             return false;
         }
 

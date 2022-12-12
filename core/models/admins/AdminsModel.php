@@ -2,68 +2,70 @@
 
 namespace core\models\admins;
 
+use core\models\ModelInterface;
 use core\models\Model;
+use core\models\admins\AdminsValidator;
 
-class AdminsModel extends Model
+class AdminsModel extends Model implements ModelInterface
 {
-    protected array $fields = ['email', 'login', 'password', 'super_admin'];
+    protected array $fields = ['email', 'login', 'password', 'super_admin', 'id'];
     private const TABLE_NAME = "admins_table";
 
-
-    public function getAllAdmins(): array
+    public function __construct()
     {
-        return $this->selectAll(self::TABLE_NAME);
+        parent::__construct(AdminsValidator::class);
     }
 
-    public function getAdminById(int $id): array
+    public function get(array $columnValue = []): array
     {
-        return $this->getRecordBy("id", $id, self::TABLE_NAME);
+        return $this->databaseSqlBuilder->select(self::TABLE_NAME, $columnValue);
     }
 
-    public function insertAdmin(array $params = []): bool
+    public function update(array $newInfo): bool
     {
-        if ($params === []) {
-            $params = $this->validator->makeDataSafe($_POST);
-        } else {
-            $params = $this->validator->makeDataSafe($params);
+        $newAdmin = $this->validator->makeDataSafe($newInfo);
+
+        if (!$this->validator->isDataSafe($newAdmin['login'], number: $newAdmin['super_admin'], email: $newAdmin['email'])) {
+            return false;
         }
 
-        if (!$this->insert($params, $this->fields, self::TABLE_NAME)) {
+        if (!$this->sqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newAdmin)) {
             return false;
         }
 
         return true;
     }
 
-    public function editAdmin($newUserData): bool
+    public function create(): bool
     {
-        $params = $this->validator->makeDataSafe($newUserData);
+        $newAdmin = json_decode(file_get_contents("php://input"), true);
+        $newAdmin = $this->validator->makeDataSafe($newAdmin);
 
-        if (!$this->update(self::TABLE_NAME, $this->fields, $params, "id")) {
+        if (!$this->validator->isDataSafe($newAdmin['login'], email: $newAdmin['email'])) {
+            return false;
+        }
+
+        if (!$this->databaseSqlBuilder->insert(recordInfo: $newAdmin, columns: $this->fields, tableName: self::TABLE_NAME)) {
             return false;
         }
 
         return true;
     }
 
-    public function deleteAdmin(array $ids): bool
+    public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
-        if (!$this->delete("id", $ids, self::TABLE_NAME)) {
+        $jsonString = file_get_contents("php://input");
+        $ids = json_decode($jsonString, true);
+
+        if (count($ids) < 1) {
             return false;
         }
 
-        return true;
-    }
+        if (!$this->sqlBuilder->delete(
+            columnValues: $columnValues,
+            tableName: self::TABLE_NAME
+        )) {
 
-    public function seedAdmins(array $data): bool
-    {
-        $params = [
-            'login' => $data['login'],
-            'password' => $data['password'],
-            'super_admin' => $data['super_admin']
-        ];
-
-        if (!$this->insertAdmin($params)) {
             return false;
         }
 
