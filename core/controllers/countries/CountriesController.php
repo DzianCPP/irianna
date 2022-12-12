@@ -16,7 +16,7 @@ class CountriesController extends BaseController
     {
         if ($this->isLogged()) {
             $this->setModel(CountriesModel::class);
-            $countries = $this->model->getAllCountries();
+            $countries = $this->model->get();
             $this->setView(CountriesView::class);
             $page = $this->getPage();
             $pages = (int)ceil(count($countries) / self::PER_PAGE);
@@ -47,7 +47,7 @@ class CountriesController extends BaseController
                 return;
             }
 
-            $this->view->render("admins/admins.html.twig", $data);
+            $this->view->render("countries/countries.html.twig", $data);
         } else {
             header("Location: " . "/admin");
             exit;
@@ -75,14 +75,14 @@ class CountriesController extends BaseController
         $this->setModel(AdminsModel::class);
         $this->setView(AdminsView::class);
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $admin = $this->model->getAdminById($id)[0];
+        $country = $this->model->getAdminById($id)[0];
         $data = [
-            'admin' => $admin,
+            'country' => $country,
             'title' => 'IriANNA',
             'author' => 'IriANNA',
             'message' => 'Введите новые данные'
         ];
-        $this->view->render("admins/edit.html.twig", $data);
+        $this->view->render("countries/edit.html.twig", $data);
     }
 
     public function delete(): void
@@ -91,7 +91,7 @@ class CountriesController extends BaseController
         $ids = json_decode($jsonString, true);
         if (count($ids) > 0) {
             $this->setModel(AdminsModel::class);
-            if (!$this->model->deleteAdmin($ids)) {
+            if (!$this->model->delete($ids)) {
                 http_response_code(500);
             }
         }
@@ -101,7 +101,7 @@ class CountriesController extends BaseController
     {
         $newCountry = json_decode(file_get_contents("php://input"), true);
         $this->setModel(CountriesModel::class);
-        $this->model->insertCountry($newCountry);
+        $this->model->create($newCountry);
     }
 
     public function update(): void

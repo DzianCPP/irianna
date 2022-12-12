@@ -20,7 +20,7 @@ class CountriesValidator extends Validator
 
         $is_active = $number;
 
-        if (!is_numeric($is_active)) {
+        if (!is_numeric($is_active) || $is_active > 1 || $is_active < 0) {
             return false;
         }
 

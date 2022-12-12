@@ -3,71 +3,68 @@
 namespace core\models\countries;
 
 use core\models\Model;
+use core\models\ModelInterface;
 
-class CountriesModel extends Model
+class CountriesModel extends Model implements ModelInterface
 {
-    protected array $fields = ['name', 'is_active'];
+    protected array $fields = ['name', 'is_active', 'id'];
     private const TABLE_NAME = "countries_table";
 
-    public function getAllCountries(): array
+    public function __construct()
     {
-        return $this->selectAll(self::TABLE_NAME);
+        parent::__construct(CountriesValidator::class);
     }
 
-    public function getCountryById(int $id): array
+    public function get(array $columnValue = []): array
     {
-        return $this->getRecordBy("id", $id, self::TABLE_NAME);
+        return $this->databaseSqlBuilder->select(self::TABLE_NAME, $columnValue);
     }
 
-    public function getCountryByName(string $name): array
+    public function update(array $newInfo): bool
     {
-        return $this->getRecordBy("name", $name, self::TABLE_NAME);
-    }
+        $newCountry = $this->validator->makeDataSafe($newInfo);
 
-    public function insertCountry(array $params = []): bool
-    {
-        if ($params === []) {
-            $params = $this->validator->makeDataSafe($_POST);
-        } else {
-            $params = $this->validator->makeDataSafe($params);
+        if (!$this->validator->isDataSafe($newCountry['name'], number: $newCountry['is_active'])) {
+            return false;
         }
 
-        if (!$this->insert($params, $this->fields, self::TABLE_NAME)) {
+        if (!$this->sqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newCountry)) {
             return false;
         }
 
         return true;
     }
 
-    public function editCountry($newUserData): bool
+    public function create(): bool
     {
-        $params = $this->validator->makeDataSafe($newUserData);
+        $newCountryInfo = json_decode(file_get_contents("php://input"), true);
+        $newCountryInfo = $this->validator->makeDataSafe($newCountryInfo);
 
-        if (!$this->update(self::TABLE_NAME, $this->fields, $params, "id")) {
+        if (!$this->validator->isDataSafe($newCountryInfo['name'], number: $newCountryInfo['is_active'])) {
+            return false;
+        }
+
+        if (!$this->sqlBuilder->insert(recordInfo: $newCountryInfo, fields: $this->fields, tableName: self::TABLE_NAME)) {
             return false;
         }
 
         return true;
     }
 
-    public function deleteCountry(array $ids): bool
+    public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
-        if (!$this->delete("id", $ids, self::TABLE_NAME)) {
+        $jsonString = file_get_contents("php://input");
+        $ids = json_decode($jsonString, true);
+
+        if (count($ids) < 1) {
             return false;
         }
 
-        return true;
-    }
+        if (!$this->sqlBuilder->delete(
+            columnValues: $columnValues,
+            tableName: self::TABLE_NAME
+        )) {
 
-    public function seedCountries(array $data): bool
-    {
-        $params = [
-            'login' => $data['login'],
-            'password' => $data['password'],
-            'super_admin' => $data['super_admin']
-        ];
-
-        if (!$this->insertCountry($params)) {
             return false;
         }
 
