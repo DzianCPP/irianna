@@ -2,9 +2,11 @@
 
 namespace core\models;
 
-class Validator
+use core\models\ValidatorInterface;
+
+abstract class Validator implements ValidatorInterface
 {
-    private string $loginRegExp = "/^[a-z ,.'-]+$/i";
+    private string $textRegExp = "/^[a-z ,.'-]+$/i";
 
     public function makeDataSafe(array $data): array
     {
@@ -19,24 +21,17 @@ class Validator
         return $userData;
     }
 
-    private function makeStringSafe($data): string
+    public function makeStringSafe(string &$text): string
     {
-        $data = trim($data);
-        $data = stripslashes($data);
+        $text = trim($text);
+        $text = stripslashes($text);
 
-        return htmlspecialchars($data);
+        return htmlspecialchars($text);
     }
 
-    public function userDataValid(string $email, string $login): bool
-    {
-        if (!$this->loginValid($login) || !$this->emailValid($email)) {
-            return false;
-        }
+    abstract public function isDataSafe(string $text = "", string $email = "", int|float $number = 0): bool;
 
-        return true;
-    }
-
-    private function emailValid(string $email): bool
+    protected function emailValid(string $email): bool
     {
         if (empty($email)) {
             return false;
@@ -49,11 +44,11 @@ class Validator
         return true;
     }
 
-    private function loginValid(string $login): bool
+    protected function textValid(string $text): bool
     {
-        $login = trim($login);
+        $text = trim($text);
 
-        if (!filter_var($login, FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => $this->loginRegExp]])) {
+        if (!filter_var($text, FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => $this->textRegExp]])) {
             return false;
         }
 
