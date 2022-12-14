@@ -44,7 +44,15 @@ class CountriesModel extends Model implements ModelInterface
             return false;
         }
 
-        if (!$this->databaseSqlBuilder->insert(recordInfo: $newCountryInfo, columns: $this->fields, tableName: self::TABLE_NAME)) {
+        $columns = [];
+
+        foreach ($this->fields as $field) {
+            if ($field != 'id') {
+                $columns[] = $field;
+            }
+        }
+
+        if (!$this->databaseSqlBuilder->insert(recordInfo: $newCountryInfo, columns: $columns, tableName: self::TABLE_NAME)) {
             return false;
         }
 

@@ -6,13 +6,13 @@ use core\controllers\BaseController;
 use core\views\countries\CountriesView;
 use core\models\countries\CountriesModel;
 use core\controllers\AppController;
+use core\controllers\ControllerInterface;
 
-
-class CountriesController extends BaseController
+class CountriesController extends BaseController implements ControllerInterface
 {
-    private const PER_PAGE = 5;
+    protected const PER_PAGE = 5;
 
-    public function show(): void
+    public function read(int $id = 0): void
     {
         if ($this->isLogged()) {
             $this->setModel(CountriesModel::class);
@@ -85,7 +85,7 @@ class CountriesController extends BaseController
         $this->view->render("countries/edit.html.twig", $data);
     }
 
-    public function delete(): void
+    public function delete(int $id = 0): void
     {
         $jsonString = file_get_contents("php://input");
         $ids = json_decode($jsonString, true);
@@ -104,7 +104,7 @@ class CountriesController extends BaseController
         $this->model->create($newCountry);
     }
 
-    public function update(): void
+    public function update(int $id = 0): void
     {
         $jsonString = file_get_contents("php://input");
         $admin = json_decode($jsonString, true);
@@ -112,58 +112,5 @@ class CountriesController extends BaseController
         if (!$this->model->editAdmin($admin)) {
             http_response_code(400);
         }
-    }
-
-    public function setPrivilege(array $admin): void
-    {
-        if ($admin['login'] === $_ENV['SUPER_ADMIN'] && $admin['password'] === $_ENV['SUPER_PASS']) {
-            setcookie("superadmin", "1", time() + 28800, "/");
-        } else {
-            setcookie("superadmin", "0", time() + 28800, "/");
-        }
-    }
-
-    private function isSuperAdmin(): bool
-    {
-        if (isset($_COOKIE['superadmin']) && $_COOKIE['superadmin'] === "1") {
-            return true;
-        }
-
-        return false;
-    }
-
-    private function limitRange(array &$admins, int $requestedPage = 1): void
-    {
-        $rangeStart = $requestedPage * self::PER_PAGE - self::PER_PAGE;
-        $rangeEnd = $rangeStart + self::PER_PAGE;
-
-        $newAdmins = [];
-        for ($i = $rangeStart; $i < $rangeEnd && $i < count($admins); ++$i) {
-            $newAdmins[] = $admins[$i];
-        }
-
-        $admins = $newAdmins;
-    }
-
-    private function getPage(): int
-    {
-        $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        if ($page == "") {
-            $page = 1;
-        }
-
-        return $page;
-    }
-
-    private function notFound(): void
-    {
-        $data = [
-            'title' => 'Add User App',
-            'author' => 'Author: DzianCPP',
-            'message' => '404: page not found'
-        ];
-        $this->view->render("404.html.twig", $data);
-        http_response_code(404);
-        return;
     }
 }

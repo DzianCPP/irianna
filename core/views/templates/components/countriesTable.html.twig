@@ -1,20 +1,28 @@
 {% block table %}
 <table class="table table-sm table-hover text-center" id="table">
-    <tr>
-        <th scope="col"><input type="checkbox" id="check-all"></th>
-        <th scope="col">id</th>
-        <th scope="col">Название</th>
-        <th scope="col">Статус</th>
-        <th scope="col"></th>
-    </tr>
-    {% for country in countries %}
-    <tr>
-        <td><input name="select" type="checkbox" value="{{country.id}}"></td>
-        <td>{{country.id}}</td>
-        <td>{{country.name}}</td>
-        <td>{% if country.is_active > 0 %}{{ 'Да' }}{% else %}{{ 'Нет' }}{% endif %}</td>
-        <td><a class="btn btn-success" href="/countries/edit/{{country.id}}">Исправить</a></td>
-    </tr>
-    {% endfor %}
+  <tr>
+    <th scope="col"><input type="checkbox" id="check-all" /></th>
+    <th scope="col">id</th>
+    <th scope="col">Название</th>
+    <th scope="col">Статус</th>
+    <th scope="col"></th>
+  </tr>
+  {% for country in countries %}
+  <tr>
+    <td><input name="select" type="checkbox" value="{{ country.id }}" /></td>
+    <td>{{ country.id }}</td>
+    <td>{{ country.name }}</td>
+    <td>
+      {% if country.is_active > 0 %}{{ "Доступна" }}{% else %}{{
+        "Не доступна"
+      }}{% endif %}
+    </td>
+    <td>
+      <a class="btn btn-success" href="/countries/edit/{{ country.id }}"
+        >Исправить</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
 </table>
 {% endblock %}

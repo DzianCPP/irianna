@@ -5,6 +5,7 @@ use core\controllers\login\LoginController;
 use core\controllers\register\RegisterController;
 use core\controllers\admins\AdminsController;
 use core\controllers\countries\CountriesController;
+use core\controllers\resorts\ResortsController;
 
 return [
     'admin' => [
@@ -51,7 +52,7 @@ return [
 
     'admins' => [
         'controller' => AdminsController::class,
-        'action' => 'show',
+        'action' => 'read',
         'method' => 'GET'
     ],
 
@@ -81,7 +82,7 @@ return [
 
     'countries' => [
         'controller' => CountriesController::class,
-        'action' => 'show',
+        'action' => 'read',
         'method' => 'GET'
     ],
 
@@ -113,5 +114,41 @@ return [
         'controller' => CountriesController::class,
         'action' => 'update',
         'method' => 'PUT'
+    ],
+
+    'resorts/new' => [
+        'controller' => ResortsController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'resorts' => [
+        'controller' => ResortsController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'resorts/edit' => [
+        'controller' => ResortsController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'resorts/create' => [
+        'controller' => ResortsController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'resort/update' => [
+        'controller' => ResortsController::class,
+        'action' => 'update',
+        'method' => 'PATCH'
+    ],
+
+    'resorts/delete' => [
+        'controller' => ResortsController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
     ]
 ];

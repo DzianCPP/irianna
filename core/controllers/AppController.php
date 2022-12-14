@@ -18,12 +18,4 @@ class AppController extends BaseController
             exit;
         }
     }
-
-    public function notFound(): void
-    {
-        $this->setView(NotFoundView::class);
-        $data = ["author" => "IriAnna", "title" => "IriAnna", "message" => "404 Страница не найдена"];
-        http_response_code(404);
-        $this->view->render("notFound/404.html.twig", $data);
-    }
 }
