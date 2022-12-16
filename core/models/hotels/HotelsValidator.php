@@ -1,10 +1,10 @@
 <?php
 
-namespace core\models\resorts;
+namespace core\models\hotels;
 
 use core\models\Validator;
 
-class ResortsValidator extends Validator
+class HotelsValidator extends Validator
 {
     private string $ruTextRegexp = "/^[а-яёА-ЯЁ ,.'-]+$/i";
 

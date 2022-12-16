@@ -7,6 +7,7 @@ use core\controllers\ControllerInterface;
 use core\models\resorts\ResortsModel;
 use core\views\resorts\ResortsView;
 use core\models\countries\CountriesModel;
+use core\views\countries\CountriesView;
 
 class ResortsController extends BaseController implements ControllerInterface
 {
@@ -42,18 +43,21 @@ class ResortsController extends BaseController implements ControllerInterface
         }
 
         $this->setModel(ResortsModel::class);
+        $countriesModel = new CountriesModel();
+        $countries = $countriesModel->get();
         $resorts = $this->model->get();
         $this->setView(ResortsView::class);
         $page = $this->getPage();
         $pages = (int)ceil(count($resorts) / parent::PER_PAGE);
         if ($page) {
-            $this->limitRange($countries, $page);
+            $this->limitRange($resorts, $page);
         } else {
-            $this->limitRange($countries);
+            $this->limitRange($resorts);
         }
 
         $data = [
             'resorts' => $resorts,
+            'countries' => $countries,
             'currentPage' => $page,
             'pages' => $pages,
             'title' => 'IriANNA',
@@ -62,17 +66,12 @@ class ResortsController extends BaseController implements ControllerInterface
             'header' => 'Курорты'
         ];
 
-        if (count($resorts) === 0) {
-            $this->view->render("resorts/resorts.html.twig", $data);
-            return;
-        }
-
         if ($page > $pages || $page < 1) {
             $this->notFound();
             return;
         }
 
-        $this->view->render("countries/countries.html.twig", $data);
+        $this->view->render("resorts/resorts.html.twig", $data);
     }
     public function update(int $id = 0): void
     {

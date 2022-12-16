@@ -6,6 +6,8 @@ use core\controllers\register\RegisterController;
 use core\controllers\admins\AdminsController;
 use core\controllers\countries\CountriesController;
 use core\controllers\resorts\ResortsController;
+use core\controllers\hotels\HotelsController;
+
 
 return [
     'admin' => [
@@ -147,6 +149,42 @@ return [
     ],
 
     'resorts/delete' => [
+        'controller' => ResortsController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
+    ],
+
+    'hotels/new' => [
+        'controller' => HotelsController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'hotels' => [
+        'controller' => HotelsController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'hotels/edit' => [
+        'controller' => HotelsController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'hotels/create' => [
+        'controller' => HotelsController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'hotels/update' => [
+        'controller' => HotelsController::class,
+        'action' => 'update',
+        'method' => 'PATCH'
+    ],
+
+    'hotels/delete' => [
         'controller' => ResortsController::class,
         'action' => 'delete',
         'method' => 'DELETE'

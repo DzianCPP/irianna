@@ -1,0 +1,34 @@
+{% block table %}
+<table class="table table-sm table-hover text-center" id="table">
+  <tr>
+    <th scope="col"><input type="checkbox" id="check-all" /></th>
+    <th scope="col">id</th>
+    <th scope="col">Название</th>
+    <th scope="col">Статус</th>
+    <th scope="col">Страна</th>
+    <th scope="col"></th>
+  </tr>
+  {% for resort in resorts %}
+  <tr>
+    <td><input name="select" type="checkbox" value="{{ resort.id }}" /></td>
+    <td>{{ resort.id }}</td>
+    <td>{{ resort.name }}</td>
+    <td>
+      {% if resort.is_active > 0 %}{{ "Доступен" }}{% else %}{{
+        "Не доступен"
+      }}{% endif %}
+    </td>
+    <td>
+      {% for country in countries %}{% if country.id == resort.country_id %}{{
+        country.name
+      }}{% endif %}{% endfor %}
+    </td>
+    <td>
+      <a class="btn btn-success" href="/resorts/edit/{{ resort.id }}"
+        >Исправить</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,20 +1,33 @@
 <?php
 
-namespace core\models\resorts;
+namespace core\models\hotels;
 
-use core\models\DatabaseSqlBuilder;
 use core\models\Model;
 use core\models\ModelInterface;
-use core\models\resorts\ResortsValidator;
+use core\models\hotels\HotelsValidator;
 
-class ResortsModel extends Model implements ModelInterface
+class HotelsModel extends Model implements ModelInterface
 {
-    protected array $fields = ['name', 'is_active', 'country_id', 'id'];
-    private const TABLE_NAME = "resorts_table";
+    protected array $fields = [
+        'name',
+        'resort_id',
+        'address',
+        'area',
+        'beach',
+        'body',
+        'number',
+        'water',
+        'food',
+        'features',
+        'description',
+        'is_active',
+        'id'
+    ];
+    private const TABLE_NAME = "hotels_table";
 
     public function __construct()
     {
-        parent::__construct(ResortsValidator::class);
+        parent::__construct(HotelsValidator::class);
     }
 
     public function get(array $columnValue = []): array
