@@ -14,7 +14,7 @@ class ResortsController extends BaseController implements ControllerInterface
     public function new(string $resortName = "", int $is_active = 0): void
     {
         $this->setView(ResortsView::class);
-        $this->setModel(ResortsView::class);
+        $this->setModel(ResortsModel::class);
         $countriesModel = new CountriesModel();
         $countries = $countriesModel->get();
         $data = [
