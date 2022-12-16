@@ -6,6 +6,8 @@ use core\application\Database;
 use PDO;
 use Exception;
 
+//TODO fix migrations
+
 class MigrationsHandler
 {
 
@@ -27,7 +29,7 @@ class MigrationsHandler
         }
 
         if (!$this->migrationHistoryExists($conn)) {
-            $fullMigrationName = "database\migrations\\" . $this->migrations[0]['m0'];
+            $fullMigrationName = "database\\migrations\\" . $this->migrations[0]['m0'];
             $migrationObject = new $fullMigrationName();
             if (!$migrationObject->up()) {
                 return false;
@@ -79,7 +81,7 @@ class MigrationsHandler
                 continue;
             }
 
-            $fullMigrationName = "database\migrations\\" . $migrationName;
+            $fullMigrationName = "database\\migrations\\" . $migrationName;
 
             $migrationObject = new $fullMigrationName();
             if (!$migrationObject->up()) {

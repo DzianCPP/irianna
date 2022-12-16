@@ -76,7 +76,7 @@ class BaseController
             'author' => 'Author: DzianCPP',
             'message' => '404: page not found'
         ];
-        $this->view->render("404.html.twig", $data);
+        $this->view->render("notFound/404.html.twig", $data);
         http_response_code(404);
         return;
     }
