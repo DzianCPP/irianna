@@ -1,7 +1,8 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-{% use 'components/navBar.html.twig' %} {% block nav %} {{ parent() }} {% endblock %}
+{% use 'components/navBar.html.twig' %} {% block nav %} {{ parent() }} {%
+endblock %}
 
 <div class="container-xs container-sm container-md container-xl pt-5">
     <div class="row w-100 mt-5">
@@ -13,14 +14,16 @@
     </div>
 
     <form class="form">
-        
+
         <div class="row w-auto mt-2">
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
             <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
                 <div class="input-group">
                     <label class="input-group-text w-25" for="name">Название</label>
-                    <input type="text" class="form-control w-75" name="new-name" id="name"
-                        placeholder="Введите новый логин" value="{{ country.name }}">
+                    <input type="text" class="form-control w-75" name="new-name"
+                        id="name"
+                        placeholder="Введите новый логин" value="{{ country.name
+                        }}">
                 </div>
             </div>
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
@@ -31,20 +34,21 @@
             <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
                 <div class="input-group">
                     <label class="input-group-text w-25" for="super-admin">Статус</label>
-                <select name="is-active" id="is-active" class="btn btn-success dropdown-toggle w-75">
-                    <option value="0"
-                        {% if country.is_active == 0 %}
+                    <select name="is-active" id="is-active" class="btn
+                        btn-success dropdown-toggle w-75">
+                        <option value="0"
+                            {% if country.is_active == 0 %}
                             {{ 'selected="selected"' }}
-                        {% endif %}>
-                        Не доступна
-                    </option>
-                    <option value="1"
-                        {% if country.is_active== 1 %}
+                            {% endif %}>
+                            Не доступна
+                        </option>
+                        <option value="1"
+                            {% if country.is_active == 1 %}
                             {{ 'selected="selected"' }}
-                        {% endif %}>
-                        Доступна
-                    </option>
-                </select>
+                            {% endif %}>
+                            Доступна
+                        </option>
+                    </select>
                 </div>
             </div>
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
@@ -53,7 +57,8 @@
         <div class="row w-auto mt-2">
             <div class="col-xs-1 col-sm-2 col-md-3 col-xl-4"></div>
             <div class="col-xs-10 col-sm-8 col-md-6 col-xl-4">
-                <button type="button" class="btn btn-success w-100" id="submit-button" value="submit" disabled>
+                <button type="button" class="btn btn-success w-100"
+                    id="save-btn" value="submit" disabled>
                     Сохранить
                 </button>
             </div>
@@ -61,7 +66,7 @@
         </div>
 
         <div>
-            <input type="hidden" value="{{ admin.id }}" name="id" id="id">
+            <input type="hidden" value="{{ country.id }}" name="id" id="id">
         </div>
 
         <div class="row w-100">
@@ -75,7 +80,8 @@
         </div>
     </form>
 
-    <script type="text/javascript" src="/assets/scripts/admins/edit/formValid.js"></script>
-    <script type="text/javascript" src="/assets/scripts/admins/edit/edit.js"></script>
+    <script type="text/javascript"
+        src="/assets/scripts/countries/formFilled.js"></script>
+    <script type="text/javascript" src="/assets/scripts/countries/edit.js"></script>
 </div>
 {% endblock %}

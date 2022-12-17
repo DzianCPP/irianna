@@ -107,9 +107,9 @@ class CountriesController extends BaseController implements ControllerInterface
     public function update(int $id = 0): void
     {
         $jsonString = file_get_contents("php://input");
-        $admin = json_decode($jsonString, true);
-        $this->setModel(AdminsModel::class);
-        if (!$this->model->editAdmin($admin)) {
+        $country = json_decode($jsonString, true);
+        $this->setModel(CountriesModel::class);
+        if (!$this->model->update($country)) {
             http_response_code(400);
         }
     }

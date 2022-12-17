@@ -10,5 +10,5 @@ function formFilled() {
         saveBtn.disabled = false;
     } else {
         saveBtn.disabled = true;
-    }    
+    }
 }

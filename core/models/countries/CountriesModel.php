@@ -28,7 +28,7 @@ class CountriesModel extends Model implements ModelInterface
             return false;
         }
 
-        if (!$this->sqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newCountry)) {
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newCountry)) {
             return false;
         }
 
