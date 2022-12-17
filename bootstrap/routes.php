@@ -9,6 +9,7 @@ use core\controllers\resorts\ResortsController;
 use core\controllers\hotels\HotelsController;
 use core\controllers\buses\BusesController;
 use core\controllers\periods\PeriodsController;
+use core\controllers\managers\ManagersController;
 
 
 return [
