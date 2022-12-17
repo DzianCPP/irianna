@@ -7,6 +7,8 @@ use core\controllers\admins\AdminsController;
 use core\controllers\countries\CountriesController;
 use core\controllers\resorts\ResortsController;
 use core\controllers\hotels\HotelsController;
+use core\controllers\buses\BusesController;
+use core\controllers\periods\PeriodsController;
 
 
 return [
@@ -186,6 +188,78 @@ return [
 
     'hotels/delete' => [
         'controller' => ResortsController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
+    ],
+
+    'buses/new' => [
+        'controller' => BusesController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'buses' => [
+        'controller' => BusesController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'buses/edit' => [
+        'controller' => BusesController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'buses/create' => [
+        'controller' => BusesController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'buses/update' => [
+        'controller' => BusesController::class,
+        'action' => 'update',
+        'method' => 'PATCH'
+    ],
+
+    'buses/delete' => [
+        'controller' => BusesController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
+    ],
+
+    'periods/new' => [
+        'controller' => PeriodsController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'periods' => [
+        'controller' => PeriodsController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'periods/edit' => [
+        'controller' => PeriodsController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'periods/create' => [
+        'controller' => PeriodsController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'periods/update' => [
+        'controller' => PeriodsController::class,
+        'action' => 'update',
+        'method' => 'PATCH'
+    ],
+
+    'periods/delete' => [
+        'controller' => PeriodsController::class,
         'action' => 'delete',
         'method' => 'DELETE'
     ]

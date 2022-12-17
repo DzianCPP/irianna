@@ -76,7 +76,15 @@ class DatabaseSqlBuilder
 
     private function getTableFields(array $fields): string
     {
-        return implode(", ", $fields);
+        $columns = [];
+
+        foreach ($fields as $field) {
+            if ($field != 'id') {
+                $columns[] = $field;
+            }
+        }
+
+        return implode(", ", $columns);
     }
 
     private function getValues(array $params): string
@@ -90,10 +98,6 @@ class DatabaseSqlBuilder
 
     private function getSets(array $fields): string
     {
-        foreach ($fields as &$field) {
-            $field = $field . "=:" . $field;
-        }
-
         return implode(",", $fields);
     }
 }

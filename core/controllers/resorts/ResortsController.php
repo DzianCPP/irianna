@@ -35,6 +35,7 @@ class ResortsController extends BaseController implements ControllerInterface
     public function create(): void
     {
         $this->setModel(ResortsModel::class);
+        $this->model->create();
     }
     public function read(int $id = 0): void
     {

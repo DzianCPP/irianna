@@ -59,9 +59,9 @@ class AdminsController extends BaseController implements ControllerInterface
         $this->setModel(AdminsModel::class);
         $this->setView(AdminsView::class);
         $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        $admin = $this->model->get($id)[0];
+        $admin = $this->model->get(columnValue: ['column' => 'id', 'value' => $id]);
         $data = [
-            'admin' => $admin,
+            'admin' => $admin[0],
             'title' => 'IriANNA',
             'author' => 'IriANNA',
             'message' => 'Введите новые данные'

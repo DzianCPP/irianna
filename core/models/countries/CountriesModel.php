@@ -17,6 +17,10 @@ class CountriesModel extends Model implements ModelInterface
 
     public function get(array $columnValue = []): array
     {
+        if ($columnValue != []) {
+            return $this->databaseSqlBuilder->select(self::TABLE_NAME, columnValue: $columnValue);
+        }
+
         return $this->databaseSqlBuilder->select(self::TABLE_NAME, $columnValue);
     }
 

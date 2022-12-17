@@ -8,7 +8,7 @@ use core\models\admins\AdminsValidator;
 
 class AdminsModel extends Model implements ModelInterface
 {
-    protected array $fields = ['email', 'login', 'password', 'super_admin', 'id'];
+    protected array $fields = ['email' => 'email', 'login' => 'login', 'password' => 'password', 'super_admin' => 'super_admin', 'id' => 'id'];
     private const TABLE_NAME = "admins_table";
 
     public function __construct()
@@ -18,6 +18,10 @@ class AdminsModel extends Model implements ModelInterface
 
     public function get(array $columnValue = []): array
     {
+        if ($columnValue != []) {
+            return $this->databaseSqlBuilder->select(self::TABLE_NAME, columnValue: $columnValue);
+        }
+
         return $this->databaseSqlBuilder->select(self::TABLE_NAME, $columnValue);
     }
 
@@ -41,11 +45,13 @@ class AdminsModel extends Model implements ModelInterface
         $newAdmin = json_decode(file_get_contents("php://input"), true);
         $newAdmin = $this->validator->makeDataSafe($newAdmin);
 
-        if (!$this->validator->isDataSafe($newAdmin['login'], email: $newAdmin['email'])) {
+        if (!$this->validator->isDataSafe()) {
             return false;
         }
 
-        if (!$this->databaseSqlBuilder->insert(recordInfo: $newAdmin, columns: $this->fields, tableName: self::TABLE_NAME)) {
+        $columns = [$this->fields['email'], $this->fields['login'], $this->fields['password']];
+
+        if (!$this->databaseSqlBuilder->insert(recordInfo: $newAdmin, columns: $columns, tableName: self::TABLE_NAME)) {
             return false;
         }
 

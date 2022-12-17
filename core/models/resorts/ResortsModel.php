@@ -19,7 +19,7 @@ class ResortsModel extends Model implements ModelInterface
 
     public function get(array $columnValue = []): array
     {
-        if ($columnValue != 0) {
+        if ($columnValue != []) {
             return $this->databaseSqlBuilder->select(self::TABLE_NAME, columnValue: $columnValue);
         }
 
@@ -34,7 +34,7 @@ class ResortsModel extends Model implements ModelInterface
     public function create(): bool
     {
         $resort = file_get_contents("php://input");
-        $resort = json_decode($resort);
+        $resort = json_decode($resort, true);
 
         if (!$this->validator->isDataSafe()) {
             return false;

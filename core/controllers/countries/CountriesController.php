@@ -28,7 +28,7 @@ class CountriesController extends BaseController implements ControllerInterface
 
             $data = [
                 'countries' => $countries,
-                'thisPage' => $page,
+                'currentPage' => $page,
                 'pages' => $pages,
                 'countCountries' => count($countries),
                 'title' => 'IriANNA',
@@ -102,9 +102,8 @@ class CountriesController extends BaseController implements ControllerInterface
 
     public function create(): void
     {
-        $newCountry = json_decode(file_get_contents("php://input"), true);
         $this->setModel(CountriesModel::class);
-        $this->model->create($newCountry);
+        $this->model->create();
     }
 
     public function update(int $id = 0): void

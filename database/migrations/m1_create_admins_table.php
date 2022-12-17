@@ -17,7 +17,7 @@ class m1_create_admins_table extends BaseMigration
                         email varchar(255) NOT NULL,
                         login varchar(255) NOT NULL,
                         password varchar(255) default NULL,
-                        super_admin bool NOT NULL,
+                        super_admin bool NOT NULL DEFAULT '0',
                         PRIMARY KEY(id))";
 
         $query = $conn->prepare($sqlQuery);

@@ -32,6 +32,8 @@ class HotelsController extends BaseController implements ControllerInterface
     }
     public function create(): void
     {
+        $this->setModel(HotelsModel::class);
+        $this->model->create();
     }
     public function read(int $id = 0): void
     {

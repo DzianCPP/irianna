@@ -1,33 +1,28 @@
 <?php
 
-namespace core\models\hotels;
+namespace core\models\buses;
 
 use core\models\Model;
 use core\models\ModelInterface;
-use core\models\hotels\HotelsValidator;
+use core\models\buses\BusesValidator;
 
-class HotelsModel extends Model implements ModelInterface
+class BusesModel extends Model implements ModelInterface
 {
     protected array $fields = [
         'name',
-        'resort_id',
-        'address',
-        'area',
-        'beach',
-        'body',
-        'number',
-        'water',
-        'food',
-        'features',
-        'description',
-        'is_active',
+        'route',
+        'places',
+        'departure_from_minsk',
+        'departure_from_resort',
+        'arrival_to_minsk',
         'id'
     ];
-    private const TABLE_NAME = "hotels_table";
+
+    private const TABLE_NAME = "buses_table";
 
     public function __construct()
     {
-        parent::__construct(HotelsValidator::class);
+        parent::__construct(BusesValidator::class);
     }
 
     public function get(array $columnValue = []): array
@@ -46,12 +41,6 @@ class HotelsModel extends Model implements ModelInterface
 
     public function create(): bool
     {
-        $hotel = json_decode(file_get_contents("php://input"), true);
-
-        $columns = array_keys($hotel);
-
-        $this->databaseSqlBuilder->insert($hotel, $columns, self::TABLE_NAME);
-
         return true;
     }
 
