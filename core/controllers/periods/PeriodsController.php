@@ -6,16 +6,19 @@ use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\views\periods\PeriodsView;
 use core\models\periods\PeriodsModel;
+use core\models\buses\BusesModel;
 
 class PeriodsController extends BaseController implements ControllerInterface
 {
     public function new(string $periodName = ""): void
     {
-        $this->setView(BusesView::class);
-        $this->setModel(BusesModel::class);
+        $this->setView(PeriodsView::class);
+        $this->setModel(PeriodsModel::class);
+        $busesModel = new BusesModel();
         $data = [
             'name' => $periodName,
             'title' => 'Периоды',
+            'buses' => $busesModel->get(),
             'author' => 'IriANNA',
             'header' => 'Добавить период',
             'login' => $_COOKIE['login']
@@ -43,6 +46,7 @@ class PeriodsController extends BaseController implements ControllerInterface
         $periods = $this->model->get();
         $this->setView(PeriodsView::class);
         $page = $this->getPage();
+        $busesModel = new BusesModel();
         $pages = (int)ceil(count($periods) / self::PER_PAGE);
 
         if ($page) {
@@ -55,6 +59,7 @@ class PeriodsController extends BaseController implements ControllerInterface
             'periods' => $periods,
             'currentPage' => $page,
             'pages' => $pages,
+            'buses' => $busesModel->get(),
             'title' => 'Периоды',
             'author' => 'IriANNA',
             'login' => $_COOKIE['login']

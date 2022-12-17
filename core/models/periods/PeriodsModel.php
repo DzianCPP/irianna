@@ -1,28 +1,25 @@
 <?php
 
-namespace core\models\buses;
+namespace core\models\periods;
 
 use core\models\Model;
 use core\models\ModelInterface;
-use core\models\buses\BusesValidator;
+use core\models\periods\PeriodsValidator;
 
-class BusesModel extends Model implements ModelInterface
+class PeriodsModel extends Model implements ModelInterface
 {
     protected array $fields = [
-        'name',
-        'route',
-        'places',
-        'departure_from_minsk',
-        'departure_from_resort',
-        'arrival_to_minsk',
+        'date',
+        'bus_id',
+        'transit_type',
         'id'
     ];
 
-    private const TABLE_NAME = "buses_table";
+    private const TABLE_NAME = "periods_table";
 
     public function __construct()
     {
-        parent::__construct(BusesValidator::class);
+        parent::__construct(PeriodsValidator::class);
     }
 
     public function get(array $columnValue = []): array
