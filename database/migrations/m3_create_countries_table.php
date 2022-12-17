@@ -12,7 +12,7 @@ class m3_create_countries_table extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "CREATE TABLE countries_table(
+        $sqlQuery = "CREATE TABLE IF NOT EXISTS countries_table(
                         id int(20) NOT NULL AUTO_INCREMENT,
                         name varchar(255) NOT NULL DEFAULT ' ',
                         is_active int(1) NOT NULL DEFAULT '1',
@@ -32,7 +32,7 @@ class m3_create_countries_table extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "DROP TABLE countries_table";
+        $sqlQuery = "DROP TABLE IF EXISTS countries_table";
 
         $query = $conn->prepare($sqlQuery);
 

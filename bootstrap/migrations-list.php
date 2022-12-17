@@ -7,5 +7,9 @@ return [
     ['m3' => 'm3_create_countries_table'],
     ['m4' => 'm4_create_resorts_table'],
     ['m5' => 'm5_create_hotels_table'],
-    ['m6' => 'm6_create_tours_table']
+    ['m6' => 'm6_create_tours_table'],
+    ['m7' => 'm7_create_managers_table'],
+    ['m8' => 'm8_create_buses_table'],
+    ['m9' => 'm9_create_periods_table'],
+    ['m10' => 'm10_create_templates_table']
 ];

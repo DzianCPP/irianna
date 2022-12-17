@@ -12,7 +12,7 @@ class m6_create_tours_table extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "CREATE TABLE tours_table(
+        $sqlQuery = "CREATE TABLE IF NOT EXISTS tours_table(
                         id int(11) NOT NULL AUTO_INCREMENT,
                         created date NOT NULL,
                         manager_id int(11) NOT NULL,
@@ -52,7 +52,7 @@ class m6_create_tours_table extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "DROP TABLE tours_table";
+        $sqlQuery = "DROP TABLE IF EXISTS tours_table";
 
         $query = $conn->prepare($sqlQuery);
 
