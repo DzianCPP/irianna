@@ -1,0 +1,20 @@
+{% block table %}
+<table class="table table-sm table-hover text-center" id="table">
+    <tr>
+        <th scope="col"><input type="checkbox" id="check-all" /></th>
+        <th scope="col">id</th>
+        <th scope="col">ФИО</th>
+        <th scope="col"></th>
+    </tr>
+    {% for manager in managers %}
+    <tr>
+        <td><input name="select" type="checkbox" value="{{ manager.id }}" /></td>
+        <td>{{ manager.id }}</td>
+        <td>{{ manager.name }}</td>
+        <td>
+            <a class="btn btn-success" href="/managers/edit/{{ manager.id }}">Исправить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

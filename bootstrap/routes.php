@@ -263,5 +263,41 @@ return [
         'controller' => PeriodsController::class,
         'action' => 'delete',
         'method' => 'DELETE'
+    ],
+
+    'managers/new' => [
+        'controller' => ManagersController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'managers' => [
+        'controller' => ManagersController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'managers/edit' => [
+        'controller' => ManagersController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'managers/create' => [
+        'controller' => ManagersController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'managers/update' => [
+        'controller' => ManagersController::class,
+        'action' => 'update',
+        'method' => 'PATCH'
+    ],
+
+    'managers/delete' => [
+        'controller' => ManagersController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
     ]
 ];
