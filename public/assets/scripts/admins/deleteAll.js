@@ -2,7 +2,7 @@ let deleteAllBtn = document.getElementById("delete-all");
 deleteAllBtn.addEventListener("click", deleteAll);
 
 function deleteAll() {
-    let allCheckboxes = document.getElementsByName("select-user");
+    let allCheckboxes = document.getElementsByName("select");
     let checkedAdminsIds = getCheckedUsers(allCheckboxes);
 
     if (confirm("Вы уверены, что хотите удалить выбранных администраторов?")) {

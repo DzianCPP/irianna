@@ -61,14 +61,7 @@ class CountriesModel extends Model implements ModelInterface
 
     public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
-        $jsonString = file_get_contents("php://input");
-        $ids = json_decode($jsonString, true);
-
-        if (count($ids) < 1) {
-            return false;
-        }
-
-        if (!$this->sqlBuilder->delete(
+        if (!$this->databaseSqlBuilder->delete(
             columnValues: $columnValues,
             tableName: self::TABLE_NAME
         )) {

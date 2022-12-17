@@ -90,8 +90,11 @@ class CountriesController extends BaseController implements ControllerInterface
         $jsonString = file_get_contents("php://input");
         $ids = json_decode($jsonString, true);
         if (count($ids) > 0) {
-            $this->setModel(AdminsModel::class);
-            if (!$this->model->delete($ids)) {
+            $this->setModel(CountriesModel::class);
+            if (!$this->model->delete(columnValues: [
+                'column' => 'id',
+                'values' => $ids
+            ])) {
                 http_response_code(500);
             }
         }
