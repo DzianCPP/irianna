@@ -33,6 +33,17 @@ class ResortsModel extends Model implements ModelInterface
 
     public function create(): bool
     {
+        $resort = file_get_contents("php://input");
+        $resort = json_decode($resort);
+
+        if (!$this->validator->isDataSafe()) {
+            return false;
+        }
+
+        if (!$this->databaseSqlBuilder->insert($resort, $this->fields, self::TABLE_NAME)) {
+            return false;
+        }
+
         return true;
     }
 

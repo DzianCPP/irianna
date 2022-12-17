@@ -29,7 +29,7 @@ abstract class Validator implements ValidatorInterface
         return htmlspecialchars($text);
     }
 
-    abstract public function isDataSafe(string $text = "", string $email = "", int|float $number = 0): bool;
+    abstract public function isDataSafe(): bool;
 
     protected function emailValid(string $email): bool
     {
