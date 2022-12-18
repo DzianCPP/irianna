@@ -50,12 +50,24 @@ class RoomsController extends BaseController implements ControllerInterface
     {
         $hotelsModel = new HotelsModel();
         $this->setModel(RoomsModel::class);
+        $page = $this->getPage();
+
+        $rooms = $this->model->get();
+
+        $pages = (int)ceil(count($rooms) / parent::PER_PAGE);
+        if ($page) {
+            $this->limitRange($rooms, $page);
+        } else {
+            $this->limitRange($rooms);
+        }
 
         $data = [
             'title' => 'Номера',
             'hotels' => $hotelsModel->get(),
-            'rooms' => $this->model->get(),
+            'rooms' => $rooms,
             'header' => 'Номера',
+            'currentPage' => $page,
+            'pages' => $pages,
             'login' => $_COOKIE['login']
         ];
 
