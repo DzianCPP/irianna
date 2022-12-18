@@ -1,0 +1,26 @@
+{% block table %}
+<table
+    class="table table-responsive table-sm table-xl table-md table-xs
+    table-hover text-center w-100"
+    id="table">
+    <tr>
+        <th scope="col"><input type="checkbox" id="check-all" /></th>
+        <th scope="col">id</th>
+        <th scope="col">Гостиница</th>
+        <th scope="col">Занято</th>
+        <th scope="col">Описание</th>
+
+        <th scope="col"></th>
+    </tr>
+    {% for room in rooms %}
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>{{ room.id }}</td>
+        <td>{% for hotel in hotels %}{% if hotel.id == room.hotel_id %}{{
+            hotel.name }}{% endif %}{% endfor %}
+        </td>
+        <td>{% if room.client_id > 0 %}{{ 'Да' }}{% else %}{{ 'Да' }}{% endif %}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -49,10 +49,12 @@ class RoomsController extends BaseController implements ControllerInterface
     public function read(int $id = 0): void
     {
         $hotelsModel = new HotelsModel();
+        $this->setModel(RoomsModel::class);
 
         $data = [
             'title' => 'Номера',
             'hotels' => $hotelsModel->get(),
+            'rooms' => $this->model->get(),
             'header' => 'Номера',
             'login' => $_COOKIE['login']
         ];
