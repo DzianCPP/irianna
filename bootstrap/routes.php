@@ -10,7 +10,7 @@ use core\controllers\hotels\HotelsController;
 use core\controllers\buses\BusesController;
 use core\controllers\periods\PeriodsController;
 use core\controllers\managers\ManagersController;
-
+use core\controllers\rooms\RoomsController;
 
 return [
     'admin' => [
@@ -299,5 +299,47 @@ return [
         'controller' => ManagersController::class,
         'action' => 'delete',
         'method' => 'DELETE'
+    ],
+
+    'rooms/new' => [
+        'controller' => RoomsController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'rooms' => [
+        'controller' => RoomsController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'rooms/edit' => [
+        'controller' => RoomsController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'rooms/create' => [
+        'controller' => RoomsController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'rooms/update' => [
+        'controller' => RoomsController::class,
+        'action' => 'update',
+        'method' => 'PATCH'
+    ],
+
+    'rooms/delete' => [
+        'controller' => RoomsController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
+    ],
+
+    'rooms/pickHotel' => [
+        'controller' => RoomsController::class,
+        'action' => 'pickHotel',
+        'method' => 'GET'
     ]
 ];

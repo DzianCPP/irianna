@@ -11,5 +11,6 @@ return [
     ['m7' => 'm7_create_managers_table'],
     ['m8' => 'm8_create_buses_table'],
     ['m9' => 'm9_create_periods_table'],
-    ['m10' => 'm10_create_templates_table']
+    ['m10' => 'm10_create_templates_table'],
+    ['m11' => 'm11_create_rooms_table']
 ];

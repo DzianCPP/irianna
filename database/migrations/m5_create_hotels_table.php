@@ -21,6 +21,7 @@ class m5_create_hotels_table extends BaseMigration
                         beach varchar(1024) DEFAULT NULL,
                         body varchar(1024) DEFAULT NULL,
                         number varchar(1024) DEFAULT NULL,
+                        rooms int(100) NOT NULL,
                         water varchar(1024) DEFAULT NULL,
                         food varchar(1024) DEFAULT NULL,
                         features varchar(1024) DEFAULT NULL,

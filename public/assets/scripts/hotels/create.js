@@ -8,6 +8,7 @@ async function create(__id) {
     let _name = document.getElementById("name-" + __id).value;
     let _resort_id = document.getElementById("resort-id-" + __id).value;
     let _address = document.getElementById("address-" + __id).value;
+    let _rooms = document.getElementById("rooms-" + __id).value;
     let _area = document.getElementById("area-" + __id).value;
     let _beach = document.getElementById("beach-" + __id).value;
     let _number = document.getElementById("number-" + __id).value;
@@ -23,6 +24,7 @@ async function create(__id) {
         name: _name,
         resort_id: _resort_id,
         address: _address,
+        rooms: _rooms,
         area: _area,
         beach: _beach,
         number: _number,

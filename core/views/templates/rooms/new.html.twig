@@ -1,0 +1,74 @@
+{% extends "base.html.twig" %} {% block content %}
+<div class="container-xs container-sm container-md container-xl">
+    {% use 'components/navBar.html.twig' %} {% block nav %} {{ parent() }} {%
+    endblock %}
+
+    <div class="row w-100 mt-2 mb-2">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+            <p class="h1 text-center" id="main-page-h1">{{ header }}</p>
+            <p class="h5 text-center" id="main-page-h5">{{ hotel.name }}</p>
+        </div>
+    </div>
+
+    <div class="row w-100 mt-2 mb-5">
+        <table
+            class="table table-sm table-bordered text-center"
+            id="table">
+            <tr>
+                <th class="w-auto"><input type="checkbox" id="check-all" /></th>
+                <th class="w-100">Сроки</th>
+                {% for i in 0..hotel.rooms %}
+                <th class="w-auto"><textarea class="form-control border-0"
+                        rows="1"
+                        id="room-description-{{ i
+                        }}"></textarea></th>
+                {% endfor %}
+            </tr>
+            {% for i in 0..hotel.rooms %}
+            <tr>
+                <td><input type="checkbox" id="{{ i }}" /></td>
+                <td>
+                    <div>
+                        <div class="input-group">
+                            <span class="input-group-text border-0 p-0 w-50">Заезд</span>
+                            <input
+                                type="date"
+                                class="form-control h-auto p-0"
+                                name="text"
+                                id="checkin-date-{{ i }}"
+                                />
+                        </div>
+                        <div class="input-group w-100">
+                            <span class="input-group-text border-0 p-0 w-50">Выезд</span>
+                            <input
+                                type="date"
+                                class="form-control p-0"
+                                name="text"
+                                id="checkout-date-{{ i }}"
+                                />
+                        </div>
+                    </div>
+                </td>
+                {% for i in 0..hotel.rooms %}
+                <td>
+                    <select class="form-select w-100" id="select-client">
+                        <option value="0"></option>
+                        <option value="1">Сидоров Петр Петрович</option>
+                        <option value="2">Солодкова Анна Николаевна</option>
+                    </select>
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                {% for i in 0..hotel.rooms %}
+                <td>
+                    <button class="btn btn-success">Сохранить</button>
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    {% endblock %}
