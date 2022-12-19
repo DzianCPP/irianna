@@ -1,6 +1,6 @@
 {% block table %}
 	<table class="table table-responsive table-sm table-xl table-md table-xs
-																				    table-hover text-center w-100" id="table">
+																								    table-hover text-center w-100" id="table">
 		<tr>
 			<th scope="col"><input type="checkbox" id="check-all"/></th>
 			<th scope="col">id</th>
@@ -16,8 +16,11 @@
 				<td>{{ room.description }}</td>
 				{% set checkins = room.checkins %}
 				{% set checkouts = room.checkouts %}
-				{% for i in 0 .. checkins|length %}
-					<td></td>
+				{% for checkin in checkins %}
+					<td>{{ checkin }}</td>
+				{% endfor %}
+				{% for checkout in checkouts %}
+					<td>{{ checkout }}</td>
 				{% endfor %}
 			</tr>
 			<tr></tr>
