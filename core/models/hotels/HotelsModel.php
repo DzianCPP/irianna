@@ -16,7 +16,7 @@ class HotelsModel extends Model implements ModelInterface
         'area',
         'beach',
         'body',
-        'number',
+        'checkins',
         'water',
         'food',
         'features',

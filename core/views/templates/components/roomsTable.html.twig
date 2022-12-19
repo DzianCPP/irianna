@@ -1,45 +1,26 @@
 {% block table %}
-<table
-    class="table table-responsive table-sm table-xl table-md table-xs
-    table-hover text-center w-100"
-    id="table">
-    <tr>
-        <th scope="col"><input type="checkbox" id="check-all" /></th>
-        <th scope="col">id</th>
-        <th scope="col">Описание</th>
-        {% for i in 1..10 %}
-        <th scope="col">{{ 'Заезд' }}<br>{{ 'Выезд' }}</th>
-        {% endfor %}
-    </tr>
-    {% for room in rooms %}
-    <tr>
-        <td><input type="checkbox"></td>
-        <td>{{ room.id }}</td>
-        <td>{{ room.description }}</td>
-        <td {% if room.client_1_id> 0 %}{{ 'style="background-color: pink;"'}}{%
-            endif %}>{{
-            room.checkin_date_1 }}<br>{{ room.checkout_date_1 }}</td>
-        <td {% if room.client_2_id> 0 %}{{ 'style="background-color: pink;"'}}{%
-            endif %}>{{ room.checkin_date_2 }}<br>{{ room.checkout_date_2 }}</td>
-        <td> {% if room.client_3_id> 0 %}{{ 'style="background-color:
-            pink;"'}}{%
-            endif %}{{ room.checkin_date_3 }}<br>{{ room.checkout_date_3 }}</td>
-        <td {% if room.client_4_id> 0 %}{{ 'style="background-color: pink;"'}}{%
-            endif %}>{{ room.checkin_date_4 }}<br>{{ room.checkout_date_4 }}</td>
-        <td {% if room.client_5_id> 0 %}{{ 'style="background-color: pink;"'}}{%
-            endif %}>{{ room.checkin_date_5 }}<br>{{ room.checkout_date_5 }}</td>
-        <td {% if room.client_6_id> 0 %}{{ 'style="background-color: pink;"'}}{%
-            endif %}>{{ room.checkin_date_6 }}<br>{{ room.checkout_date_6 }}</td>
-        <td {% if room.client_7_id> 0 %}{{ 'style="background-color: pink;"'}}{%
-            endif %}>{{ room.checkin_date_7 }}<br>{{ room.checkout_date_7 }}</td>
-        <td {% if room.client_8_id> 0 %}{{ 'style="background-color: pink;"'}}{%
-            endif %}>{{ room.checkin_date_8 }}<br>{{ room.checkout_date_8 }}</td>
-        <td {% if room.client_9_id> 0 %}{{ 'style="background-color: pink;"'}}{%
-            endif %}>{{ room.checkin_date_9 }}<br>{{ room.checkout_date_9 }}</td>
-        <td {% if room.client_10_id> 0 %}{{ 'style="background-color:
-            pink;"'}}{%
-            endif %}>{{ room.checkin_date_10 }}<br>{{ room.checkout_date_10 }}</td>
-    </tr>
-    {% endfor %}
-</table>
+	<table class="table table-responsive table-sm table-xl table-md table-xs
+																				    table-hover text-center w-100" id="table">
+		<tr>
+			<th scope="col"><input type="checkbox" id="check-all"/></th>
+			<th scope="col">id</th>
+			<th scope="col">Описание</th>
+			{% for i in 1..10 %}
+				<th scope="col">{{ 'Заезд' }}<br>{{ 'Выезд' }}</th>
+			{% endfor %}
+		</tr>
+		{% for room in rooms %}
+			<tr>
+				<td><input type="checkbox"></td>
+				<td>{{ room.id }}</td>
+				<td>{{ room.description }}</td>
+				{% set checkins = room.checkins %}
+				{% set checkouts = room.checkouts %}
+				{% for i in 0 .. checkins|length %}
+					<td></td>
+				{% endfor %}
+			</tr>
+			<tr></tr>
+		{% endfor %}
+	</table>
 {% endblock %}

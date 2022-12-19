@@ -11,7 +11,7 @@ async function create(__id) {
     let _rooms = document.getElementById("rooms-" + __id).value;
     let _area = document.getElementById("area-" + __id).value;
     let _beach = document.getElementById("beach-" + __id).value;
-    let _number = document.getElementById("number-" + __id).value;
+    let _checkins = document.getElementById("number-" + __id).value;
     let _water = document.getElementById("water-" + __id).value;
     let _food = document.getElementById("food-" + __id).value;
     let _features = document.getElementById("features-" + __id).value;
@@ -27,7 +27,7 @@ async function create(__id) {
         rooms: _rooms,
         area: _area,
         beach: _beach,
-        number: _number,
+        checkins: _checkins,
         water: _water,
         food: _food,
         features: _features,

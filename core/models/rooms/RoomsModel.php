@@ -33,6 +33,10 @@ class RoomsModel extends Model implements ModelInterface
 
     public function create(): bool
     {
+        $room = file_get_contents("php://input");
+        $room = json_decode($room, true);
+        $columns = array_keys($room);
+        $this->databaseSqlBuilder->insert($room, $columns, self::TABLE_NAME);
         return true;
     }
 

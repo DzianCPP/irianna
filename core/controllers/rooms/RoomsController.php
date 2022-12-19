@@ -45,6 +45,8 @@ class RoomsController extends BaseController implements ControllerInterface
     }
     public function create(): void
     {
+        $this->setModel(RoomsModel::class);
+        $this->model->create();
     }
     public function read(int $id = 0): void
     {
@@ -53,6 +55,15 @@ class RoomsController extends BaseController implements ControllerInterface
         $page = $this->getPage();
 
         $rooms = $this->model->get();
+        foreach ($rooms as &$room) {
+            $room['checkin_checkout_dates'] = json_decode($room['checkin_checkout_dates'], true);
+        }
+
+        foreach ($rooms as &$room) {
+            $middle = count($room['checkin_checkout_dates']) / 2;
+            $room['checkins'] = array_values(array_slice($room['checkin_checkout_dates'], 0, $middle, true));
+            $room['checkouts'] = array_values(array_slice($room['checkin_checkout_dates'], $middle));
+        }
 
         $pages = (int)ceil(count($rooms) / parent::PER_PAGE);
         if ($page) {
