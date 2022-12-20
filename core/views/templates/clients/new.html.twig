@@ -1,0 +1,96 @@
+{% extends "base.html.twig" %}
+{% block content %}
+	<div class="container-xs container-sm container-md container-xl">
+		{% use 'components/navBar.html.twig' %}
+		{% block nav %}
+			{{ parent() }}
+		{%
+  endblock %}
+
+		<div class="row w-100 mt-2 mb-2">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+				<p class="h1 text-center" id="main-page-h1">{{ 'ДОБАВИТь КЛИЕНТА' }}</p>
+			</div>
+		</div>
+
+		<div class="row w-100 mb-2">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+				<div class="input-group-vertical">
+					<span class="input-group-text">Фамилия</span>
+					<input type="text" class="form-control" id="lastName-1" placeholder="Введите фамилию клиента"/>
+					<span class="input-group-text">Имя</span>
+					<input type="text" class="form-control" id="firstName-1" placeholder="Введите имя клиента"/>
+					<span class="input-group-text">Отчество</span>
+					<input type="text" class="form-control" id="secondName-1" placeholder="Введите отчество клиента"/>
+					<span class="input-group-text">Телефон 1</span>
+					<input type="text" class="form-control" id="phone1-1" placeholder="Введите телефон клиента"/>
+					<span class="input-group-text">Телефон 2</span>
+					<input type="text" class="form-control" id="phone2-1" placeholder="Введите телефон клиента"/>
+					<span class="input-group-text">Паспорт</span>
+					<input type="text" class="form-control" id="passport-1" placeholder="Введите серию и номер паспорта"/>
+					<span class="input-group-text">Дата рождения</span>
+					<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/>
+					<span class="input-group-text">Адрес</span>
+					<input type="text" class="form-control" id="address-1" placeholder="Введите арес прописки клиента"/>
+					<div class="input-group">
+						<button type="button" class="btn btn-success w-75" id="save-btn-1" disabled>
+							Сохранить
+						</button>
+						<button class="btn w-25 btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubClient-1" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+							+
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+				<div class="collapse" id="collapseSubClient-1">
+					<div class="input-group-vertical">
+						<span class="input-group-text">Фамилия</span>
+						<input type="text" class="form-control" id="lastName-1" placeholder="Введите фамилию клиента"/>
+						<span class="input-group-text">Имя</span>
+						<input type="text" class="form-control" id="firstName-1" placeholder="Введите имя клиента"/>
+						<span class="input-group-text">Отчество</span>
+						<input type="text" class="form-control" id="secondName-1" placeholder="Введите отчество клиента"/>
+						<span class="input-group-text">Паспорт</span>
+						<input type="text" class="form-control" id="passport-1" placeholder="Введите серию и номер паспорта"/>
+						<span class="input-group-text">Дата рождения</span>
+						<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/>
+						<div class="input-group">
+							<button type="button" class="btn btn-success w-75" id="save-btn-1" disabled>
+								Сохранить
+							</button>
+							<button class="btn w-25 btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubClient-2" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+								+
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+				<div class="collapse" id="collapseSubClient-2">
+					<div class="input-group-vertical">
+						<span class="input-group-text">Фамилия</span>
+						<input type="text" class="form-control" id="lastName-1" placeholder="Введите фамилию клиента"/>
+						<span class="input-group-text">Имя</span>
+						<input type="text" class="form-control" id="firstName-1" placeholder="Введите имя клиента"/>
+						<span class="input-group-text">Отчество</span>
+						<input type="text" class="form-control" id="secondName-1" placeholder="Введите отчество клиента"/>
+						<span class="input-group-text">Паспорт</span>
+						<input type="text" class="form-control" id="passport-1" placeholder="Введите серию и номер паспорта"/>
+						<span class="input-group-text">Дата рождения</span>
+						<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/>
+						<div class="input-group">
+							<button type="button" class="btn btn-success w-100" id="save-btn-1" disabled>
+								Сохранить
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	{% endblock %}

@@ -11,6 +11,7 @@ use core\controllers\buses\BusesController;
 use core\controllers\periods\PeriodsController;
 use core\controllers\managers\ManagersController;
 use core\controllers\rooms\RoomsController;
+use core\controllers\clients\ClientsController;
 
 return [
     'admin' => [
@@ -337,9 +338,39 @@ return [
         'method' => 'DELETE'
     ],
 
-    'rooms/pickHotel' => [
-        'controller' => RoomsController::class,
-        'action' => 'pickHotel',
+    'clients' => [
+        'controller' => ClientsController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'clients/edit' => [
+        'controller' => ClientsController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'clients/create' => [
+        'controller' => ClientsController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'clients/update' => [
+        'controller' => ClientsController::class,
+        'action' => 'update',
+        'method' => 'PATCH'
+    ],
+
+    'clients/delete' => [
+        'controller' => ClientsController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
+    ],
+
+    'clients/new' => [
+        'controller' => ClientsController::class,
+        'action' => 'new',
         'method' => 'GET'
     ]
 ];
