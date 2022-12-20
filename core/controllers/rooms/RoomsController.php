@@ -63,6 +63,12 @@ class RoomsController extends BaseController implements ControllerInterface
             $middle = count($room['checkin_checkout_dates']) / 2;
             $room['checkins'] = array_values(array_slice($room['checkin_checkout_dates'], 0, $middle, true));
             $room['checkouts'] = array_values(array_slice($room['checkin_checkout_dates'], $middle));
+            for ($i = 0; $i < count($room['checkins']); $i++) {
+                $room['dates'][$i] = [
+                    'checkin' => $room['checkins'][$i],
+                    'checkout' => $room['checkouts'][$i]
+                ];
+            }
         }
 
         $pages = (int)ceil(count($rooms) / parent::PER_PAGE);
