@@ -10,8 +10,14 @@ class ClientsController extends BaseController implements ControllerInterface
 {
     public function new(): void
     {
+        $data = [
+            'title' => 'Добавить клиента',
+            'header' => 'Добавить клиента',
+            'login' => $_COOKIE['login']
+        ];
+
         $this->setView(ClientsView::class);
-        $this->view->render("clients/new.html.twig");
+        $this->view->render("clients/new.html.twig", $data);
     }
 
     public function edit(): void
@@ -26,8 +32,15 @@ class ClientsController extends BaseController implements ControllerInterface
 
     public function read(int $id = 0): void
     {
+        $data = [
+            'title' => 'Клиенты',
+            'header' => 'Клиенты',
+            'login' => $_COOKIE['login'],
+            'currentPage' => 1,
+            'pages' => 1
+        ];
         $this->setView(ClientsView::class);
-        $this->view->render("clients/clients.html.twig");
+        $this->view->render("clients/clients.html.twig", $data);
     }
 
     public function update(int $id = 0): void

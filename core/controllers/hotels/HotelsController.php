@@ -21,7 +21,7 @@ class HotelsController extends BaseController implements ControllerInterface
             'resorts' => $resortsModel->get(),
             'title' => 'IriANNA',
             'author' => 'IriANNA',
-            'header' => 'Добавить отель',
+            'header' => 'Добавить гостиницу',
             'login' => $_COOKIE['login']
         ];
 

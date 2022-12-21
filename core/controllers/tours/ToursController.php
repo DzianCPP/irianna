@@ -14,6 +14,14 @@ class ToursController extends BaseController implements ControllerInterface
 {
     public function new(string $resortName = "", int $is_active = 0): void
     {
+        $data = [
+            'title' => 'Добавить тур',
+            'header' => 'Добавить тур',
+            'login' => $_COOKIE['login']
+        ];
+
+        $this->setView(ToursView::class);
+        $this->view->render("tours/new.html.twig", $data);
     }
     public function edit(): void
     {

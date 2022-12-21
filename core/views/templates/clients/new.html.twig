@@ -31,7 +31,7 @@
 					<span class="input-group-text">Дата рождения</span>
 					<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/>
 					<span class="input-group-text">Адрес</span>
-					<input type="text" class="form-control" id="address-1" placeholder="Введите арес прописки клиента"/>
+					<input type="text" class="form-control" id="address-1" placeholder="Введите адрес прописки клиента"/>
 					<div class="input-group">
 						<button type="button" class="btn btn-success w-75" id="save-btn-1" disabled>
 							Сохранить
@@ -64,8 +64,17 @@
 								+
 							</button>
 						</div>
-
 					</div>
+				</div>
+
+				<div class="input-group-vertical">
+					<span class="input-group-text">Детей</span>
+					<input type="number" class="form-control" id="children" placeholder="Введите количество детей"/>
+					<span class="input-group-text">Возраст</span>
+					<input type="text" class="form-control" id="childrenAge" placeholder="Введите возраст детей через запятую"/>
+					<button type="button" class="btn btn-success w-100" id="save-btn-1" disabled>
+						Сохранить
+					</button>
 				</div>
 			</div>
 
@@ -91,6 +100,5 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	{% endblock %}

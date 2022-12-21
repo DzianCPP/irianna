@@ -12,6 +12,7 @@ use core\controllers\periods\PeriodsController;
 use core\controllers\managers\ManagersController;
 use core\controllers\rooms\RoomsController;
 use core\controllers\clients\ClientsController;
+use core\controllers\tours\ToursController;
 
 return [
     'admin' => [
@@ -302,6 +303,12 @@ return [
         'method' => 'DELETE'
     ],
 
+    'rooms/pickHotel' => [
+        'controller' => RoomsController::class,
+        'action' => 'pickHotel',
+        'method' => 'GET'
+    ],
+
     'rooms/new' => [
         'controller' => RoomsController::class,
         'action' => 'new',
@@ -370,6 +377,42 @@ return [
 
     'clients/new' => [
         'controller' => ClientsController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'tours' => [
+        'controller' => ToursController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'tours/edit' => [
+        'controller' => ToursController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'tours/create' => [
+        'controller' => ToursController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'tours/update' => [
+        'controller' => ToursController::class,
+        'action' => 'update',
+        'method' => 'PATCH'
+    ],
+
+    'tours/delete' => [
+        'controller' => ToursController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
+    ],
+
+    'tours/new' => [
+        'controller' => ToursController::class,
         'action' => 'new',
         'method' => 'GET'
     ]

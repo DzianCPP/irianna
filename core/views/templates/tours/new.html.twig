@@ -1,0 +1,178 @@
+{% extends "base.html.twig" %}
+{% block content %}
+	<div class="container-xs container-sm container-md container-xl">
+		{% use 'components/navBar.html.twig' %}
+		{% block nav %}
+			{{ parent() }}
+		{% endblock %}
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+				<p class="h1 m-auto text-center mt-5 mb-3">{{ header | upper }}</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+				<div class="container w-100">
+					<div class="input-group">
+						<span class="input-group-text">Менеджер</span>
+						<select class="form-select">
+							<option>Петренко В.В.</option>
+						</select>
+					</div>
+					<div class="input-group">
+						<span class="input-group-text">Страна</span>
+						<select class="form-select">
+							<option>Украина</option>
+						</select>
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-text">Курорт</span>
+						<select class="form-select">
+							<option>Буковель</option>
+						</select>
+					</div>
+
+
+					<div class="input-group">
+						<span class="input-group-text">Гостиница</span>
+						<select class="form-select">
+							<option>Эребор</option>
+						</select>
+					</div>
+
+
+					<div class="input-group">
+						<span class="input-group-text">Только проезд</span>
+						<input type="checkbox" class="checkbox"></input>
+				</div>
+
+				<div class="input-group">
+					<span class="input-group-text">Проезд</span>
+					<select class="form-select">
+						<option>Туда</option>
+						<option>В обе стороны</option>
+					</select>
+				</div>
+
+				<div class="input-group">
+					<span class="input-group-text">Автобус</span>
+					<select class="form-select">
+						<option>Атлас Минск-Буковель-Минск</option>
+					</select>
+				</div>
+
+				<div class="input-group">
+					<span class="input-group-text">Выезд из Минска</span>
+					<select class="form-select">
+						<option>Январь</option>
+						<option>Февраль</option>
+						<option>Март</option>
+						<option>Апрель</option>
+						<option>Май</option>
+						<option>Июнь</option>
+						<option>Июль</option>
+						<option>Август</option>
+						<option>Сентябрь</option>
+						<option>Октябрь</option>
+						<option>Ноябрь</option>
+						<option>Декабрь</option>
+					</select>
+					<select class="form-select">
+						<option>2022-12-22</option>
+						<option>2022-12-29</option>
+					</select>
+				</div>
+
+
+				<div class="input-group">
+					<span class="input-group-text">Обрытный автобус</span>
+					<select class="form-select">
+						<option>Атлас Минск-Буковель-Минск</option>
+
+					</select>
+				</div>
+
+
+				<div class="input-group">
+					<span class="input-group-text">Выезд из курорта</span>
+					<select class="form-select">
+						<option>Январь</option>
+						<option>Февраль</option>
+						<option>Март</option>
+						<option>Апрель</option>
+						<option>Май</option>
+						<option>Июнь</option>
+						<option>Июль</option>
+						<option>Август</option>
+						<option>Сентябрь</option>
+						<option>Октябрь</option>
+						<option>Ноябрь</option>
+						<option>Декабрь</option>
+					</select>
+					<select class="form-select">
+						<option>2022-12-22</option>
+						<option>2022-12-29</option>
+					</select>
+				</div>
+
+				<div class="input-group">
+					<span class="input-group-text bg-success text-light w-75">Свободно мест туда:
+					</span>
+					<span class="input-group-text w-25">3</span>
+					<span class="input-group-text bg-success text-light w-75">Свободно мест обратно:
+
+
+					</span>
+					<span class="input-group-text w-25">3</span>
+
+				</div>
+
+
+				<div>
+					<button type="button" class="btn btn-success w-100" id="save-btn-1" disabled>
+						Применить
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+			<div class="container w-100">
+				<div class="input-group-vertical">
+					<span class="input-group-text">Фамилия</span>
+					<input type="text" class="form-control" id="lastName-1" placeholder="Введите фамилию клиента"/>
+					<span class="input-group-text">Имя</span>
+					<input type="text" class="form-control" id="firstName-1" placeholder="Введите имя клиента"/>
+					<span class="input-group-text">Отчество</span>
+					<input type="text" class="form-control" id="secondName-1" placeholder="Введите отчество клиента"/>
+					<span class="input-group-text">Телефон 1</span>
+					<input type="text" class="form-control" id="phone1-1" placeholder="Введите телефон клиента"/>
+					<span class="input-group-text">Телефон 2</span>
+					<input type="text" class="form-control" id="phone2-1" placeholder="Введите телефон клиента"/>
+					<span class="input-group-text">Паспорт</span>
+					<input type="text" class="form-control" id="passport-1" placeholder="Введите серию и номер паспорта"/>
+					<span class="input-group-text">Дата рождения</span>
+					<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/>
+					<span class="input-group-text">Адрес</span>
+					<input type="text" class="form-control" id="address-1" placeholder="Введите адрес прописки клиента"/>
+					<div class="input-group">
+						<button type="button" class="btn btn-success w-75" id="save-btn-1" disabled>
+							Сохранить
+						</button>
+						<button class="btn w-25 btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubClient-1" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+							+
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+			<div class="container w-100"></div>
+		</div>
+
+	</div>
+{% endblock %}
