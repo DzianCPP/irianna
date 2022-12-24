@@ -18,7 +18,6 @@ class m8_create_buses_table extends BaseMigration
                         route varchar(1024) NOT NULL,
                         places int(11) NOT NULL,
                         departure_from_minsk date DEFAULT NULL,
-                        departure_from_resort date DEFAULT NULL,
                         arrival_to_minsk date DEFAULT NULL,
                         PRIMARY KEY (id))";
 
