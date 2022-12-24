@@ -1,0 +1,20 @@
+{% block table %}
+<table class="table table-sm table-hover text-center" id="table">
+    <tr>
+        <th scope="col"><input type="checkbox" id="check-all"></th>
+        <th scope="col">id</th>
+        <th scope="col">Логин</th>
+        <th scope="col">Супер Админ</th>
+        <th scope="col"></th>
+    </tr>
+    {% for admin in admins %}
+    <tr>
+        <td><input name="select" type="checkbox" value="{{admin.id}}"></td>
+        <td>{{admin.id}}</td>
+        <td>{{admin.login}}</td>
+        <td>{% if admin.super_admin > 0 %}{{ 'Да' }}{% else %}{{ 'Нет' }}{% endif %}</td>
+        <td><a class="btn btn-success" href="/admins/edit/{{admin.id}}">Исправить</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

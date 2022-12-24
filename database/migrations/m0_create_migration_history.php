@@ -12,7 +12,7 @@ class m0_create_migration_history extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "CREATE TABLE migrationHistory(
+        $sqlQuery = "CREATE TABLE IF NOT EXISTS migrationHistory(
                      migrationID int(10) NOT NULL AUTO_INCREMENT,
                      migrationIndex varchar(10) NOT NULL,
                      migrationName varchar(100) NOT NULL,
@@ -31,7 +31,7 @@ class m0_create_migration_history extends BaseMigration
     {
         $db = Database::getInstance();
         $conn = $db->getConnection();
-        $sqlQuery = "DROP TABLE migrationHistory";
+        $sqlQuery = "DROP TABLE IF EXISTS migrationHistory";
 
         $query = $conn->prepare($sqlQuery);
 

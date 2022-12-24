@@ -1,0 +1,32 @@
+{% block table %}
+<table
+    class="table table-responsive table-sm table-xl table-md table-xs
+    table-hover text-center w-100"
+    id="table">
+    <tr>
+        <th scope="col"><input type="checkbox" id="check-all" /></th>
+        <th scope="col">id</th>
+        <th scope="col">Дата</th>
+        <th scope="col">Автобус</th>
+        <th scope="col">Маршрут</th>
+        <th scope="col">Направление</th>
+        <th scope="col"></th>
+    </tr>
+    {% for period in periods %}
+    <tr>
+        <td><input name="select" type="checkbox" value="{{ period.id }}" /></td>
+        <td>{{ period.id }}</td>
+        <td>{{ period.date }}</td>
+        <td>{% for bus in buses %}{% if bus.id == period.bus_id %}{{ bus.name
+            }}{%
+            endif %}{% endfor %}</td>
+        <td>{{ 'Затока-Минск-Затока' }}</td>
+        <td>{% if period.transit_type == 1 %}{{ 'Туда' }}{% endif %}{% if
+            period.transit_type == 2 %}{{ 'Туда-Обратно' }}{% endif %}</td>
+        <td>
+            <a class="btn btn-success" href="/buses/edit/{{ bus.id }}">Исправить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

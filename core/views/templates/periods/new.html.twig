@@ -1,0 +1,178 @@
+{% extends "base.html.twig" %} {% block content %}
+<div class="container-xs container-sm container-md container-xl">
+    {% use 'components/navBar.html.twig' %} {% block nav %} {{ parent() }} {%
+    endblock %}
+
+    <div class="row w-100 mt-5 mb-5">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+            <p class="h1 text-center" id="main-page-h1">{{ header }}</p>
+        </div>
+    </div>
+
+    <div class="row w-100">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+            <div class="container-xs container-sm container-md container-xl">
+                <div class="row w-100 mb-2">
+                    <div class="input-group">
+                        <span class="input-group-text w-auto">Дата</span>
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="text"
+                            id="date-1"
+                            placeholder="Введите дату начала тура"
+                            />
+                        <select class="form-select">
+                            {% for bus in buses %}
+                            <option value="{{ bus.id }}">{{ bus.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select">
+                            <option value="1">Туда</option>
+                            <option value="2">Туда-Обратно</option>
+                        </select>
+                        <button class="btn btn-success w-auto text-center">Сохранить</button>
+                    </div>
+                </div>
+
+                <div class="row w-100 mb-2">
+                    <div class="input-group">
+                        <span class="input-group-text w-auto">Дата</span>
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="text"
+                            id="date-2"
+                            placeholder="Введите дату начала тура"
+                            />
+                        <select class="form-select">
+                            {% for bus in buses %}
+                            <option value="{{ bus.id }}">{{ bus.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select">
+                            <option value="1">Туда</option>
+                            <option value="2">Туда-Обратно</option>
+                        </select>
+                        <button class="btn btn-success w-auto text-center">Сохранить</button>
+                    </div>
+                </div>
+
+                <div class="row w-100 mb-2">
+                    <div class="input-group">
+                        <span class="input-group-text w-auto">Дата</span>
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="text"
+                            id="date-3"
+                            placeholder="Введите дату начала тура"
+                            />
+                        <select class="form-select">
+                            {% for bus in buses %}
+                            <option value="{{ bus.id }}">{{ bus.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select">
+                            <option value="1">Туда</option>
+                            <option value="2">Туда-Обратно</option>
+                        </select>
+                        <button class="btn btn-success w-auto text-center">Сохранить</button>
+                    </div>
+                </div>
+
+                <div class="row w-100 mb-2">
+                    <div class="input-group">
+                        <span class="input-group-text w-auto">Дата</span>
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="text"
+                            id="date-4"
+                            placeholder="Введите дату начала тура"
+                            />
+                        <select class="form-select">
+                            {% for bus in buses %}
+                            <option value="{{ bus.id }}">{{ bus.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select">
+                            <option value="1">Туда</option>
+                            <option value="2">Туда-Обратно</option>
+                        </select>
+                        <button class="btn btn-success w-auto text-center">Сохранить</button>
+                    </div>
+                </div>
+
+                <div class="row w-100 mb-2">
+                    <div class="input-group">
+                        <span class="input-group-text w-auto">Дата</span>
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="text"
+                            id="date-5"
+                            placeholder="Введите дату начала тура"
+                            />
+                        <select class="form-select">
+                            {% for bus in buses %}
+                            <option value="{{ bus.id }}">{{ bus.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select">
+                            <option value="1">Туда</option>
+                            <option value="2">Туда-Обратно</option>
+                        </select>
+                        <button class="btn btn-success w-auto text-center">Сохранить</button>
+                    </div>
+                </div>
+
+                <div class="row w-100 mb-2">
+                    <div class="input-group">
+                        <span class="input-group-text w-auto">Дата</span>
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="text"
+                            id="date-6"
+                            placeholder="Введите дату начала тура"
+                            />
+                        <select class="form-select">
+                            {% for bus in buses %}
+                            <option value="{{ bus.id }}">{{ bus.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select">
+                            <option value="1">Туда</option>
+                            <option value="2">Туда-Обратно</option>
+                        </select>
+                        <button class="btn btn-success w-auto text-center">Сохранить</button>
+                    </div>
+                </div>
+
+                <div class="row w-100 mb-2">
+                    <button
+                        type="date"
+                        class="btn btn-success w-100"
+                        name="text"
+                        id="save-btn"
+                        placeholder="Введите дату начала тура">Сохранить все</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-1 col-xl-3"></div>
+
+
+    </div>
+
+
+    <script
+        type="text/javascript"
+        src="/assets/scripts/periods/create.js"></script>
+    <script
+        type="text/javascript"
+        src="/assets/scripts/periods/formFilled.js"></script>
+</div>
+{% endblock %}

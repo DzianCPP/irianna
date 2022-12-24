@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<div class="container-xs container-sm container-md container-xl">
+    {% use 'components/navBar.html.twig' %} {% block nav %} {{ parent() }} {%
+    endblock %}
+
+    <div class="row w-100 mt-5 mb-5">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+            <h1 class="h1 m-1 text-center" id="main-page-h1">{{ header }}</h1>
+        </div>
+    </div>
+
+    <div class="row w-100 mb-2">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
+            <div class="input-group">
+                <span class="input-group-text w-25">Гостиница</span>
+                <select class="form-select" id="hotel-id">
+                    {% for hotel in hotels %}
+                    <option value="{{ hotel.id }}">{{ hotel.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row w-100 mb-2">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
+            <div class="input-group w-100 mb-2">
+                <button type="button" class="btn btn-success w-100"
+                    id="choose-btn">Выбрать</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row w-100">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
+            <p id="error-field"></p>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/assets/scripts/rooms/pick.js"></script>
+    {% endblock %}

@@ -1,0 +1,559 @@
+{% extends "base.html.twig" %} {% block content %}
+<div class="container-xs container-sm container-md container-xl">
+  {% use 'components/navBar.html.twig' %} {% block nav %} {{ parent() }} {%
+  endblock %}
+
+  <div class="row w-100 mt-2 mb-2">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+      <p class="h1 text-center" id="main-page-h1">{{ header }}</p>
+    </div>
+  </div>
+
+  <div class="row w-100">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
+      <div class="container-xs container-sm container-md container-xl">
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Название</span>
+            <input
+              type="text"
+              class="form-control"
+              name="text"
+              id="name-1"
+              placeholder="Введите название гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Курорт</span>
+            <select
+              name="country"
+              id="resort-id-1"
+              name="select"
+              class="btn btn-success dropdown-toggle w-75">
+              {% for resort in resorts %}
+              <option value="{{ resort.id }}">{{ resort.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Адрес</span>
+            <input
+              type="text"
+              class="form-control"
+              name="text"
+              id="address-1"
+              placeholder="Введите адрес гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Количество номеров</span>
+            <input
+              type="number"
+              class="form-control"
+              name="text"
+              id="rooms-1"
+              placeholder="Введите количество номеров"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Местность</span>
+            <input
+              type="text"
+              class="form-control"
+              id="area-1"
+              name="text"
+              placeholder="Опишите местность гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Пляж</span>
+            <input
+              type="text"
+              class="form-control"
+              id="beach-1"
+              name="text"
+              placeholder="Опишите пляж гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Заезды</span>
+            <input
+              type="number"
+              name="text"
+              class="form-control"
+              id="number-1"
+              placeholder="Количество заездов"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Вода</span>
+            <input
+              type="text"
+              class="form-control"
+              id="water-1"
+              name="text"
+              placeholder="Опишите воду в гостинице"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Питание</span>
+            <input
+              type="text"
+              class="form-control"
+              id="food-1"
+              name="text"
+              placeholder="Опишите питание"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Особенности</span>
+            <input
+              type="text"
+              name="text"
+              class="form-control"
+              id="features-1"
+              placeholder="Опишите питание"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Описание</span>
+            <input
+              type="text"
+              class="form-control"
+              id="description-1"
+              name="text"
+              placeholder="Добавьте описание"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Статус</span>
+            <select
+              name="is-active"
+              id="is-active-1"
+              name="select"
+              class="btn btn-success dropdown-toggle w-75">
+              <option value="0">Не доступна</option>
+              <option value="1">Доступна</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group w-100 mb-2">
+            <button
+              type="button"
+              class="btn btn-success w-100"
+              id="save-btn-1"
+              disabled>
+              Сохранить
+            </button>
+          </div>
+        </div>
+
+        <div class="row w-100 mb-150">
+          <p id="error-field-1"></p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
+      <div class="container-xs container-sm container-md container-xl">
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Название</span>
+            <input
+              type="text"
+              class="form-control"
+              name="text"
+              id="name-2"
+              placeholder="Введите название гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Курорт</span>
+            <select
+              name="country"
+              id="resort-id-2"
+              name="select"
+              class="btn btn-success dropdown-toggle w-75">
+              {% for resort in resorts %}
+              <option value="{{ resort.id }}">{{ resort.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Адрес</span>
+            <input
+              type="text"
+              class="form-control"
+              name="text"
+              id="address-2"
+              placeholder="Введите адрес гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Количество номеров</span>
+            <input
+              type="number"
+              class="form-control"
+              name="text"
+              id="rooms-2"
+              placeholder="Введите количество номеров"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Местность</span>
+            <input
+              type="text"
+              class="form-control"
+              id="area-2"
+              name="text"
+              placeholder="Опишите местность гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Пляж</span>
+            <input
+              type="text"
+              class="form-control"
+              id="beach-2"
+              name="text"
+              placeholder="Опишите пляж гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Номер</span>
+            <input
+              type="text"
+              name="text"
+              class="form-control"
+              id="number-2"
+              placeholder="Напишите номер гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Вода</span>
+            <input
+              type="text"
+              class="form-control"
+              id="water-2"
+              name="text"
+              placeholder="Опишите воду в гостинице"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Питание</span>
+            <input
+              type="text"
+              class="form-control"
+              id="food-2"
+              name="text"
+              placeholder="Опишите питание"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Особенности</span>
+            <input
+              type="text"
+              name="text"
+              class="form-control"
+              id="features-2"
+              placeholder="Опишите питание"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Описание</span>
+            <input
+              type="text"
+              class="form-control"
+              id="description-2"
+              name="text"
+              placeholder="Добавьте описание"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Статус</span>
+            <select
+              name="is-active"
+              id="is-active-2"
+              name="select"
+              class="btn btn-success dropdown-toggle w-75">
+              <option value="0">Не доступна</option>
+              <option value="1">Доступна</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group w-100 mb-2">
+            <button
+              type="button"
+              class="btn btn-success w-100"
+              id="save-btn-2"
+              disabled>
+              Сохранить
+            </button>
+          </div>
+        </div>
+
+        <div class="row w-100 mb-150">
+          <p id="error-field-2"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
+      <div class="container-xs container-sm container-md container-xl">
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Название</span>
+            <input
+              type="text"
+              class="form-control"
+              name="text"
+              id="name-3"
+              placeholder="Введите название гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Курорт</span>
+            <select
+              name="country"
+              id="resort-id-3"
+              name="select"
+              class="btn btn-success dropdown-toggle w-75">
+              {% for resort in resorts %}
+              <option value="{{ resort.id }}">{{ resort.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Адрес</span>
+            <input
+              type="text"
+              class="form-control"
+              name="text"
+              id="address-3"
+              placeholder="Введите адрес гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Количество номеров</span>
+            <input
+              type="number"
+              class="form-control"
+              name="text"
+              id="rooms-3"
+              placeholder="Введите количество номеров"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Местность</span>
+            <input
+              type="text"
+              class="form-control"
+              id="area-3"
+              name="text"
+              placeholder="Опишите местность гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Пляж</span>
+            <input
+              type="text"
+              class="form-control"
+              id="beach-3"
+              name="text"
+              placeholder="Опишите пляж гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Номер</span>
+            <input
+              type="text"
+              name="text"
+              class="form-control"
+              id="number-3"
+              placeholder="Напишите номер гостиницы"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Вода</span>
+            <input
+              type="text"
+              class="form-control"
+              id="water-3"
+              name="text"
+              placeholder="Опишите воду в гостинице"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Питание</span>
+            <input
+              type="text"
+              class="form-control"
+              id="food-3"
+              name="text"
+              placeholder="Опишите питание"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Особенности</span>
+            <input
+              type="text"
+              name="text"
+              class="form-control"
+              id="features-3"
+              placeholder="Опишите питание"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Описание</span>
+            <input
+              type="text"
+              class="form-control"
+              id="description-3"
+              name="text"
+              placeholder="Добавьте описание"
+              />
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group">
+            <span class="input-group-text w-25">Статус</span>
+            <select
+              name="is-active"
+              id="is-active-3"
+              name="select"
+              class="btn btn-success dropdown-toggle w-75">
+              <option value="0">Не доступна</option>
+              <option value="1">Доступна</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+          <div class="input-group w-100 mb-2">
+            <button
+              type="button"
+              class="btn btn-success w-100"
+              id="save-btn-3"
+              disabled>
+              Сохранить
+            </button>
+          </div>
+        </div>
+
+        <div class="row w-100 mb-150">
+          <p id="error-field-3"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script
+    type="text/javascript"
+    src="/assets/scripts/hotels/create.js"></script>
+  <script
+    type="text/javascript"
+    src="/assets/scripts/hotels/formFilled.js"></script>
+</div>
+{% endblock %}

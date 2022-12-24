@@ -10,11 +10,7 @@ class RegisterController extends BaseController
     public function index(): void
     {
         $this->setView(RegisterView::class);
-        $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Register"];
+        $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Регистрация"];
         $this->view->render("register/register.html.twig", $data);
-    }
-
-    public function register(): void
-    {
     }
 }

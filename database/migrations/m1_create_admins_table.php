@@ -12,11 +12,12 @@ class m1_create_admins_table extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "CREATE TABLE admins_table(
+        $sqlQuery = "CREATE TABLE IF NOT EXISTS admins_table(
                         id int(20) NOT NULL AUTO_INCREMENT,
+                        email varchar(255) NOT NULL,
                         login varchar(255) NOT NULL,
                         password varchar(255) default NULL,
-                        super_admin bool NOT NULL,
+                        super_admin bool NOT NULL DEFAULT '0',
                         PRIMARY KEY(id))";
 
         $query = $conn->prepare($sqlQuery);
@@ -33,7 +34,7 @@ class m1_create_admins_table extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "DROP TABLE admins_table";
+        $sqlQuery = "DROP TABLE IF EXISTS admins_table";
 
         $query = $conn->prepare($sqlQuery);
 

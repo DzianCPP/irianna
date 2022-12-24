@@ -27,7 +27,7 @@ class MigrationsHandler
         }
 
         if (!$this->migrationHistoryExists($conn)) {
-            $fullMigrationName = "database\migrations\\" . $this->migrations[0]['m0'];
+            $fullMigrationName = "database\\migrations\\" . $this->migrations[0]['m0'];
             $migrationObject = new $fullMigrationName();
             if (!$migrationObject->up()) {
                 return false;
@@ -57,7 +57,7 @@ class MigrationsHandler
             $migrationIndex = "m" . (string)$i;
             $migrationName = $migration[$migrationIndex];
 
-            $fullMigrationName = "database\migrations\\" . $migrationName;
+            $fullMigrationName = "database\\migrations\\" . $migrationName;
 
             $migrationObject = new $fullMigrationName();
             if (!$migrationObject->down()) {
@@ -75,11 +75,11 @@ class MigrationsHandler
             $migrationIndex = "m" . (string)$i;
             $migrationName = $migration[$migrationIndex];
 
-            if ($migrationIndex === $completedMigrations[$i - 1]['migrationIndex']) {
+            if (isset($completedMigrations[$i]) && $migrationIndex === $completedMigrations[$i]['migrationIndex']) {
                 continue;
             }
 
-            $fullMigrationName = "database\migrations\\" . $migrationName;
+            $fullMigrationName = "database\\migrations\\" . $migrationName;
 
             $migrationObject = new $fullMigrationName();
             if (!$migrationObject->up()) {
