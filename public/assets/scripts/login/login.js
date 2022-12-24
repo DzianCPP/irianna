@@ -18,7 +18,7 @@ async function login() {
     let response = await fetch(url, postRequest);
 
     if (response.status === 205) {
-        location.reload(true);
+        window.location = "/tours/new";
     }
 
     if (response.status === 401) {
