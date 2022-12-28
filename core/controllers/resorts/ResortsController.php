@@ -8,6 +8,7 @@ use core\models\resorts\ResortsModel;
 use core\views\resorts\ResortsView;
 use core\models\countries\CountriesModel;
 use core\views\countries\CountriesView;
+use core\services\IdGetter;
 
 class ResortsController extends BaseController implements ControllerInterface
 {
@@ -31,6 +32,20 @@ class ResortsController extends BaseController implements ControllerInterface
     }
     public function edit(): void
     {
+        $this->setModel(REsortsModel::class);
+        $this->setView(ResortsView::class);
+
+        $id = IdGetter::getId();
+
+        $data = [
+            'title' => 'IriANNA',
+            'author' => 'IriANNA',
+            'header' => 'Исправить курорт',
+            'login' => $_COOKIE['login'],
+            'resort' => $this->model->get($id)
+        ];
+
+        $this->view->render("resorts/edit.html.twig", $data);
     }
     public function create(): void
     {
@@ -77,6 +92,8 @@ class ResortsController extends BaseController implements ControllerInterface
     }
     public function update(int $id = 0): void
     {
+        $this->setModel(ResortsModel::class);
+        $this->model->update();
     }
     public function delete(int $id = 0): void
     {
