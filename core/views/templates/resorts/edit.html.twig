@@ -44,10 +44,10 @@
 					<select name="is-active" id="is-active" class="btn btn-success dropdown-toggle w-75">
 						{% for i in 0..1 %}
 							<option value="{{ i }}" {% if resort.is_active == i %} {{ 'selected="selected"' }} {% endif %}>
-								{% if resort.is_active == 0 %}
+								{% if i == 0 %}
 									{{ 'Не доступна' }}
 								{% endif %}
-								{% if resort.is_active == 1 %}
+								{% if i== 1 %}
 									{{ 'Доступна' }}
 								{% endif %}
 							{% endfor %}
@@ -69,7 +69,7 @@
 			<div class="row w-100 mb-150">
 				<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
 					<p id="error-field"></p>
-                    <p id="id">{{ resort.id }}</p>
+					<p id="id" hidden>{{ resort.id }}</p>
 				</div>
 			</div>
 

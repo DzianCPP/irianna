@@ -4,8 +4,7 @@
 		{% use 'components/navBar.html.twig' %}
 		{% block nav %}
 			{{ parent() }}
-		{%
-  endblock %}
+		{% endblock %}
 
 		<div class="row w-100 mt-5 mb-5">
 			<div class="col-xs-12 col-sm-12 col-md-6 col-xl-6">
@@ -45,31 +44,33 @@
 								{% if i == 0 %}
 									{{ 'Не доступна' }}
 								{% endif %}
-								{% of i == 1 %}{{ 'Доступна' }}
-							{% endif %}
-						</option>
-					{% endfor %}
-				</select>
+								{% if i == 1 %}
+									{{ 'Доступна' }}
+								{% endif %}
+							</option>
+						{% endfor %}
+					</select>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="row w-100 mb-2">
-		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
-			<div class="input-group w-100 mb-2">
-				<button type="button" class="btn btn-success w-100" id="save-btn" disabled>
-					Сохранить
-				</button>
+		<div class="row w-100 mb-2">
+			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
+				<div class="input-group w-100 mb-2">
+					<button type="button" class="btn btn-success w-100" id="save-btn" disabled>
+						Сохранить
+					</button>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="row w-100 mb-150">
-		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
-			<p id="error-field"></p>
+		<div class="row w-100 mb-150">
+			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
+				<p id="error-field"></p>
+			</div>
 		</div>
-	</div>
 
-	<script type="text/javascript" src="/assets/scripts/resorts/formFilled.js"></script>
-	<script type="text/javascript" src="/assets/scripts/resorts/create.js"></script>
-</div>{% endblock %}
+		<script type="text/javascript" src="/assets/scripts/resorts/formFilled.js"></script>
+		<script type="text/javascript" src="/assets/scripts/resorts/create.js"></script>
+	</div>
+{% endblock %}

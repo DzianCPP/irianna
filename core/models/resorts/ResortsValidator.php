@@ -7,7 +7,7 @@ use core\models\Validator;
 class ResortsValidator extends Validator
 {
     private $nameRegEx = "/[\x{0410}-\x{042F}]/u";
-    
+
 
     public function isDataSafe(array $resort = []): bool
     {
@@ -26,16 +26,16 @@ class ResortsValidator extends Validator
         if (!$this->isIdSafe($resort['id'])) {
             return false;
         }
-        
+
         return true;
     }
 
     private function isNameSafe(string $name): bool
     {
-        if (preg_match($this->nameRegEx, $name) != 0) {
+        if (preg_match($this->nameRegEx, $name) == 0) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -47,17 +47,13 @@ class ResortsValidator extends Validator
 
         return true;
     }
-    
+
     private function isStatusSafe(int $is_active): bool
     {
-        if (!filter_var($is_active, FILTER_VALIDATE_INT)) {
+        if ($is_active != 0 && $is_active != 1) {
             return false;
         }
 
-        if ($is_active != 0 || $is_active != 1) {
-            return false;
-        }
-        
         return true;
     }
 

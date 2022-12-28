@@ -1,9 +1,9 @@
-document.getElementById("save-btn-1").addEventListener("click", create);
+document.getElementById("save-btn").addEventListener("click", create);
 
 async function create() {
-    let _name = document.getElementById("name-1").value;
-    let _country_id = document.getElementById("country-1").value;
-    let _is_active = document.getElementById("is-active-1").value;
+    let _name = document.getElementById("name").value;
+    let _country_id = document.getElementById("country").value;
+    let _is_active = document.getElementById("is-active").value;
 
     url = "/resorts/create";
 

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("save_btn").addEventListener("click", update);
+    document.getElementById("save-btn").addEventListener("click", update);
 })
 
 async function update() {

@@ -153,10 +153,10 @@ return [
         'method' => 'POST'
     ],
 
-    'resort/update' => [
+    'resorts/update' => [
         'controller' => ResortsController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'resorts/delete' => [
