@@ -92,8 +92,9 @@ class ResortsController extends BaseController implements ControllerInterface
     }
     public function update(int $id = 0): void
     {
+        $resort = json_decode(file_get_contents("php://input"), true);
         $this->setModel(ResortsModel::class);
-        $this->model->update();
+        $this->model->update($resort);
     }
     public function delete(int $id = 0): void
     {
