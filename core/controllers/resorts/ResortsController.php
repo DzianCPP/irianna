@@ -97,5 +97,17 @@ class ResortsController extends BaseController implements ControllerInterface
     }
     public function delete(int $id = 0): void
     {
+        $ids = json_decode(file_get_contents("php://input"), true);
+        if (count($ids) < 1) {
+            return;
+        }
+
+        $this->setModel(ResortsModel::class);
+        if (!$this->model->delete([
+            'column' => 'id',
+            'values' => $ids
+        ])) {
+            http_response_code(500);
+        };
     }
 }
