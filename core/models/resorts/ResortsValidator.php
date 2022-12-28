@@ -23,8 +23,10 @@ class ResortsValidator extends Validator
             return false;
         }
 
-        if (!$this->isIdSafe($resort['id'])) {
-            return false;
+        if (isset($resort['id'])) {
+            if (!$this->isIdSafe($resort['id'])) {
+                return false;
+            }
         }
 
         return true;
@@ -50,7 +52,7 @@ class ResortsValidator extends Validator
 
     private function isStatusSafe(int $is_active): bool
     {
-        if ($is_active != 0 && $is_active != 1) {
+        if ($is_active > 1 && $is_active < 0) {
             return false;
         }
 
