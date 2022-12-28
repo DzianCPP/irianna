@@ -6,7 +6,7 @@ async function _delete() {
     if (!confirm("Вы действительно хотите удалить выбранные курорты?")) {
         return;
     }
-    
+
     let checkboxes = document.getElementsByName("select");
     let ids = getIds(checkboxes);
     let url = "/resorts/delete";
@@ -29,7 +29,7 @@ function getIds(checkboxes) {
     let i = 0;
 
     for (let checkbox in checkboxes) {
-        ids[i] = checkbox.id;
+        ids[i] = checkbox.value;
         i++;
     }
 
