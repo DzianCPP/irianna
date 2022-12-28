@@ -21,6 +21,12 @@ return [
         'method' => 'GET'
     ],
 
+    'admin/dashboard' => [
+        'controller' => AppController::class,
+        'action' => 'dashboard',
+        'method' => 'GET'
+    ],
+
     '' => [
         'controller' => AppController::class,
         'action' => 'index',
