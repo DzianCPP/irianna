@@ -9,7 +9,7 @@ use core\models\resorts\ResortsValidator;
 
 class ResortsModel extends Model implements ModelInterface
 {
-    protected array $fields = ['name', 'is_active', 'country_id', 'id'];
+    protected array $fields = ['name', 'country_id', 'is_active', 'id'];
     private const TABLE_NAME = "resorts_table";
 
     public function __construct()
@@ -36,7 +36,7 @@ class ResortsModel extends Model implements ModelInterface
         $resort = file_get_contents("php://input");
         $resort = json_decode($resort, true);
 
-        if (!$this->validator->isDataSafe()) {
+        if (!$this->validator->isDataSafe($resort)) {
             return false;
         }
 
