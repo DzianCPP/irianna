@@ -58,6 +58,16 @@ class ResortsModel extends Model implements ModelInterface
 
     public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
+        if (!$this->databaseSqlBuilder->delete(
+            [
+                'column' => $columnValues['column'],
+                'values' => $columnValues['values']
+            ],
+            self::TABLE_NAME
+        )) {
+            return false;
+        }
+        
         return true;
     }
 }
