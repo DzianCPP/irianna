@@ -26,7 +26,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
 				<div class="input-group">
 					<span class="input-group-text w-25">Страна</span>
-					<select name="country" id="country-1" class="btn btn-success dropdown-toggle w-75">
+					<select name="country" id="country" class="btn btn-success dropdown-toggle w-75">
 						{% for country in countries %}
 							<option value="{{ country.id }}">{{ country.name }}</option>
 						{% endfor %}
@@ -39,34 +39,37 @@
 			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
 				<div class="input-group">
 					<span class="input-group-text w-25">Статус</span>
-					<select name="is-active" id="is-active-1" class="btn btn-success dropdown-toggle w-75">
-						<option value="0">Не доступна</option>
-						<option value="1">Доступна</option>
-					</select>
-				</div>
+					<select name="is-active" id="is-active" class="btn btn-success dropdown-toggle w-75">
+						{% for i in 0..1 %}
+							<option value="{{ i }}">
+								{% if i == 0 %}
+									{{ 'Не доступна' }}
+								{% endif %}
+								{% of i == 1 %}{{ 'Доступна' }}
+							{% endif %}
+						</option>
+					{% endfor %}
+				</select>
 			</div>
 		</div>
-
-		<div class="row w-100 mb-2">
-			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
-				<div class="input-group w-100 mb-2">
-					<button type="button" class="btn btn-success w-75" id="save-btn-1" disabled>
-						Сохранить
-					</button>
-					<button class="btn w-25 btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm-1" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-						+
-					</button>
-				</div>
-			</div>
-		</div>
-
-		<div class="row w-100 mb-150">
-			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
-				<p id="error-field"></p>
-			</div>
-		</div>
-
-		<script type="text/javascript" src="/assets/scripts/resorts/formFilled.js"></script>
-		<script type="text/javascript" src="/assets/scripts/resorts/create.js"></script>
 	</div>
-{% endblock %}
+
+	<div class="row w-100 mb-2">
+		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
+			<div class="input-group w-100 mb-2">
+				<button type="button" class="btn btn-success w-100" id="save-btn" disabled>
+					Сохранить
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="row w-100 mb-150">
+		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
+			<p id="error-field"></p>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="/assets/scripts/resorts/formFilled.js"></script>
+	<script type="text/javascript" src="/assets/scripts/resorts/create.js"></script>
+</div>{% endblock %}
