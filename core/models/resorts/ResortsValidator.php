@@ -6,7 +6,7 @@ use core\models\Validator;
 
 class ResortsValidator extends Validator
 {
-    private $nameRegEx = "";
+    private $nameRegEx = "/[\x{0410}-\x{042F}]/u";
     
 
     public function isDataSafe(array $resort = []): bool
