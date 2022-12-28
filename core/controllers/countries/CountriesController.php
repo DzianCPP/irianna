@@ -92,7 +92,7 @@ class CountriesController extends BaseController implements ControllerInterface
         $ids = json_decode($jsonString, true);
         if (count($ids) > 0) {
             $this->setModel(CountriesModel::class);
-            if (!$this->model->delete(columnValues: [
+            if (!$this->model->delete([
                 'column' => 'id',
                 'values' => $ids
             ])) {
