@@ -1,22 +1,21 @@
-document.getElementById("save-btn-1").addEventListener("click", () => { create(1); });
-document.getElementById("save-btn-1").addEventListener("click", () => { create(2); });
-document.getElementById("save-btn-1").addEventListener("click", () => { create(3); });
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("save-btn").addEventListener("click", create);
+})
 
 
-
-async function create(__id) {
-    let _name = document.getElementById("name-" + __id).value;
-    let _resort_id = document.getElementById("resort-id-" + __id).value;
-    let _address = document.getElementById("address-" + __id).value;
-    let _rooms = document.getElementById("rooms-" + __id).value;
-    let _area = document.getElementById("area-" + __id).value;
-    let _beach = document.getElementById("beach-" + __id).value;
-    let _checkins = document.getElementById("number-" + __id).value;
-    let _water = document.getElementById("water-" + __id).value;
-    let _food = document.getElementById("food-" + __id).value;
-    let _features = document.getElementById("features-" + __id).value;
-    let _description = document.getElementById("description-" + __id).value;
-    let _is_active = document.getElementById("is-active-" + __id).value;
+async function create() {
+    let _name = document.getElementById("name").value;
+    let _resort_id = document.getElementById("resort-id").value;
+    let _address = document.getElementById("address").value;
+    let _rooms = document.getElementById("rooms").value;
+    let _area = document.getElementById("area").value;
+    let _beach = document.getElementById("beach").value;
+    let _checkins = document.getElementById("number").value;
+    let _water = document.getElementById("water").value;
+    let _food = document.getElementById("food").value;
+    let _features = document.getElementById("features").value;
+    let _description = document.getElementById("description").value;
+    let _is_active = document.getElementById("is-active").value;
 
     url = "/hotels/create";
 
