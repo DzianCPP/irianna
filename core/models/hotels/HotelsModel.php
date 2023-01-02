@@ -15,7 +15,6 @@ class HotelsModel extends Model implements ModelInterface
         'rooms',
         'area',
         'beach',
-        'body',
         'checkins',
         'water',
         'food',
@@ -42,6 +41,16 @@ class HotelsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
+        $newInfo = $this->validator->makeDataSafe($newInfo);
+
+        if (!$this->validator->isDataSafe($newInfo)) {
+            return false;
+        }
+
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, "id")) {
+            return false;
+        }
+
         return true;
     }
 

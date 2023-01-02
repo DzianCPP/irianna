@@ -87,9 +87,14 @@ class HotelsController extends BaseController implements ControllerInterface
 
         $this->view->render("hotels/hotels.html.twig", $data);
     }
+
     public function update(int $id = 0): void
     {
+        $hotel = json_decode(file_get_contents("php://input"), true);
+        $this->setModel(HotelsModel::class);
+        $this->model->update($hotel);
     }
+
     public function delete(int $id = 0): void
     {
     }
