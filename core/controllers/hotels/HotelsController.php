@@ -7,6 +7,7 @@ use core\controllers\ControllerInterface;
 use core\models\resorts\ResortsModel;
 use core\views\hotels\HotelsView;
 use core\models\hotels\HotelsModel;
+use core\services\IdGetter;
 
 class HotelsController extends BaseController implements ControllerInterface
 {
@@ -29,6 +30,20 @@ class HotelsController extends BaseController implements ControllerInterface
     }
     public function edit(): void
     {
+        $this->setModel(HotelsModel::class);
+        $this->setView(HotelsView::class);
+        $id = IdGetter::getId();
+
+        $resorts = new ResortsModel();
+
+        $data = [
+            'hotel' => $this->model->get(columnValue: ['column' => "id", 'value' => $id])[0],
+            'title' => "Исправить гостиницу",
+            'header' => "Изменить гостиницу",
+            'resorts' => $resorts->get()
+        ];
+
+        $this->view->render("hotels/edit.html.twig", $data);
     }
     public function create(): void
     {
