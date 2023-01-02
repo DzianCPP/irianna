@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("save-btn").addEventListener("click", create);
-})
+    document.getElementById("save-btn").addEventListener("click", update);
+});
 
-
-async function create() {
+async function update() {
     let _name = document.getElementById("name").value;
     let _resort_id = document.getElementById("resort-id").value;
     let _address = document.getElementById("address").value;
@@ -16,8 +15,9 @@ async function create() {
     let _features = document.getElementById("features").value;
     let _description = document.getElementById("description").value;
     let _is_active = document.getElementById("is-active").value;
+    let _id = document.getElementById("id").innerHTML;
 
-    url = "/hotels/create";
+    url = "/hotels/update";
 
     let info = {
         name: _name,
@@ -31,15 +31,16 @@ async function create() {
         food: _food,
         features: _features,
         description: _description,
-        is_active: _is_active
+        is_active: _is_active,
+        id: _id
     };
 
-    let POST = {
-        method: "POST",
+    let PUT = {
+        method: "PUT",
         body: JSON.stringify(info)
     };
 
-    let response = await fetch(url, POST);
+    let response = await fetch(url, PUT);
 
     if (response.ok !== false) {
         window.location = "/hotels";

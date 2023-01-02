@@ -22,7 +22,7 @@
 							Название
 							<span class="text-danger">*</span>
 						</span>
-						<input required type="text" class="form-control" name="text" id="name" placeholder="Введите название гостиницы"/>
+						<input required type="text" class="form-control" name="text" id="name" placeholder="Введите название гостиницы" value="{{ hotel.name }}"/>
 					</div>
 				</div>
 
@@ -33,7 +33,7 @@
 						</span>
 						<select required name="country" id="resort-id" name="select" class="btn btn-success dropdown-toggle w-75">
 							{% for resort in resorts %}
-								<option value="{{ resort.id }}">{{ resort.name }}</option>
+								<option value="{{ resort.id }}" {%if resrt.id == hotel.resort_id %} {{ 'selected="selected"' }} {% endif %}>{{ resort.name }}</option>
 							{% endfor %}
 						</select>
 					</div>
@@ -42,7 +42,7 @@
 				<div class="row w-100 mb-2">
 					<div class="input-group">
 						<span class="input-group-text w-25">Адрес</span>
-						<input type="text" class="form-control" name="text" id="address" placeholder="Введите адрес гостиницы"/>
+						<input type="text" class="form-control" name="text" id="address" placeholder="Введите адрес гостиницы" value="{{ hotel.address}}"/>
 					</div>
 				</div>
 
@@ -51,56 +51,56 @@
 						<span class="input-group-text w-25">Номера
 							<span class="text-danger">*</span>
 						</span>
-						<input required type="number" class="form-control" name="text" id="rooms" placeholder="Введите количество номеров"/>
+						<input required type="number" class="form-control" value="{{ hotel.rooms }}" name="text" id="rooms" placeholder="Введите количество номеров"/>
 					</div>
 				</div>
 
 				<div class="row w-100 mb-2">
 					<div class="input-group">
 						<span class="input-group-text w-25">Местность</span>
-						<input type="text" class="form-control" id="area" name="text" placeholder="Опишите местность гостиницы"/>
+						<input type="text" class="form-control" id="area" name="text" value="{{ hotel.area }}" placeholder="Опишите местность гостиницы"/>
 					</div>
 				</div>
 
 				<div class="row w-100 mb-2">
 					<div class="input-group">
 						<span class="input-group-text w-25">Пляж</span>
-						<input type="text" class="form-control" id="beach" name="text" placeholder="Опишите пляж гостиницы"/>
+						<input type="text" class="form-control" id="beach" name="text" value="{{ hotel.beach }}" placeholder="Опишите пляж гостиницы"/>
 					</div>
 				</div>
 
 				<div class="row w-100 mb-2">
 					<div class="input-group">
 						<span class="input-group-text w-25">Заезды</span>
-						<input type="number" name="text" class="form-control" id="number" placeholder="Количество заездов"/>
+						<input type="number" name="text" class="form-control" id="number" value="{{ hotel.checkins }}" placeholder="Количество заездов"/>
 					</div>
 				</div>
 
 				<div class="row w-100 mb-2">
 					<div class="input-group">
 						<span class="input-group-text w-25">Вода</span>
-						<input type="text" class="form-control" id="water" name="text" placeholder="Опишите воду в гостинице"/>
+						<input type="text" class="form-control" id="water" name="text" value="{{ hotel.water }}" placeholder="Опишите воду в гостинице"/>
 					</div>
 				</div>
 
 				<div class="row w-100 mb-2">
 					<div class="input-group">
 						<span class="input-group-text w-25">Питание</span>
-						<input type="text" class="form-control" id="food" name="text" placeholder="Опишите питание"/>
+						<input type="text" class="form-control" id="food" name="text" value="{{ hotel.food }}" placeholder="Опишите питание"/>
 					</div>
 				</div>
 
 				<div class="row w-100 mb-2">
 					<div class="input-group">
 						<span class="input-group-text w-25">Особенности</span>
-						<input type="text" name="text" class="form-control" id="features" placeholder="Опишите особенности гостиницы"/>
+						<input type="text" name="text" class="form-control" id="features" value="{{ hotel.features }}" placeholder="Опишите особенности гостиницы"/>
 					</div>
 				</div>
 
 				<div class="row w-100 mb-2">
 					<div class="input-group">
 						<span class="input-group-text w-25">Описание</span>
-						<input type="text" class="form-control" id="description" name="text" placeholder="Добавьте описание"/>
+						<input type="text" class="form-control" id="description" name="text" value="{{ hotel.description }}" placeholder="Добавьте описание"/>
 					</div>
 				</div>
 
@@ -110,8 +110,16 @@
 							<span class="text-danger">*</span>
 						</span>
 						<select name="is-active" id="is-active" name="select" class="btn btn-success dropdown-toggle w-75">
-							<option value="0">Не доступна</option>
-							<option value="1">Доступна</option>
+							{% for i in 0..1 %}
+								<option value="{{ i }}" {% if hotel.is_active == i %} {{ 'selected="selected"' }} {% endif %}>
+									{% if i == 0 %}
+										{{ 'Не доступна' }}
+									{% endif %}
+									{% if i == 1 %}
+										{{ 'Доступна' }}
+									{% endif %}
+								</option>
+							{% endfor %}
 						</select>
 					</div>
 				</div>
@@ -126,10 +134,11 @@
 
 				<div class="row w-100 mb-150">
 					<p class="text-center text-danger" id="error-field"></p>
+					<p hidden id="id">{{ hotel.id }}</p>
 				</div>
 			</div>
 
-			<script type="text/javascript" src="/assets/scripts/hotels/create.js"></script>
+			<script type="text/javascript" src="/assets/scripts/hotels/update.js"></script>
 			<script type="text/javascript" src="/assets/scripts/hotels/formFilled.js"></script>
 		</div>
 	{% endblock %}

@@ -98,6 +98,10 @@ class DatabaseSqlBuilder
 
     private function getSets(array $fields): string
     {
+        foreach ($fields as &$field) {
+            $field = $field . "=:" . $field;
+        }
+
         return implode(",", $fields);
     }
 }

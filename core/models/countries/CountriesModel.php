@@ -28,7 +28,7 @@ class CountriesModel extends Model implements ModelInterface
     {
         $newCountry = $this->validator->makeDataSafe($newInfo);
 
-        if (!$this->validator->isDataSafe($newCountry['name'], number: $newCountry['is_active'])) {
+        if (!$this->validator->isDataSafe($newCountry)) {
             return false;
         }
 
@@ -44,7 +44,7 @@ class CountriesModel extends Model implements ModelInterface
         $newCountryInfo = json_decode(file_get_contents("php://input"), true);
         $newCountryInfo = $this->validator->makeDataSafe($newCountryInfo);
 
-        if (!$this->validator->isDataSafe()) {
+        if (!$this->validator->isDataSafe($newCountryInfo)) {
             return false;
         }
 

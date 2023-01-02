@@ -1,47 +1,50 @@
-document.getElementById("name-1").addEventListener("keyup", formFilled1);
-document.getElementById("resort-id-1").addEventListener("change", formFilled1);
-document.getElementById("is-active-1").addEventListener("change", formFilled1);
+document.getElementById("name").addEventListener("keyup", formFilled);
+document.getElementById("resort-id").addEventListener("click", formFilled);
+document.getElementById("is-active").addEventListener("click", formFilled);
+document.getElementById("rooms").addEventListener("keyup", formFilled);
+document.getElementById("rooms").addEventListener("click", formFilled);
 
 
-function formFilled1() {
-    let _name = document.getElementById("name-1");
-    let saveBtn = document.getElementById("save-btn-1");
+function formFilled() {
+    let _name = document.getElementById("name");
+    let _resort_id = document.getElementById("resort-id");
+    let _rooms = document.getElementById("rooms");
+    let _is_active = document.getElementById("is-active");
+    let saveBtn = document.getElementById("save-btn");
+    let _error_field = document.getElementById("error-field");
 
-    if (_name.value.length > 2) {
-        saveBtn.disabled = false;
-    } else {
+    saveBtn.disabled = true;
+
+    if (_name.value.length < 2) {
         saveBtn.disabled = true;
+        _error_field.innerHTML = "Введите название гостиницы";
+        return;
     }
-}
 
-document.getElementById("name-2").addEventListener("keyup", formFilled2);
-document.getElementById("resort-id-2").addEventListener("change", formFilled2);
-document.getElementById("is-active-2").addEventListener("change", formFilled2);
-
-
-function formFilled2() {
-    let _name = document.getElementById("name-2");
-    let saveBtn = document.getElementById("save-btn-2");
-
-    if (_name.value.length > 2) {
-        saveBtn.disabled = false;
-    } else {
+    if (isNaN(_resort_id.value)) {
         saveBtn.disabled = true;
+        _error_field.innerHTML = "Выберите курорт";
+        return;
     }
-}
 
-document.getElementById("name-3").addEventListener("keyup", formFilled3);
-document.getElementById("resort-id-3").addEventListener("change", formFilled3);
-document.getElementById("is-active-3").addEventListener("change", formFilled3);
-
-
-function formFilled3() {
-    let _name = document.getElementById("name-3");
-    let saveBtn = document.getElementById("save-btn-3");
-
-    if (_name.value.length > 2) {
-        saveBtn.disabled = false;
-    } else {
+    if (isNaN(_rooms.value)) {
         saveBtn.disabled = true;
+        _error_field.innerHTML = "Введите количетсов комнат ЧИСЛОВЫМ значением";
+        return;
     }
+
+    if (_rooms.value.length < 1) {
+        saveBtn.disabled = true;
+        _error_field.innerHTML = "Введите количетсов комнат";
+        return;
+    }
+
+    if (_rooms.value < 1) {
+        saveBtn.disabled = true;
+        _error_field.innerHTML = "Количество комнат не может быть меньше 1";
+        return;
+    }
+
+    _error_field.innerHTML = "";
+    saveBtn.disabled = false;
 }

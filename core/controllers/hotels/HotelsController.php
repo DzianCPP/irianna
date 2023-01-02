@@ -7,6 +7,7 @@ use core\controllers\ControllerInterface;
 use core\models\resorts\ResortsModel;
 use core\views\hotels\HotelsView;
 use core\models\hotels\HotelsModel;
+use core\services\IdGetter;
 
 class HotelsController extends BaseController implements ControllerInterface
 {
@@ -29,6 +30,20 @@ class HotelsController extends BaseController implements ControllerInterface
     }
     public function edit(): void
     {
+        $this->setModel(HotelsModel::class);
+        $this->setView(HotelsView::class);
+        $id = IdGetter::getId();
+
+        $resorts = new ResortsModel();
+
+        $data = [
+            'hotel' => $this->model->get(columnValue: ['column' => "id", 'value' => $id])[0],
+            'title' => "Исправить гостиницу",
+            'header' => "Изменить гостиницу",
+            'resorts' => $resorts->get()
+        ];
+
+        $this->view->render("hotels/edit.html.twig", $data);
     }
     public function create(): void
     {
@@ -72,10 +87,27 @@ class HotelsController extends BaseController implements ControllerInterface
 
         $this->view->render("hotels/hotels.html.twig", $data);
     }
+
     public function update(int $id = 0): void
     {
+        $hotel = json_decode(file_get_contents("php://input"), true);
+        $this->setModel(HotelsModel::class);
+        $this->model->update($hotel);
     }
+
     public function delete(int $id = 0): void
     {
+        $ids = json_decode(file_get_contents("php://input"), true);
+        if (count($ids) < 1) {
+            return;
+        }
+
+        $this->setModel(HotelsModel::class);
+        if (!$this->model->delete([
+            'column' => 'id',
+            'values' => $ids
+        ])) {
+            http_response_code(500);
+        };
     }
 }

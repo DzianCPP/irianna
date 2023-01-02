@@ -7,6 +7,7 @@ use core\views\countries\CountriesView;
 use core\models\countries\CountriesModel;
 use core\controllers\AppController;
 use core\controllers\ControllerInterface;
+use core\services\IdGetter;
 
 class CountriesController extends BaseController implements ControllerInterface
 {
@@ -74,7 +75,7 @@ class CountriesController extends BaseController implements ControllerInterface
     {
         $this->setModel(CountriesModel::class);
         $this->setView(CountriesView::class);
-        $id = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        $id = IdGetter::getId();
         $country = $this->model->get(['column' => 'id', 'value' => $id])[0];
         $data = [
             'country' => $country,
@@ -91,7 +92,7 @@ class CountriesController extends BaseController implements ControllerInterface
         $ids = json_decode($jsonString, true);
         if (count($ids) > 0) {
             $this->setModel(CountriesModel::class);
-            if (!$this->model->delete(columnValues: [
+            if (!$this->model->delete([
                 'column' => 'id',
                 'values' => $ids
             ])) {

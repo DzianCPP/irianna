@@ -8,6 +8,7 @@ use core\models\resorts\ResortsModel;
 use core\views\resorts\ResortsView;
 use core\models\countries\CountriesModel;
 use core\views\countries\CountriesView;
+use core\services\IdGetter;
 
 class ResortsController extends BaseController implements ControllerInterface
 {
@@ -31,12 +32,30 @@ class ResortsController extends BaseController implements ControllerInterface
     }
     public function edit(): void
     {
+        $this->setModel(ResortsModel::class);
+        $this->setView(ResortsView::class);
+        $countries = new CountriesModel();
+
+        $id = IdGetter::getId();
+
+        $data = [
+            'title' => 'IriANNA',
+            'author' => 'IriANNA',
+            'header' => 'Исправить курорт',
+            'login' => $_COOKIE['login'],
+            'resort' => $this->model->get(['column' => 'id', 'value' => $id])[0],
+            'countries' => $countries->get()
+        ];
+
+        $this->view->render("resorts/edit.html.twig", $data);
     }
+
     public function create(): void
     {
         $this->setModel(ResortsModel::class);
         $this->model->create();
     }
+
     public function read(int $id = 0): void
     {
         if (!$this->isLogged()) {
@@ -75,10 +94,27 @@ class ResortsController extends BaseController implements ControllerInterface
 
         $this->view->render("resorts/resorts.html.twig", $data);
     }
+
     public function update(int $id = 0): void
     {
+        $resort = json_decode(file_get_contents("php://input"), true);
+        $this->setModel(ResortsModel::class);
+        $this->model->update($resort);
     }
+
     public function delete(int $id = 0): void
     {
+        $ids = json_decode(file_get_contents("php://input"), true);
+        if (count($ids) < 1) {
+            return;
+        }
+
+        $this->setModel(ResortsModel::class);
+        if (!$this->model->delete([
+            'column' => 'id',
+            'values' => $ids
+        ])) {
+            http_response_code(500);
+        };
     }
 }
