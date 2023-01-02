@@ -8,7 +8,7 @@
 			<div class="text-center collapse navbar-collapse flex-grow-1 text-right" id="navbarScroll">
 				<ul class="navbar-nav ms-auto me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 170px;">
 					<li class="nav-item">
-						<p class="btn btn-dark rounded text-light text-center m-1">Привет,
+						<p class="btn btn-outline-dark rounded text-center m-1">Привет,
 							{{ login }}</p>
 					</li>
 					<li class="nav-item">
@@ -16,8 +16,8 @@
 					</li>
 					<li class="nav-item">
 						<a class="btn btn-success rounded text-light text-center m-1 {% if login != 'sadmin' %} {{ 'disabled' }} {% endif %}" href="/admins" tabindex="-1" aria-disabled="true">Admins</a>
-						<a class="btn btn-outline-success rounded text-dark text-center m-1" id="logout-btn">Выйти</a>
-						<a class="btn btn-outline-success rounded text-dark text-center m-1" id="dashboard-btn" href="/admin/dashboard">Дашборд</a>
+						<a class="btn btn-warning rounded text-dark text-center m-1" id="logout-btn">Выйти</a>
+						<a class="btn btn-warning rounded text-dark text-center m-1" id="dashboard-btn" href="/admin/dashboard">Дашборд</a>
 						<a class="btn btn-success rounded text-light text-center m-1" href="/tours/new" id="main-btn">Главная</a>
 					</li>
 				</ul>
