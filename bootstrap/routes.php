@@ -153,10 +153,10 @@ return [
         'method' => 'POST'
     ],
 
-    'resort/update' => [
+    'resorts/update' => [
         'controller' => ResortsController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'resorts/delete' => [
@@ -192,11 +192,11 @@ return [
     'hotels/update' => [
         'controller' => HotelsController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'hotels/delete' => [
-        'controller' => ResortsController::class,
+        'controller' => HotelsController::class,
         'action' => 'delete',
         'method' => 'DELETE'
     ],

@@ -1,5 +1,4 @@
-let deleteAllBtn = document.getElementById("delete-all");
-deleteAllBtn.addEventListener("click", deleteAll);
+document.getElementById("delete-all").addEventListener("click", deleteAll);
 
 function deleteAll() {
     let allCheckboxes = document.getElementsByName("select");
