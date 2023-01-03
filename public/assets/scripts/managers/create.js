@@ -3,9 +3,7 @@ document.getElementById("save-btn").addEventListener("click", create);
 async function create() {
     let url = "/managers/create";
     let _name =
-        document.getElementById("last-name").value + " " +
-        document.getElementById("first-name").value + " " +
-        document.getElementById("second-name").value;
+        document.getElementById("name").value;
 
     let info = {
         name: _name
