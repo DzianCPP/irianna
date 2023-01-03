@@ -5,6 +5,7 @@ namespace core\controllers\managers;
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\models\managers\ManagersModel;
+use core\services\IdGetter;
 use core\views\managers\ManagersView;
 
 class ManagersController extends BaseController implements ControllerInterface
@@ -26,6 +27,16 @@ class ManagersController extends BaseController implements ControllerInterface
 
     public function edit(): void
     {
+        $this->setView(ManagersView::class);
+        $this->setModel(ManagersModel::class);
+
+        $data = [
+            'title' => 'Изменить менеджера',
+            'header' => 'Изменить менеджера',
+            'manager' => $this->model->get(IdGetter::getId())
+        ];
+
+        $this->view->render("managers/edit.html.twig", $data);
     }
 
     public function create(): void
