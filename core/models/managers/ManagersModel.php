@@ -28,16 +28,36 @@ class ManagersModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
+        $newInfo = $this->validator->makeDataSafe($newInfo);
+
+        if (!$this->validator->isDataSafe($newInfo)) {
+            return false;
+        }
+
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, "id")) {
+            return false;
+        }
+
         return true;
     }
 
     public function create(): bool
     {
+        $manager = json_decode(file_get_contents("php://input"), true);
+
+        if (!$this->databaseSqlBuilder->insert(recordInfo: $manager, columns: $this->fields, tableName: self::TABLE_NAME)) {
+            return false;
+        }
+
         return true;
     }
 
     public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
+        if (!$this->databaseSqlBuilder->delete($columnValues, self::TABLE_NAME)) {
+            return false;
+        }
+
         return true;
     }
 }

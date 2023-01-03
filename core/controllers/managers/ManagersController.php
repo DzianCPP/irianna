@@ -5,6 +5,7 @@ namespace core\controllers\managers;
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\models\managers\ManagersModel;
+use core\services\IdGetter;
 use core\views\managers\ManagersView;
 
 class ManagersController extends BaseController implements ControllerInterface
@@ -26,12 +27,29 @@ class ManagersController extends BaseController implements ControllerInterface
 
     public function edit(): void
     {
+        $this->setView(ManagersView::class);
+        $this->setModel(ManagersModel::class);
+        $id = IdGetter::getId();
+        $manager = $this->model->get(
+            columnValue: [
+                'column' => 'id',
+                'value' => $id
+            ]
+        )[0];
+
+        $data = [
+            'title' => 'Изменить менеджера',
+            'header' => 'Изменить менеджера',
+            'manager' => $manager
+        ];
+
+        $this->view->render("managers/edit.html.twig", $data);
     }
 
     public function create(): void
     {
-        $info = file_get_contents("php://input");
-        $info;
+        $this->setModel(ManagersModel::class);
+        $this->model->create();
     }
 
     public function read(int $id = 0): void
@@ -58,6 +76,7 @@ class ManagersController extends BaseController implements ControllerInterface
             'currentPage' => $page,
             'pages' => $pages,
             'title' => 'Менеджеры',
+            'header' => 'Менеджеры',
             'author' => 'IriANNA',
             'login' => $_COOKIE['login']
         ];
@@ -72,9 +91,23 @@ class ManagersController extends BaseController implements ControllerInterface
 
     public function update(int $id = 0): void
     {
+        $this->setModel(ManagersModel::class);
+        $manager = json_decode(file_get_contents("php://input"), true);
+        $this->model->update($manager);
     }
 
     public function delete(int $id = 0): void
     {
+        $ids = json_decode(file_get_contents("php://input"), true);
+
+        $this->setModel(ManagersModel::class);
+        if (!$this->model->delete(
+            columnValues: [
+                'column' => 'id',
+                'values' => $ids
+            ]
+        )) {
+            http_response_code(500);
+        }
     }
 }
