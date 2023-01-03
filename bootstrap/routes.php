@@ -300,7 +300,7 @@ return [
     'managers/update' => [
         'controller' => ManagersController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'managers/delete' => [
