@@ -90,6 +90,9 @@ class ManagersController extends BaseController implements ControllerInterface
 
     public function update(int $id = 0): void
     {
+        $this->setModel(ManagersModel::class);
+        $manager = json_decode(file_get_contents("php://input"), true);
+        $this->model->update($manager);
     }
 
     public function delete(int $id = 0): void
