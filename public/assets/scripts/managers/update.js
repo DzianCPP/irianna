@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function update() {
     let _name = document.getElementById("name").value;
-    let _id = document.getElementById("id").value;
+    let _id = document.getElementById("id").innerHTML;
     let url = "/managers/update";
 
     let info = {
