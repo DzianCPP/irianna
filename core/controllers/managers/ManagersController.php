@@ -29,11 +29,18 @@ class ManagersController extends BaseController implements ControllerInterface
     {
         $this->setView(ManagersView::class);
         $this->setModel(ManagersModel::class);
+        $id = IdGetter::getId();
+        $manager = $this->model->get(
+            columnValue: [
+                'column' => 'id',
+                'value' => $id
+            ]
+        )[0];
 
         $data = [
             'title' => 'Изменить менеджера',
             'header' => 'Изменить менеджера',
-            'manager' => $this->model->get(IdGetter::getId())
+            'manager' => $manager
         ];
 
         $this->view->render("managers/edit.html.twig", $data);
