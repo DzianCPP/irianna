@@ -97,5 +97,16 @@ class ManagersController extends BaseController implements ControllerInterface
 
     public function delete(int $id = 0): void
     {
+        $ids = json_decode(file_get_contents("php://input"), true);
+
+        $this->setModel(ManagersModel::class);
+        if (!$this->model->delete(
+            columnValues: [
+                'column' => 'id',
+                'values' => $ids
+            ]
+        )) {
+            http_response_code(500);
+        }
     }
 }
