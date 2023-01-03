@@ -76,6 +76,7 @@ class ManagersController extends BaseController implements ControllerInterface
             'currentPage' => $page,
             'pages' => $pages,
             'title' => 'Менеджеры',
+            'header' => 'Менеджеры',
             'author' => 'IriANNA',
             'login' => $_COOKIE['login']
         ];
