@@ -30,8 +30,8 @@ class ManagersController extends BaseController implements ControllerInterface
 
     public function create(): void
     {
-        $info = file_get_contents("php://input");
-        $info;
+        $this->setModel(ManagersModel::class);
+        $this->model->create();
     }
 
     public function read(int $id = 0): void
