@@ -33,6 +33,12 @@ class ManagersModel extends Model implements ModelInterface
 
     public function create(): bool
     {
+        $manager = json_decode(file_get_contents("php://input"), true);
+
+        if (!$this->databaseSqlBuilder->insert(recordInfo: $manager, columns: $this->fields, tableName: self::TABLE_NAME)) {
+            return false;
+        }
+
         return true;
     }
 
