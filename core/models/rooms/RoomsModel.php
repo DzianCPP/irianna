@@ -9,8 +9,10 @@ use core\models\rooms\RoomsValidator;
 
 class RoomsModel extends Model implements ModelInterface
 {
-    protected array $fields = ['name', 'is_active', 'country_id', 'id'];
+    protected array $fields = ['hotel_id', 'description', 'clients_id', 'checkin_checkout_dates', 'comforts', 'food', 'id'];
     private const TABLE_NAME = "rooms_table";
+    protected array $comforts = ['Телевизор', 'Холодильник', 'Кондиционер', 'Душ', 'Ванна', 'Джакузи', 'Туалет', 'Балкон', 'Чайник', 'Кухня'];
+    protected array $food = ['Без питания', 'Завтрак', 'Обед', 'Ужин'];
 
     public function __construct()
     {
@@ -43,5 +45,15 @@ class RoomsModel extends Model implements ModelInterface
     public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
         return true;
+    }
+
+    public function getComforts(): array
+    {
+        return $this->comforts;
+    }
+
+    public function getFood(): array
+    {
+        return $this->food;
     }
 }

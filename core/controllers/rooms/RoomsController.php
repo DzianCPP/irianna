@@ -30,11 +30,14 @@ class RoomsController extends BaseController implements ControllerInterface
         $hotel_id = (int)filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $hotelsModel = new HotelsModel();
         $this->setView(RoomsView::class);
+        $rooms = new RoomsModel();
 
         $data = [
             'hotel' => $hotelsModel->get(columnValue: ['column' => 'id', 'value' => $hotel_id])[0],
             'title' => 'Номера',
             'header' => 'Добавить номера',
+            'comforts' => $rooms->getComforts(),
+            'food' => $rooms->getFood(),
             'login' => $_COOKIE['login']
         ];
 

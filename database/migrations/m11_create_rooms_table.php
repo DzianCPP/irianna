@@ -19,6 +19,7 @@ class m11_create_rooms_table extends BaseMigration
                         clients_ids text DEFAULT NULL,
                         checkin_checkout_dates text DEFAULT NULL,
                         comforts text DEFAULT NULL,
+                        food text DEFAULT NULL,
                         PRIMARY KEY (id))";
 
         $query = $conn->prepare($sqlQuery);
