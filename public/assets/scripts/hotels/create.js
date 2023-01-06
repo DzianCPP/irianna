@@ -19,14 +19,18 @@ async function create() {
 
     url = "/hotels/create";
 
+    if (_checkins === "") {
+        _checkins = 1;
+    }
+
     let info = {
         name: _name,
         resort_id: _resort_id,
         address: _address,
-        rooms: _rooms,
         area: _area,
         beach: _beach,
         checkins: _checkins,
+        rooms: _rooms,
         water: _water,
         food: _food,
         features: _features,
