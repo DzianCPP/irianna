@@ -14,6 +14,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
 				<p class="h1 text-center" id="main-page-h1">{{ header }}</p>
 				<p class="h5 text-center" id="main-page-h5">{{ hotel.name }}</p>
+				<p hidden id="hotel-id">{{ hotel.id }}</p>
 			</div>
 		</div>
 
@@ -25,16 +26,16 @@
 							<th class="w-auto text-center">Описание номера</th>
 							{% for i in 0..hotel.rooms - 1 %}
 								<th>
-									<textarea class="border-1 w-auto"></textarea>
+									<textarea class="border-1 w-auto" name="room-description"></textarea>
 								</th>
 							{% endfor %}
 						</tr>
 
 
 						<tr>
-							<th class="w-auto text-center">Удобства</th>
+							<td class="w-auto text-center">Удобства</td>
 							{% for i in 0..hotel.rooms - 1 %}
-								<th>
+								<td>
 									<div class="input-group mb-3">
 										<textarea class="form-control border-0" name="comfort" id="room-comforts-{{ i }}"></textarea>
 										<div class="btn-group dropend">
@@ -50,14 +51,14 @@
 											</ul>
 										</div>
 									</div>
-								</th>
+								</td>
 							{% endfor %}
 						</tr>
 					</tr>
 					<tr>
-						<th class="w-auto text-center">Питание</th>
+						<td class="w-auto text-center">Питание</td>
 						{% for i in 0..hotel.rooms - 1 %}
-							<th>
+							<td>
 								<div class="input-group mb-3">
 									<textarea class="form-control border-0" name="food" id="room-food-{{ i }}"></textarea>
 									<div class="btn-group dropend">
@@ -73,37 +74,36 @@
 										</ul>
 									</div>
 								</div>
-							</th>
+							</td>
 						{% endfor %}
 					</tr>
 
 					<tr>
-						<th class="w-auto text-center">Заезды/Выезды</th>
+						<td class="w-auto text-center">Заезды/Выезды</td>
 						{% for i in 0..hotel.rooms - 1 %}
-							<th>
+							<td>
 								<div class="input-group w-100">
 									<input type="date" class="btn btn-sm border-0 w-50" name="date" id="date-in-{{ i }}">
 									<input type="date" class="btn btn-sm border-0 w-50" name="date" id="date-out-{{ i }}">
 								</div>
 
 								<div class="input-group w-100">
-									<textarea placeholder="Заезды" class="form-control w-50" aria-label="With textarea" id="field-date-in-{{ i }}"></textarea>
-									<textarea placeholder="Выезды" class="form-control w-50" aria-label="With textarea" id="field-date-out-{{ i }}"></textarea>
+									<textarea placeholder="Заезды" class="form-control w-50" name="checkins" aria-label="With textarea" id="field-date-in-{{ i }}"></textarea>
+									<textarea placeholder="Выезды" class="form-control w-50" name="checkouts" aria-label="With textarea" id="field-date-out-{{ i }}"></textarea>
 								</div>
-							</th>
+							</td>
 
 						{% endfor %}
 					</tr>
 
 					<tr>
-						<th></th>
+						<td></td>
 						{% for i in 0..hotel.rooms - 1 %}
-							<th class="w-auto">
+							<td class="w-auto">
 								<div class="input-group mx-auto">
-									<button class="btn btn-outline-success w-50">Сохранить</button>
-									<button class="btn btn-outline-danger w-50">Очистить</button>
+									<button class="btn btn-outline-danger w-100">Очистить</button>
 								</div>
-							</th>
+							</td>
 						{% endfor %}
 					</tr>
 
@@ -115,7 +115,7 @@
 
 		<div class="row">
 			<div class="input-group w-50 mx-auto">
-				<button class="btn btn-success w-75">Сохранить все</button>
+				<button class="btn btn-success w-75" name="save">Сохранить все</button>
 				<button class="btn btn-danger w-25">Очистить все</button>
 			</div>
 		</div>

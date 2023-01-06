@@ -9,7 +9,7 @@ use core\models\rooms\RoomsValidator;
 
 class RoomsModel extends Model implements ModelInterface
 {
-    protected array $fields = ['hotel_id', 'description', 'clients_id', 'checkin_checkout_dates', 'comforts', 'food', 'id'];
+    protected array $fields = ['hotel_id', 'description', 'checkin_checkout_dates', 'comforts', 'food', 'id'];
     private const TABLE_NAME = "rooms_table";
     protected array $comforts = ['Телевизор', 'Холодильник', 'Кондиционер', 'Душ', 'Ванна', 'Джакузи', 'Туалет', 'Балкон', 'Чайник', 'Кухня'];
     protected array $food = ['Без питания', 'Завтрак', 'Обед', 'Ужин'];
@@ -35,10 +35,22 @@ class RoomsModel extends Model implements ModelInterface
 
     public function create(): bool
     {
-        $room = file_get_contents("php://input");
-        $room = json_decode($room, true);
-        $columns = array_keys($room);
-        $this->databaseSqlBuilder->insert($room, $columns, self::TABLE_NAME);
+        $rooms = json_decode(file_get_contents("php://input"), true);
+        foreach ($rooms as $room) {
+            // TODO move these three methods to a helper class
+            $room['comforts'] = str_replace("\n", ", ", $room['comforts']);
+            $room['food'] = str_replace("\n", ", ", $room['food']);
+            $room['checkin_checkout_dates'] = str_replace("\n", ", ", $room['checkin_checkout_dates']);
+            foreach ($room as $attribute) {
+                if ($attribute == NULL || $attribute == "") {
+                    continue 2;
+                }
+            }
+            if (!$this->databaseSqlBuilder->insert($room, $this->fields, self::TABLE_NAME)) {
+                return false;
+            }
+        }
+
         return true;
     }
 
