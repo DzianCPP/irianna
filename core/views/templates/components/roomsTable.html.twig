@@ -1,28 +1,72 @@
 {% block table %}
-	<table class="table table-bordered table-responsive table-sm table-xl table-md table-xs
-																																																																																										    table-hover text-center w-100" id="table">
+	<table class="table table-bordered border-secondary table-responsive table-sm table-xl table-md table-xs table-hover text-center w-100" id="table">
 		<tr>
 			<th scope="col"><input type="checkbox" id="check-all"/></th>
-			<th scope="col">id</th>
 			<th scope="col">Описание</th>
-			{% for i in 0 .. 4 %}
-				<th scope="col">{{ 'Заезд' }}<br>{{ 'Выезд' }}</th>
+			{% for room in rooms %}
+				<th scope="col">
+					<span>
+						{{ room.description }}
+					</span>
+				</th>
 			{% endfor %}
 		</tr>
-		{% for room in rooms %}
-			<tr>
-				<td><input type="checkbox"></td>
-				<td>{{ room.id }}</td>
-				<td>{{ room.description }}</td>
-				{% set dates = room.dates %}
-				{% for date in dates %}
-					<td style="background-color: {% if date.checkin != NULL %}
-																											{{ 'lightgreen' }}{% else %}{{ 'darkgrey' }}{% endif %};">
-						<div class="text">{{ date.checkin }}</div>
-						<div class="text">{{ date.checkout }}</div>
-					</td>
-				{% endfor %}
-			</tr>
-		{% endfor %}
+
+		<tr class="bg-warning text-dark">
+			<td></td>
+			<td class="w-auto text-center">Удобства</td>
+			{% for room in rooms %}
+				<td>
+					<span>
+						{% for comfort in room.comforts %}
+							{{ comfort }}
+						{% endfor %}
+					</span>
+				</td>
+			{% endfor %}
+		</tr>
+
+		<tr>
+			<td></td>
+			<td class="w-auto text-center">Питание</td>
+			{% for room in rooms %}
+				<td>
+					<span>
+						{% for food_item in room.food %}
+							{{ food_item }}
+						{% endfor %}
+					</span>
+				</td>
+			{% endfor %}
+		</tr>
+
+		<tr class="bg-warning text-dark">
+			<td></td>
+			<td class="w-auto text-center">Заезды/Выезды</td>
+			{% for room in rooms %}
+				<td>
+					<span>
+						{% for date in room.checkin_checkout_dates %}
+							{% set dateList = date | split(',') %}
+							{% for item in dateList %}
+								{{ item }}
+							{% endfor %}
+						{% endfor %}
+					</span>
+				</td>
+			{% endfor %}
+		</tr>
+
+		<tr>
+			<td></td>
+			<td class="w-auto text-center"></td>
+			{% for room in rooms %}
+				<td>
+					<button class="btn btn-warning">Изменить</button>
+				</td>
+			{% endfor %}
+		</tr>
+
+
 	</table>
 {% endblock %}

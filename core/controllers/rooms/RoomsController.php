@@ -62,13 +62,8 @@ class RoomsController extends BaseController implements ControllerInterface
 
         foreach ($rooms as &$room) {
             $room['checkin_checkout_dates'] = explode("\n", trim($room['checkin_checkout_dates']), strlen($room['checkin_checkout_dates']));
-        }
-
-        $pages = (int)ceil(count($rooms) / parent::PER_PAGE);
-        if ($page) {
-            $this->limitRange($rooms, $page);
-        } else {
-            $this->limitRange($rooms);
+            $room['comforts'] = explode(",", trim($room['comforts']), strlen($room['comforts']));
+            $room['food'] = explode(",", trim($room['food']), strlen($room['food']));
         }
 
         $data = [
@@ -76,8 +71,6 @@ class RoomsController extends BaseController implements ControllerInterface
             'hotels' => $hotelsModel->get(),
             'rooms' => $rooms,
             'header' => 'Номера',
-            'currentPage' => $page,
-            'pages' => $pages,
             'login' => $_COOKIE['login']
         ];
 
