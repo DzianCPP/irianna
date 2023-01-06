@@ -2,76 +2,99 @@ document.addEventListener("DOMContentLoaded", function () {
     let saves = document.getElementsByName("save");
 
     for (let save of saves) {
-        let saveBtn = save;
-        saveBtn.addEventListener("click", function () {
-            createRoom(saveBtn.id);
+        save.addEventListener("click", function () {
+            saveRooms();
         });
     }
 });
 
-async function createRoom(btnId) {
-    let roomId = btnId.substr(5);
-    let checkins = document.getElementsByName("checkin-date-room-" + roomId);
-    let checkouts = document.getElementsByName("checkout-date-room-" + roomId);
-    let checkin_dates = new Array();
-    let checkout_dates = new Array();
-
-    for (let checkin of checkins) {
-        checkin_dates.push(checkin.value);
-    }
-
-    for (let checkout of checkouts) {
-        checkout_dates.push(checkout.value);
-    }
-
-    let checkin_obj = {};
-
-    for (var i = 0; i < checkin_dates.length; i++) {
-        var key = "checkin_date_" + (i + 1);
-        Object.defineProperty(checkin_obj, key, {
-            value: checkin_dates[i],
-            enumerable: true
-        });
-    }
-
-    let checkout_obj = {};
-
-    for (var i = 0; i < checkout_dates.length; i++) {
-        var key = "checkout_date_" + (i + 1);
-        Object.defineProperty(checkout_obj, key, {
-            value: checkout_dates[i],
-            enumerable: true
-        });
-    }
-
-    let _checkin_checkout_dates = JSON.stringify(Object.assign(checkin_obj, checkout_obj));
-
-    let hotel_ids = document.getElementsByName("hotel-id");
-
-    let _hotel_id = hotel_ids[roomId].value;
-
-    let descriptions = document.getElementsByName("room-description");
-
-    let _description = descriptions[roomId].value;
-
-    let info = {
-        checkin_checkout_dates: _checkin_checkout_dates,
-        hotel_id: _hotel_id,
-        description: _description
-    };
+async function saveRooms() {
+    let _rooms = getRoomsInfo();
+    let newRooms = new Object(_rooms);
 
     let url = "/rooms/create";
 
     let POST = {
         method: "POST",
-        body: JSON.stringify(info)
-    }
+        body: stringifyToJson(newRooms)
+    };
 
     let response = await fetch(url, POST);
 
     if (response.ok != false) {
-        location.reload();
+        window.location = "/main";
     } else {
-        alert("error");
+        alert("Что-то пошло не так!");
     }
+}
+
+function getRoomsInfo() {
+    let rooms = {};
+
+    for (var i = 0; i < getCountOfRooms(); i++) {
+        Object.defineProperty(rooms, i, {
+            value: getRoom(i),
+            enumerable: true
+        })
+    }
+
+    return rooms;
+}
+
+function getRoom(i) {
+    return {
+        hotel_id: getHotelId()[i],
+        description: getDescriptions()[i].value,
+        checkin_checkout_dates: getCheckinCheckoutDates()["room-" + i],
+        comforts: getGetComforts()[i].value,
+        food: getFood()[i].value
+    };
+}
+
+function getDescriptions() {
+    return document.getElementsByName("room-description");
+}
+
+function getHotelId() {
+    return document.getElementById("hotel-id").innerHTML;
+}
+
+function getCountOfRooms() {
+    return document.getElementsByTagName("th").length - 1;
+}
+
+function getGetComforts() {
+    return document.getElementsByName("comfort");
+}
+
+function getFood() {
+    return document.getElementsByName("food");
+}
+
+function getCheckinCheckoutDates() {
+    let checkins = getCheckins();
+    let checkouts = getCheckouts();
+
+    let dates = {};
+
+    for (var i = 0; i < getCountOfRooms(); i++) {
+        var json = checkins[i].value + checkouts[i].value;
+        Object.defineProperty(dates, "room-" + i, {
+            value: json
+        });
+    }
+
+    return dates;
+}
+
+function getCheckins() {
+    return document.getElementsByName("checkins");
+}
+
+function getCheckouts() {
+    return document.getElementsByName("checkouts");
+}
+
+function stringifyToJson(value) {
+    return JSON.stringify(value);
 }
