@@ -12,7 +12,7 @@ function addComfort(foodValue) {
     let fieldId = getIdOfFoodsField(foodValue);
     let foodOption = getFoodOption(foodValue);
 
-    document.getElementById(fieldId).value += foodOption + " ";
+    document.getElementById(fieldId).value += foodOption + "\n";
 }
 
 function getIdOfFoodsField(foodValue) {

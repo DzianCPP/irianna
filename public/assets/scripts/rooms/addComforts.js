@@ -12,7 +12,7 @@ function addComfort(comfortValue) {
     let fieldId = getIdOfComfortsField(comfortValue);
     let comfort = getComfort(comfortValue);
 
-    document.getElementById(fieldId).value += comfort + " ";
+    document.getElementById(fieldId).value += comfort + "\n";
 }
 
 function getIdOfComfortsField(comfortValue) {

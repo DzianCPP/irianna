@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let _field = document.getElementById(_fieldId);
             let dateRaw = date.value;
             let dateLocal = formatDateDMY(dateRaw);
-            _field.value += dateLocal + ", ";
+            _field.value += dateLocal + "\n";
         });
     }
 });
