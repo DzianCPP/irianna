@@ -65,9 +65,11 @@
 					<td>
 						<div class="btn-group-vertical">
 							{% for date in dates %}
+							{% if date|length > 4 %}
 								<button {% set dateStatus = date|first %} class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-dark disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
 									{{ date|trim(dateStatus) }}
 								</button>
+								{% endif %}
 							{% endfor %}
 						</div>
 					</td>

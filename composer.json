@@ -27,7 +27,7 @@
     ],
      "require": {
         "vlucas/phpdotenv": "^5.5",
-      "ext-pdo": "*",
+        "ext-pdo": "*",
         "twig/twig": "^3.2",
         "twig/cache-extra": "^3.4"
     }
