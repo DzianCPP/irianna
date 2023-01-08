@@ -40,7 +40,7 @@
 							<td class="w-auto text-center">Удобства</td>
 							<td>
 								<div class="input-group mb-3">
-									<textarea class="form-control border-0" name="comfort" id="room-comforts-{{ room.id }}">{% for comfort in room.comforts %}{{ comfort|trim }}{% endfor %}</textarea>
+									<textarea class="form-control border-0" name="comfort" id="room-comforts-{{ room.id }}">{% for comfort in room.comforts %}{{ comfort|trim }}{{ '\n' }}{% endfor %}</textarea>
 									<div class="btn-group dropend">
 										<button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
 											Добавить
@@ -60,7 +60,7 @@
 							<td class="w-auto text-center">Питание</td>
 							<td>
 								<div class="input-group mb-3">
-									<textarea class="form-control border-0" id="room-food-{{ room.id }}" name="food">{% for food in room.food %}{{ food|trim }}{% endfor %}</textarea>
+									<textarea class="form-control border-0" id="room-food-{{ room.id }}" name="food">{% for food in room.food %}{{ food|trim }}{{ '\n' }}{% endfor %}</textarea>
 									<div class="btn-group dropend">
 										<button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
 											Добавить

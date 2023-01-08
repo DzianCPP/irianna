@@ -2,6 +2,8 @@
 
 namespace core\controllers\rooms\helpers;
 
+use core\services\IdGetter;
+
 class RoomsHelper
 {
     public function normalizeRoom(array &$room): array
@@ -32,5 +34,28 @@ class RoomsHelper
         $room['food'] = explode(",", trim($room['food'], ", "), strlen($room['food']));
         
         return $room;
+    }
+
+    public function normalizeRooms(array &$rooms): array
+    {
+        foreach ($rooms as &$room) {
+            $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
+            $room['checkin_checkout_dates'] = explode(", ", $room['checkin_checkout_dates'], strlen($room['checkin_checkout_dates']));
+            $room['comforts'] = explode(",", trim($room['comforts']), strlen($room['comforts']));
+            $room['food'] = explode(",", trim($room['food']), strlen($room['food']));
+        }
+
+        return $rooms;
+    }
+
+    public function getHotelId(): int
+    {
+        $hotelId = IdGetter::getId();
+
+        if ($hotelId != "") {
+            return $hotelId;
+        }
+        
+        return 0;
     }
 }

@@ -77,15 +77,20 @@ class RoomsController extends BaseController implements ControllerInterface
     {
         $hotelsModel = new HotelsModel();
         $this->setModel(RoomsModel::class);
+        $roomsHelper = new RoomsHelper();
+        $hotelId = $roomsHelper->getHotelId();
 
-        $rooms = $this->model->get();
-
-        foreach ($rooms as &$room) {
-            $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
-            $room['checkin_checkout_dates'] = explode(", ", $room['checkin_checkout_dates'], strlen($room['checkin_checkout_dates']));
-            $room['comforts'] = explode(",", trim($room['comforts']), strlen($room['comforts']));
-            $room['food'] = explode(",", trim($room['food']), strlen($room['food']));
+        if ($hotelId) {
+            $rooms = $this->model->get(columnValue:
+            [
+                'column' => 'hotel_id',
+                'value' => $hotelId
+            ]);
+        } else {
+            $rooms = $this->model->get();
         }
+        
+        $rooms = $roomsHelper->normalizeRooms($rooms);
 
         $data = [
             'title' => 'Номера',
