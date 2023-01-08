@@ -64,6 +64,14 @@ class RoomsModel extends Model implements ModelInterface
 
     public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
+        if (!$this->databaseSqlBuilder->delete(
+            columnValues: $columnValues,
+            tableName: self::TABLE_NAME
+        )) {
+
+            return false;
+        }
+
         return true;
     }
 

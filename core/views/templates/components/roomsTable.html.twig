@@ -5,10 +5,12 @@
 		</tr>
 		<tr>
 			<th scope="col"><input type="checkbox" id="check-all"/></th>
-			{% for i in 0..rooms|length - 1 %}
+			{% for room in rooms %}
+			{% if room.hotel_id == hotel.id %}
 				<th scope="col">
-					<input type="checkbox" name="select"/>
+					<input type="checkbox" name="select" value="{{ room.id }}"/>
 				</th>
+				{% endif %}
 			{% endfor %}
 		</tr>
 
