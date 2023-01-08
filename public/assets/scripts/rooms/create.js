@@ -43,7 +43,7 @@ function getRoomsInfo() {
 
 function getRoom(i) {
     return {
-        hotel_id: getHotelId()[i],
+        hotel_id: getHotelId(),
         description: getDescriptions()[i].value,
         checkin_checkout_dates: getCheckinCheckoutDates()["room-" + i],
         comforts: getGetComforts()[i].value,
