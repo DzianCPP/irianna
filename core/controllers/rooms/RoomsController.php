@@ -7,6 +7,8 @@ use core\controllers\BaseController;
 use core\models\hotels\HotelsModel;
 use core\models\rooms\RoomsModel;
 use core\views\rooms\RoomsView;
+use core\services\IdGetter;
+use core\controllers\rooms\helpers\RoomsHelper;
 
 class RoomsController extends BaseController implements ControllerInterface
 {
@@ -30,11 +32,14 @@ class RoomsController extends BaseController implements ControllerInterface
         $hotel_id = (int)filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $hotelsModel = new HotelsModel();
         $this->setView(RoomsView::class);
+        $rooms = new RoomsModel();
 
         $data = [
             'hotel' => $hotelsModel->get(columnValue: ['column' => 'id', 'value' => $hotel_id])[0],
             'title' => 'Номера',
             'header' => 'Добавить номера',
+            'comforts' => $rooms->getComforts(),
+            'food' => $rooms->getFood(),
             'login' => $_COOKIE['login']
         ];
 
@@ -42,59 +47,94 @@ class RoomsController extends BaseController implements ControllerInterface
     }
     public function edit(): void
     {
+        $id = IdGetter::getId();
+        $this->setModel(RoomsModel::class);
+        $room = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
+        $this->setView(RoomsView::class);
+
+        $roomsHelper = new RoomsHelper();
+        $room = $roomsHelper->normalizeRoom($room);
+
+        $data = [
+            'title' => 'Изменить номер',
+            'header' => 'Изменить номер',
+            'comforts' => $this->model->getComforts(),
+            'food' => $this->model->getFood(),
+            'login' => $_COOKIE['login'],
+            'room' => $room
+        ];
+
+        $this->view->render("rooms/edit.html.twig", $data);
     }
+
     public function create(): void
     {
         $this->setModel(RoomsModel::class);
         $this->model->create();
     }
+
     public function read(int $id = 0): void
     {
         $hotelsModel = new HotelsModel();
         $this->setModel(RoomsModel::class);
-        $page = $this->getPage();
+        $roomsHelper = new RoomsHelper();
+        $hotelId = $roomsHelper->getHotelId();
 
-        $rooms = $this->model->get();
-        foreach ($rooms as &$room) {
-            $room['checkin_checkout_dates'] = json_decode($room['checkin_checkout_dates'], true);
-        }
-
-        foreach ($rooms as &$room) {
-            $middle = count($room['checkin_checkout_dates']) / 2;
-            $room['checkins'] = array_values(array_slice($room['checkin_checkout_dates'], 0, $middle, true));
-            $room['checkouts'] = array_values(array_slice($room['checkin_checkout_dates'], $middle));
-            for ($i = 0; $i < count($room['checkins']); $i++) {
-                $room['dates'][$i] = [
-                    'checkin' => $room['checkins'][$i],
-                    'checkout' => $room['checkouts'][$i]
-                ];
-            }
-        }
-
-        $pages = (int)ceil(count($rooms) / parent::PER_PAGE);
-        if ($page) {
-            $this->limitRange($rooms, $page);
+        if ($hotelId) {
+            $rooms = $this->model->get(columnValue:
+            [
+                'column' => 'hotel_id',
+                'value' => $hotelId
+            ]);
         } else {
-            $this->limitRange($rooms);
+            $rooms = $this->model->get();
         }
+
+        if ($hotelId) {
+            $hotel = $hotelsModel->get(columnValue:
+            [
+                'column' => 'id',
+                'value' => $hotelId
+            ])[0];
+        } else {
+            $hotel = $hotelsModel->get()[0];
+        }
+        
+        $rooms = $roomsHelper->normalizeRooms($rooms);
 
         $data = [
             'title' => 'Номера',
+            'hotel' => $hotel,
             'hotels' => $hotelsModel->get(),
             'rooms' => $rooms,
             'header' => 'Номера',
-            'currentPage' => $page,
-            'pages' => $pages,
             'login' => $_COOKIE['login']
         ];
 
         $this->setView(RoomsView::class);
         $this->view->render("rooms/rooms.html.twig", $data);
     }
+
     public function update(int $id = 0): void
     {
+        $room = json_decode(file_get_contents("php://input"), true);
+        $this->setModel(RoomsModel::class);
+        $this->model->update($room);
     }
+
     public function delete(int $id = 0): void
     {
+        $ids = json_decode(file_get_contents("php://input"), true);
+        if (count($ids) < 1) {
+            return;
+        }
+
+        $this->setModel(RoomsModel::class);
+        if (!$this->model->delete([
+            'column' => 'id',
+            'values' => $ids
+        ])) {
+            http_response_code(500);
+        };
     }
 }
