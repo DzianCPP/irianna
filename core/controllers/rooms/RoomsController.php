@@ -7,6 +7,8 @@ use core\controllers\BaseController;
 use core\models\hotels\HotelsModel;
 use core\models\rooms\RoomsModel;
 use core\views\rooms\RoomsView;
+use core\services\IdGetter;
+use core\controllers\rooms\helpers\RoomsHelper;
 
 class RoomsController extends BaseController implements ControllerInterface
 {
@@ -45,7 +47,26 @@ class RoomsController extends BaseController implements ControllerInterface
     }
     public function edit(): void
     {
+        $id = IdGetter::getId();
+        $this->setModel(RoomsModel::class);
+        $room = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
+        $this->setView(RoomsView::class);
+
+        $roomsHelper = new RoomsHelper();
+        $room = $roomsHelper->normalizeRoom($room);
+
+        $data = [
+            'title' => 'Изменить номер',
+            'header' => 'Изменить номер',
+            'comforts' => $this->model->getComforts(),
+            'food' => $this->model->getFood(),
+            'login' => $_COOKIE['login'],
+            'room' => $room
+        ];
+
+        $this->view->render("rooms/edit.html.twig", $data);
     }
+
     public function create(): void
     {
         $this->setModel(RoomsModel::class);
@@ -56,18 +77,19 @@ class RoomsController extends BaseController implements ControllerInterface
     {
         $hotelsModel = new HotelsModel();
         $this->setModel(RoomsModel::class);
-        $page = $this->getPage();
 
         $rooms = $this->model->get();
 
         foreach ($rooms as &$room) {
-            $room['checkin_checkout_dates'] = explode("\n", trim($room['checkin_checkout_dates']), strlen($room['checkin_checkout_dates']));
+            $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
+            $room['checkin_checkout_dates'] = explode(", ", $room['checkin_checkout_dates'], strlen($room['checkin_checkout_dates']));
             $room['comforts'] = explode(",", trim($room['comforts']), strlen($room['comforts']));
             $room['food'] = explode(",", trim($room['food']), strlen($room['food']));
         }
 
         $data = [
             'title' => 'Номера',
+            'hotel' => $hotelsModel->get()[$id],
             'hotels' => $hotelsModel->get(),
             'rooms' => $rooms,
             'header' => 'Номера',
