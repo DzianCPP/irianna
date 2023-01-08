@@ -342,7 +342,7 @@ return [
     'rooms/update' => [
         'controller' => RoomsController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'rooms/delete' => [

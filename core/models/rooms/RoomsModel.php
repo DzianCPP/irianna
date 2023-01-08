@@ -30,6 +30,29 @@ class RoomsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
+        $newInfo = $this->validator->makeDataSafe($newInfo);
+
+        $room = $newInfo;
+
+        $room['comforts'] = str_replace("\n", ", ", $room['comforts']);
+            $room['food'] = str_replace("\n", ", ", $room['food']);
+            $room['checkin_checkout_dates'] = str_replace("\n", ", ", $room['checkin_checkout_dates']);
+            $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
+            $room['checkin_checkout_dates'] = explode(", ", $room['checkin_checkout_dates'], strlen($room['checkin_checkout_dates']));
+            foreach ($room['checkin_checkout_dates'] as &$date) {
+                $date = "f" . $date;
+            }
+
+            $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
+
+        if (!$this->validator->isDataSafe($newInfo)) {
+            return false;
+        }
+
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $room, "id")) {
+            return false;
+        }
+
         return true;
     }
 

@@ -114,9 +114,14 @@ class RoomsController extends BaseController implements ControllerInterface
         $this->setView(RoomsView::class);
         $this->view->render("rooms/rooms.html.twig", $data);
     }
+
     public function update(int $id = 0): void
     {
+        $room = json_decode(file_get_contents("php://input"), true);
+        $this->setModel(RoomsModel::class);
+        $this->model->update($room);
     }
+
     public function delete(int $id = 0): void
     {
         $ids = json_decode(file_get_contents("php://input"), true);
