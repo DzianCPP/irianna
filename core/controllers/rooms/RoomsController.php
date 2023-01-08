@@ -89,12 +89,22 @@ class RoomsController extends BaseController implements ControllerInterface
         } else {
             $rooms = $this->model->get();
         }
+
+        if ($hotelId) {
+            $hotel = $hotelsModel->get(columnValue:
+            [
+                'column' => 'id',
+                'value' => $hotelId
+            ])[0];
+        } else {
+            $hotel = $hotelsModel->get()[0];
+        }
         
         $rooms = $roomsHelper->normalizeRooms($rooms);
 
         $data = [
             'title' => 'Номера',
-            'hotel' => $hotelsModel->get()[$id],
+            'hotel' => $hotel,
             'hotels' => $hotelsModel->get(),
             'rooms' => $rooms,
             'header' => 'Номера',

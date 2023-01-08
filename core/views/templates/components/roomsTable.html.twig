@@ -1,8 +1,11 @@
 {% block table %}
 	<table class="table table-bordered border-secondary table-responsive table-sm table-xl table-md table-xs table-hover text-center w-100" id="table">
 		<tr>
+		<th colspan="{{ rooms|length + 1}}">Еще можно создать номеров:  {% set freeRooms = hotel.rooms - rooms|length %}{{ freeRooms }}</th>
+		</tr>
+		<tr>
 			<th scope="col"><input type="checkbox" id="check-all"/></th>
-			{% for i in 0..hotel.rooms - 1 %}
+			{% for i in 0..rooms|length - 1 %}
 				<th scope="col">
 					<input type="checkbox" id="select"/>
 				</th>
