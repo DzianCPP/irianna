@@ -10,25 +10,25 @@ class RoomsHelper
     {
         $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
         $room['checkin_checkout_dates'] = explode(", ", $room['checkin_checkout_dates'], strlen($room['checkin_checkout_dates']));
-        foreach ($room['checkin_checkout_dates'] as &$date) {
-            $date = substr($date, 1);
-        }
         
         $checkins = [];
         
         
-        for ($i = 0; $i < count($room['checkin_checkout_dates']); $i += 2) {
+        for ($i = 0; $i < count($room['checkin_checkout_dates']) / 2; $i++) {
             $checkins[] = $room['checkin_checkout_dates'][$i];
         }
 
         $checkouts = [];
-        for ($i = 1; $i < count($room['checkin_checkout_dates']); $i += 2) {
+        for ($i = count($room['checkin_checkout_dates']) / 2; $i < count($room['checkin_checkout_dates']); $i++) {
             $checkouts[] = $room['checkin_checkout_dates'][$i];
         }
 
         $room['checkin_checkout_dates'] = [];
-        $room['checkin_checkout_dates']['checkins'] = $checkins;
-        $room['checkin_checkout_dates']['checkouts'] = $checkouts;
+
+        for ($i = 0; $i < count($checkins); $i++) {
+            $room['checkin_checkout_dates'][] = $checkins[$i];
+            $room['checkin_checkout_dates'][] = $checkouts[$i];
+        }
 
         $room['comforts'] = explode(",", trim($room['comforts'], ", "), strlen($room['comforts']));
         $room['food'] = explode(",", trim($room['food'], ", "), strlen($room['food']));
@@ -39,10 +39,7 @@ class RoomsHelper
     public function normalizeRooms(array &$rooms): array
     {
         foreach ($rooms as &$room) {
-            $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
-            $room['checkin_checkout_dates'] = explode(", ", $room['checkin_checkout_dates'], strlen($room['checkin_checkout_dates']));
-            $room['comforts'] = explode(",", trim($room['comforts']), strlen($room['comforts']));
-            $room['food'] = explode(",", trim($room['food']), strlen($room['food']));
+            $room = $this->normalizeRoom($room);
         }
 
         return $rooms;
