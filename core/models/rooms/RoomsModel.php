@@ -36,11 +36,19 @@ class RoomsModel extends Model implements ModelInterface
     public function create(): bool
     {
         $rooms = json_decode(file_get_contents("php://input"), true);
-        foreach ($rooms as $room) {
+        foreach ($rooms as &$room) {
             // TODO move these three methods to a helper class
             $room['comforts'] = str_replace("\n", ", ", $room['comforts']);
             $room['food'] = str_replace("\n", ", ", $room['food']);
             $room['checkin_checkout_dates'] = str_replace("\n", ", ", $room['checkin_checkout_dates']);
+            $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
+            $room['checkin_checkout_dates'] = explode(", ", $room['checkin_checkout_dates'], strlen($room['checkin_checkout_dates']));
+            foreach ($room['checkin_checkout_dates'] as &$date) {
+                $date = "f" . $date;
+            }
+
+            $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
+
             foreach ($room as $attribute) {
                 if ($attribute == NULL || $attribute == "") {
                     continue 2;
