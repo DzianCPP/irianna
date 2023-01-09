@@ -6,6 +6,8 @@ use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\views\buses\BusesView;
 use core\models\buses\BusesModel;
+use core\services\IdGetter;
+use core\controllers\buses\helpers\BusesHelper;
 
 class BusesController extends BaseController implements ControllerInterface
 {
@@ -26,10 +28,28 @@ class BusesController extends BaseController implements ControllerInterface
 
     public function edit(): void
     {
+        $this->setModel(BusesModel::class);
+        $this->setView(BusesView::class);
+        $id = IdGetter::getId();
+        $bus = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
+        $bus = BusesHelper::datesToArray($bus);
+
+        $data = [
+            'title' => "Изменить рейс",
+            'header' => "Изменить рейс",
+            'login' => $_COOKIE['login'],
+            'bus' => $bus
+        ];
+
+        $this->view->render("buses/edit.html.twig", $data);
     }
+
     public function create(): void
     {
+        $this->setModel(BusesModel::class);
+        $this->model->create();
     }
+
     public function read(int $id = 0): void
     {
         if (!$this->isLogged()) {
@@ -69,6 +89,7 @@ class BusesController extends BaseController implements ControllerInterface
     public function update(int $id = 0): void
     {
     }
+
     public function delete(int $id = 0): void
     {
     }
