@@ -81,7 +81,8 @@ class CountriesController extends BaseController implements ControllerInterface
             'country' => $country,
             'title' => 'IriANNA',
             'author' => 'IriANNA',
-            'message' => 'Введите новые данные'
+            'message' => 'Введите новые данные',
+            'login' => $_COOKIE['login']
         ];
         $this->view->render("countries/edit.html.twig", $data);
     }

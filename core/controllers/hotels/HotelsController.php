@@ -28,6 +28,7 @@ class HotelsController extends BaseController implements ControllerInterface
 
         $this->view->render("hotels/new.html.twig", $data);
     }
+
     public function edit(): void
     {
         $this->setModel(HotelsModel::class);
@@ -40,16 +41,19 @@ class HotelsController extends BaseController implements ControllerInterface
             'hotel' => $this->model->get(columnValue: ['column' => "id", 'value' => $id])[0],
             'title' => "Исправить гостиницу",
             'header' => "Изменить гостиницу",
+            'login' => $_COOKIE['login'],
             'resorts' => $resorts->get()
         ];
 
         $this->view->render("hotels/edit.html.twig", $data);
     }
+
     public function create(): void
     {
         $this->setModel(HotelsModel::class);
         $this->model->create();
     }
+
     public function read(int $id = 0): void
     {
         if (!$this->isLogged()) {
