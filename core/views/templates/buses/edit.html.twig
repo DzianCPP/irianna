@@ -22,21 +22,21 @@
 						<div class="row w-100 mb-2">
 							<div class="input-group">
 								<span class="input-group-text w-25">Название</span>
-								<input type="text" class="form-control" name="text" id="name" placeholder="Введите название автобуса"/>
+								<input type="text" value="{{ bus.name }}" class="form-control" name="text" id="name" placeholder="Введите название автобуса"/>
 							</div>
 						</div>
 
 						<div class="row w-100 mb-2">
 							<div class="input-group">
 								<span class="input-group-text w-25">Маршрут</span>
-								<input type="text" class="form-control" name="text" id="route" placeholder="Введите маршрут автобуса"/>
+								<input type="text" value="{{ bus.route }}" class="form-control" name="text" id="route" placeholder="Введите маршрут автобуса"/>
 							</div>
 						</div>
 
 						<div class="row w-100 mb-2">
 							<div class="input-group">
 								<span class="input-group-text w-25">Места</span>
-								<input type="text" class="form-control" name="text" id="places" placeholder="Введите количетсво мест"/>
+								<input type="text" value="{{ bus.places }}" class="form-control" name="text" id="places" placeholder="Введите количетсво мест"/>
 							</div>
 						</div>
 
@@ -44,12 +44,12 @@
 							<div class="input-group">
                                 <div class="input-group w-100">
 									<span class="input-group-text w-25">Из Минска</span>
-									<textarea placeholder="Из Минска" class="form-control w-50" name="from-minsk" aria-label="With textarea" id="from-minsk"></textarea>
+									<textarea placeholder="Из Минска" class="form-control w-50" name="from-minsk" aria-label="With textarea" id="from-minsk">{% for date in bus.departure_from_minsk %}{{ date }}{{ '\n' }}{% endfor %}</textarea>
 									<input type="date" class="btn btn-sm border-0 w-25" name="date" id="calendar-from-minsk">
 								</div>
 								<div class="input-group w-100">
 									<span class="input-group-text w-25">В Минск</span>
-									<textarea placeholder="В Минск" class="form-control w-50" name="to-minsk" aria-label="With textarea" id="to-minsk"></textarea>
+									<textarea placeholder="В Минск" class="form-control w-50" name="to-minsk" aria-label="With textarea" id="to-minsk">{% for date in bus.arrival_to_minsk %}{{ date }}{{ '\n' }}{% endfor %}</textarea>
                                     <input type="date" class="btn btn-sm border-0 w-25" name="date" id="calendar-to-minsk">
 								</div>
 							</div>
@@ -64,7 +64,8 @@
 						</div>
 
 						<div class="row w-100 mb-2">
-							<p id="error-field-1"></p>
+							<p id="error-field"></p>
+							<p hidden id="bus-id">{{ bus.id }}</p>
 						</div>
 					
 				</div>
@@ -72,7 +73,7 @@
 		</div>
 
 
-		<script type="text/javascript" src="/assets/scripts/buses/create.js"></script>
+		<script type="text/javascript" src="/assets/scripts/buses/update.js"></script>
 		<script type="text/javascript" src="/assets/scripts/buses/formFilled.js"></script>
 		<script type="text/javascript" src="/assets/scripts/buses/addDates.js"></script>		
 	</div>
