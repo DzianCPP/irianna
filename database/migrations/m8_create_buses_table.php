@@ -17,8 +17,8 @@ class m8_create_buses_table extends BaseMigration
                         name varchar(255) NOT NULL,
                         route varchar(1024) NOT NULL,
                         places int(11) NOT NULL,
-                        departure_from_minsk date DEFAULT NULL,
-                        arrival_to_minsk date DEFAULT NULL,
+                        departure_from_minsk text DEFAULT NULL,
+                        arrival_to_minsk text DEFAULT NULL,
                         PRIMARY KEY (id))";
 
         $query = $conn->prepare($sqlQuery);
