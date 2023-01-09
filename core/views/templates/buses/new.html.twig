@@ -1,318 +1,78 @@
-{% extends "base.html.twig" %} {% block content %}
-<div class="container-xs container-sm container-md container-xl">
-    {% use 'components/navBar.html.twig' %} {% block nav %} {{ parent() }} {%
+{% extends "base.html.twig" %}
+{% block content %}
+	<div class="container-xs container-sm container-md container-xl">
+		{% use 'components/navBar.html.twig' %}
+		{% block nav %}
+			{{ parent() }}
+		{%
     endblock %}
 
-    <div class="row w-100 mt-5 mb-5">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
-            <p class="h1 text-center" id="main-page-h1">{{ header }}</p>
-        </div>
-    </div>
+		<div class="container-fluid">
+			<div class="row w-100 mt-5 mb-5">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+					<p class="h1 text-center" id="main-page-h1">{{ header }}</p>
+				</div>
+			</div>
+		</div>
 
-    <div class="row w-100">
+		<div class="container-fluid">
+			<div class="row w-100">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4"></div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
+						<div class="row w-100 mb-2">
+							<div class="input-group">
+								<span class="input-group-text w-25">Название</span>
+								<input type="text" class="form-control" name="text" id="name" placeholder="Введите название автобуса"/>
+							</div>
+						</div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
-            <div class="container-xs container-sm container-md container-xl">
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-25">Название</span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="text"
-                            id="name-1"
-                            placeholder="Введите название автобуса"
-                            />
-                    </div>
-                </div>
+						<div class="row w-100 mb-2">
+							<div class="input-group">
+								<span class="input-group-text w-25">Маршрут</span>
+								<input type="text" class="form-control" name="text" id="route" placeholder="Введите маршрут автобуса"/>
+							</div>
+						</div>
 
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-25">Маршрут</span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="text"
-                            id="route-1"
-                            placeholder="Введите маршрут автобуса"
-                            />
-                    </div>
-                </div>
+						<div class="row w-100 mb-2">
+							<div class="input-group">
+								<span class="input-group-text w-25">Места</span>
+								<input type="text" class="form-control" name="text" id="places" placeholder="Введите количетсво мест"/>
+							</div>
+						</div>
 
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-25">Места</span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="text"
-                            id="places-1"
-                            placeholder="Введите количетсво мест"
-                            />
-                    </div>
-                </div>
+						<div class="row w-100 mb-2">
+							<div class="input-group">
+                                <div class="input-group w-100">
+									<span class="input-group-text w-25">Из Минска</span>
+									<textarea placeholder="Из Минска" class="form-control w-50" name="from-minsk" aria-label="With textarea" id="from-minsk"></textarea>
+									<input type="date" class="btn btn-sm border-0 w-25" name="date" id="date-out">
+								</div>
+								<div class="input-group w-100">
+									<span class="input-group-text w-25">В Минск</span>
+									<textarea placeholder="В Минск" class="form-control w-50" name="to-minsk" aria-label="With textarea" id="to-minsk"></textarea>
+                                    <input type="date" class="btn btn-sm border-0 w-25" name="date" id="date-in">
+								</div>
+							</div>
+						</div>
 
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-50">Из Минска</span>
-                        <input
-                            type="date"
-                            class="form-control"
-                            name="text"
-                            id="departure-from-minsk-1"
-                            placeholder="Введите дату отправления из Минска"
-                            />
-                    </div>
-                </div>
+						<div class="row w-100 mb-2">
+							<div class="input-group w-100 mb-2">
+								<button type="button" class="btn btn-success w-100" id="save-btn" disabled>
+									Сохранить
+								</button>
+							</div>
+						</div>
 
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-50">Из курорта</span>
-                        <input
-                            type="date"
-                            class="form-control"
-                            name="text"
-                            id="departure-from-resort-1"
-                            placeholder="Введите дату отправления из курорта"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-50">В Минск</span>
-                        <input
-                            type="date"
-                            class="form-control"
-                            name="text"
-                            id="arrival-to-minsk-1"
-                            placeholder="Введите дату прибытия в Минск"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group w-100 mb-2">
-                        <button
-                            type="button"
-                            class="btn btn-success w-100"
-                            id="save-btn-1"
-                            disabled>
-                            Сохранить
-                        </button>
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <p id="error-field-1"></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
-            <div class="container-xs container-sm container-md container-xl">
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-25">Название</span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="text"
-                            id="name-2"
-                            placeholder="Введите название автобуса"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-25">Маршрут</span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="text"
-                            id="route-2"
-                            placeholder="Введите маршрут автобуса"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-25">Места</span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="text"
-                            id="places-2"
-                            placeholder="Введите количетсво мест"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-50">Из Минска</span>
-                        <input
-                            type="date"
-                            class="form-control"
-                            name="text"
-                            id="departure-from-minsk-2"
-                            placeholder="Введите дату отправления из Минска"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-50">Из курорта</span>
-                        <input
-                            type="date"
-                            class="form-control"
-                            name="text"
-                            id="departure-from-resort-2"
-                            placeholder="Введите дату отправления из курорта"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-50">В Минск</span>
-                        <input
-                            type="date"
-                            class="form-control"
-                            name="text"
-                            id="arrival-to-minsk-2"
-                            placeholder="Введите дату прибытия в Минск"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group w-100 mb-2">
-                        <button
-                            type="button"
-                            class="btn btn-success w-100"
-                            id="save-btn-2"
-                            disabled>
-                            Сохранить
-                        </button>
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <p id="error-field-1"></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
-            <div class="container-xs container-sm container-md container-xl">
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-25">Название</span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="text"
-                            id="name-3"
-                            placeholder="Введите название автобуса"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-25">Маршрут</span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="text"
-                            id="route-3"
-                            placeholder="Введите маршрут автобуса"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-25">Места</span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="text"
-                            id="places-3"
-                            placeholder="Введите количетсво мест"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-50">Из Минска</span>
-                        <input
-                            type="date"
-                            class="form-control"
-                            name="text"
-                            id="departure-from-minsk-1"
-                            placeholder="Введите дату отправления из Минска"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-50">Из курорта</span>
-                        <input
-                            type="date"
-                            class="form-control"
-                            name="text"
-                            id="departure-from-resort-3"
-                            placeholder="Введите дату отправления из курорта"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text w-50">В Минск</span>
-                        <input
-                            type="date"
-                            class="form-control"
-                            name="text"
-                            id="arrival-to-minsk-3"
-                            placeholder="Введите дату прибытия в Минск"
-                            />
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group w-100 mb-2">
-                        <button
-                            type="button"
-                            class="btn btn-success w-100"
-                            id="save-btn-3"
-                            disabled>
-                            Сохранить
-                        </button>
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <p id="error-field-1"></p>
-                </div>
-            </div>
-        </div>
-
-    </div>
+						<div class="row w-100 mb-2">
+							<p id="error-field-1"></p>
+						</div>
+					
+				</div>
+			</div>
+		</div>
 
 
-    <script
-        type="text/javascript"
-        src="/assets/scripts/buses/create.js"></script>
-    <script
-        type="text/javascript"
-        src="/assets/scripts/buses/formFilled.js"></script>
-</div>
+		<script type="text/javascript" src="/assets/scripts/buses/create.js"></script>
+		<script type="text/javascript" src="/assets/scripts/buses/formFilled.js"></script>
+	</div>
 {% endblock %}
