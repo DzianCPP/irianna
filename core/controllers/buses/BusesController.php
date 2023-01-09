@@ -88,9 +88,26 @@ class BusesController extends BaseController implements ControllerInterface
 
     public function update(int $id = 0): void
     {
+        $bus = json_decode(file_get_contents("php://input"), true);
+        $this->setModel(BusesModel::class);
+        if (!$this->model->update($bus)) {
+            http_response_code(500);
+        }
     }
 
     public function delete(int $id = 0): void
     {
+        $ids = json_decode(file_get_contents("php://input"), true);
+        if (count($ids) < 1) {
+            return;
+        }
+
+        $this->setModel(BusesModel::class);
+        if (!$this->model->delete([
+            'column' => 'id',
+            'values' => $ids
+        ])) {
+            http_response_code(500);
+        };
     }
 }

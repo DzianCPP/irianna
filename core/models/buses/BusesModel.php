@@ -35,6 +35,10 @@ class BusesModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, 'id')) {
+            return false;
+        }
+
         return true;
     }
 
@@ -52,6 +56,10 @@ class BusesModel extends Model implements ModelInterface
 
     public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
+        if (!$this->databaseSqlBuilder->delete($columnValues, self::TABLE_NAME)) {
+            return false;
+        }
+
         return true;
     }
 }

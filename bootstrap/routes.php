@@ -228,7 +228,7 @@ return [
     'buses/update' => [
         'controller' => BusesController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'buses/delete' => [
