@@ -64,7 +64,7 @@
 				</div>
 			</div>
 
-			{% for sb in sub_clients %}
+			{% for sc in sub_clients %}
 				<div class="container-fluid w-100 mb-2 container-fluid w-100 border border-dark border-1 border-start-0 border-end-0 border-bottom-0 rounded-0 pt-2">
 					<div class="row w-100">
 						<div class="col-12 col-sm-12 col-md-4 col-xl-4"></div>
@@ -73,30 +73,31 @@
 								<span class="input-group-text w-25">Фамилия
 									<span class="text-danger">*</span>
 								</span>
-								<input value="{{ sb.lastName }}" type="text" class="form-control" name="last-name" id="main-client-last-name" placeholder="Введите фамилию клиента"/>
+								<input value="{{ sc.lastName }}" type="text" class="form-control" name="last-name" id="main-client-last-name" placeholder="Введите фамилию клиента"/>
 							</div>
 							<div class="input-group mt-2">
 								<span class="input-group-text w-25">Имя
 									<span class="text-danger">*</span>
 								</span>
-								<input value="{{ sb.firstName }}" type="text" class="form-control" name="first-name" id="main-client-first-name" placeholder="Введите имя клиента"/>
+								<input value="{{ sc.firstName }}" type="text" class="form-control" name="first-name" id="main-client-first-name" placeholder="Введите имя клиента"/>
 							</div>
 							<div class="input-group mt-2">
 								<span class="input-group-text w-25">Отчество</span>
-								<input value="{{ sb.secondName }}" type="text" class="form-control" name="second-name" id="main-client-second-name" placeholder="Введите отчество клиента"/>
+								<input value="{{ sc.secondName }}" type="text" class="form-control" name="second-name" id="main-client-second-name" placeholder="Введите отчество клиента"/>
 							</div>
 							<div class="input-group mt-2">
 								<span class="input-group-text w-25">Паспорт
 									<span class="text-danger">*</span>
 								</span>
-								<input value="{{ client.passport }}" type="text" class="form-control" name="passport" id="main-client-passport" placeholder="Введите серию и номер паспорта"/>
+								<input value="{{ sc.passport }}" type="text" class="form-control" name="passport" id="main-client-passport" placeholder="Введите серию и номер паспорта"/>
 							</div>
 							<div class="input-group mt-2">
 								<span class="input-group-text w-50">Дата рождения(д.м.г)
 									<span class="text-danger">*</span>
 								</span>
-								<input value="{{ client.birth_date }}" type="date" class="form-control" name="bith-date" id="main-client-birth-date" placeholder="Введите дату рождения клиента"/>
+								<input value="{{ sc.birth_date }}" type="date" class="form-control" name="bith-date" id="main-client-birth-date" placeholder="Введите дату рождения клиента"/>
 							</div>
+                            <p hidden name="sub-client-id-form">{{ sc.id }}</p>
 						</div>
 					</div>
 				</div>
@@ -115,6 +116,11 @@
 				</div>
 			</div>
 		</div>
+
+		<p hidden id="client-id">{{ client.id }}</p>
+		{% for sc in sub_clients %}
+			<p hidden name="sub-client-id">{{ sc.id }}</p>
+		{% endfor %}
 		<script type="text/javascript" src="/assets/scripts/clients/addForm.js"></script>
-		<script type="text/javascript" src="/assets/scripts/clients/create.js"></script>
+		<script type="text/javascript" src="/assets/scripts/clients/update.js"></script>
 	{% endblock %}
