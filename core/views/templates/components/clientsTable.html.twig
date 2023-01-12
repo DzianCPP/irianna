@@ -4,20 +4,24 @@
     table-hover text-center w-100"
     id="table">
     <tr>
-        <th scope="col"><input type="checkbox" id="check-all" /></th>
+        <th scope="col"><input type="checkbox" id="check-all"/></th>
         <th scope="col">id</th>
         <th scope="col">ФИО</th>
         <th scope="col">Паспорт</th>
+        <th scope="col">Телефон</th>
+        <th scope="col">Доп.телефон</th>
         <th scope="col">Прописка</th>
         <th scope="col"></th>
     </tr>
     {% for client in clients %}
     <tr>
-        <td><input name="select" type="checkbox" value="{{ bus.id }}" /></td>
+        <td><input name="select" type="checkbox" value="{{ client.id }}" /></td>
         <td>{{ client.id }}</td>
         <td>{{ client.name }}</td>
         <td>{{ client.passport }}</td>
-        <td>{{ client.address }}</td>
+        <td>{% if client.main_phone|length < 1 %}{{ '---' }}{% else %}{{ client.main_phone }}{% endif %}</td>
+        <td>{% if client.second_phone|length < 1 %}{{ '---' }}{% else %}{{ client.second_phone }}{% endif %}</td>
+        <td>{% if client.address|length < 1 %}{{ '---' }}{% else %}{{ client.address }}{% endif %}</td>
         <td>
             <a class="btn btn-success" href="/clients/edit/{{ client.id }}">Исправить</a>
         </td>
