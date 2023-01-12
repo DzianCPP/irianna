@@ -28,4 +28,16 @@ class ClientsHelper
 
         return $clients[count($clients) - 1]['id'];
     }
+
+    public static function denormalizeClients(array &$clients): array
+    {
+        foreach ($clients as &$c) {
+            $arr = explode(" ", $c['name'], strlen($c['name']));
+            $c['lastName'] = $arr[0];
+            $c['firstName'] = $arr[1];
+            $c['secondName'] = $arr[2];
+        }
+
+        return $clients;
+    }
 }

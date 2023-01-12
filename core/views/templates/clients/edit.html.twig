@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+{% block content %}
+	<div class="container-xs container-sm container-md container-xl" id="main-container">
+		{% use 'components/navBar.html.twig' %}
+		{% block nav %}
+			{{ parent() }}
+		{%
+  endblock %}
+
+		<div class="container-fluid w-100">
+			<div class="row w-100 mt-2 mb-2">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+					<p class="h1 text-center" id="main-page-h1">{{ header }}</p>
+				</div>
+			</div>
+		</div>
+
+        {% for sb in sub_clients %}
+        <p hidden name="sub-client-name">{{ sb.name }}</p>
+        <p hidden name="sub-client-passport">{{ sb.passport }}</p>
+        <p hidden name="sub-client-birth_date">{{ sb.birth_date }}</p>
+        {% endfor %}
+
+		<div class="container-fluid p-2 w-100" name="clients" id="clients">
+			<div class="row w-100 mb-2">
+				<div class="col-12 col-sm-12 col-md-4 col-xl-4"></div>
+				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+					<div class="input-group">
+						<span class="input-group-text w-25">Фамилия
+							<span class="text-danger">*</span>
+						</span>
+						<input value="{{ client.lastName }}" type="text" class="form-control" name="last-name" id="main-client-last-name" placeholder="Введите фамилию клиента"/>
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text w-25">Имя
+							<span class="text-danger">*</span>
+						</span>
+						<input value="{{ client.firstName }}" type="text" class="form-control" name="first-name" id="main-client-first-name" placeholder="Введите имя клиента"/>
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text w-25">Отчество</span>
+						<input value="{{ client.secondName }}" type="text" class="form-control" name="second-name" id="main-client-second-name" placeholder="Введите отчество клиента"/>
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text w-auto">Телефон 1
+							<span class="text-danger">*</span>
+						</span>
+						<input value="{{ client.main_phone }}" type="text" class="form-control" name="phone" id="main-client-phone-main" placeholder="Введите телефон клиента"/>
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text w-25">Телефон 2</span>
+						<input type="text" class="form-control" name="phone" id="main-client-phone-second" placeholder="Введите телефон клиента"/>
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text w-25">Паспорт
+							<span class="text-danger">*</span>
+						</span>
+						<input value="{{ client.passport }}" type="text" class="form-control" name="passport" id="main-client-passport" placeholder="Введите серию и номер паспорта"/>
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text w-50">Дата рождения(д.м.г)
+							<span class="text-danger">*</span>
+						</span>
+						<input value="{{ client.birth_date }}" type="date" class="form-control" name="bith-date" id="main-client-birth-date" placeholder="Введите дату рождения клиента"/>
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text w-25">Адрес</span>
+						<input value="{{ client.address }}" type="text" class="form-control" name="address" id="main-client-address" placeholder="Введите адрес прописки клиента"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid w-100" name="clients" id="clients">
+			<div class="row w-100 mb-2">
+				<div class="col-12 col-sm-12 col-md-4 col-xl-4"></div>
+				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+					<div class="input-group mt-2">
+						<button type="button" class="btn btn-success w-75" name="save-btn" id="save-btn">
+							Сохранить
+						</button>
+						<button type"button" class="btn btn-outline-success w-25" name="add-subclient">+</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="/assets/scripts/clients/addForm.js"></script>
+		<script type="text/javascript" src="/assets/scripts/clients/create.js"></script>
+	{% endblock %}

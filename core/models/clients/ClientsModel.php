@@ -21,11 +21,15 @@ class ClientsModel extends Model implements ModelInterface
 
     public function get(array $columnValue = []): array
     {
+        $clients = [];
+
         if ($columnValue != []) {
-            return $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], columnValue: $columnValue);
+            $clients  = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], columnValue: $columnValue);
+        } else {
+            $clients = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], $columnValue);
         }
 
-        return $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], $columnValue);
+        return ClientsHelper::denormalizeClients($clients);
     }
 
     public function update(array $newInfo): bool
@@ -60,7 +64,15 @@ class ClientsModel extends Model implements ModelInterface
         if (!$this->databaseSqlBuilder->delete($columnValues, self::TABLE_NAMES[0])) {
             return false;
         }
-        
+
         return true;
+    }
+
+    public function getSubClients(array $columnValue = []): array
+    {
+        $sub_clients =  $this->databaseSqlBuilder->select(self::TABLE_NAMES[1], $columnValue);
+        $sub_clients = ClientsHelper::denormalizeClients($sub_clients);
+
+        return $sub_clients;
     }
 }
