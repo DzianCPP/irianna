@@ -77,11 +77,15 @@ function getSubClients() {
     for (var el of document.getElementsByName("sub-client-birth-date")) {
         birthDates.push(el.value);
     }
+
+    let names = [];
+
+    for (var i = 0; i < lastNames.length; i++) {
+        names.push(lastNames[i] + " " + firstNames[i] + " " + secondNames[i]);
+    }
     
     return {
-        _lastNames: lastNames,
-        _firstNames: firstNames,
-        _secondNames: secondNames,
+        _names: names,
         _passport: passports,
         _birthDates: birthDates
     };

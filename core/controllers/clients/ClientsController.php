@@ -5,6 +5,7 @@ namespace core\controllers\clients;
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\views\clients\ClientsView;
+use core\models\clients\ClientsModel;
 
 class ClientsController extends BaseController implements ControllerInterface
 {
@@ -22,11 +23,23 @@ class ClientsController extends BaseController implements ControllerInterface
 
     public function edit(): void
     {
+        $this->setModel(ClientsModel::class);
+        if (!$this->model->create()) {
+            http_response_code(500);
+            die();
+        }
+
         return;
     }
 
     public function create(): void
     {
+        $this->setModel(ClientsModel::class);
+        if (!$this->model->create()) {
+            http_response_code(500);
+            die();
+        }
+
         return;
     }
 
