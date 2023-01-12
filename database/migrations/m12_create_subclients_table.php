@@ -5,18 +5,19 @@ namespace database\migrations;
 use core\application\Database;
 use PDO;
 
-class m9_create_periods_table extends BaseMigration
+class m12_create_subclients_table extends BaseMigration
 {
     public function up(): bool
     {
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "CREATE TABLE IF NOT EXISTS periods_table (
+        $sqlQuery = "CREATE TABLE IF NOT EXISTS subclients_table (
                         id int(11) NOT NULL AUTO_INCREMENT,
-                        date date NOT NULL,
-                        bus_id int(11) NOT NULL,
-                        transit_type int(11) NOT NULL,
+                        main_client_id int(11) NOT NULL,
+                        name text(1024) NOT NULL,
+                        passport text(256) NOT NULL,
+                        birth_date text(256) NOT NULL,
                         PRIMARY KEY (id))";
 
         $query = $conn->prepare($sqlQuery);
