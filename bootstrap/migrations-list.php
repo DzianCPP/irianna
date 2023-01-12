@@ -10,7 +10,8 @@ return [
     ['m6' => 'm6_create_tours_table'],
     ['m7' => 'm7_create_managers_table'],
     ['m8' => 'm8_create_buses_table'],
-    ['m9' => 'm9_create_periods_table'],
+    ['m9' => 'm9_create_clients_table'],
     ['m10' => 'm10_create_templates_table'],
-    ['m11' => 'm11_create_rooms_table']
+    ['m11' => 'm11_create_rooms_table'],
+    ['m12' => 'm12_create_subclients_table']
 ];
