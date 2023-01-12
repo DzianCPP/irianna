@@ -43,7 +43,7 @@ class ClientsModel extends Model implements ModelInterface
             return false;
         }
 
-        $clientId = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0])[0]['id'];
+        $clientId = ClientsHelper::getLastClientId(self::TABLE_NAMES[0]);
 
         foreach ($sub_clients as $sb) {
             $sb['main_client_id'] = $clientId;

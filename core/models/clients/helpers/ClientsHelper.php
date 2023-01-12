@@ -2,6 +2,8 @@
 
 namespace core\models\clients\helpers;
 
+use core\models\DatabaseSqlBuilder;
+
 class ClientsHelper
 {
     public static function normalizeSubClients(array &$sub_clients_data): array
@@ -17,5 +19,13 @@ class ClientsHelper
         }
 
         return $sub_clients;
+    }
+
+    public static function getLastClientId(string $table_name): int
+    {
+        $dbSqlBuilder = new DatabaseSqlBuilder();
+        $clients = $dbSqlBuilder->select($table_name);
+
+        return $clients[count($clients) - 1]['id'];
     }
 }
