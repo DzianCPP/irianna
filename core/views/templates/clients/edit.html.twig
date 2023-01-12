@@ -55,7 +55,7 @@
 						<span class="input-group-text w-50">Дата рождения(д.м.г)
 							<span class="text-danger">*</span>
 						</span>
-						<input value="{{ client.birth_date }}" type="date" class="form-control" name="bith-date" id="main-client-birth-date" placeholder="Введите дату рождения клиента"/>
+						<input value="{{ client.birth_date }}" type="date" class="form-control" name="birth-date" id="main-client-birth-date" placeholder="Введите дату рождения клиента"/>
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-25">Адрес</span>
@@ -73,29 +73,29 @@
 								<span class="input-group-text w-25">Фамилия
 									<span class="text-danger">*</span>
 								</span>
-								<input value="{{ sc.lastName }}" type="text" class="form-control" name="last-name" id="main-client-last-name" placeholder="Введите фамилию клиента"/>
+								<input value="{{ sc.lastName }}" type="text" class="form-control" name="sub-client-last-name" id="main-client-last-name" placeholder="Введите фамилию клиента"/>
 							</div>
 							<div class="input-group mt-2">
 								<span class="input-group-text w-25">Имя
 									<span class="text-danger">*</span>
 								</span>
-								<input value="{{ sc.firstName }}" type="text" class="form-control" name="first-name" id="main-client-first-name" placeholder="Введите имя клиента"/>
+								<input value="{{ sc.firstName }}" type="text" class="form-control" name="sub-client-first-name" id="main-client-first-name" placeholder="Введите имя клиента"/>
 							</div>
 							<div class="input-group mt-2">
 								<span class="input-group-text w-25">Отчество</span>
-								<input value="{{ sc.secondName }}" type="text" class="form-control" name="second-name" id="main-client-second-name" placeholder="Введите отчество клиента"/>
+								<input value="{{ sc.secondName }}" type="text" class="form-control" name="sub-client-second-name" id="main-client-second-name" placeholder="Введите отчество клиента"/>
 							</div>
 							<div class="input-group mt-2">
 								<span class="input-group-text w-25">Паспорт
 									<span class="text-danger">*</span>
 								</span>
-								<input value="{{ sc.passport }}" type="text" class="form-control" name="passport" id="main-client-passport" placeholder="Введите серию и номер паспорта"/>
+								<input value="{{ sc.passport }}" type="text" class="form-control" name="sub-client-passport" id="main-client-passport" placeholder="Введите серию и номер паспорта"/>
 							</div>
 							<div class="input-group mt-2">
 								<span class="input-group-text w-50">Дата рождения(д.м.г)
 									<span class="text-danger">*</span>
 								</span>
-								<input value="{{ sc.birth_date }}" type="date" class="form-control" name="bith-date" id="main-client-birth-date" placeholder="Введите дату рождения клиента"/>
+								<input value="{{ sc.birth_date }}" type="date" class="form-control" name="sub-client-birth-date" id="main-client-birth-date" placeholder="Введите дату рождения клиента"/>
 							</div>
                             <p hidden name="sub-client-id-form">{{ sc.id }}</p>
 						</div>

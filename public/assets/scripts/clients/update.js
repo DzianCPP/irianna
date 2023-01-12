@@ -40,14 +40,16 @@ function getMainClient() {
     let _passport = document.getElementById("main-client-passport").value;
     let _birthDate = document.getElementById("main-client-birth-date").value;
     let _address = document.getElementById("main-client-address").value;
+    let _id = document.getElementById("client-id").innerHTML;
 
     return {
         name: _lastName + " " + _firstName + " " + _secondName,
         main_phone: _mainPhone,
         second_phone: _secondPhone,
         passport: _passport,
-        birthday: _birthDate,
-        address: _address
+        birth_date: _birthDate,
+        address: _address,
+        id: _id
     };
 }
 
@@ -57,6 +59,7 @@ function getSubClients() {
     let secondNames = [];
     let passports = [];
     let birthDates = [];
+    let ids = [];
 
     for (var el of document.getElementsByName("sub-client-last-name")) {
         lastNames.push(el.value);
@@ -78,6 +81,10 @@ function getSubClients() {
         birthDates.push(el.value);
     }
 
+    for (var el of document.getElementsByName("sub-client-id")) {
+        ids.push(el.innerHTML);
+    }
+
     let names = [];
 
     for (var i = 0; i < lastNames.length; i++) {
@@ -87,6 +94,7 @@ function getSubClients() {
     return {
         _names: names,
         _passport: passports,
-        _birthDates: birthDates
+        _birthDates: birthDates,
+        _ids: ids
     };
 }

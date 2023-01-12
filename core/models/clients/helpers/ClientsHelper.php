@@ -40,4 +40,13 @@ class ClientsHelper
 
         return $clients;
     }
+
+    public static function addIds(array &$clients, array $ids): array
+    {
+        for ($i = 0; $i < count($ids); $i++) {
+            $clients[$i]['id'] = (int)$ids[$i];
+        }
+
+        return $clients;
+    }
 }
