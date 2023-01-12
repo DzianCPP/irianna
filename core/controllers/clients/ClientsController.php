@@ -25,12 +25,19 @@ class ClientsController extends BaseController implements ControllerInterface
     public function edit(): void
     {
         $this->setModel(ClientsModel::class);
-        if (!$this->model->create()) {
-            http_response_code(500);
-            die();
-        }
+        $this->setView(ClientsView::class);
 
-        return;
+        $client = $this->model->get(columnValue: ['column' => 'id', 'value' => IdGetter::getId()])[0];
+
+        $data = [
+            'client' => $client,
+            'sub_clients' => $this->model->getSubClients(columnValue: ['column' => 'main_client_id', 'value' => $client['id']]),
+            'title' => "Изменить клиента",
+            'login' => $_COOKIE['login'],
+            'header' => "Изменить клиента"
+        ];
+
+        $this->view->render("clients/edit.html.twig", $data);
     }
 
     public function create(): void
@@ -62,6 +69,16 @@ class ClientsController extends BaseController implements ControllerInterface
 
     public function update(int $id = 0): void
     {
+        $id = IdGetter::getId();
+        
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        $this->setModel(ClientsModel::class);
+        if (!$this->model->update($data)) {
+            http_response_code(500);
+            die();
+        }
+
         return;
     }
 

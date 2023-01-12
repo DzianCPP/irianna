@@ -21,15 +21,34 @@ class ClientsModel extends Model implements ModelInterface
 
     public function get(array $columnValue = []): array
     {
+        $clients = [];
+
         if ($columnValue != []) {
-            return $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], columnValue: $columnValue);
+            $clients  = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], columnValue: $columnValue);
+        } else {
+            $clients = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], $columnValue);
         }
 
-        return $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], $columnValue);
+        return ClientsHelper::denormalizeClients($clients);
     }
 
     public function update(array $newInfo): bool
     {
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAMES[0], $this->fields[0], $newInfo['main_client'], 'id')) {
+            return false;
+        }
+
+        $sub_clients = ClientsHelper::normalizeSubClients($newInfo['sub_client']);
+        $sub_clients = ClientsHelper::addIds($sub_clients, $newInfo['sub_client']['_ids']);
+        $main_client_id = (int)$newInfo['main_client']['id'];
+
+        foreach ($sub_clients as &$sc) {
+            $sc['main_client_id'] = $main_client_id;
+            if (!$this->databaseSqlBuilder->update(self::TABLE_NAMES[1], $this->fields[1], $sc, 'main_client_id')) {
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -45,9 +64,9 @@ class ClientsModel extends Model implements ModelInterface
 
         $clientId = ClientsHelper::getLastClientId(self::TABLE_NAMES[0]);
 
-        foreach ($sub_clients as $sb) {
-            $sb['main_client_id'] = $clientId;
-            if (!$this->databaseSqlBuilder->insert($sb, $this->fields[1], self::TABLE_NAMES[1])) {
+        foreach ($sub_clients as $sc) {
+            $sc['main_client_id'] = $clientId;
+            if (!$this->databaseSqlBuilder->insert($sc, $this->fields[1], self::TABLE_NAMES[1])) {
                 return false;
             }
         }
@@ -60,7 +79,15 @@ class ClientsModel extends Model implements ModelInterface
         if (!$this->databaseSqlBuilder->delete($columnValues, self::TABLE_NAMES[0])) {
             return false;
         }
-        
+
         return true;
+    }
+
+    public function getSubClients(array $columnValue = []): array
+    {
+        $sub_clients =  $this->databaseSqlBuilder->select(self::TABLE_NAMES[1], $columnValue);
+        $sub_clients = ClientsHelper::denormalizeClients($sub_clients);
+
+        return $sub_clients;
     }
 }

@@ -372,7 +372,7 @@ return [
     'clients/update' => [
         'controller' => ClientsController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'clients/delete' => [
