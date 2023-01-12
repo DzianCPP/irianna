@@ -23,43 +23,43 @@
 						<span class="input-group-text w-25">Фамилия
 							<span class="text-danger">*</span>
 						</span>
-						<input type="text" class="form-control" name="last-name" id="last-name" placeholder="Введите фамилию клиента"/>
+						<input type="text" class="form-control" name="last-name" id="main-client-last-name" placeholder="Введите фамилию клиента"/>
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-25">Имя
 							<span class="text-danger">*</span>
 						</span>
-						<input type="text" class="form-control" name="first-name" id="first-name" placeholder="Введите имя клиента"/>
+						<input type="text" class="form-control" name="first-name" id="main-client-first-name" placeholder="Введите имя клиента"/>
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-25">Отчество</span>
-						<input type="text" class="form-control" name="second-name" id="second-name" placeholder="Введите отчество клиента"/>
+						<input type="text" class="form-control" name="second-name" id="main-client-second-name" placeholder="Введите отчество клиента"/>
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-auto">Телефон 1
 							<span class="text-danger">*</span>
 						</span>
-						<input type="text" class="form-control" name="phone" id="phone-main" placeholder="Введите телефон клиента"/>
+						<input type="text" class="form-control" name="phone" id="main-client-phone-main" placeholder="Введите телефон клиента"/>
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-25">Телефон 2</span>
-						<input type="text" class="form-control" name="phone" id="phone-second" placeholder="Введите телефон клиента"/>
+						<input type="text" class="form-control" name="phone" id="main-client-phone-second" placeholder="Введите телефон клиента"/>
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-25">Паспорт
 							<span class="text-danger">*</span>
 						</span>
-						<input type="text" class="form-control" name="passport" id="passport" placeholder="Введите серию и номер паспорта"/>
+						<input type="text" class="form-control" name="passport" id="main-client-passport" placeholder="Введите серию и номер паспорта"/>
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-50">Дата рождения
 							<span class="text-danger">*</span>
 						</span>
-						<input type="date" class="form-control" name="bith-date" id="birth-date" placeholder="Введите дату рождения клиента"/>
+						<input type="date" class="form-control" name="bith-date" id="main-client-birth-date" placeholder="Введите дату рождения клиента"/>
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-25">Адрес</span>
-						<input type="text" class="form-control" name="address" id="address" placeholder="Введите адрес прописки клиента"/>
+						<input type="text" class="form-control" name="address" id="main-client-address" placeholder="Введите адрес прописки клиента"/>
 					</div>
 				</div>
 			</div>
@@ -69,7 +69,7 @@
 				<div class="col-12 col-sm-12 col-md-4 col-xl-4"></div>
 				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
 					<div class="input-group mt-2">
-						<button type="button" class="btn btn-success w-75" name="save-btn" id="save-btn" disabled>
+						<button type="button" class="btn btn-success w-75" name="save-btn" id="save-btn">
 							Сохранить
 						</button>
 						<button type"button" class="btn btn-outline-success w-25" name="add-subclient">+</button>
@@ -78,4 +78,5 @@
 			</div>
 		</div>
 		<script type="text/javascript" src="/assets/scripts/clients/addForm.js"></script>
+		<script type="text/javascript" src="/assets/scripts/clients/create.js"></script>
 	{% endblock %}

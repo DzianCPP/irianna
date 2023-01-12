@@ -50,7 +50,7 @@ function createLastNameInputGroup() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group");
     _input_group.appendChild(createSpan("input-group-text w-25", "Фамилия"));
-    _input_group.appendChild(createInputText("form-control", "text", "last-name", "Введите фамилию клиента"));
+    _input_group.appendChild(createInputText("form-control", "text", "sub-client-last-name", "Введите фамилию клиента"));
     return _input_group;
 }
 
@@ -58,7 +58,7 @@ function createFirstNameInputGroup() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group mt-2");
     _input_group.appendChild(createSpan("input-group-text w-25", "Имя"));
-    _input_group.appendChild(createInputText("form-control", "text", "first-name", "Введите имя клиента"));
+    _input_group.appendChild(createInputText("form-control", "text", "sub-client-first-name", "Введите имя клиента"));
 
     return _input_group;
 }
@@ -67,7 +67,7 @@ function createSecondNameInputGroup() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group mt-2");
     _input_group.appendChild(createSpan("input-group-text w-25", "Отчество"));
-    _input_group.appendChild(createInputText("form-control", "text", "second-name", "Введите отчество клиента"));
+    _input_group.appendChild(createInputText("form-control", "text", "sub-client-second-name", "Введите отчество клиента"));
 
     return _input_group;
 }
@@ -76,7 +76,7 @@ function createPassportInputGroup() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group mt-2");
     _input_group.appendChild(createSpan("input-group-text w-25", "Паспорт"));
-    _input_group.appendChild(createInputText("form-control", "text", "passport", "Введите серию и номер паспорта"));
+    _input_group.appendChild(createInputText("form-control", "text", "sub-client-passport", "Введите серию и номер паспорта"));
 
     return _input_group;
 }
@@ -85,7 +85,7 @@ function createBirthDateInputGroup() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group mt-2");
     _input_group.appendChild(createSpan("input-group-text w-50", "Дата рождения"));
-    _input_group.appendChild(createInputText("form-control", "date", "birth-date", ""));
+    _input_group.appendChild(createInputText("form-control", "date", "sub-client-birth-date", ""));
 
     return _input_group;
 }
