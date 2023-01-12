@@ -45,12 +45,15 @@ class ClientsController extends BaseController implements ControllerInterface
 
     public function read(int $id = 0): void
     {
+        $this->setModel(ClientsModel::class);
+        
         $data = [
             'title' => 'Клиенты',
             'header' => 'Клиенты',
             'login' => $_COOKIE['login'],
             'currentPage' => 1,
-            'pages' => 1
+            'pages' => 1,
+            'clients' => $this->model->get()
         ];
         $this->setView(ClientsView::class);
         $this->view->render("clients/clients.html.twig", $data);
