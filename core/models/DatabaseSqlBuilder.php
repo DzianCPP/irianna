@@ -37,7 +37,7 @@ class DatabaseSqlBuilder
         if ($columnValue != []) {
             $column = $columnValue['column'];
             $value = $columnValue['value'];
-            $sqlQuery .= " WHERE ${column}=${value}";
+            $sqlQuery .= " WHERE ${column}='${value}'";
         }
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();

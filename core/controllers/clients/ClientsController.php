@@ -54,7 +54,7 @@ class ClientsController extends BaseController implements ControllerInterface
     public function read(int $id = 0): void
     {
         $this->setModel(ClientsModel::class);
-        
+
         $data = [
             'title' => 'Клиенты',
             'header' => 'Клиенты',
@@ -70,7 +70,7 @@ class ClientsController extends BaseController implements ControllerInterface
     public function update(int $id = 0): void
     {
         $id = IdGetter::getId();
-        
+
         $data = json_decode(file_get_contents("php://input"), true);
 
         $this->setModel(ClientsModel::class);
@@ -93,5 +93,13 @@ class ClientsController extends BaseController implements ControllerInterface
         }
 
         return;
+    }
+
+    public function find(): void
+    {
+        $this->setModel(ClientsModel::class);
+        $passport = json_decode(file_get_contents("php://input"), true);
+        $client = $this->model->get(columnValue: ['column' => 'passport', 'value' => $passport])[0];
+        echo (json_encode($client));
     }
 }

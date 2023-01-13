@@ -369,6 +369,12 @@ return [
         'method' => 'GET'
     ],
 
+    'clients/find' => [
+        'controller' => ClientsController::class,
+        'action' => 'find',
+        'method' => 'POST'
+    ],
+
     'clients/edit' => [
         'controller' => ClientsController::class,
         'action' => 'edit',
