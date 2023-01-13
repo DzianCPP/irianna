@@ -57,7 +57,7 @@ data to use:
 						<span class="input-group-text">Курорт</span>
 						<select class="form-select" name="resorts" id="resorts"></select>
 					</div>
-		
+
 
 					<div class="input-group">
 						<span class="input-group-text">Гостиница</span>
@@ -73,185 +73,147 @@ data to use:
 						<span class="input-group-text">Номер</span>
 						<select class="form-select" name="rooms" id="rooms"></select>
 						<span class="input-group-text">Только проезд</span>
-						<span class="input-group-text"><input type="checkbox" class="checkbox"></input></span>
+						<span class="input-group-text"><input type="checkbox" class="checkbox"></input>
+					</span>
 				</div>
 
 				<div class="input-group">
 					<span class="input-group-text">Автобус</span>
-					<select class="form-select" name="bus-to-resort">
+					<select class="form-select" name="bus-to-resort" id="bus-to">
 						{% for bus in buses %}
-							<option value="{{ bus.id }}">{{ bus.name }}{{ ': ' }}{{ bus.route }}</option>
+							<option value="{{ bus.id }}">
+								{{ bus.name }}{{ ': ' }}{{ bus.route }}
+							</option>
 						{% endfor %}
 					</select>
 				</div>
 
 				<div class="input-group">
 					<span class="input-group-text">Выезд из Минска</span>
-					<select class="form-select" name="departure-from-minsk">
+					<select class="form-select" name="departure-from-minsk" id="departure-from-minsk"></select>
+				</div>
+
+
+				<div class="input-group">
+					<span class="input-group-text">Обрытный автобус</span>
+					<select class="form-select" name="bus-from-resort">
 						{% for bus in buses %}
-							<option value="{{ bus.departure_from_minsk }}">{{ bus.departure_from_minsk }}
+							<option value="{{ bus.id }}">{{ bus.name}}{{ ': '}}{{ bus.route }}</option>
+						{% endfor %}
+					</select>
+				</div>
+
+				<div class="input-group">
+					<span class="input-group-text">Выезд из курорта</span>
+					<select class="form-select" name="departure-from-resort">
+						{% for bus in buses %}
+							<option value="{{ bus.departure_from_resort }}">{{ bus.departure_from_resort }}
 							{% endfor %}
 						</select>
 					</div>
 
-
 					<div class="input-group">
-						<span class="input-group-text">Обрытный автобус</span>
-						<select class="form-select" name="bus-from-resort">
-							{% for bus in buses %}
-								<option value="{{ bus.id }}">{{ bus.name}}{{ ': '}}{{ bus.route }}</option>
-							{% endfor %}
-						</select>
+						<span class="input-group-text bg-success text-light w-75">Свободно мест туда:
+						</span>
+						<span class="input-group-text w-25">{{ bus.places }}</span>
+						<span class="input-group-text bg-success text-light w-75">Свободно мест обратно:
+						</span>
+						<span class="input-group-text w-25">{{ bus. places }}</span>
+
 					</div>
 
+					<div>
+						<button type="button" class="btn btn-success w-100" id="save-btn-1" disabled>
+							Применить
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+				<div class="container w-100 mt-3">
 					<div class="input-group">
-						<span class="input-group-text">Выезд из курорта</span>
-						<select class="form-select" name="departure-from-resort">
-							{% for bus in buses %}
-								<option value="{{ bus.departure_from_resort }}">{{ bus.departure_from_resort }}
-								{% endfor %}
-							</select>
-						</div>
-
-						<div class="input-group">
-							<span class="input-group-text bg-success text-light w-75">Свободно мест туда:
-							</span>
-							<span class="input-group-text w-25">{{ bus.places }}</span>
-							<span class="input-group-text bg-success text-light w-75">Свободно мест обратно:
-							</span>
-							<span class="input-group-text w-25">{{ bus. places }}</span>
-
-						</div>
-
-						<div>
-							<button type="button" class="btn btn-success w-100" id="save-btn-1" disabled>
-								Применить
-							</button>
-						</div>
+						<span class="input-group-text w-25">Фамилия</span>
+						<input type="text" class="form-control" id="lastName-1" placeholder="Введите фамилию клиента"/>
+					</div>
+					<div class="input-group">
+						<span class="input-group-text w-25">Имя</span>
+						<input type="text" class="form-control" id="firstName-1" placeholder="Введите имя клиента"/>
+					</div>
+					<div class="input-group">
+						<span class="input-group-text w-25">Отчество</span>
+						<input type="text" class="form-control" id="secondName-1" placeholder="Введите отчество клиента"/></div>
+					<div class="input-group">
+						<span class="input-group-text w-25">Телефон 1</span>
+						<input type="text" class="form-control" id="phone1-1" placeholder="Введите телефон клиента"/></div>
+					<div class="input-group">
+						<span class="input-group-text w-25">Телефон 2</span>
+						<input type="text" class="form-control" id="phone2-1" placeholder="Введите телефон клиента"/></div>
+					<div class="input-group">
+						<span class="input-group-text w-25">Паспорт</span>
+						<input type="text" class="form-control" id="passport-1" placeholder="Введите серию и номер паспорта"/></div>
+					<div class="input-group">
+						<span class="input-group-text w-50">Дата рождения</span>
+						<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/></div>
+					<div class="input-group">
+						<span class="input-group-text w-25">Адрес</span>
+						<input type="text" class="form-control" id="address-1" placeholder="Введите адрес прописки клиента"/></div>
+					<div class="input-group">
+						<span class="input-group-text bg-primary text-light  w-50">Тур услуга</span>
+						<input type="text" class="form-control" id="address-1" placeholder="Введите стоимость услуги в BYN"/></div>
+					<div class="input-group">
+						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
+						<input type="text" class="form-control" id="tour-price-1" placeholder="Введите стоимость тура в BYN"/></div>
+					<div class="input-group">
+						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
+					</div>
+					<div class="input-group">
+						<button type="button" class="btn btn-success w-75" id="save-btn-1" disabled>
+							Сохранить
+						</button>
+						<button class="btn w-25 btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubClient-1" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+							+
+						</button>
 					</div>
 				</div>
+			</div>
 
-				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
-					<div class="container w-100 mt-3">
-						<div class="input-group">
-							<span class="input-group-text w-25">Фамилия</span>
-							<input type="text" class="form-control" id="lastName-1" placeholder="Введите фамилию клиента"/>
-						</div>
-						<div class="input-group">
-							<span class="input-group-text w-25">Имя</span>
-							<input type="text" class="form-control" id="firstName-1" placeholder="Введите имя клиента"/>
-						</div>
-						<div class="input-group">
-							<span class="input-group-text w-25">Отчество</span>
-							<input type="text" class="form-control" id="secondName-1" placeholder="Введите отчество клиента"/></div>
-						<div class="input-group">
-							<span class="input-group-text w-25">Телефон 1</span>
-							<input type="text" class="form-control" id="phone1-1" placeholder="Введите телефон клиента"/></div>
-						<div class="input-group">
-							<span class="input-group-text w-25">Телефон 2</span>
-							<input type="text" class="form-control" id="phone2-1" placeholder="Введите телефон клиента"/></div>
-						<div class="input-group">
-							<span class="input-group-text w-25">Паспорт</span>
-							<input type="text" class="form-control" id="passport-1" placeholder="Введите серию и номер паспорта"/></div>
-						<div class="input-group">
-							<span class="input-group-text w-50">Дата рождения</span>
-							<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/></div>
-						<div class="input-group">
-							<span class="input-group-text w-25">Адрес</span>
-							<input type="text" class="form-control" id="address-1" placeholder="Введите адрес прописки клиента"/></div>
-						<div class="input-group">
-							<span class="input-group-text bg-primary text-light  w-50">Тур услуга</span>
-							<input type="text" class="form-control" id="address-1" placeholder="Введите стоимость услуги в BYN"/></div>
-						<div class="input-group">
-							<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
-							<input type="text" class="form-control" id="tour-price-1" placeholder="Введите стоимость тура в BYN"/></div>
-						<div class="input-group">
-							<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
-						</div>
-						<div class="input-group">
-							<button type="button" class="btn btn-success w-75" id="save-btn-1" disabled>
-								Сохранить
-							</button>
-							<button class="btn w-25 btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubClient-1" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-								+
-							</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
-					<div class="container w-100">
-						<div class="collapse" id="collapseSubClient-1">
-							<div class="input-group-vertical">
-								<div class="input-group">
-									<span class="input-group-text w-25">Фамилия</span>
-									<input type="text" class="form-control" id="lastName-1" placeholder="Введите фамилию клиента"/>
-								</div>
-								<div class="input-group">
-									<span class="input-group-text w-25">Имя</span>
-									<input type="text" class="form-control" id="firstName-1" placeholder="Введите имя клиента"/>
-								</div>
-								<div class="input-group">
-									<span class="input-group-text w-25">Отчество</span>
-									<input type="text" class="form-control" id="secondName-1" placeholder="Введите отчество клиента"/></div>
-								<div class="input-group">
-									<span class="input-group-text w-25">Паспорт</span>
-									<input type="text" class="form-control" id="passport-1" placeholder="Введите серию и номер паспорта"/></div>
-								<div class="input-group">
-									<span class="input-group-text w-50">Дата рождения</span>
-									<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/></div>
-								<div class="input-group">
-									<span class="input-group-text bg-primary text-light  w-50">Тур услуга</span>
-									<input type="text" class="form-control" id="address-1" placeholder="Введите стоимость услуги в BYN"/></div>
-								<div class="input-group">
-									<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
-									<input type="text" class="form-control" id="tour-price-1" placeholder="Введите стоимость тура в BYN"/></div>
-								<div class="input-group">
-									<span class="input-group-text bg-primary text-light w-50">Стоимость тура в USD</span>
-									<span type="text" class="form-control"/></div>
-
-								<div class="input-group">
-									<button type="button" class="btn btn-success w-100" id="save-btn-1" disabled>
-										Сохранить
-									</button>
-								</div>
-
+			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+				<div class="container w-100">
+					<div class="collapse" id="collapseSubClient-1">
+						<div class="input-group-vertical">
+							<div class="input-group">
+								<span class="input-group-text w-25">Фамилия</span>
+								<input type="text" class="form-control" id="lastName-1" placeholder="Введите фамилию клиента"/>
 							</div>
-						</div>
-
-					</div>
-				</div>
-
-				<div class="row mb-5 pb-5 pt-2">
-					<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
-						<div class="container w-100">
-							<div class="input-group m-1">
-								<button type="button" class="btn btn-outline-success w-50">Сохранить</button>
-								<button type="button" class="btn btn-outline-success w-50">Новый договор</button>
+							<div class="input-group">
+								<span class="input-group-text w-25">Имя</span>
+								<input type="text" class="form-control" id="firstName-1" placeholder="Введите имя клиента"/>
 							</div>
-							<div class="input-group m-1">
-								<button type="button" class="btn btn-outline-success w-50">Печать договора</button>
-								<button type="button" class="btn btn-outline-success w-50">Печать приложения 2</button>
-							</div>
-							<div class="input-group m-1">
-								<button type="button" class="btn btn-outline-success w-100">Печать путевки</button>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
-						<div class="container w-100">
-							<div class="input-group m-1">
-								<span class="input-group-text bg-primary text-light  w-75">Итого тур услуга</span>
+							<div class="input-group">
+								<span class="input-group-text w-25">Отчество</span>
+								<input type="text" class="form-control" id="secondName-1" placeholder="Введите отчество клиента"/></div>
+							<div class="input-group">
+								<span class="input-group-text w-25">Паспорт</span>
+								<input type="text" class="form-control" id="passport-1" placeholder="Введите серию и номер паспорта"/></div>
+							<div class="input-group">
+								<span class="input-group-text w-50">Дата рождения</span>
+								<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/></div>
+							<div class="input-group">
+								<span class="input-group-text bg-primary text-light  w-50">Тур услуга</span>
 								<input type="text" class="form-control" id="address-1" placeholder="Введите стоимость услуги в BYN"/></div>
-							<div class="input-group m-1">
-
-								<span class="input-group-text bg-primary text-light w-75">Итого стоимость тура</span>
+							<div class="input-group">
+								<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
 								<input type="text" class="form-control" id="tour-price-1" placeholder="Введите стоимость тура в BYN"/></div>
-							<div class="input-group m-1">
-
-								<span class="input-group-text bg-primary text-light w-75">Итого стоимость тура в USD</span>
+							<div class="input-group">
+								<span class="input-group-text bg-primary text-light w-50">Стоимость тура в USD</span>
 								<span type="text" class="form-control"/></div>
+
+							<div class="input-group">
+								<button type="button" class="btn btn-success w-100" id="save-btn-1" disabled>
+									Сохранить
+								</button>
+							</div>
 
 						</div>
 					</div>
@@ -259,8 +221,46 @@ data to use:
 				</div>
 			</div>
 
-			<script type="text/javascript" src="/assets/scripts/tours/addResorts.js"></script>
-			<script type="text/javascript" src="/assets/scripts/tours/addHotels.js"></script>
-			<script type="text/javascript" src="/assets/scripts/tours/addRooms.js"></script>
+			<div class="row mb-5 pb-5 pt-2">
+				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+					<div class="container w-100">
+						<div class="input-group m-1">
+							<button type="button" class="btn btn-outline-success w-50">Сохранить</button>
+							<button type="button" class="btn btn-outline-success w-50">Новый договор</button>
+						</div>
+						<div class="input-group m-1">
+							<button type="button" class="btn btn-outline-success w-50">Печать договора</button>
+							<button type="button" class="btn btn-outline-success w-50">Печать приложения 2</button>
+						</div>
+						<div class="input-group m-1">
+							<button type="button" class="btn btn-outline-success w-100">Печать путевки</button>
+						</div>
+					</div>
+				</div>
 
-		{% endblock %}
+				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+					<div class="container w-100">
+						<div class="input-group m-1">
+							<span class="input-group-text bg-primary text-light  w-75">Итого тур услуга</span>
+							<input type="text" class="form-control" id="address-1" placeholder="Введите стоимость услуги в BYN"/></div>
+						<div class="input-group m-1">
+
+							<span class="input-group-text bg-primary text-light w-75">Итого стоимость тура</span>
+							<input type="text" class="form-control" id="tour-price-1" placeholder="Введите стоимость тура в BYN"/></div>
+						<div class="input-group m-1">
+
+							<span class="input-group-text bg-primary text-light w-75">Итого стоимость тура в USD</span>
+							<span type="text" class="form-control"/></div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<script type="text/javascript" src="/assets/scripts/tours/addResorts.js"></script>
+		<script type="text/javascript" src="/assets/scripts/tours/addHotels.js"></script>
+		<script type="text/javascript" src="/assets/scripts/tours/addRooms.js"></script>
+		<script type="text/javascript" src="/assets/scripts/tours/addDepartureFromMinskDates.js"></script>
+
+	{% endblock %}
