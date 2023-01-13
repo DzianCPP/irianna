@@ -11,7 +11,7 @@ async function createTour() {
 
     let url = "/tours/create";
     let _manager_id = document.getElementById("manager").value;
-    let _only_transit = document.getElementById("only-transit").value;
+    let _only_transit = document.getElementById("only-transit");
     let _resort_id = document.getElementById("resort").value;
     let _hotel_id = document.getElementById("hotels").value;
     let _room_id = document.getElementById("rooms").value;
@@ -19,27 +19,29 @@ async function createTour() {
     let _departure_from_minsk = document.getElementById("departure-from-minsk").value;
     let _bus_back_id = document.getElementById("bus-from").value;
     let _departure_from_resort = document.getElementById("departure-from-resort").value;
+    let _created = new Date();
 
     let tour = {
-        created: Date(),
+        created: _created.getDay() + "-" + _created.getMonth() + "-" + _created.getFullYear(),
         manager_id: _manager_id,
-        is_only_transit: _only_transit,
+        is_only_transit: Number(_only_transit.checked),
+        transit: "Туда и обратно",
         resort_id: _resort_id,
         hotel_id: _hotel_id,
         checkin_date: _departure_from_minsk,
         checkout_date: _departure_from_resort,
         count_of_days: 7,
         bus_id: _bus_id,
-        owner_id: lastClientId,
-        owner_travel_service: document.getElementById("main-client-service-cost").value,
-        owner_travel_cost: document.getElementById("main-client-tour-cost").value,
-        number_of_children: 2,
-        ages: "7, 8",
-        total_travel_service_byn: document.getElementById("total-service-cost").value,
-        total_tour_cost_byn: document.getElementById("total-tour-cost").value,
-        total_travel_service_currency: document.getElementById("total-cost-currency").value,
-        from_minsk_date: _departure_from_minsk,
-        to_minsk_date: _departure_from_resort
+        owner_id: getLastClientId(),
+        // owner_travel_service: 50,
+        // owner_travel_cost: 50,
+        // number_of_children: 2,
+        // ages: "7, 8",
+        // total_travel_service_byn: 50,
+        // total_tour_cost_byn: 50,
+        // total_travel_service_currency: 50,
+        // from_minsk_date: _departure_from_minsk,
+        // to_minsk_date: _departure_from_resort
     };
 
     let POST = {

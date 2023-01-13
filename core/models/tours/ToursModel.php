@@ -9,10 +9,8 @@ use core\models\tours\ToursValidator;
 
 class ToursModel extends Model implements ModelInterface
 {
-    protected array $fields = ['hotel_id', 'description', 'checkin_checkout_dates', 'comforts', 'food', 'id'];
-    private const TABLE_NAME = "rooms_table";
-    protected array $comforts = ['Телевизор', 'Холодильник', 'Кондиционер', 'Душ', 'Ванна', 'Джакузи', 'Туалет', 'Балкон', 'Чайник', 'Кухня'];
-    protected array $food = ['Без питания', 'Завтрак', 'Обед', 'Ужин'];
+    protected array $fields = ['created', 'manager_id', 'is_only_transit', 'transit', 'resort_id', 'hotel_id', 'checkin_date', 'checkout_date', 'count_of_day', 'bus_id', 'owner_id', 'owner_travel_service', 'owner_travel_cost', 'number_of_children', 'ages', 'total_travel_service_byn', 'total_travel_cost_byn', 'total_travel_service_currency', 'total_travel_cost_currency', 'from_minsk_date', 'to_minsk_date'];
+    private const TABLE_NAME = "tours_table";
 
     public function __construct()
     {
@@ -31,6 +29,38 @@ class ToursModel extends Model implements ModelInterface
 
     public function create(): bool
     {
+        $tour = json_decode(file_get_contents("php://input"), true);
+
+        if (!$this->databaseSqlBuilder->insert(
+            $tour,
+            [
+                'created',
+                'manager_id',
+                'is_only_transit',
+                'transit',
+                'resort_id',
+                'hotel_id',
+                'checkin_date',
+                'checkout_date',
+                'count_of_day',
+                'bus_id',
+                'owner_id',
+                // 'owner_travel_service',
+                // 'owner_travel_cost',
+                // 'number_of_children',
+                // 'ages',
+                // 'total_travel_service_byn',
+                // 'total_travel_cost_byn',
+                // 'total_travel_service_currency',
+                // 'total_travel_cost_currency',
+                // 'from_minsk_date',
+                // 'to_minsk_date'
+            ],
+            self::TABLE_NAME
+        )) {
+            return false;
+        }
+
         return true;
     }
 
