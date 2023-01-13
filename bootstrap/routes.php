@@ -333,6 +333,12 @@ return [
         'method' => 'GET'
     ],
 
+    'roomsOne' => [
+        'controller' => RoomsController::class,
+        'action' => 'readOne',
+        'method' => 'GET'
+    ],
+
     'rooms/edit' => [
         'controller' => RoomsController::class,
         'action' => 'edit',

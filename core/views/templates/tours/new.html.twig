@@ -96,7 +96,7 @@ data to use:
 
 				<div class="input-group">
 					<span class="input-group-text">Обрытный автобус</span>
-					<select class="form-select" name="bus-from-resort">
+					<select class="form-select" name="bus-from-resort" id="bus-from">
 						{% for bus in buses %}
 							<option value="{{ bus.id }}">{{ bus.name}}{{ ': '}}{{ bus.route }}</option>
 						{% endfor %}
@@ -105,7 +105,7 @@ data to use:
 
 				<div class="input-group">
 					<span class="input-group-text">Выезд из курорта</span>
-					<select class="form-select" name="departure-from-resort">
+					<select class="form-select" name="departure-from-resort" id="departure-from-resort">
 						{% for bus in buses %}
 							<option value="{{ bus.departure_from_resort }}">{{ bus.departure_from_resort }}
 							{% endfor %}
@@ -262,5 +262,6 @@ data to use:
 		<script type="text/javascript" src="/assets/scripts/tours/addHotels.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/addRooms.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/addDepartureFromMinskDates.js"></script>
+		<script type="text/javascript" src="/assets/scripts/tours/addArrivalToMinskDates.js"></script>
 
 	{% endblock %}
