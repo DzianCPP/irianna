@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("bus-to").addEventListener("click", function () {
+    document.getElementById("bus-to").addEventListener("change", function () {
         addDepartureFromMinskDates();
     });
 });
@@ -25,8 +25,8 @@ function addOptions(from_minsk) {
 
     console.log(dates);
 
-    for (let i = 0; i < fromMinskSelector.length; i++) {
-        fromMinskSelector.removeChild(fromMinskSelector.options[i]);
+    for (let i = fromMinskSelector.length - 1; i >= 0; i--) {
+        fromMinskSelector.remove(i);
     }
 
     for (var date of dates) {
