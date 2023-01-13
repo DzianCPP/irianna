@@ -11,6 +11,7 @@ use core\models\buses\BusesModel;
 use core\models\managers\ManagersModel;
 use core\models\countries\CountriesModel;
 use core\models\resorts\ResortsModel;
+use core\models\rooms\RoomsModel;
 
 class ToursController extends BaseController implements ControllerInterface
 {
@@ -21,6 +22,7 @@ class ToursController extends BaseController implements ControllerInterface
         $resorts = new ResortsModel();
         $hotels = new HotelsModel();
         $buses = new BusesModel();
+        $rooms = new RoomsModel();
 
         $data = [
             'title' => 'Добавить тур',
@@ -30,7 +32,8 @@ class ToursController extends BaseController implements ControllerInterface
             'countries' => $countries->get(),
             'resorts' => json_encode($resorts->get()),
             'hotels' => json_encode($hotels->get()),
-            'buses' => $buses->get()
+            'buses' => $buses->get(),
+            'rooms' => json_encode($rooms->get())
         ];
 
         $this->setView(ToursView::class);
