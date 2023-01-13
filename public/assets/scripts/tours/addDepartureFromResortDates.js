@@ -34,11 +34,11 @@ function addOptions(from_resort) {
         toMinskSelector.remove(i);
     }
 
-    for (var date of dates) {
+    for (let k = 1; k <= dates.length; k = k + 2) {
         var newOption = document.createElement('option');
-        var optionText = document.createTextNode(date);
+        var optionText = document.createTextNode(dates[k]);
         newOption.appendChild(optionText);
-        newOption.setAttribute('value', date);
+        newOption.setAttribute('value', dates[k]);
         toMinskSelector.appendChild(newOption);
     }
 }
