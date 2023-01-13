@@ -113,12 +113,10 @@ data to use:
 					</div>
 
 					<div class="input-group">
-						<span class="input-group-text bg-success text-light w-75">Свободно мест туда:
-						</span>
-						<span class="input-group-text w-25">{{ bus.places }}</span>
-						<span class="input-group-text bg-success text-light w-75">Свободно мест обратно:
-						</span>
-						<span class="input-group-text w-25">{{ bus. places }}</span>
+						<span class="input-group-text bg-success text-light w-75">Свободно мест туда:</span>
+						<span class="input-group-text w-25" id="places-to">40</span>
+						<span class="input-group-text bg-success text-light w-75">Свободно мест обратно:</span>
+						<span class="input-group-text w-25" id="places-from">40</span>
 
 					</div>
 
@@ -131,93 +129,61 @@ data to use:
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
-				<div class="container w-100 mt-3">
-					<div class="input-group">
-						<span class="input-group-text w-25">Фамилия</span>
-						<input type="text" class="form-control" id="lastName-1" placeholder="Введите фамилию клиента"/>
-					</div>
-					<div class="input-group">
-						<span class="input-group-text w-25">Имя</span>
-						<input type="text" class="form-control" id="firstName-1" placeholder="Введите имя клиента"/>
-					</div>
-					<div class="input-group">
-						<span class="input-group-text w-25">Отчество</span>
-						<input type="text" class="form-control" id="secondName-1" placeholder="Введите отчество клиента"/></div>
-					<div class="input-group">
-						<span class="input-group-text w-25">Телефон 1</span>
-						<input type="text" class="form-control" id="phone1-1" placeholder="Введите телефон клиента"/></div>
-					<div class="input-group">
-						<span class="input-group-text w-25">Телефон 2</span>
-						<input type="text" class="form-control" id="phone2-1" placeholder="Введите телефон клиента"/></div>
-					<div class="input-group">
-						<span class="input-group-text w-25">Паспорт</span>
-						<input type="text" class="form-control" id="passport-1" placeholder="Введите серию и номер паспорта"/></div>
-					<div class="input-group">
-						<span class="input-group-text w-50">Дата рождения</span>
-						<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/></div>
-					<div class="input-group">
-						<span class="input-group-text w-25">Адрес</span>
-						<input type="text" class="form-control" id="address-1" placeholder="Введите адрес прописки клиента"/></div>
-					<div class="input-group">
-						<span class="input-group-text bg-primary text-light  w-50">Тур услуга</span>
-						<input type="text" class="form-control" id="address-1" placeholder="Введите стоимость услуги в BYN"/></div>
-					<div class="input-group">
-						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
-						<input type="text" class="form-control" id="tour-price-1" placeholder="Введите стоимость тура в BYN"/></div>
-					<div class="input-group">
-						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
-					</div>
-					<div class="input-group">
-						<button type="button" class="btn btn-success w-75" id="save-btn-1" disabled>
-							Сохранить
-						</button>
-						<button class="btn w-25 btn-outline-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubClient-1" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-							+
-						</button>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
-				<div class="container w-100">
-					<div class="collapse" id="collapseSubClient-1">
-						<div class="input-group-vertical">
-							<div class="input-group">
-								<span class="input-group-text w-25">Фамилия</span>
-								<input type="text" class="form-control" id="lastName-1" placeholder="Введите фамилию клиента"/>
-							</div>
-							<div class="input-group">
-								<span class="input-group-text w-25">Имя</span>
-								<input type="text" class="form-control" id="firstName-1" placeholder="Введите имя клиента"/>
-							</div>
-							<div class="input-group">
-								<span class="input-group-text w-25">Отчество</span>
-								<input type="text" class="form-control" id="secondName-1" placeholder="Введите отчество клиента"/></div>
-							<div class="input-group">
-								<span class="input-group-text w-25">Паспорт</span>
-								<input type="text" class="form-control" id="passport-1" placeholder="Введите серию и номер паспорта"/></div>
-							<div class="input-group">
-								<span class="input-group-text w-50">Дата рождения</span>
-								<input type="date" class="form-control" id="birthDate-1" placeholder="Введите дату рождения клиента"/></div>
-							<div class="input-group">
-								<span class="input-group-text bg-primary text-light  w-50">Тур услуга</span>
-								<input type="text" class="form-control" id="address-1" placeholder="Введите стоимость услуги в BYN"/></div>
-							<div class="input-group">
-								<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
-								<input type="text" class="form-control" id="tour-price-1" placeholder="Введите стоимость тура в BYN"/></div>
-							<div class="input-group">
-								<span class="input-group-text bg-primary text-light w-50">Стоимость тура в USD</span>
-								<span type="text" class="form-control"/></div>
-
-							<div class="input-group">
-								<button type="button" class="btn btn-success w-100" id="save-btn-1" disabled>
-									Сохранить
-								</button>
-							</div>
-
+				<div class="container-fluid p-2 w-100" name="clients" id="clients">
+					<div class="row w-100 mb-2">
+						<div class="input-group">
+							<span class="input-group-text w-25">Фамилия
+								<span class="text-danger">*</span>
+							</span>
+							<input type="text" class="form-control" name="last-name" id="main-client-last-name" placeholder="Введите фамилию клиента"/>
+						</div>
+						<div class="input-group mt-2">
+							<span class="input-group-text w-25">Имя
+								<span class="text-danger">*</span>
+							</span>
+							<input type="text" class="form-control" name="first-name" id="main-client-first-name" placeholder="Введите имя клиента"/>
+						</div>
+						<div class="input-group mt-2">
+							<span class="input-group-text w-25">Отчество</span>
+							<input type="text" class="form-control" name="second-name" id="main-client-second-name" placeholder="Введите отчество клиента"/>
+						</div>
+						<div class="input-group mt-2">
+							<span class="input-group-text w-auto">Телефон 1
+								<span class="text-danger">*</span>
+							</span>
+							<input type="text" class="form-control" name="phone" id="main-client-phone-main" placeholder="Введите телефон клиента"/>
+						</div>
+						<div class="input-group mt-2">
+							<span class="input-group-text w-25">Телефон 2</span>
+							<input type="text" class="form-control" name="phone" id="main-client-phone-second" placeholder="Введите телефон клиента"/>
+						</div>
+						<div class="input-group mt-2">
+							<span class="input-group-text w-25">Паспорт
+								<span class="text-danger">*</span>
+							</span>
+							<input type="text" class="form-control" name="passport" id="main-client-passport" placeholder="Введите серию и номер паспорта"/>
+						</div>
+						<div class="input-group mt-2">
+							<span class="input-group-text w-50">Дата рождения
+								<span class="text-danger">*</span>
+							</span>
+							<input type="date" class="form-control" name="birth-date" id="main-client-birth-date" placeholder="Введите дату рождения клиента"/>
+						</div>
+						<div class="input-group mt-2">
+							<span class="input-group-text w-25">Адрес</span>
+							<input type="text" class="form-control" name="address" id="main-client-address" placeholder="Введите адрес прописки клиента"/>
 						</div>
 					</div>
-
+				</div>
+				<div class="container-fluid w-100" name="clients">
+					<div class="row w-100 mb-2">
+						<div class="input-group mt-2">
+							<button type="button" class="btn btn-success w-75" name="save-btn" id="save-btn">
+								Сохранить
+							</button>
+							<button type"button" class="btn btn-outline-success w-25" name="add-subclient">+</button>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -263,5 +229,7 @@ data to use:
 		<script type="text/javascript" src="/assets/scripts/tours/addRooms.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/addDepartureFromMinskDates.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/addArrivalToMinskDates.js"></script>
+		<script type="text/javascript" src="/assets/scripts/clients/addForm.js"></script>
+		<script type="text/javascript" src="/assets/scripts/clients/create.js"></script>
 
 	{% endblock %}
