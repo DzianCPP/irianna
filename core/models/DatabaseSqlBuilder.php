@@ -74,6 +74,11 @@ class DatabaseSqlBuilder
         return true;
     }
 
+    public function getCount(): int
+    {
+        return rand()%10;
+    }
+
     private function getTableFields(array $fields): string
     {
         $columns = [];

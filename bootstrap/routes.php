@@ -405,6 +405,12 @@ return [
         'method' => 'GET'
     ],
 
+    'tours/places' => [
+        'controller' => ToursController::class,
+        'action' => 'getCountOfRegisteredTours',
+        'method' => 'POST'
+    ],
+
     'tours/edit' => [
         'controller' => ToursController::class,
         'action' => 'edit',
