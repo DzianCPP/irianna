@@ -375,6 +375,12 @@ return [
         'method' => 'POST'
     ],
 
+    'clients/last' => [
+        'controller' => ClientsController::class,
+        'action' => 'getLastClientId',
+        'method' => 'POST'
+    ],
+
     'clients/edit' => [
         'controller' => ClientsController::class,
         'action' => 'edit',

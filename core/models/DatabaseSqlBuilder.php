@@ -74,9 +74,15 @@ class DatabaseSqlBuilder
         return true;
     }
 
-    public function getCount(): int
+    public function getCount(string $table_name, array $columns, array|int $values): int|bool
     {
-        return rand()%10;
+        $sqlQuery = "SELECT COUNT(*) FROM $table_name WHERE $columns[0] = '$values[0]'";
+        $query = $this->conn->prepare($sqlQuery);
+        if (!$query->execute()) {
+            return 0;
+        }
+
+        return $query->fetchAll(); 
     }
 
     private function getTableFields(array $fields): string

@@ -41,6 +41,6 @@ class ToursModel extends Model implements ModelInterface
 
     public function getCountOfRegisteredTours(int $bus_id, string $date): int
     {
-        return $this->databaseSqlBuilder->getCount();
+        return $this->databaseSqlBuilder->getCount(self::TABLE_NAME, columns: ["bus_id", "departure_from_minsk"], values: [$bus_id, $date]);
     }
 }

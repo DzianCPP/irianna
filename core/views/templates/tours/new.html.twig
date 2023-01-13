@@ -174,65 +174,78 @@ data to use:
 							<span class="input-group-text w-25">Адрес</span>
 							<input type="text" class="form-control" name="address" id="main-client-address" placeholder="Введите адрес прописки клиента"/>
 						</div>
-					</div>
-				</div>
-				<div class="container-fluid w-100" name="clients">
-					<div class="row w-100 mb-2">
 						<div class="input-group mt-2">
-							<button type="button" class="btn btn-success w-75" name="save-btn" id="save-btn">
-								Сохранить
-							</button>
-							<button type"button" class="btn btn-outline-success w-25" name="add-subclient">+</button>
+							<span class="input-group-text bg-primary text-light w-50">Тур. услуга</span>
+							<input type="text" class="form-control" id="main-client-service-cost" placeholder="Стоимость услуги в BYN"/>
 						</div>
+						<div class="input-group mt-2">
+							<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
+							<input type="text" class="form-control" id="main-client-tour-cost" placeholder="Стоимость тура в BYN"/>
+						</div>
+						<div class="input-group mt-2">
+							<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
+							<input type="text" class="form-control" id="main-client-total-cost-currency"></input>
+							<input type="text" class="form-control" placeholder="Валюта"></input>
 					</div>
 				</div>
 			</div>
-
-			<div class="row mb-5 pb-5 pt-2">
-				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
-					<div class="container w-100">
-						<div class="input-group m-1">
-							<button type="button" class="btn btn-outline-success w-50" id="save-tour">Сохранить</button>
-							<button type="button" class="btn btn-outline-success w-50" id="new-contract">Новый договор</button>
-						</div>
-						<div class="input-group m-1">
-							<button type="button" class="btn btn-outline-success w-50" id="print-contract">Печать договора</button>
-							<button type="button" class="btn btn-outline-success w-50" id="print-attachment-2">Печать приложения 2</button>
-						</div>
-						<div class="input-group m-1">
-							<button type="button" class="btn btn-outline-success w-100" id="print-voucher">Печать путевки</button>
-						</div>
+			<div class="container-fluid w-100" name="clients">
+				<div class="row w-100 mb-2">
+					<div class="input-group mt-2">
+						<button type="button" class="btn btn-success w-75" name="save-btn" id="save-btn">
+							Сохранить
+						</button>
+						<button type"button" class="btn btn-outline-success w-25" name="add-subclient">+</button>
 					</div>
 				</div>
-
-				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
-					<div class="container w-100">
-						<div class="input-group m-1">
-							<span class="input-group-text bg-primary text-light  w-75">Итого тур услуга</span>
-							<input type="text" class="form-control" id="address-1" placeholder="Введите стоимость услуги в BYN"/></div>
-						<div class="input-group m-1">
-
-							<span class="input-group-text bg-primary text-light w-75">Итого стоимость тура</span>
-							<input type="text" class="form-control" id="tour-price-1" placeholder="Введите стоимость тура в BYN"/></div>
-						<div class="input-group m-1">
-
-							<span class="input-group-text bg-primary text-light w-75">Итого стоимость тура в USD</span>
-							<span type="text" class="form-control"/></div>
-
-					</div>
-				</div>
-
 			</div>
 		</div>
 
-		<script type="text/javascript" src="/assets/scripts/tours/addResorts.js"></script>
-		<script type="text/javascript" src="/assets/scripts/tours/addHotels.js"></script>
-		<script type="text/javascript" src="/assets/scripts/tours/addRooms.js"></script>
-		<script type="text/javascript" src="/assets/scripts/tours/addDepartureFromMinskDates.js"></script>
-		<script type="text/javascript" src="/assets/scripts/tours/addDepartureFromResortDates.js"></script>
-		<script type="text/javascript" src="/assets/scripts/clients/addForm.js"></script>
-		<script type="text/javascript" src="/assets/scripts/tours/create.js"></script>
-		<script type="text/javascript" src="/assets/scripts/tours/addPlacesFromMinsk.js"></script>
-		<script type="text/javascript" src="/assets/scripts/tours/addPlacesFromResort.js"></script>
-		<script type="text/javascript" src="/assets/scripts/tours/findClient.js"></script>
-	{% endblock %}
+		<div class="row mb-5 pb-5 pt-2">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+				<div class="container w-100">
+					<div class="input-group m-1">
+						<button type="button" class="btn btn-outline-success w-50" id="save-tour">Сохранить</button>
+						<button type="button" class="btn btn-outline-success w-50" id="new-contract">Новый договор</button>
+					</div>
+					<div class="input-group m-1">
+						<button type="button" class="btn btn-outline-success w-50" id="print-contract">Печать договора</button>
+						<button type="button" class="btn btn-outline-success w-50" id="print-attachment-2">Печать приложения 2</button>
+					</div>
+					<div class="input-group m-1">
+						<button type="button" class="btn btn-outline-success w-100" id="print-voucher">Печать путевки</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
+				<div class="container w-100">
+					<div class="input-group m-1">
+						<span class="input-group-text bg-primary text-light w-50">Тур. услуга</span>
+						<span class="form-control"></span>
+					</div>
+					<div class="input-group m-1">
+						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
+						<span class="form-control"></span>
+					</div>
+					<div class="input-group m-1">
+						<span class="input-group-text bg-primary text-light w-50">Итого стоимость тура</span>
+						<span class="form-control"></span>
+						<input type="text" class="form-control" placeholder="Валюта"></input>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script type="text/javascript" src="/assets/scripts/tours/addResorts.js"></script>
+<script type="text/javascript" src="/assets/scripts/tours/addHotels.js"></script>
+<script type="text/javascript" src="/assets/scripts/tours/addRooms.js"></script>
+<script type="text/javascript" src="/assets/scripts/tours/addDepartureFromMinskDates.js"></script>
+<script type="text/javascript" src="/assets/scripts/tours/addDepartureFromResortDates.js"></script>
+<script type="text/javascript" src="/assets/scripts/clients/addForm.js"></script>
+<script type="text/javascript" src="/assets/scripts/tours/create.js"></script>
+<script type="text/javascript" src="/assets/scripts/tours/addPlacesFromMinsk.js"></script>
+<script type="text/javascript" src="/assets/scripts/tours/addPlacesFromResort.js"></script>
+<script type="text/javascript" src="/assets/scripts/tours/findClient.js"></script>{% endblock %}

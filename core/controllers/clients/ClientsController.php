@@ -6,6 +6,7 @@ use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\views\clients\ClientsView;
 use core\models\clients\ClientsModel;
+use core\models\clients\helpers\ClientsHelper;
 use core\services\IdGetter;
 
 class ClientsController extends BaseController implements ControllerInterface
@@ -101,5 +102,12 @@ class ClientsController extends BaseController implements ControllerInterface
         $passport = json_decode(file_get_contents("php://input"), true);
         $client = $this->model->get(columnValue: ['column' => 'passport', 'value' => $passport])[0];
         echo (json_encode($client));
+    }
+
+    public function getLastClientId(): void
+    {
+        $this->setModel(ClientsModel::class);
+        $id = $this->model->getLastClientId();
+        echo json_encode($id);
     }
 }
