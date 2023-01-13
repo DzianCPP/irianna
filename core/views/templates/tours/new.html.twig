@@ -38,7 +38,7 @@ data to use:
 				<div class="container w-100">
 					<div class="input-group">
 						<span class="input-group-text">Менеджер</span>
-						<select class="form-select" name="managers">
+						<select class="form-select" name="manager" id="manager">
 							{% for manager in managers %}
 								<option value="{{ manager.id }}">{{ manager.name }}</option>
 							{% endfor %}
@@ -46,7 +46,7 @@ data to use:
 					</div>
 					<div class="input-group">
 						<span class="input-group-text">Страна</span>
-						<select class="form-select" name="countries" id="countries">
+						<select class="form-select" name="country" id="country">
 							{% for country in countries %}
 								<option value="{{ country.id }}">{{ country.name }}</option>
 							{% endfor %}
@@ -55,7 +55,7 @@ data to use:
 
 					<div class="input-group">
 						<span class="input-group-text">Курорт</span>
-						<select class="form-select" name="resorts" id="resorts"></select>
+						<select class="form-select" name="resorts" id="resort"></select>
 					</div>
 
 
@@ -73,7 +73,7 @@ data to use:
 						<span class="input-group-text">Номер</span>
 						<select class="form-select" name="rooms" id="rooms"></select>
 						<span class="input-group-text">Только проезд</span>
-						<span class="input-group-text"><input type="checkbox" class="checkbox"></input>
+						<span class="input-group-text"><input type="checkbox" class="checkbox" id="only-transit"></input>
 					</span>
 				</div>
 
@@ -192,15 +192,15 @@ data to use:
 				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
 					<div class="container w-100">
 						<div class="input-group m-1">
-							<button type="button" class="btn btn-outline-success w-50">Сохранить</button>
-							<button type="button" class="btn btn-outline-success w-50">Новый договор</button>
+							<button type="button" class="btn btn-outline-success w-50" id="save-tour">Сохранить</button>
+							<button type="button" class="btn btn-outline-success w-50" id="new-contract">Новый договор</button>
 						</div>
 						<div class="input-group m-1">
-							<button type="button" class="btn btn-outline-success w-50">Печать договора</button>
-							<button type="button" class="btn btn-outline-success w-50">Печать приложения 2</button>
+							<button type="button" class="btn btn-outline-success w-50" id="print-contract">Печать договора</button>
+							<button type="button" class="btn btn-outline-success w-50" id="print-attachment-2">Печать приложения 2</button>
 						</div>
 						<div class="input-group m-1">
-							<button type="button" class="btn btn-outline-success w-100">Печать путевки</button>
+							<button type="button" class="btn btn-outline-success w-100" id="print-voucher">Печать путевки</button>
 						</div>
 					</div>
 				</div>
@@ -231,7 +231,7 @@ data to use:
 		<script type="text/javascript" src="/assets/scripts/tours/addDepartureFromMinskDates.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/addDepartureFromResortDates.js"></script>
 		<script type="text/javascript" src="/assets/scripts/clients/addForm.js"></script>
-		<script type="text/javascript" src="/assets/scripts/clients/create.js"></script>
+		<script type="text/javascript" src="/assets/scripts/tours/create.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/addPlacesFromMinsk.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/addPlacesFromResort.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/findClient.js"></script>
