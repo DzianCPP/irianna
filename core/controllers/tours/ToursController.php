@@ -44,6 +44,9 @@ class ToursController extends BaseController implements ControllerInterface
     }
     public function create(): void
     {
+        $tour = file_get_contents("php://input");
+        $tour = json_decode($tour, true);
+        $a = 1;
     }
     public function read(int $id = 0): void
     {

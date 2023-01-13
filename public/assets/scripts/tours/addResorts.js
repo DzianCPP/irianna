@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("countries").addEventListener("click", addResorts);
+    document.getElementById("country").addEventListener("click", addResorts);
 })
 
 function addResorts() {
-    let country = document.getElementById("countries").value;
-    let resortsSelect = document.getElementById("resorts");
+    let country = document.getElementById("country").value;
+    let resortsSelect = document.getElementById("resort");
     let resorts = JSON.parse(document.getElementById("resorts-array").innerHTML);
 
     for (let i = 0; i < resortsSelect.length; i++) {
