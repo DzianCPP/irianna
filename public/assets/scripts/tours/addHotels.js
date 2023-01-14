@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("resorts").addEventListener("click", addHotels);
+    document.getElementById("resort").addEventListener("click", addHotels);
 })
 
 function addHotels() {
-    let resort = document.getElementById("resorts").value;
+    let resort = document.getElementById("resort").value;
     let hotelsSelector = document.getElementById("hotels");
     let hotels = JSON.parse(document.getElementById("hotels-array").innerHTML);
 
