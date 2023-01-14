@@ -1,81 +1,127 @@
-{% extends "base.html.twig" %} {% block content %}
-<div class="container-xs container-sm container-md container-xl">
-    {% use 'components/navBar.html.twig' %} {% block nav %} {{ parent() }} {%
+{% extends "base.html.twig" %}
+{% block content %}
+	<div class="container-xs container-sm container-md container-xl">
+		{% use 'components/navBar.html.twig' %}
+		{% block nav %}
+			{{ parent() }}
+		{%
     endblock %}
 
-    <div class="row w-100 mt-2 mb-2">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
-            <p class="h1 text-center" id="main-page-h1">{{ header }}</p>
-            <p class="h5 text-center" id="main-page-h5">{{ hotel.name }}</p>
-        </div>
-    </div>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <div class="row w-100 mt-2 mb-5">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
-            <div class="table-responsive w-100">
 
-                <table
-                    class="table table-sm table-xl table-md
-                    table-xs
-                    table-hover text-center w-100"
-                    id="table">
-                    <tr>
-                        <th class="w-auto"><input type="checkbox" id="check-all"
-                                /></th>
-                        <th class="w-auto text-center">Описание</th>
+		<div class="row w-100 mt-2 mb-2">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+				<p class="h1 text-center" id="main-page-h1">{{ header }}</p>
+				<p class="h5 text-center" id="main-page-h5">{{ hotel.name }}</p>
+				<p hidden id="hotel-id">{{ hotel.id }}</p>
+			</div>
+		</div>
 
-                        {% for i in 0..hotel.rooms - 1 %}
-                        <th class="w-auto"><textarea class="form-control
-                                border-0
-                                bg-transparent"
-                                rows="1"
-                                name="room-description"></textarea></th>
-                        {% endfor %}
+		<div class="row w-100 mt-2 mb-5">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
+				<div class="table-responsive w-100">
+					<table class="table table-sm" id="table">
+						<tr>
+							<th class="w-auto text-center">Описание номера</th>
+							{% for i in 0..hotel.rooms - 1 %}
+								<th>
+									<textarea class="border-1 w-auto" name="room-description"></textarea>
+								</th>
+							{% endfor %}
+						</tr>
 
-                    </tr>
-                    {% for i in 0..hotel.checkins - 1 %}
-                    <tr>
-                        <td><input type="checkbox" id="{{ i }}" /></td>
-                        <td>
-                            <span class="input-group-text border-0 p-0 w-50
-                                bg-transparent">Заезд</span>
-                            <span class="input-group-text border-0 p-0 w-50
-                                bg-transparent">Выезд</span>
-                        </td>
-                        {% for i in 0..hotel.rooms - 1 %}
-                        <td>
-                            <div>
-                                <input
-                                    type="date"
-                                    class="form-control h-auto p-0
-                                    bg-transparent"
-                                    name="checkin-date-room-{{ i }}"
-                                    />
-                            </div>
-                            <input
-                                type="date"
-                                class="form-control p-0 bg-transparent"
-                                name="checkout-date-room-{{ i }}"
-                                />
-                        </div>
-                    </div>
-                </td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-            <tr>
-                <td></td>
-                <td></td>
-                {% for i in 0..hotel.rooms - 1 %}
-                <td>
-                    <button class="btn btn-success" name="save" id="save-{{ i }}">Сохранить</button>
-                    <input class="hidden" name="hotel-id" value="{{ hotel.id }}" hidden>
-                </td>
-                {% endfor %}
-            </tr>
-        </table>
-    </div>
+
+						<tr>
+							<td class="w-auto text-center">Удобства</td>
+							{% for i in 0..hotel.rooms - 1 %}
+								<td>
+									<div class="input-group mb-3">
+										<textarea class="form-control border-0" name="comfort" id="room-comforts-{{ i }}"></textarea>
+										<div class="btn-group dropend">
+											<button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+												Добавить
+											</button>
+											<ul class="dropdown-menu dropdown-menu-sm">
+												{% for comfort in comforts %}
+													<li>
+														<button class="btn" name="comfort-option" value="room-comforts-{{ i }}-{{ comfort }}">{{ comfort }}</button>
+													</li>
+												{% endfor %}
+											</ul>
+										</div>
+									</div>
+								</td>
+							{% endfor %}
+						</tr>
+					</tr>
+					<tr>
+						<td class="w-auto text-center">Питание</td>
+						{% for i in 0..hotel.rooms - 1 %}
+							<td>
+								<div class="input-group mb-3">
+									<textarea class="form-control border-0" name="food" id="room-food-{{ i }}"></textarea>
+									<div class="btn-group dropend">
+										<button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+											Добавить
+										</button>
+										<ul class="dropdown-menu">
+											{% for food_item in food %}
+												<li>
+													<button class="btn" name="food-option" value="room-food-{{ i }}-{{ food_item }}">{{ food_item }}</button>
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+								</div>
+							</td>
+						{% endfor %}
+					</tr>
+
+					<tr>
+						<td class="w-auto text-center">Заезды/Выезды</td>
+						{% for i in 0..hotel.rooms - 1 %}
+							<td>
+								<div class="input-group w-100">
+									<input type="date" class="btn btn-sm border-0 w-50" name="date" id="date-in-{{ i }}">
+									<input type="date" class="btn btn-sm border-0 w-50" name="date" id="date-out-{{ i }}">
+								</div>
+
+								<div class="input-group w-100">
+									<textarea placeholder="Заезды" class="form-control w-50" name="checkins" aria-label="With textarea" id="field-date-in-{{ i }}"></textarea>
+									<textarea placeholder="Выезды" class="form-control w-50" name="checkouts" aria-label="With textarea" id="field-date-out-{{ i }}"></textarea>
+								</div>
+							</td>
+
+						{% endfor %}
+					</tr>
+
+					<tr>
+						<td></td>
+						{% for i in 0..hotel.rooms - 1 %}
+							<td class="w-auto">
+								<div class="input-group mx-auto">
+									<button class="btn btn-outline-danger w-100">Очистить</button>
+								</div>
+							</td>
+						{% endfor %}
+					</tr>
+
+
+					{% for i in 0..hotel.checkins %}{% endfor %}
+				</tr>
+			</table>
+		</div>
+
+		<div class="row">
+			<div class="input-group w-50 mx-auto">
+				<button class="btn btn-success w-75" name="save">Сохранить все</button>
+				<button class="btn btn-danger w-25">Очистить все</button>
+			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript" src="/assets/scripts/rooms/create.js"></script>
-</div>
-    {% endblock %}
+<script type="text/javascript" src="/assets/scripts/rooms/addComforts.js"></script>
+<script type="text/javascript" src="/assets/scripts/rooms/addFood.js"></script>
+<script type="text/javascript" src="/assets/scripts/rooms/addCalendar.js"></script></div>{% endblock %}

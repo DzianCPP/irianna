@@ -1,26 +1,23 @@
-document.getElementById("save-btn-1").addEventListener("click", () => { create(1); });
-document.getElementById("save-btn-1").addEventListener("click", () => { create(2); });
-document.getElementById("save-btn-1").addEventListener("click", () => { create(3); });
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("save-btn").addEventListener("click", function () {
+        create();
+    });
+});
 
-
-
-async function create(__id) {
-    let _name = document.getElementById("name-" + __id).value;
-    let _route = document.getElementById("route-" + __id).value;
-    let _places = document.getElementById("route-" + __id).value;
-    let _fromMinsk = document.getElementById("departure-from-minsk-" + __id).value;
-    let _fromResort = document.getElementById("departure-from-resort-" + __id).value;
-    let _toMinsk = document.getElementById("arrival-to-minsk-" + __id).value;
-
-    url = "/buses/create";
+async function create() {
+    let url = "/buses/create";
+    let _name = document.getElementById("name").value;
+    let _route = document.getElementById("route").value;
+    let _places = document.getElementById("places").value;
+    let _from_minsk = document.getElementById("from-minsk").value;
+    let _to_minsk = document.getElementById("to-minsk").value;
 
     let info = {
         name: _name,
         route: _route,
         places: _places,
-        departure_from_minsk: _fromMinsk,
-        departure_from_resort: _fromResort,
-        arrival_to_minsk: _toMinsk
+        departure_from_minsk: _from_minsk,
+        arrival_to_minsk: _to_minsk
     };
 
     let POST = {
@@ -30,10 +27,9 @@ async function create(__id) {
 
     let response = await fetch(url, POST);
 
-    if (response.ok !== false) {
+    if (response.ok != false) {
         window.location = "/buses";
     } else {
-        let errorField = document.getElementById("error-field-" + __id);
-        errorField.innerHTML = "Неправильно заполненная информация";
+        alert("Что-то пошло не так");
     }
 }

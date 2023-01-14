@@ -1,136 +1,78 @@
-{% extends "base.html.twig" %}
-{% block content %}
-	<div class="container-xs container-sm container-md container-xl">
-		{% use 'components/navBar.html.twig' %}
-		{% block nav %}
-			{{ parent() }}
-		{%
-  endblock %}
-		<div class="table-responsive">
-			<table class="table table-responsive table-sm table-xl table-hover text-center" id="table">
-				<tr>
-					<th scope="col"><input type="checkbox" id="check-all"/></th>
-					<th scope="col">id</th>
-					<th scope="col">ФИО</th>
-					<th scope="col">Телефон 1</th>
-					<th scope="col">Телефон 2</th>
-					<th scope="col">Паспорт</th>
-					<th scope="col">Дата рождения</th>
-					<th scope="col">Прописка</th>
-					<th scope="col">Последний курорт</th>
-					<th scope="col">Постоянный клиент</th>
-					<th scope="col"></th>
-				</tr>
-				<tr>
-					<td><input type="checkbox" id="client-1">
-					</td>
-					<td>1</td>
-					<td>Андросович Василий Николаевич</td>
-					<td>+375 29 639 66 57</td>
-					<td>+ 375 44 798 45 67</td>
-					<td>MC45688</td>
-					<td>1979-12-12</td>
-					<td>Минск, Достоевского 67-34</td>
-					<td>Буковель</td>
-					<td>Да</td>
-					<td>
-						<button class="btn btn-success">Исправить</button>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" id="client-1">
-					</td>
-					<td>2</td>
-					<td>Мазур Екатерина Николаевна</td>
-					<td>+ 375 44 798 45 67</td>
+{% extends "base.html.twig" %} {% block content %} {% use
+'components/navBar.html.twig' %} {% block nav %} {{ parent() }} {% endblock %}
+<div class="container-xs container-sm container-md container-xl pt-5 w-100">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+        <p class="h1 m-auto text-center mt-5 mb-3">{{ header | upper }}</p>
+    </div>
+    {% if clients|length > 0 %}
+    <div class="row w-auto">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
+            <div class="table-responsive w-100">
+                {% use 'components/clientsTable.html.twig' %} {% block table %}
+                {{ parent() }}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
 
-					<td>+375 29 639 66 57</td>
+    <div class="row w-100">
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+            <div>
+                <a class="btn btn-outline-success w-100 mb-1" id="delete-btn">
+                    Удалить выбранные
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+    </div>
 
-					<td>MP556888</td>
-					<td>1983-01-22</td>
-					<td>Минск, Ольшевского 2-55</td>
-					<td>Буковель</td>
-					<td>Нет</td>
-					<td>
-						<button class="btn btn-success">Исправить</button>
-					</td>
-				</tr>
+    {% else %}
+    <div class="row w-100">
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+            <div>
+                <h1 class="h1 w-100 m-1">{{ "Не удалось найти клиентов" }}</h1>
+            </div>
+        </div>
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+    </div>
+    {% endif %} {% if buses|length > 1 %} {% use
+    'components/pagination.html.twig' %} {% block pagination %}
+    {{ parent() }}
+    {% endblock %} {% endif %}
 
-				<tr>
-					<td><input type="checkbox" id="client-1">
-					</td>
-					<td>3</td>
-					<td>Калганович Мария Степановна</td>
-					<td>+375 33 539 86 47</td>
-					<td>+ 375 44 732 15 27</td>
-					<td>MC5969840</td>
-					<td>1993-03-23</td>
-					<td>Минск, Дятлова 6</td>
-					<td>Буковель</td>
-					<td>Да</td>
-					<td>
-						<button class="btn btn-success">Исправить</button>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" id="client-1">
-					</td>
-					<td>4</td>
-					<td>Валько Дмитрий Николаевич</td>
-					<td>+375 29 456 87 12</td>
-					<td>+ 375 44 23 543 67</td>
-					<td>MC555555</td>
-					<td>1965-01-01</td>
-					<td>Минск, Достоевского 2-2</td>
-					<td>Буковель</td>
-					<td>Да</td>
-					<td>
-						<button class="btn btn-success">Исправить</button>
-					</td>
-				</tr>
-			</table>
-		</div>
+    <div class="row w-100">
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+            <div>
+                <a
+                    class="btn btn-outline-success w-100 mb-1"
+                    id="add-country"
+                    href="/clients/new">
+                    Добавить клиента
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+    </div>
 
-		<div class="row w-100">
-			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
-				<div>
-					<a class="btn btn-outline-success w-100 mb-1" id="delete-all">
-						Удалить выбранные
-					</a>
-				</div>
-			</div>
-			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-		</div>
-		{% use
-  'components/pagination.html.twig' %}
-		{% block pagination %}
-			{{ parent() }}
-		{% endblock %}
+    <div class="row w-100">
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+            <div>
+                <a class="btn btn-success w-100 mb-1" id="main-page"
+                    href="/admin">
+                    Главная страница
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+    </div>
+</div>
+<script type="text/javascript" src="/assets/scripts/selectAll.js"></script>
+<script
+    type="text/javascript"
+    src="/assets/scripts/clients/delete.js"></script>
 
-
-		<div class="row w-100">
-			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
-				<div>
-					<a class="btn btn-outline-success w-100 mb-1" id="add-country" href="/clients/new">
-						Добавить клиента
-					</a>
-				</div>
-			</div>
-			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-		</div>
-
-		<div class="row w-100">
-			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
-				<div>
-					<a class="btn btn-success w-100 mb-1" id="main-page" href="/admin">
-						Главная страница
-					</a>
-				</div>
-			</div>
-			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-		</div>
-	</div>
 {% endblock %}

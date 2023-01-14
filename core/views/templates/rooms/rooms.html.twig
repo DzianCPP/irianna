@@ -8,21 +8,28 @@
     endblock %}
 		<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
 			<p class="h1 m-auto text-center mt-5 mb-3">{{ header | upper }}</p>
+			<p class="h5 m-auto text-center mb-3">{{ hotel.name }}</p>
 		</div>
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
-				<select class="form-select">
-					{% for hotel in hotels %}
-						<option>{{ hotel.name }}</option>
-					{% endfor %}
-				</select>
+				<div class="dropdown">
+					<a class="btn btn-outline-secondary dropdown-toggle text-dark w-75 mx-auto" href="/rooms/{{ hotel.id }}" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+						{{ hotel.name }}
+					</a>
+
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						{% for hotel in hotels %}
+						<li><a class="dropdown-item" href="/rooms/{{ hotel.id }}">{{ hotel.name }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
 			</div>
 		</div>
 
 		{% if rooms|length > 0 %}
-			<div class="row w-auto">
-				<div class="col-xs-12 col-sm-12 col-md-10 col-xl-10">
+			<div class="row w-100">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 mx-auto">
 					<div class="table-responsive">
 						{% use 'components/roomsTable.html.twig' %}
 						{% block table %}
@@ -36,7 +43,7 @@
 				<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
 				<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
 					<div>
-						<a class="btn btn-outline-success w-100 mb-1" id="delete-all">
+						<a class="btn btn-outline-success w-100 mb-1" id="delete-btn">
 							Удалить выбранные
 						</a>
 					</div>
@@ -49,19 +56,13 @@
 				<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
 				<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
 					<div>
-						<h1 class="h1 w-100 m-1">{{ "Не удалось найти комнаты" }}</h1>
+						<h1 class="h1 w-100 m-1">{{ "Не удалось найти номера в этой	 гостинице" }}</h1>
 					</div>
 				</div>
 				<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
 			</div>
 		{% endif %}
-		{% if rooms|length > 1 %}
-			{% use
-    'components/pagination.html.twig' %}
-			{% block pagination %}
-				{{ parent() }}
-			{% endblock %}
-		{% endif %}
+
 		<div class="row w-100">
 			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
 			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
@@ -86,5 +87,9 @@
 			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
 		</div>
 	</div>
+</div>
 
-</div>{% endblock %}
+<script type="text/javascript" src="/assets/scripts/selectAll.js"></script>
+<script type="text/javascript" src="/assets/scripts/rooms/delete.js"></script>
+
+{% endblock %}

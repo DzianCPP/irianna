@@ -1,43 +1,39 @@
-let deleteAllBtn = document.getElementById("delete-all");
-deleteAllBtn.addEventListener("click", deleteAll);
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("delete-btn").addEventListener("click", _delete);
+})
 
-function deleteAll() {
-    let allCheckboxes = document.getElementsByName("select");
-    let checkedIds = getChecked(allCheckboxes);
+async function _delete() {
+    if (!confirm("Вы действительно хотите удалить выбранные автобусы?")) {
+        return;
+    }
 
-    if (confirm("Вы уверены, что хотите удалить выбранные автобусы?")) {
-        let url = "/buses/delete";
+    let checkboxes = document.getElementsByName("select");
+    let ids = getIds(checkboxes);
+    let url = "/buses/delete";
+    let deleteRequest = {
+        method: "DELETE",
+        body: JSON.stringify(ids)
+    };
 
-        let countries = {};
+    let response = await fetch(url, deleteRequest);
 
-        for (var i = 0; i < checkedIds.length; i++) {
-            var key = "bus" + i;
-            Object.defineProperty(countries, key, {
-                value: checkedIds[i],
-                enumerable: true
-            });
-        }
-
-        let deleteRequest = {
-            method: "DELETE",
-            body: JSON.stringify(countries)
-        };
-
-        fetch(url, deleteRequest)
-            .then(() => {
-                location.reload(true);
-            });
+    if (response.ok != false) {
+        location.reload(true);
+    } else {
+        alert("Что-то пошло не так");
     }
 }
 
-function getChecked(allCheckboxes) {
-    let checkedIds = new Array();
+function getIds(checkboxes) {
+    let ids = new Array();
+    let i = 0;
 
-    for (var i = 0; i < allCheckboxes.length; i++) {
-        if (allCheckboxes[i].checked === true) {
-            checkedIds.push(allCheckboxes[i].value);
+    for (var checkbox of checkboxes) {
+        if (checkbox.checked) {
+            ids.push(checkbox.value);
         }
+        i++;
     }
 
-    return checkedIds;
+    return ids;
 }

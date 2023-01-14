@@ -13,7 +13,6 @@ class BusesModel extends Model implements ModelInterface
         'route',
         'places',
         'departure_from_minsk',
-        'departure_from_resort',
         'arrival_to_minsk',
         'id'
     ];
@@ -36,16 +35,31 @@ class BusesModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, 'id')) {
+            return false;
+        }
+
         return true;
     }
 
     public function create(): bool
     {
+        $bus = json_decode(file_get_contents("php://input"), true);
+        $bus['places'] = (int)$bus['places'];
+
+        if (!$this->databaseSqlBuilder->insert($bus, $this->fields, self::TABLE_NAME)) {
+            return false;
+        }
+        
         return true;
     }
 
     public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
+        if (!$this->databaseSqlBuilder->delete($columnValues, self::TABLE_NAME)) {
+            return false;
+        }
+
         return true;
     }
 }

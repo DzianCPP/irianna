@@ -213,6 +213,12 @@ return [
         'method' => 'GET'
     ],
 
+    'busesOne' => [
+        'controller' => BusesController::class,
+        'action' => 'readOne',
+        'method' => 'GET'
+    ],
+
     'buses/edit' => [
         'controller' => BusesController::class,
         'action' => 'edit',
@@ -228,7 +234,7 @@ return [
     'buses/update' => [
         'controller' => BusesController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'buses/delete' => [
@@ -327,6 +333,12 @@ return [
         'method' => 'GET'
     ],
 
+    'roomsOne' => [
+        'controller' => RoomsController::class,
+        'action' => 'readOne',
+        'method' => 'GET'
+    ],
+
     'rooms/edit' => [
         'controller' => RoomsController::class,
         'action' => 'edit',
@@ -342,7 +354,7 @@ return [
     'rooms/update' => [
         'controller' => RoomsController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'rooms/delete' => [
@@ -355,6 +367,18 @@ return [
         'controller' => ClientsController::class,
         'action' => 'read',
         'method' => 'GET'
+    ],
+
+    'clients/find' => [
+        'controller' => ClientsController::class,
+        'action' => 'find',
+        'method' => 'POST'
+    ],
+
+    'clients/last' => [
+        'controller' => ClientsController::class,
+        'action' => 'getLastClientId',
+        'method' => 'POST'
     ],
 
     'clients/edit' => [
@@ -372,7 +396,7 @@ return [
     'clients/update' => [
         'controller' => ClientsController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'clients/delete' => [
@@ -391,6 +415,12 @@ return [
         'controller' => ToursController::class,
         'action' => 'read',
         'method' => 'GET'
+    ],
+
+    'tours/places' => [
+        'controller' => ToursController::class,
+        'action' => 'getCountOfRegisteredTours',
+        'method' => 'POST'
     ],
 
     'tours/edit' => [
