@@ -52,6 +52,7 @@ class ToursController extends BaseController implements ControllerInterface
 
         return;
     }
+    
     public function read(int $id = 0): void
     {
     }
