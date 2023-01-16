@@ -113,7 +113,7 @@ function createServiceCost() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group mt-2");
     _input_group.appendChild(createSpan("input-group-text w-50 bg-primary text-light", "Тур. услуга"));
-    _input_group.appendChild(createInputText("form-control", "text", "sub-client-service-cost", "Стоимость услуги в BYN"));
+    _input_group.appendChild(createInputText("form-control", "text", "service-cost", "Стоимость услуги в BYN"));
 
     return _input_group;
 }
@@ -122,7 +122,7 @@ function createTourCost() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group mt-2");
     _input_group.appendChild(createSpan("input-group-text w-50 bg-primary text-light", "Стоимость тура"));
-    _input_group.appendChild(createInputText("form-control", "text", "sub-client-tour-cost", "Стоимость тура в BYN"));
+    _input_group.appendChild(createInputText("form-control", "text", "tour-cost", "Стоимость тура в BYN"));
 
     return _input_group;
 }
@@ -131,7 +131,7 @@ function createTourCostCurrency() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group mt-2");
     _input_group.appendChild(createSpan("input-group-text w-50 bg-primary text-light", "Стоимость тура"));
-    _input_group.appendChild(createInputText("form-control", "text", "sub-client-tour-cost-currency", ""));
-    _input_group.appendChild(createInputText("form-control", "text", "sub-client-currency", "Валюта"));
+    _input_group.appendChild(createInputText("form-control", "text", "tour-cost-currency", ""));
+    _input_group.appendChild(createInputText("form-control", "text", "currency", "Валюта"));
     return _input_group;
 }
