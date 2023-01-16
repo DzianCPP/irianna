@@ -52,9 +52,8 @@ class ToursModel extends Model implements ModelInterface
                 'total_travel_service_byn',
                 'total_travel_cost_byn',
                 'total_travel_service_currency',
-                // 'total_travel_cost_currency',
-                // 'from_minsk_date',
-                // 'to_minsk_date'
+                'from_minsk_date',
+                'to_minsk_date'
             ],
             self::TABLE_NAME
         )) {

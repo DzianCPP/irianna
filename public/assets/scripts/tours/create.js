@@ -37,11 +37,11 @@ async function createTour() {
         owner_travel_cost: document.getElementById("main-client-tour-cost").value,
         number_of_children: document.getElementById("number-of-children").value,
         ages: document.getElementById("age-of-children").value,
-        total_travel_service_byn: document.getElementById("total-service-cost").value,
-        total_tour_cost_byn: document.getElementById("total-tour-cost").value,
-        total_travel_service_currency: document.getElementById("total-cost-currency").value,
-        // from_minsk_date: _departure_from_minsk,
-        // to_minsk_date: _departure_from_resort
+        total_travel_service_byn: document.getElementById("total-service-cost").innerHTML,
+        total_tour_cost_byn: document.getElementById("total-tour-cost").innerHTML,
+        total_travel_service_currency: document.getElementById("total-cost-currency").innerHTML,
+        from_minsk_date: _departure_from_minsk,
+        to_minsk_date: _departure_from_resort
     };
 
     let POST = {
