@@ -90,4 +90,9 @@ class ClientsModel extends Model implements ModelInterface
 
         return $sub_clients;
     }
+
+    public function getLastClientId(): int
+    {
+        return ClientsHelper::getLastClientId(self::TABLE_NAMES[0]);
+    }
 }

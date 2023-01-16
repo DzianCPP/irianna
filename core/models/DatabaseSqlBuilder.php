@@ -37,7 +37,7 @@ class DatabaseSqlBuilder
         if ($columnValue != []) {
             $column = $columnValue['column'];
             $value = $columnValue['value'];
-            $sqlQuery .= " WHERE ${column}=${value}";
+            $sqlQuery .= " WHERE ${column}='${value}'";
         }
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
@@ -72,6 +72,17 @@ class DatabaseSqlBuilder
         }
 
         return true;
+    }
+
+    public function getCount(string $table_name, array $columns, array|int $values): int|bool
+    {
+        $sqlQuery = "SELECT COUNT(*) FROM $table_name WHERE $columns[0] = '$values[0]'";
+        $query = $this->conn->prepare($sqlQuery);
+        if (!$query->execute()) {
+            return 0;
+        }
+
+        return $query->fetchAll(); 
     }
 
     private function getTableFields(array $fields): string

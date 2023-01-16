@@ -17,6 +17,9 @@ function addForm() {
     _cols.appendChild(createSecondNameInputGroup());
     _cols.appendChild(createPassportInputGroup());
     _cols.appendChild(createBirthDateInputGroup());
+    _cols.appendChild(createServiceCost());
+    _cols.appendChild(createTourCost());
+    _cols.appendChild(createTourCostCurrency())
     row.appendChild(_cols);
     cont.appendChild(row);
     document.getElementById("clients").appendChild(cont);
@@ -104,4 +107,31 @@ function createInputText(className, typeName, nameName, placeholder) {
     _input_text.setAttribute("placeholder", placeholder);
 
     return _input_text;
+}
+
+function createServiceCost() {
+    const _input_group = document.createElement('div');
+    _input_group.setAttribute("class", "input-group mt-2");
+    _input_group.appendChild(createSpan("input-group-text w-50 bg-primary text-light", "Тур. услуга"));
+    _input_group.appendChild(createInputText("form-control", "text", "service-cost", "Стоимость услуги в BYN"));
+
+    return _input_group;
+}
+
+function createTourCost() {
+    const _input_group = document.createElement('div');
+    _input_group.setAttribute("class", "input-group mt-2");
+    _input_group.appendChild(createSpan("input-group-text w-50 bg-primary text-light", "Стоимость тура"));
+    _input_group.appendChild(createInputText("form-control", "text", "tour-cost", "Стоимость тура в BYN"));
+
+    return _input_group;
+}
+
+function createTourCostCurrency() {
+    const _input_group = document.createElement('div');
+    _input_group.setAttribute("class", "input-group mt-2");
+    _input_group.appendChild(createSpan("input-group-text w-50 bg-primary text-light", "Стоимость тура"));
+    _input_group.appendChild(createInputText("form-control", "text", "tour-cost-currency", ""));
+    _input_group.appendChild(createInputText("form-control", "text", "currency", "Валюта"));
+    return _input_group;
 }

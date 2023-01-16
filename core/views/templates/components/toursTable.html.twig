@@ -1,0 +1,68 @@
+{% block table %}
+<table class="table table-sm table-hover text-center" id="table">
+    <tr>
+        <th scope="col"><input type="checkbox" id="check-all" /></th>
+        <th scope="col">id</th>
+        <th scope="col">Менеджер</th>
+        <th scope="col">Гостиница</th>
+        <th scope="col">Из Минска</th>
+        <th scope="col">Из курорта</th>
+        <th scope="col">Автобус</th>
+        <th scope="col">Номер</th>
+        <th scope="col">Удобства</th>
+        <th scope="col">Питание</th>
+        <th scope="col">Клиент</th>
+        <th scope="col">Всего человек</th>
+        <th scope="col">Стоимость тур.услуги</th>
+        <th scope="col">Стоимость тура</th>
+        <th scope="col">Только проезд</th>
+        <th scope="col">Тип проезда</th>
+    </tr>
+    {% for tour in tours %}
+    <tr>
+        <td><input name="select" type="checkbox" value="{{ tour.id }}" /></td>
+        <td>{{ tour.id }}</td>
+        {% for manager in managers %}{% if manager.id == tour.manager_id %}
+        <td>{{ manager.name }}</td>
+        {% endif %}{% endfor %}
+        {% for hotel in hotels %}{% if hotel.id == tour.hotel_id %}
+        <td>{{ hotel.name }}</td>
+        {% endif %}{% endfor %}
+        <td>{{ tour.from_minsk_date }}</td>
+        <td>{{ tour.to_minsk_date }}</td>
+        {% for bus in buses %}{% if bus.id == tour.bus_id %}
+        <td>{{ bus.name }}</td>
+        {% endif %}{% endfor %}
+        {% for room in rooms %}{% if room.id == tour.room_id %}
+        <td>{{ room.description|trim(', ') }}</td>
+        <td>{{ room.comforts|trim(', ') }}</td>
+        <td>{{ room.food|trim(', ') }}</td>
+        {% endif %}{% endfor %}
+        {% for client in clients %}{% if client.id == tour.owner_id %}
+        <td>{{ client.name }}</td>
+        {% set count = 1 %}
+        {% for sc in sub_clients %}
+        {% if sc.main_client_id == client.id %}
+        {% set count = count + 1 %}
+        {% endif %}
+        {% endfor %}
+        <td>{{ count }}</td>
+        {% endif %}{% endfor %}
+        <td>{{ tour.total_travel_service_byn }} BYN</td>
+        <td>
+            <span>{{ tour.total_travel_cost_byn }} BYN</span>
+            <br>
+            <span>{{ tour.total_travel_service_currency }}</span>
+        </td>
+        <td>
+            <input type="checkbox" {% if tour.is_only_transit !=0 %}{{ 'checked' }}{% endif %}>
+        </td>
+        <td>
+            {% if tour.transit == 0 %}{{ 'Туда' }}{% endif %}
+            {% if tour.transit == 1 %}{{ 'Обратно' }}{% endif %}
+            {% if tour.transit == 2 %}{{ 'Туда-Обратно' }}{% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

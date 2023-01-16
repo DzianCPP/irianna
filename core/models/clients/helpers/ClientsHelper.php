@@ -33,9 +33,17 @@ class ClientsHelper
     {
         foreach ($clients as &$c) {
             $arr = explode(" ", $c['name'], strlen($c['name']));
-            $c['lastName'] = $arr[0];
-            $c['firstName'] = $arr[1];
-            $c['secondName'] = $arr[2];
+            if (isset($arr[0])) {
+                $c['lastName']  = $arr[0];
+            }    
+
+            if (isset($arr[1])) {
+                $c['firstName'] = $arr[1];
+            }
+
+            if (isset($arr[2])) {
+                $c['secondName']  = $arr[2];
+            }
         }
 
         return $clients;
