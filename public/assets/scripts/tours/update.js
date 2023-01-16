@@ -21,8 +21,31 @@ async function update() {
         return;
     }
 
-    alert("OK");
+    let url = "/tours/update";
+    let tour = getTour();
+
+    let PUT = {
+        method: 'PUT',
+        body: JSON.stringify(tour)
+    };
+
+    let response = await fetch(url, PUT);
+
+    if (!response.ok) {
+        console.log("Ошибка на сервере");
+        document.getElementById("error-field").innerHTML = "Что-то пошло не так";
+        return;
+    } else {
+        window.location = "/tours";
+    }
 }
+
+
+
+
+
+
+
 
 async function updateSubClients() {
     let url = "/clients/updateSubClients";
@@ -40,6 +63,24 @@ async function updateSubClients() {
     }
 
     return true;
+}
+
+async function updateMainClient() {
+    let url = "/clients/update";
+    let main_client = getMainClient();
+
+    let PUT = {
+        method: "PUT",
+        body: JSON.stringify(main_client)
+    };
+
+    let response = await fetch(url, PUT);
+
+    if (response.ok != false) {
+        return true;
+    }
+
+    return false;
 }
 
 function getSubClients() {
@@ -84,7 +125,7 @@ function getSubClients() {
     for (var el of document.getElementsByName("main-client-id")) {
         main_client_ids.push(el.innerHTML);
     }
-    
+
     return {
         _names: names,
         _passport: passports,
@@ -92,24 +133,6 @@ function getSubClients() {
         _ids: ids,
         _main_client_ids: main_client_ids
     };
-}
-
-async function updateMainClient() {
-    let url = "/clients/update";
-    let main_client = getMainClient();
-
-    let PUT = {
-        method: "PUT",
-        body: JSON.stringify(main_client)
-    };
-
-    let response = await fetch(url, PUT);
-
-    if (response.ok != false) {
-        return true;
-    }
-
-    return false;
 }
 
 function getMainClient() {
@@ -131,5 +154,43 @@ function getMainClient() {
         birth_date: _birthDate,
         address: _address,
         id: _id
+    };
+}
+
+function getTour() {
+    let _manager_id = document.getElementById("manager").value;
+    let _only_transit = document.getElementById("only-transit");
+    let _resort_id = document.getElementById("resort").value;
+    let _hotel_id = document.getElementById("hotels").value;
+    let _room_id = document.getElementById("rooms").value;
+    let _bus_id = document.getElementById("bus-to").value;
+    let _departure_from_minsk = document.getElementById("departure-from-minsk").value;
+    let _departure_from_resort = document.getElementById("departure-from-resort").value;
+    let _created = new Date();
+
+    return {
+        created: _created.getDay() + "-" + _created.getMonth() + "-" + _created.getFullYear(),
+        manager_id: Number(_manager_id),
+        is_only_transit: Number(_only_transit.checked),
+        transit: document.getElementById("transits").value,
+        resort_id: _resort_id,
+        hotel_id: _hotel_id,
+        checkin_date: _departure_from_minsk,
+        checkout_date: _departure_from_resort,
+        count_of_days: 7,
+        bus_id: _bus_id,
+        owner_id: Number(document.getElementById("client-id").innerHTML),
+        owner_travel_service: document.getElementById("main-client-service-cost").value,
+        owner_travel_cost: document.getElementById("main-client-tour-cost").value,
+        number_of_children: document.getElementById("number-of-children").value,
+        ages: document.getElementById("age-of-children").value,
+        total_travel_service_byn: document.getElementById("total-service-cost").innerHTML,
+        total_travel_cost_byn: document.getElementById("total-tour-cost").innerHTML,
+        total_travel_service_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency").innerHTML,
+        total_travel_service_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency").innerHTML,
+        from_minsk_date: _departure_from_minsk,
+        to_minsk_date: _departure_from_resort,
+        room_id: document.getElementById("rooms").value,
+        id: Number(document.getElementById("tour-id").innerHTML)
     };
 }

@@ -28,9 +28,11 @@ class ToursModel extends Model implements ModelInterface
         'total_travel_service_byn',
         'total_travel_cost_byn',
         'total_travel_service_currency',
+        'total_travel_cost_currency',
         'from_minsk_date',
         'to_minsk_date',
-        'room_id'
+        'room_id',
+        'id'
     ];
     private const TABLE_NAME = "tours_table";
 
@@ -46,6 +48,10 @@ class ToursModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, 'id')) {
+            return false;
+        }
+        
         return true;
     }
 

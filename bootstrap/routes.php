@@ -444,7 +444,7 @@ return [
     'tours/update' => [
         'controller' => ToursController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'tours/delete' => [
