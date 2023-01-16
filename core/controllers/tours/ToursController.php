@@ -13,6 +13,7 @@ use core\models\managers\ManagersModel;
 use core\models\countries\CountriesModel;
 use core\models\resorts\ResortsModel;
 use core\models\rooms\RoomsModel;
+use core\services\IdGetter;
 
 class ToursController extends BaseController implements ControllerInterface
 {
@@ -42,7 +43,47 @@ class ToursController extends BaseController implements ControllerInterface
     }
     public function edit(): void
     {
+        $this->setModel(ToursModel::class);
+        $this->setView(ToursView::class);
+        $tour = $this->model->get(columnValue: ['column' => 'id', 'value' => IdGetter::getId()])[0];
+        $managers = new ManagersModel();
+        $countries = new CountriesModel();
+        $resorts = new ResortsModel();
+        $hotels = new HotelsModel();
+        $rooms = new RoomsModel();
+        $buses = new BusesModel();
+        $client = new ClientsModel();
+        $client = $client->get(columnValue: [
+            'column' => 'id',
+            'value' => $tour['owner_id']
+        ])[0];
+
+        $sub_clients = new ClientsModel();
+        $sub_clients = $sub_clients->getSubClients(columnValue: [
+            'column' => 'main_client_id',
+            'value' => $client['id']
+        ]);
+
+        // TODO add owner_travel_cost_currency field to DB and Model
+
+        $data = [
+            'tour' => $tour,
+            'managers' => $managers->get(),
+            'countries' => $countries->get(),
+            'resorts' => json_encode($resorts->get()),
+            'hotels' => json_encode($hotels->get()),
+            'rooms' => json_encode($rooms->get()),
+            'buses' => $buses->get(),
+            'client' => $client,
+            'sub_clients' => $sub_clients,
+            'title' => 'Изменить тур',
+            'header' => 'Изменить тур',
+            'login' => $_COOKIE['login']
+        ];
+
+        $this->view->render("tours/edit.html.twig", $data);
     }
+
     public function create(): void
     {
         $this->setModel(ToursModel::class);
