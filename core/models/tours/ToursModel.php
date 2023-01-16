@@ -62,6 +62,10 @@ class ToursModel extends Model implements ModelInterface
 
     public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
+        if (!$this->databaseSqlBuilder->delete($columnValues, self::TABLE_NAME)) {
+            return false;
+        }
+        
         return true;
     }
 
