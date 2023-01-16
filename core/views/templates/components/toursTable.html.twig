@@ -17,6 +17,7 @@
         <th scope="col">Стоимость тура</th>
         <th scope="col">Только проезд</th>
         <th scope="col">Тип проезда</th>
+        <th scope="col"></th>
     </tr>
     {% for tour in tours %}
     <tr>
@@ -62,6 +63,7 @@
             {% if tour.transit == 1 %}{{ 'Обратно' }}{% endif %}
             {% if tour.transit == 2 %}{{ 'Туда-Обратно' }}{% endif %}
         </td>
+        <td><a class="btn btn-sm btn-success" href="/tours/edit/{{ tour.id }}">Изменить</a></td>
     </tr>
     {% endfor %}
 </table>
