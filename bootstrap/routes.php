@@ -393,6 +393,12 @@ return [
         'method' => 'POST'
     ],
 
+    'clients/updateSubClients' => [
+        'controller' => ClientsController::class,
+        'action' => 'updateSubClients',
+        'method' => 'PUT'
+    ],
+
     'clients/update' => [
         'controller' => ClientsController::class,
         'action' => 'update',
