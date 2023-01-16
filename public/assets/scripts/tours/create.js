@@ -25,7 +25,7 @@ async function createTour() {
         created: _created.getDay() + "-" + _created.getMonth() + "-" + _created.getFullYear(),
         manager_id: _manager_id,
         is_only_transit: Number(_only_transit.checked),
-        transit: "Туда и обратно",
+        transit: document.getElementById("transits").value,
         resort_id: _resort_id,
         hotel_id: _hotel_id,
         checkin_date: _departure_from_minsk,
@@ -38,10 +38,11 @@ async function createTour() {
         number_of_children: document.getElementById("number-of-children").value,
         ages: document.getElementById("age-of-children").value,
         total_travel_service_byn: document.getElementById("total-service-cost").innerHTML,
-        total_tour_cost_byn: document.getElementById("total-tour-cost").innerHTML,
-        total_travel_service_currency: document.getElementById("total-cost-currency").innerHTML,
+        total_travel_cost_byn: document.getElementById("total-tour-cost").innerHTML,
+        total_travel_service_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency"). innerHTML,
         from_minsk_date: _departure_from_minsk,
-        to_minsk_date: _departure_from_resort
+        to_minsk_date: _departure_from_resort,
+        room_id: document.getElementById("rooms").value
     };
 
     let POST = {

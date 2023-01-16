@@ -77,6 +77,14 @@ data to use:
 					<span class="input-group-text">Номер<span class="text-danger">*</span>
 					</span>
 					<select class="form-select" name="rooms" id="rooms"></select>
+				</div>
+				<div class="input-group mt-2">
+					<span class="input-group-text">Проезд</span>
+					<select class="form-select" name="rooms" id="transits">
+						<option value="0">Туда</option>
+						<option value="1">Обратно</option>
+						<option value="2">Туда-Обратно</option>
+					</select>
 					<span class="input-group-text">Только проезд</span>
 					<span class="input-group-text"><input type="checkbox" class="checkbox" id="only-transit"></input>
 					</span>
@@ -217,12 +225,12 @@ data to use:
 				<div class="row w-100 mb-2">
 					<div class="input-group mt-2">
 						<span class="input-group-text bg-warning text-dark w-auto">Кол-во детей</span>
-						<input type="number" class="form-control" id="number-of-children" placeholder="Кол-во детей" />
+						<input type="number" class="form-control" id="number-of-children" placeholder="Кол-во детей" value="0"/>
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text bg-warning text-dark w-auto">Возраст детей</span>
 						<input type="text" class="form-control" id="age-of-children"
-							placeholder="Возраст детей через запятую" />
+							placeholder="Возраст детей через запятую" value="0"/>
 					</div>
 					<div class="input-group mt-2">
 						<button type="button" class="btn btn-success w-75" name="save-btn" id="save-btn">

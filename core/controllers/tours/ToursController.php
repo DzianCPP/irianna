@@ -8,6 +8,7 @@ use core\views\tours\ToursView;
 use core\models\tours\ToursModel;
 use core\models\hotels\HotelsModel;
 use core\models\buses\BusesModel;
+use core\models\clients\ClientsModel;
 use core\models\managers\ManagersModel;
 use core\models\countries\CountriesModel;
 use core\models\resorts\ResortsModel;
@@ -55,7 +56,36 @@ class ToursController extends BaseController implements ControllerInterface
     
     public function read(int $id = 0): void
     {
+        $this->setModel(ToursModel::class);
+        $this->setView(ToursView::class);
+        $tours = $this->model->get();
+        $clients = new ClientsModel();
+        $sub_clients = $clients->getSubClients();
+        $clients = $clients->get();
+        $hotels = new HotelsModel();
+        $rooms = new RoomsModel();
+        $resorts = new ResortsModel();
+        $managers = new ManagersModel();
+        $buses = new BusesModel();
+
+        $data = [
+            'tours' => $tours,
+            'clients' => $clients,
+            'hotels' => $hotels->get(),
+            'rooms' => $rooms->get(),
+            'resorts' => $resorts->get(),
+            'managers' => $managers->get(),
+            'buses' => $buses->get(),
+            'sub_clients' => $sub_clients,
+            'header' => 'Туры',
+            'title' => 'Туры',
+            'login' => $_COOKIE['login']
+        ];
+
+
+        $this->view->render("tours/tours.html.twig", $data);
     }
+
     public function update(int $id = 0): void
     {
     }
