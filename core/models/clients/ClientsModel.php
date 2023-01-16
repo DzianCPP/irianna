@@ -34,13 +34,18 @@ class ClientsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
-        if (!$this->databaseSqlBuilder->update(self::TABLE_NAMES[0], $this->fields[0], $newInfo['main_client'], 'id')) {
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAMES[0], $this->fields[0], $newInfo, 'id')) {
             return false;
         }
 
-        $sub_clients = ClientsHelper::normalizeSubClients($newInfo['sub_client']);
-        $sub_clients = ClientsHelper::addIds($sub_clients, $newInfo['sub_client']['_ids']);
-        $main_client_id = (int)$newInfo['main_client']['id'];
+        return true;
+    }
+
+    public function updateSubClients(array $newInfo): bool
+    {
+        $sub_clients = ClientsHelper::normalizeSubClients($newInfo);
+        $sub_clients = ClientsHelper::addIds($sub_clients, $newInfo['_ids']);
+        $main_client_id = (int)$newInfo['_main_client_ids'][0];
 
         foreach ($sub_clients as &$sc) {
             $sc['main_client_id'] = $main_client_id;
