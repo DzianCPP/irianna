@@ -79,7 +79,8 @@ class ToursController extends BaseController implements ControllerInterface
             'sub_clients' => $sub_clients,
             'header' => 'Туры',
             'title' => 'Туры',
-            'login' => $_COOKIE['login']
+            'login' => $_COOKIE['login'],
+            'currentPage' => $this->getPage()
         ];
 
 
