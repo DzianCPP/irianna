@@ -34,6 +34,7 @@ class ToursModel extends Model implements ModelInterface
         'room_id',
         'id'
     ];
+    
     private const TABLE_NAME = "tours_table";
 
     public function __construct()
