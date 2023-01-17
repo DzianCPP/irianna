@@ -30,7 +30,7 @@ async function createTour() {
         hotel_id: _hotel_id,
         checkin_date: _departure_from_minsk,
         checkout_date: _departure_from_resort,
-        count_of_days: 7,
+        count_of_day: 7,
         bus_id: _bus_id,
         owner_id: await getLastClientId(),
         owner_travel_service: document.getElementById("main-client-service-cost").value,
@@ -40,6 +40,7 @@ async function createTour() {
         total_travel_service_byn: document.getElementById("total-service-cost").innerHTML,
         total_travel_cost_byn: document.getElementById("total-tour-cost").innerHTML,
         total_travel_service_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency"). innerHTML,
+        total_travel_cost_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency"). innerHTML,
         from_minsk_date: _departure_from_minsk,
         to_minsk_date: _departure_from_resort,
         room_id: document.getElementById("rooms").value
@@ -54,6 +55,7 @@ async function createTour() {
 
     if (response.ok) {
         console.log("Тур сохранен");
+        window.location = "/tours";
     } else {
         console.log("Тур не удалось сохранить");
     }
