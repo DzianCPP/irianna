@@ -13,6 +13,7 @@ use core\controllers\managers\ManagersController;
 use core\controllers\rooms\RoomsController;
 use core\controllers\clients\ClientsController;
 use core\controllers\tours\ToursController;
+use core\controllers\contracts\ContractsController;
 
 return [
     'admin' => [
@@ -455,6 +456,18 @@ return [
 
     'tours/new' => [
         'controller' => ToursController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'contracts' => [
+        'controller' => ContractsController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'contracts/new' => [
+        'controller' => ContractsController::class,
         'action' => 'new',
         'method' => 'GET'
     ]
