@@ -70,7 +70,6 @@ class ClientsController extends BaseController implements ControllerInterface
 
     public function update(int $id = 0): void
     {
-        $id = IdGetter::getId();
         $data = json_decode(file_get_contents("php://input"), true);
 
         $this->setModel(ClientsModel::class);

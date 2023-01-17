@@ -161,11 +161,4 @@ class ToursController extends BaseController implements ControllerInterface
         $tour_identifiers = json_decode(file_get_contents("php://input"), true);
         echo $this->model->getCountOfRegisteredTours($tour_identifiers['bus_id'], $tour_identifiers['date']);
     }
-
-    public function getCountOfRegisteredTours(): void
-    {
-        $this->setModel(ToursModel::class);
-        $tour_identifiers = json_decode(file_get_contents("php://input"), true);
-        echo $this->model->getCountOfRegisteredTours($tour_identifiers['bus_id'], $tour_identifiers['date']);
-    }
 }
