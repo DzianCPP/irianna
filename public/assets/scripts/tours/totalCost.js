@@ -47,6 +47,10 @@ document.addEventListener("DOMContentLoaded", function () {
             tour_costs_currency_values += Number(tc.value);
         }
 
-        document.getElementById("total-cost-currency").innerHTML = tour_costs_currency_values;
+        if (tour_costs_currency_values != 0) {
+            document.getElementById("total-cost-currency").innerHTML = tour_costs_currency_values;
+        } else {
+            document.getElementById("total-cost-currency").innerHTML = "-";
+        }
     });
 });
