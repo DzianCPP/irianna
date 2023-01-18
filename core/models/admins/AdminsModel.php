@@ -33,7 +33,7 @@ class AdminsModel extends Model implements ModelInterface
             return false;
         }
 
-        if (!$this->sqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newAdmin)) {
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newAdmin)) {
             return false;
         }
 
@@ -67,7 +67,7 @@ class AdminsModel extends Model implements ModelInterface
             return false;
         }
 
-        if (!$this->sqlBuilder->delete(
+        if (!$this->databaseSqlBuilder->delete(
             columnValues: $columnValues,
             tableName: self::TABLE_NAME
         )) {
