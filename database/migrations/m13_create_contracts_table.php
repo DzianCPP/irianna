@@ -3,21 +3,19 @@
 namespace database\migrations;
 
 use core\application\Database;
-use PDO;
 
-class m12_create_subclients_table extends BaseMigration
+class m13_create_contracts_table extends BaseMigration
 {
     public function up(): bool
     {
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "CREATE TABLE IF NOT EXISTS subclients_table (
+        $sqlQuery = "CREATE TABLE IF NOT EXISTS contracts_table (
                         id int(11) NOT NULL AUTO_INCREMENT,
-                        main_client_id int(11) NOT NULL,
-                        name text(1024) NOT NULL,
-                        passport text(256) NOT NULL,
-                        birth_date text(256) NOT NULL,
+                        name varchar(255) NOT NULL,
+                        label varchar(255) NOT NULL,
+                        html text NOT NULL,
                         PRIMARY KEY (id))";
 
         $query = $conn->prepare($sqlQuery);
@@ -34,7 +32,7 @@ class m12_create_subclients_table extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "DROP TABLE IF EXISTS subclients_table";
+        $sqlQuery = "DROP TABLE IF EXISTS contracts_table";
 
         $query = $conn->prepare($sqlQuery);
 

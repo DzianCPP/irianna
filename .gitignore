@@ -3,4 +3,5 @@
 /ApacheFolder/
 .env
 /core/views/cache/
+static/contracts/
 todo.php

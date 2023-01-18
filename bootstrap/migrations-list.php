@@ -13,5 +13,6 @@ return [
     ['m9' => 'm9_create_clients_table'],
     ['m10' => 'm10_create_templates_table'],
     ['m11' => 'm11_create_rooms_table'],
-    ['m12' => 'm12_create_subclients_table']
+    ['m12' => 'm12_create_subclients_table'],
+    ['m13' => 'm13_create_contracts_table']
 ];
