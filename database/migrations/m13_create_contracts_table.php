@@ -15,7 +15,7 @@ class m13_create_contracts_table extends BaseMigration
                         id int(11) NOT NULL AUTO_INCREMENT,
                         name varchar(255) NOT NULL,
                         label varchar(255) NOT NULL,
-                        html text NOT NULL,
+                        html longtext NOT NULL,
                         PRIMARY KEY (id))";
 
         $query = $conn->prepare($sqlQuery);
