@@ -7,11 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
 async function create() {
     let file = document.getElementById("formFile").files[0];
     let url = "/contracts/create";
-    let fileName = file.name;
     
     let formData = new FormData();
 
     formData.append('file', file);
+    formData.append('name', document.getElementById("document-name").value);
 
     let POST = {
         method: 'POST',
@@ -22,8 +22,7 @@ async function create() {
 
     if (response.ok != false) {
         console.log("Файл успешно загружен");
-        console.log(await response.json());
-        // window.location = "/contracts";
+        window.location = "/contracts";
     } else {
         document.getElementById("error-field").innerHTML = "Что-то пошло не так";
         return;
