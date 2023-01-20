@@ -476,5 +476,11 @@ return [
         'controller' => ContractsController::class,
         'action' => 'create',
         'method' => 'POST'
+    ],
+
+    'contracts/edit' => [
+        'controller' => ContractsController::class,
+        'action' => 'edit',
+        'method' => 'GET'
     ]
 ];
