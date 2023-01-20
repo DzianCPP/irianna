@@ -4,9 +4,9 @@ namespace core\controllers\contracts;
 
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
+use core\services\IdGetter;
 use core\views\contracts\ContractsView;
-use RtfHtmlPhp\Document;
-use RtfHtmlPhp\Html\HtmlFormatter;
+use core\models\contracts\ContractsModel;
 
 class ContractsController extends BaseController implements ControllerInterface
 {
@@ -25,36 +25,49 @@ class ContractsController extends BaseController implements ControllerInterface
 
     public function edit(): void
     {
+        $id = IdGetter::getId();
+        $this->setModel(ContractsModel::class);
+        $this->setView(ContractsView::class);
+
+        $contract = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
+        $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
+        $data = [
+            'title' => 'Исправить шаблон договора',
+            'header' => 'Исправить шаблон договора',
+            'login' => $_COOKIE['login'],
+            'contract' => $contract
+        ];
+
+        $this->view->render("contracts/edit.html.twig", $data);
 
     }
 
     public function create(): void
     {
-        if (isset($_FILES['file'])) {
-            $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
-            $new_name = time() . '.' . $ext;
-            move_uploaded_file($_FILES['file']['tmp_name'], "../static/contracts/" . $new_name);
-
-            $rtf = file_get_contents(BASE_PATH . "static/contracts/" . $new_name);
-            $document = new Document($rtf);
-
-            $formatter = new HtmlFormatter('UTF-8');
-
-            $html = $formatter->Format($document);
-
-            $data = [
-                'file_source' => BASE_PATH . 'static/contracts/' . $new_name
-            ];
-
-            echo json_encode($data);
+        $this->setModel(ContractsModel::class);
+        if (!$this->model->create()) {
+            http_response_code(500);
+            die();
         }
 
+        http_response_code(200);
         return;
     }
 
     public function read(int $id = 0): void
     {
+        $this->setModel(ContractsModel::class);
+        $this->setView(ContractsView::class);
 
+        $contracts = $this->model->get();
+
+        $data = [
+            'title' => 'Шаблоны документов',
+            'header' => 'Шаблоны документов',
+            'contracts' => $contracts
+        ];
+
+        $this->view->render("contracts/contracts.html.twig", $data);
     }
 
     public function update(int $id = 0): void
