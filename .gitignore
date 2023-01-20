@@ -1,5 +1,6 @@
 .vscode
 /vendor/
+node_modules/
 /ApacheFolder/
 .env
 /core/views/cache/
