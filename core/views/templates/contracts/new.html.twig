@@ -16,6 +16,16 @@
     </div>
 
     <div class="container-fluid">
+        <div class="row w-100 mb-3">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4"></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-success text-light">Название документа</span>
+                    <input class="form-control" type="text" placeholder="Пример: Договор + Приложение 2" id="document-name">
+                </div>
+            </div>
+        </div>
+
         <div class="row w-100">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4"></div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
@@ -23,26 +33,31 @@
                     <label for="formFile" class="form-label">Выберите файл в формате .rtf</label>
                     <input class="custom-file-input" type="file" accept=".rtf" id="formFile">
                 </div>
-
-                <div class="row w-100 mb-2">
-                    <div class="input-group w-100 mb-2">
-                        <button type="button" class="btn btn-success w-100" id="save-btn" disabled>
-                            Сохранить
-                        </button>
-                    </div>
-                </div>
-
-                <div class="row w-100 mb-2">
-                    <p id="error-field"></p>
-                </div>
-
             </div>
         </div>
+
+        <div class="row w-100 mb-2">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4"></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
+                <div class="input-group w-100 mb-2">
+                    <button type="button" class="btn btn-success w-100" id="save-btn" disabled>
+                        Сохранить
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row w-100 mb-2">
+            <p id="error-field"></p>
+        </div>
+
     </div>
+</div>
+</div>
 
 
-    <script type="text/javascript" src="/assets/scripts/contracts/create.js"></script>
-    <script type="text/javascript" src="/assets/scripts/contracts/isFilePicked.js"></script>
+<script type="text/javascript" src="/assets/scripts/contracts/create.js"></script>
+<script type="text/javascript" src="/assets/scripts/contracts/isFilePicked.js"></script>
 
 </div>
 {% endblock %}
