@@ -64,7 +64,8 @@ class ContractsController extends BaseController implements ControllerInterface
         $data = [
             'title' => 'Шаблоны документов',
             'header' => 'Шаблоны документов',
-            'contracts' => $contracts
+            'contracts' => $contracts,
+            'login' => $_COOKIE['login']
         ];
 
         $this->view->render("contracts/contracts.html.twig", $data);
