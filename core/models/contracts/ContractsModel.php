@@ -28,6 +28,10 @@ class ContractsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, 'id')) {
+            return false;
+        }
+        
         return true;
     }
 

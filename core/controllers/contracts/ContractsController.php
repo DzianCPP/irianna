@@ -73,7 +73,16 @@ class ContractsController extends BaseController implements ControllerInterface
 
     public function update(int $id = 0): void
     {
+        $this->setModel(COntractsModel::class);
 
+        $newInfo = json_decode(file_get_contents("php://input"), true);
+        
+        if (!$this->model->update($newInfo)) {
+            http_response_code(500);
+            die();
+        }
+
+        return;
     }
 
     public function delete(int $id = 0): void

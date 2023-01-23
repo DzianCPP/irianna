@@ -480,7 +480,7 @@ return [
 
     'contracts/update' => [
         'controller' => ContractsController::class,
-        'action' => 'new',
+        'action' => 'update',
         'method' => 'PUT'
     ],
 
