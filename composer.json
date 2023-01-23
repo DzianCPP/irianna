@@ -30,6 +30,7 @@
         "ext-pdo": "*",
         "twig/twig": "^3.2",
         "twig/cache-extra": "^3.4",
-        "henck/rtf-to-html": "^1.2"
+        "henck/rtf-to-html": "^1.2",
+        "kartik-v/krajee-markdown-editor": "@dev"
     }
 }
