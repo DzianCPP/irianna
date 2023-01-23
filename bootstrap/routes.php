@@ -478,6 +478,12 @@ return [
         'method' => 'POST'
     ],
 
+    'contracts/update' => [
+        'controller' => ContractsController::class,
+        'action' => 'new',
+        'method' => 'PUT'
+    ],
+
     'contracts/edit' => [
         'controller' => ContractsController::class,
         'action' => 'edit',
