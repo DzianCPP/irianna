@@ -42,8 +42,8 @@
   {% block nav %}
   {{ parent() }}
   {% endblock %}
-  <div class="container text-center">
-    <div id="summernote">{{ contract.html|raw }}</div>
+  <div class="container">
+    <div id="summernote" class="text-left">{{ contract.html|raw }}</div>
     <button class="btn btn-success w-75 mx-auto" id="save-btn">Сохранить</button>
     <p id="error-field" style="color: red;"></p>
   </div>
