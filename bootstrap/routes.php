@@ -470,5 +470,29 @@ return [
         'controller' => ContractsController::class,
         'action' => 'new',
         'method' => 'GET'
+    ],
+
+    'contracts/create' => [
+        'controller' => ContractsController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'contracts/update' => [
+        'controller' => ContractsController::class,
+        'action' => 'update',
+        'method' => 'PUT'
+    ],
+
+    'contracts/edit' => [
+        'controller' => ContractsController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'contracts/delete' => [
+        'controller' => ContractsController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
     ]
 ];

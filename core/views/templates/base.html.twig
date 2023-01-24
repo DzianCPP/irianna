@@ -15,6 +15,10 @@
 		{% endblock %}
 	</head>
 	<body>
+		{% use 'components/navBar.html.twig' %}
+		{% block nav %}
+			{{ parent() }}
+		{% endblock %}
 		{% block content %}{% endblock %}
 		<div id="footer">
 			{% block footer %}

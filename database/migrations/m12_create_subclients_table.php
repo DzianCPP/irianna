@@ -34,7 +34,7 @@ class m12_create_subclients_table extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "DROP TABLE IF EXISTS periods_table";
+        $sqlQuery = "DROP TABLE IF EXISTS subclients_table";
 
         $query = $conn->prepare($sqlQuery);
 
