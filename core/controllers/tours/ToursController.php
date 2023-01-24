@@ -4,6 +4,7 @@ namespace core\controllers\tours;
 
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
+use core\models\contracts\ContractsModel;
 use core\views\tours\ToursView;
 use core\models\tours\ToursModel;
 use core\models\hotels\HotelsModel;
@@ -153,6 +154,21 @@ class ToursController extends BaseController implements ControllerInterface
         }
 
         return;
+    }
+
+    public function printContract(): void
+    {
+        $this->setModel(ToursModel::class);
+        $tour = $this->model->getLastTour();
+        $clientsModel = new ClientsModel();
+        $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
+        $contractsModel = new ContractsModel();
+        $contract = $contractsModel->getContractInHTML();
+
+        $data = [];
+
+        $this->setView(ToursView::class);
+        $this->view->render("tours/print.html.twig", $data);
     }
 
     public function getCountOfRegisteredTours(): void
