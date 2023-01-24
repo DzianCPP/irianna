@@ -460,6 +460,12 @@ return [
         'method' => 'GET'
     ],
 
+    'tours/printContract' => [
+        'controller' => ToursController::class,
+        'action' => 'printContract',
+        'method' => 'GET'
+    ],
+
     'contracts' => [
         'controller' => ContractsController::class,
         'action' => 'read',
