@@ -488,5 +488,11 @@ return [
         'controller' => ContractsController::class,
         'action' => 'edit',
         'method' => 'GET'
+    ],
+
+    'contracts/delete' => [
+        'controller' => ContractsController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
     ]
 ];

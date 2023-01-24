@@ -92,6 +92,13 @@ class ContractsController extends BaseController implements ControllerInterface
 
     public function delete(int $id = 0): void
     {
+        $this->setModel(ContractsModel::class);
+        $ids = json_decode(file_get_contents("php://input"));
+        if (!$this->model->delete(columnValues: ['column' => 'id', 'values' => $ids])) {
+            http_response_code(500);
+            die();
+        }
 
+        return;
     }
 }
