@@ -9,6 +9,8 @@ use Twig\Environment;
 class BaseView
 {
     protected string $templatePath;
+    protected $loader;
+    protected $twig;
 
     public function __construct()
     {

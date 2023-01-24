@@ -25,23 +25,25 @@ async function createTour() {
         created: _created.getDay() + "-" + _created.getMonth() + "-" + _created.getFullYear(),
         manager_id: _manager_id,
         is_only_transit: Number(_only_transit.checked),
-        transit: "Туда и обратно",
+        transit: document.getElementById("transits").value,
         resort_id: _resort_id,
         hotel_id: _hotel_id,
         checkin_date: _departure_from_minsk,
         checkout_date: _departure_from_resort,
-        count_of_days: 7,
+        count_of_day: 7,
         bus_id: _bus_id,
-        owner_id: getLastClientId(),
-        // owner_travel_service: 50,
-        // owner_travel_cost: 50,
-        // number_of_children: 2,
-        // ages: "7, 8",
-        // total_travel_service_byn: 50,
-        // total_tour_cost_byn: 50,
-        // total_travel_service_currency: 50,
-        // from_minsk_date: _departure_from_minsk,
-        // to_minsk_date: _departure_from_resort
+        owner_id: await getLastClientId(),
+        owner_travel_service: document.getElementById("main-client-service-cost").value,
+        owner_travel_cost: document.getElementById("main-client-tour-cost").value,
+        number_of_children: document.getElementById("number-of-children").value,
+        ages: document.getElementById("age-of-children").value,
+        total_travel_service_byn: document.getElementById("total-service-cost").innerHTML,
+        total_travel_cost_byn: document.getElementById("total-tour-cost").innerHTML,
+        total_travel_service_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency"). innerHTML,
+        total_travel_cost_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency"). innerHTML,
+        from_minsk_date: _departure_from_minsk,
+        to_minsk_date: _departure_from_resort,
+        room_id: document.getElementById("rooms").value
     };
 
     let POST = {
@@ -53,6 +55,7 @@ async function createTour() {
 
     if (response.ok) {
         console.log("Тур сохранен");
+        window.location = "/tours";
     } else {
         console.log("Тур не удалось сохранить");
     }

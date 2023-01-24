@@ -13,6 +13,7 @@ use core\controllers\managers\ManagersController;
 use core\controllers\rooms\RoomsController;
 use core\controllers\clients\ClientsController;
 use core\controllers\tours\ToursController;
+use core\controllers\contracts\ContractsController;
 
 return [
     'admin' => [
@@ -393,6 +394,12 @@ return [
         'method' => 'POST'
     ],
 
+    'clients/updateSubClients' => [
+        'controller' => ClientsController::class,
+        'action' => 'updateSubClients',
+        'method' => 'PUT'
+    ],
+
     'clients/update' => [
         'controller' => ClientsController::class,
         'action' => 'update',
@@ -438,7 +445,7 @@ return [
     'tours/update' => [
         'controller' => ToursController::class,
         'action' => 'update',
-        'method' => 'PATCH'
+        'method' => 'PUT'
     ],
 
     'tours/delete' => [
@@ -451,5 +458,41 @@ return [
         'controller' => ToursController::class,
         'action' => 'new',
         'method' => 'GET'
+    ],
+
+    'contracts' => [
+        'controller' => ContractsController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'contracts/new' => [
+        'controller' => ContractsController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'contracts/create' => [
+        'controller' => ContractsController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'contracts/update' => [
+        'controller' => ContractsController::class,
+        'action' => 'update',
+        'method' => 'PUT'
+    ],
+
+    'contracts/edit' => [
+        'controller' => ContractsController::class,
+        'action' => 'edit',
+        'method' => 'GET'
+    ],
+
+    'contracts/delete' => [
+        'controller' => ContractsController::class,
+        'action' => 'delete',
+        'method' => 'DELETE'
     ]
 ];

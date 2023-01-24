@@ -55,23 +55,23 @@ class ClientsController extends BaseController implements ControllerInterface
     public function read(int $id = 0): void
     {
         $this->setModel(ClientsModel::class);
+        $clients = $this->model->get();
 
         $data = [
             'title' => 'Клиенты',
             'header' => 'Клиенты',
             'login' => $_COOKIE['login'],
-            'currentPage' => 1,
-            'pages' => 1,
-            'clients' => $this->model->get()
+            'currentPage' => $this->getPage(),
+            'pages' => (int)ceil(count($clients) / self::PER_PAGE),
+            'clients' => $clients
         ];
+
         $this->setView(ClientsView::class);
         $this->view->render("clients/clients.html.twig", $data);
     }
 
     public function update(int $id = 0): void
     {
-        $id = IdGetter::getId();
-
         $data = json_decode(file_get_contents("php://input"), true);
 
         $this->setModel(ClientsModel::class);
@@ -109,5 +109,16 @@ class ClientsController extends BaseController implements ControllerInterface
         $this->setModel(ClientsModel::class);
         $id = $this->model->getLastClientId();
         echo json_encode($id);
+    }
+
+    public function updateSubClients(): void
+    {
+        $this->setModel(ClientsModel::class);
+        if (!$this->model->updateSubClients(json_decode(file_get_contents("php://input"), true))) {
+            http_response_code(500);
+            die();
+        }
+
+        return;
     }
 }
