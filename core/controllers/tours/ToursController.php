@@ -166,10 +166,14 @@ class ToursController extends BaseController implements ControllerInterface
         $contractsModel = new ContractsModel();
         $contract = $contractsModel->getContractInHTML('contract');
 
+        $resortsModel = new ResortsModel();
+        $resort = $resortsModel->get(['column' => 'id', 'value' => $tour['resort_id']])[0];
+
         $data = [
             'tour' => $tour,
             'client' => $client,
-            'contract' => $contract['html'],
+            'contract' => $contract,
+            'resort' => $resort,
             'title' => 'Печать договора',
             'header' => 'Печать договора',
             'login' => $_COOKIE['login']

@@ -78,11 +78,13 @@ class ContractsModel extends Model implements ModelInterface
         return true;
     }
 
-    public function getContractInHTML(string $label = ""): array
+    public function getContractInHTML(string $label = ""): string
     {
-        return $this->databaseSqlBuilder->select(
+        $contract =  $this->databaseSqlBuilder->select(
             self::TABLE_NAME,
             ['column' => 'label', 'value' => $label]
-        );
+        )[0];
+
+        return $contract['html'];
     }
 }
