@@ -160,15 +160,16 @@ class ToursController extends BaseController implements ControllerInterface
     {
         $this->setModel(ToursModel::class);
         $tour = $this->model->getLastTour();
-        $clientsModel = new ClientsModel();
-        $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
-        $contractsModel = new ContractsModel();
-        $contract = $contractsModel->getContractInHTML();
+        var_dump($tour);
+        // $clientsModel = new ClientsModel();
+        // $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
+        // $contractsModel = new ContractsModel();
+        // $contract = $contractsModel->getContractInHTML();
 
-        $data = [];
+        // $data = [];
 
-        $this->setView(ToursView::class);
-        $this->view->render("tours/print.html.twig", $data);
+        // $this->setView(ToursView::class);
+        // $this->view->render("tours/print.html.twig", $data);
     }
 
     public function getCountOfRegisteredTours(): void
