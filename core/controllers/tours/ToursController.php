@@ -169,7 +169,7 @@ class ToursController extends BaseController implements ControllerInterface
         $data = [
             'tour' => $tour,
             'client' => $client,
-            'contract' => $contract,
+            'contract' => $contract['html'],
             'title' => 'Печать договора',
             'header' => 'Печать договора',
             'login' => $_COOKIE['login']
