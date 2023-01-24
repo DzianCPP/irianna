@@ -9,7 +9,7 @@ use core\views\contracts\ContractsView;
 use core\models\contracts\ContractsModel;
 
 class ContractsController extends BaseController implements ControllerInterface
-{
+{    
     public function new(): void
     {
         $this->setView(ContractsView::class);
@@ -61,11 +61,16 @@ class ContractsController extends BaseController implements ControllerInterface
 
         $contracts = $this->model->get();
 
+        $page = $this->getPage();
+        $pages = (int)ceil(count($contracts) / self::PER_PAGE);
+
         $data = [
             'title' => 'Шаблоны документов',
             'header' => 'Шаблоны документов',
             'contracts' => $contracts,
-            'login' => $_COOKIE['login']
+            'login' => $_COOKIE['login'],
+            'currentPage' => $page,
+            'pages' => $pages
         ];
 
         $this->view->render("contracts/contracts.html.twig", $data);
