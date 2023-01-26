@@ -31,11 +31,21 @@ class ContractsController extends BaseController implements ControllerInterface
 
         $contract = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
         $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
+        $contract = $contract['html'];
+
+        $fileName = 'contract.html.twig';
+        $contractFileName = 'core/views/templates/components/' . $fileName;
+        $contract = '{% block contract %}' . $contract . '{% endblock %}';
+
+        $fp = fopen(BASE_PATH . $contractFileName, 'w');
+        fwrite($fp, $contract, strlen($contract));
+        fclose($fp);
+        
         $data = [
             'title' => 'Исправить шаблон договора',
             'header' => 'Исправить шаблон договора',
             'login' => $_COOKIE['login'],
-            'contract' => $contract
+            'world' => 'МИИИР'
         ];
 
         $this->view->render("contracts/edit.html.twig", $data);

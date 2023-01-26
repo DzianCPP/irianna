@@ -23,27 +23,25 @@
   {% endblock %}
 </head>
 
-<body>
-  <style>
-    @media all {
-      .page-break {
-        display: none;
-      }
+<style>
+  @media all {
+    .page-break {
+      display: none;
     }
+  }
 
-    @media print {
-      .page-break {
-        display: block;
-        page-break-before: always;
-      }
+  @media print {
+    .page-break {
+      display: block;
+      page-break-before: always;
     }
-  </style>
-  {% use 'components/navBar.html.twig' %}
-  {% block nav %}
-  {{ parent() }}
-  {% endblock %}
+  }
+</style>
+
+<body>
   <div class="container">
-    <div id="summernote" class="text-left">{{ contract|raw }}</div>
+    <div id="summernote" class="text-left">
+    </div>
     <button class="btn btn-success w-75 mx-auto" id="save-btn">Сохранить</button>
     <p id="error-field" style="color: red;"></p>
   </div>

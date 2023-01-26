@@ -18,7 +18,7 @@ use core\services\IdGetter;
 
 class ToursController extends BaseController implements ControllerInterface
 {
-    public function new(string $resortName = "", int $is_active = 0): void
+    public function new (string $resortName = "", int $is_active = 0): void
     {
         $managers = new ManagersModel();
         $countries = new CountriesModel();
@@ -95,7 +95,7 @@ class ToursController extends BaseController implements ControllerInterface
 
         return;
     }
-    
+
     public function read(int $id = 0): void
     {
         $this->setModel(ToursModel::class);
@@ -142,7 +142,7 @@ class ToursController extends BaseController implements ControllerInterface
 
         return;
     }
-    
+
     public function delete(int $id = 0): void
     {
         $this->setModel(ToursModel::class);
@@ -176,7 +176,8 @@ class ToursController extends BaseController implements ControllerInterface
             'resort' => $resort,
             'title' => 'Печать договора',
             'header' => 'Печать договора',
-            'login' => $_COOKIE['login']
+            'login' => $_COOKIE['login'],
+            'world' => 'МИИИР'
         ];
 
         $this->setView(ToursView::class);
