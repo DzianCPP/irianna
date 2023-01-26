@@ -43,7 +43,12 @@
   {{ parent() }}
   {% endblock %}
   <div class="container">
-    <div id="summernote" class="text-left">{{ contract.html|raw }}</div>
+    <div id="summernote" class="text-left">
+      {% use 'components/contract.html.twig' %}
+      {% block contract %}
+      {{ parent() }}
+      {% endblock %}
+    </div>
     <button class="btn btn-success w-75 mx-auto" id="save-btn">Сохранить</button>
     <p id="error-field" style="color: red;"></p>
   </div>

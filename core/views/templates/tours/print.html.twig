@@ -39,8 +39,17 @@
 </style>
 
 <body>
+  {% use 'components/navBar.html.twig' %}
+  {% block nav %}
+  {{ parent() }}
+  {% endblock %}
+
+  {% use 'components/contract.html.twig' %}
   <div class="container">
     <div id="summernote" class="text-left">
+      {% block contract %}
+      {{ parent() }}
+      {% endblock %}
     </div>
     <button class="btn btn-success w-75 mx-auto" id="save-btn">Сохранить</button>
     <p id="error-field" style="color: red;"></p>

@@ -164,20 +164,26 @@ class ToursController extends BaseController implements ControllerInterface
         $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
 
         $contractsModel = new ContractsModel();
-        $contract = $contractsModel->getContractInHTML('contract');
 
         $resortsModel = new ResortsModel();
         $resort = $resortsModel->get(['column' => 'id', 'value' => $tour['resort_id']])[0];
 
+        $contract = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'contract'])[0];
+        $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
+        $contract = $contract['html'];
+
+        $fileName = 'contract.html.twig';
+        $contractFileName = 'core/views/templates/components/' . $fileName;
+        $contract = '{% block contract %}' . $contract . '{% endblock %}';
+
+        $fp = fopen(BASE_PATH . $contractFileName, 'w');
+        fwrite($fp, $contract, strlen($contract));
+        fclose($fp);
+
         $data = [
-            'tour' => $tour,
-            'client' => $client,
-            'contract' => $contract,
-            'resort' => $resort,
             'title' => 'Печать договора',
-            'header' => 'Печать договора',
-            'login' => $_COOKIE['login'],
-            'world' => 'МИИИР'
+            'header' => 'печать договора',
+            'resot_name' => $resort['name']
         ];
 
         $this->setView(ToursView::class);
