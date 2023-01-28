@@ -176,6 +176,8 @@ class ToursController extends BaseController implements ControllerInterface
         $busesModel = new BusesModel();
         $bus = $busesModel->get(['column' => 'id', 'value' => $tour['bus_id']])[0];
 
+        $countriesModel = new CountriesModel();
+
         $managersModel = new ManagersModel();
         $manager = $managersModel->get(['column' => 'id', 'value' => $tour['manager_id']])[0];
 
@@ -213,7 +215,8 @@ class ToursController extends BaseController implements ControllerInterface
             'second_phone' => $client['second_phone'],
             'service_cost_in_BYN' => $tour['total_travel_service_byn'],
             'tour_price_in_curr' => explode(' ', $tour['total_travel_cost_currency'])[0],
-            'currency' => explode(' ', $tour['total_travel_cost_currency'])[1]
+            'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
+            'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name']
         ];
 
         $contract = ContractMaker::prepareContract($contract, $contractData);
