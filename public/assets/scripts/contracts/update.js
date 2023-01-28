@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function update() {
     let url = "/contracts/update";
-    let _html = document.getElementById("summernote").innerHTML;
+    let _html = document.getElementsByClassName("note-editable card-block")[0].innerHTML;
     let _name = document.getElementById("document-name").innerHTML;
     let _label = document.getElementById("document-label").innerHTML;
     let _id = document.getElementById("document-id").innerHTML;
