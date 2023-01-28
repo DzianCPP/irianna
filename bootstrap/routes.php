@@ -472,6 +472,12 @@ return [
         'method' => 'GET'
     ],
 
+    'contracts/addLabel' => [
+        'controller' => ContractsController::class,
+        'action' => 'addLabel',
+        'method' => 'POST'
+    ],
+
     'contracts/new' => [
         'controller' => ContractsController::class,
         'action' => 'new',

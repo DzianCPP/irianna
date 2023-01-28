@@ -87,4 +87,11 @@ class ContractsModel extends Model implements ModelInterface
 
         return $contract['html'];
     }
+
+    public function getLastDocument(): array
+    {
+        $lastDocument = $this->databaseSqlBuilder->selectLastRecord(self::TABLE_NAME, 'id');
+
+        return $lastDocument;
+    }
 }

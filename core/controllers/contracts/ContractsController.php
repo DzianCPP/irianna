@@ -9,8 +9,8 @@ use core\views\contracts\ContractsView;
 use core\models\contracts\ContractsModel;
 
 class ContractsController extends BaseController implements ControllerInterface
-{    
-    public function new(): void
+{
+    public function new (): void
     {
         $this->setView(ContractsView::class);
 
@@ -31,6 +31,9 @@ class ContractsController extends BaseController implements ControllerInterface
 
         $contract = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
         $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
+        $document_name = $contract['name'];
+        $document_id = $contract['id'];
+        $document_label = $contract['label'];
         $contract = $contract['html'];
 
         $fileName = 'contract.html.twig';
@@ -40,12 +43,14 @@ class ContractsController extends BaseController implements ControllerInterface
         $fp = fopen(BASE_PATH . $contractFileName, 'w');
         fwrite($fp, $contract, strlen($contract));
         fclose($fp);
-        
+
         $data = [
             'title' => 'Исправить шаблон договора',
             'header' => 'Исправить шаблон договора',
             'login' => $_COOKIE['login'],
-            'world' => 'МИИИР'
+            'document_id' => $document_id,
+            'document_name' => $document_name,
+            'document_label' => $document_label
         ];
 
         $this->view->render("contracts/edit.html.twig", $data);
@@ -72,7 +77,7 @@ class ContractsController extends BaseController implements ControllerInterface
         $contracts = $this->model->get();
 
         $page = $this->getPage();
-        $pages = (int)ceil(count($contracts) / self::PER_PAGE);
+        $pages = (int) ceil(count($contracts) / self::PER_PAGE);
 
         $data = [
             'title' => 'Шаблоны документов',
@@ -88,10 +93,10 @@ class ContractsController extends BaseController implements ControllerInterface
 
     public function update(int $id = 0): void
     {
-        $this->setModel(COntractsModel::class);
+        $this->setModel(ContractsModel::class);
 
         $newInfo = json_decode(file_get_contents("php://input"), true);
-        
+
         if (!$this->model->update($newInfo)) {
             http_response_code(500);
             die();
@@ -110,5 +115,31 @@ class ContractsController extends BaseController implements ControllerInterface
         }
 
         return;
+    }
+
+    public function addLabel(): void
+    {
+        $this->setModel(ContractsModel::class);
+        $lastDocument = $this->model->getLastDocument();
+
+        $label = json_decode(file_get_contents("php://input"), true)['label'];
+
+        $lastDocument['label'] = $label;
+
+        if (
+            !$this->model->update(
+            newInfo: [
+                    'id' => $lastDocument['id'],
+                    'name' => $lastDocument['name'],
+                    'label' => $lastDocument['label'],
+                    'html' => $lastDocument['html']
+                ]
+            )
+        ) {
+            http_response_code(500);
+            die();
+        }
+
+        http_response_code(200);
     }
 }
