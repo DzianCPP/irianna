@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("print-contract").addEventListener("click", function () {
-        printContract();
+        printTour();
     });
 });
 
-function printContract() {
+async function printTour() {
     window.location = "/tours/printContract";
 }

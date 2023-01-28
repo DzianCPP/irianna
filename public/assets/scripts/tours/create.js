@@ -55,7 +55,6 @@ async function createTour() {
 
     if (response.ok) {
         console.log("Тур сохранен");
-        window.location = "/tours";
     } else {
         console.log("Тур не удалось сохранить");
     }

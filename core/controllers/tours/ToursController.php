@@ -15,6 +15,8 @@ use core\models\countries\CountriesModel;
 use core\models\resorts\ResortsModel;
 use core\models\rooms\RoomsModel;
 use core\services\IdGetter;
+use DateTime;
+use core\services\ContractMaker;
 
 class ToursController extends BaseController implements ControllerInterface
 {
@@ -168,13 +170,57 @@ class ToursController extends BaseController implements ControllerInterface
         $resortsModel = new ResortsModel();
         $resort = $resortsModel->get(['column' => 'id', 'value' => $tour['resort_id']])[0];
 
+        $hotelsModel = new HotelsModel();
+        $hotel = $hotelsModel->get(['column' => 'id', 'value' => $tour['hotel_id']])[0];
+
+        $busesModel = new BusesModel();
+        $bus = $busesModel->get(['column' => 'id', 'value' => $tour['bus_id']])[0];
+
+        $managersModel = new ManagersModel();
+        $manager = $managersModel->get(['column' => 'id', 'value' => $tour['manager_id']])[0];
+
+        $sub_clients = $clientsModel->getSubClients(['column' => 'main_client_id', 'value' => $client['id']]);
+
         $contract = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'contract'])[0];
         $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
         $contract = $contract['html'];
 
         $fileName = 'contract.html.twig';
         $contractFileName = 'core/views/templates/components/' . $fileName;
-        $contract = '{% block contract %}' . $contract . '{% endblock %}';
+
+        $fp = fopen(BASE_PATH . $contractFileName, 'w');
+        fwrite($fp, $contract, strlen($contract));
+        fclose($fp);
+
+        $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
+
+        $contractData = [
+            'resort_name' => $resort['name'],
+            'hotel_name' => $hotel['name'],
+            'day' => date('d'),
+            'month' => date('m'),
+            'year' => date('Y'),
+            'from_minsk_date' => $tour['from_minsk_date'],
+            'arrival_to_minsk' => $bus['arrival_to_minsk'],
+            'to_minsk_date' => $tour['to_minsk_date'],
+            'manager_name' => $manager['name'],
+            'client_name' => $client['name'],
+            'total_people' => 1 + count($sub_clients),
+            'number_of_children' => $tour['number_of_children'],
+            'age_of_children' => $age_of_children,
+            'passport_number' => $client['passport'],
+            'main_phone' => $client['main_phone'],
+            'second_phone' => $client['second_phone'],
+            'service_cost_in_BYN' => $tour['total_travel_service_byn'],
+            'tour_price_in_curr' => explode(' ', $tour['total_travel_cost_currency'])[0],
+            'currency' => explode(' ', $tour['total_travel_cost_currency'])[1]
+        ];
+
+        $contract = ContractMaker::prepareContract($contract, $contractData);
+        $contract = '{% block contract %}' . $contract . '{% endblock %}'
+        ;
+        $fileName = 'contract.html.twig';
+        $contractFileName = 'core/views/templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $contractFileName, 'w');
         fwrite($fp, $contract, strlen($contract));
@@ -183,7 +229,7 @@ class ToursController extends BaseController implements ControllerInterface
         $data = [
             'title' => 'Печать договора',
             'header' => 'печать договора',
-            'resot_name' => $resort['name']
+            'login' => $_COOKIE['login']
         ];
 
         $this->setView(ToursView::class);
