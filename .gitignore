@@ -5,4 +5,5 @@ node_modules/
 .env
 /core/views/cache/
 static/contracts/
+core/views/templates/components/contract.html.twig
 todo.php

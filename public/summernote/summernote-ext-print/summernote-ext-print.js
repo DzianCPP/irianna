@@ -15,7 +15,13 @@
   $.extend(true, $.summernote.lang, {
     'en-US': {
       print: {
-        print: 'Print'
+        print: 'Печать'
+      }
+    },
+
+    'ru-RU': {
+      print: {
+        print: 'Печать'
       }
     },
     'ko-KR': {

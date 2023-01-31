@@ -75,8 +75,22 @@ class ToursModel extends Model implements ModelInterface
         return true;
     }
 
+    public function getLastTour(): array
+    {
+        $tour = $this->databaseSqlBuilder->selectLastRecord(self::TABLE_NAME, 'id');
+        
+        return $tour;
+    }
+
     public function getCountOfRegisteredTours(int $bus_id, string $date): int
     {
         return $this->databaseSqlBuilder->getCount(self::TABLE_NAME, columns: ["bus_id", "departure_from_minsk"], values: [$bus_id, $date]);
+    }
+
+    public function getLastTourId(): int
+    {
+        $id =  $this->databaseSqlBuilder->lastId(self::TABLE_NAME, 'id');
+
+        return $id;
     }
 }

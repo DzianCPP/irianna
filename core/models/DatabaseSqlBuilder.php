@@ -85,6 +85,28 @@ class DatabaseSqlBuilder
         return $query->fetchAll(); 
     }
 
+    public function lastId(string $tableName, string $column): int|array
+    {
+        $sql = "SELECT MAX($column) FROM $tableName";
+        $query = $this->conn->prepare($sql);
+        if (!$query->execute()) {
+            return 0;
+        }
+
+        return $query->fetchAll()[0][0];
+    }
+
+    public function selectLastRecord(string $tableName = "", string $column = ""): array
+    {
+        $sql = "SELECT * FROM $tableName WHERE $column=(SELECT MAX($column) FROM $tableName)";
+        $query = $this->conn->prepare($sql);
+        if (!$query->execute()) {
+            return 0;
+        }
+
+        return $query->fetchAll()[0];
+    }
+
     private function getTableFields(array $fields): string
     {
         $columns = [];

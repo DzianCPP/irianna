@@ -31,7 +31,7 @@ class ContractsModel extends Model implements ModelInterface
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, 'id')) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -74,7 +74,24 @@ class ContractsModel extends Model implements ModelInterface
         if (!$this->databaseSqlBuilder->delete($columnValues, self::TABLE_NAME)) {
             return false;
         }
-        
+
         return true;
+    }
+
+    public function getContractInHTML(string $label = ""): string
+    {
+        $contract =  $this->databaseSqlBuilder->select(
+            self::TABLE_NAME,
+            ['column' => 'label', 'value' => $label]
+        )[0];
+
+        return $contract['html'];
+    }
+
+    public function getLastDocument(): array
+    {
+        $lastDocument = $this->databaseSqlBuilder->selectLastRecord(self::TABLE_NAME, 'id');
+
+        return $lastDocument;
     }
 }

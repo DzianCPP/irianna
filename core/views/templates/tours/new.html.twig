@@ -241,18 +241,19 @@ data to use:
 			<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
 				<div class="container w-100">
 					<div class="input-group m-1">
-						<button type="button" class="btn btn-success w-50" id="save-tour">Сохранить</button>
-						<button type="button" class="btn btn-outline-success w-50" id="new-contract">Новый
+						<button type="button" class="btn btn-success w-50" id="save-tour" disabled>Сохранить</button>
+						<button type="button" class="btn btn-outline-success w-50" id="new-contract" disabled>Новый
 							договор</button>
 					</div>
 					<div class="input-group m-1">
-						<button type="button" class="btn btn-outline-success w-50" id="print-contract">Печать
+						<button type="button" class="btn btn-outline-success w-50" id="print-contract" disabled>Печать
 							договора</button>
-						<button type="button" class="btn btn-outline-success w-50" id="print-attachment-2">Печать
+						<button type="button" class="btn btn-outline-success w-50" id="print-attachment-2"
+							disabled>Печать
 							приложения 2</button>
 					</div>
 					<div class="input-group m-1">
-						<button type="button" class="btn btn-outline-success w-100" id="print-voucher">Печать
+						<button type="button" class="btn btn-outline-success w-100" id="print-voucher" disabled>Печать
 							путевки</button>
 					</div>
 				</div>
@@ -274,7 +275,8 @@ data to use:
 						<span class="form-control" placeholder="Валюта" id="total-currency">-</input>
 					</div>
 					<div class="input-group m-1">
-						<button class="btn btn-warning text-dark w-100" id="calculate-total-cost">Посчитать общую стоимость</button>
+						<button class="btn btn-warning text-dark w-100" id="calculate-total-cost">Посчитать общую
+							стоимость</button>
 					</div>
 				</div>
 			</div>
@@ -290,4 +292,7 @@ data to use:
 		<script type="text/javascript" src="/assets/scripts/tours/addPlacesFromResort.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/totalCost.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/findClient.js"></script>
+		<script type="text/javascript" src="/assets/scripts/tours/printContract.js"></script>
+		<script type="text/javascript" src="/assets/scripts/tours/activatePrintContractButton.js"></script>
+		<script type="text/javascript" src="/assets/scripts/tours/activateSaveTourButton.js"></script>
 		{% endblock %}

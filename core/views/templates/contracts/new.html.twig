@@ -16,8 +16,13 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4"></div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
                 <div class="input-group">
-                    <span class="input-group-text bg-success text-light">Название документа</span>
-                    <input class="form-control" type="text" placeholder="Пример: Договор + Приложение 2" id="document-name">
+                    <span class="input-group-text bg-success text-light">Тип документа</span>
+                    <select class="dropdown form-select" id="document-label">
+                        <option value="contract">Договор</option>
+                        <option value="attachment-1">Приложение 1</option>
+                        <option value="attachment-2">Приложение 2</option>
+                        <option value="voucher">Ваучер(путевка)</option>
+                    </select>
                 </div>
             </div>
         </div>
