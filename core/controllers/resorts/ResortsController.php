@@ -5,9 +5,9 @@ namespace core\controllers\resorts;
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\models\resorts\ResortsModel;
+use core\services\Paginator;
 use core\views\resorts\ResortsView;
 use core\models\countries\CountriesModel;
-use core\views\countries\CountriesView;
 use core\services\IdGetter;
 
 class ResortsController extends BaseController implements ControllerInterface
@@ -68,16 +68,19 @@ class ResortsController extends BaseController implements ControllerInterface
         $countries = $countriesModel->get();
         $resorts = $this->model->get();
         $this->setView(ResortsView::class);
-        $page = $this->getPage();
+        
+        $page = Paginator::getPage();
         $pages = (int)ceil(count($resorts) / parent::PER_PAGE);
+
         if ($page) {
-            $this->limitRange($resorts, $page);
+            Paginator::limitRange($resorts, self::PER_PAGE, $page);
         } else {
-            $this->limitRange($resorts);
+            Paginator::limitRange($resorts, self::PER_PAGE);
         }
 
         $data = [
             'resorts' => $resorts,
+            'entity' => 'resorts',
             'countries' => $countries,
             'currentPage' => $page,
             'pages' => $pages,

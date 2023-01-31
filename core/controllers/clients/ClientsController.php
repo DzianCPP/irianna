@@ -4,6 +4,7 @@ namespace core\controllers\clients;
 
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
+use core\services\Paginator;
 use core\views\clients\ClientsView;
 use core\models\clients\ClientsModel;
 use core\models\clients\helpers\ClientsHelper;
@@ -57,12 +58,22 @@ class ClientsController extends BaseController implements ControllerInterface
         $this->setModel(ClientsModel::class);
         $clients = $this->model->get();
 
+        $page = Paginator::getPage();
+        $pages = (int)ceil(count($clients) / parent::PER_PAGE);
+
+        if ($page) {
+            Paginator::limitRange($clients, self::PER_PAGE, $page);
+        } else {
+            Paginator::limitRange($clients, self::PER_PAGE);
+        }
+
         $data = [
             'title' => 'Клиенты',
+            'entity' => 'clients',
             'header' => 'Клиенты',
             'login' => $_COOKIE['login'],
-            'currentPage' => $this->getPage(),
-            'pages' => (int)ceil(count($clients) / self::PER_PAGE),
+            'currentPage' => $page,
+            'pages' => $pages,
             'clients' => $clients
         ];
 

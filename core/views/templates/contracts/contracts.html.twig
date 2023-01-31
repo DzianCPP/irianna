@@ -39,7 +39,7 @@
     </div>
     {% endif %}
 
-    {% if contracts|length > 1 %}
+    {% if pages > 1 %}
     {% use 'components/pagination.html.twig' %}
     {% block pagination %}
     {{ parent() }}

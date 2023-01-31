@@ -4,6 +4,7 @@ namespace core\controllers\buses;
 
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
+use core\services\Paginator;
 use core\views\buses\BusesView;
 use core\models\buses\BusesModel;
 use core\services\IdGetter;
@@ -11,6 +12,8 @@ use core\controllers\buses\helpers\BusesHelper;
 
 class BusesController extends BaseController implements ControllerInterface
 {
+    protected const PER_PAGE = 5;
+    
     public function new(string $busName = ""): void
     {
         $this->setView(BusesView::class);
@@ -70,17 +73,18 @@ class BusesController extends BaseController implements ControllerInterface
         $this->setModel(BusesModel::class);
         $buses = $this->model->get();
         $this->setView(BusesView::class);
-        $page = $this->getPage();
+        $page = Paginator::getPage();
         $pages = (int)ceil(count($buses) / self::PER_PAGE);
 
         if ($page) {
-            $this->limitRange($buses, $page);
+            Paginator::limitRange($buses, self::PER_PAGE, $page);
         } else {
-            $this->limitRange($buses);
+            Paginator::limitRange($buses, self::PER_PAGE);
         }
 
         $data = [
             'buses' => $buses,
+            'entity' => 'buses',
             'currentPage' => $page,
             'pages' => $pages,
             'title' => 'Автобусы',

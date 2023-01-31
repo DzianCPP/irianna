@@ -3,6 +3,7 @@
 namespace core\controllers\admins;
 
 use core\controllers\BaseController;
+use core\services\Paginator;
 use core\views\admins\AdminsView;
 use core\models\admins\AdminsModel;
 use core\controllers\AppController;
@@ -18,16 +19,17 @@ class AdminsController extends BaseController implements ControllerInterface
             $this->setModel(AdminsModel::class);
             $admins = $this->model->get();
             $this->setView(AdminsView::class);
-            $page = $this->getPage();
-            $pages = (int)ceil(count($admins) / parent::PER_PAGE);
+            $page = Paginator::getPage();
+            $pages = (int)ceil(count($admins) / self::PER_PAGE);
             if ($page) {
-                $this->limitRange($admins, $page);
+                Paginator::limitRange($admins, self::PER_PAGE, $page);
             } else {
-                $this->limitRange($admins);
+                Paginator::limitRange($admins, self::PER_PAGE);
             }
 
             $data = [
                 'admins' => $admins,
+                'entity' => 'admins',
                 'thisPage' => $page,
                 'pages' => $pages,
                 'countAdmins' => count($admins),

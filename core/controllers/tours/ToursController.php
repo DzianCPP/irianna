@@ -5,6 +5,7 @@ namespace core\controllers\tours;
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\models\contracts\ContractsModel;
+use core\services\Paginator;
 use core\views\tours\ToursView;
 use core\models\tours\ToursModel;
 use core\models\hotels\HotelsModel;
@@ -112,8 +113,19 @@ class ToursController extends BaseController implements ControllerInterface
         $managers = new ManagersModel();
         $buses = new BusesModel();
 
+        $page = Paginator::getPage();
+        $pages = (int)ceil(count($tours) / parent::PER_PAGE);
+
+        if ($page) {
+            Paginator::limitRange($tours, self::PER_PAGE, $page);
+        } else {
+            Paginator::limitRange($tours, self::PER_PAGE);
+        }
+
+
         $data = [
             'tours' => $tours,
+            'entity' => 'tours',
             'clients' => $clients,
             'hotels' => $hotels->get(),
             'rooms' => $rooms->get(),
@@ -124,7 +136,8 @@ class ToursController extends BaseController implements ControllerInterface
             'header' => 'Туры',
             'title' => 'Туры',
             'login' => $_COOKIE['login'],
-            'currentPage' => $this->getPage()
+            'currentPage' => $page,
+            'pages' => $pages
         ];
 
 
