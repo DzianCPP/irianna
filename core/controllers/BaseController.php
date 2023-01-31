@@ -46,29 +46,6 @@ class BaseController
         return false;
     }
 
-    protected function limitRange(array &$records, int $requestedPage = 1): void
-    {
-        $rangeStart = $requestedPage * self::PER_PAGE - self::PER_PAGE;
-        $rangeEnd = $rangeStart + self::PER_PAGE;
-
-        $newRecords = [];
-        for ($i = $rangeStart; $i < $rangeEnd && $i < count($records); ++$i) {
-            $newRecords[] = $records[$i];
-        }
-
-        $records = $newRecords;
-    }
-
-    protected function getPage(): int
-    {
-        $page = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
-        if ($page == "") {
-            $page = 1;
-        }
-
-        return $page;
-    }
-
     protected function notFound(): void
     {
         $data = [
