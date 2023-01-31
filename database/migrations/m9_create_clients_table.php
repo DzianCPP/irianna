@@ -36,7 +36,7 @@ class m9_create_clients_table extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "DROP TABLE IF EXISTS periods_table";
+        $sqlQuery = "DROP TABLE IF EXISTS clients_table";
 
         $query = $conn->prepare($sqlQuery);
 

@@ -92,11 +92,6 @@ class BusesController extends BaseController implements ControllerInterface
             'login' => $_COOKIE['login']
         ];
 
-        if ($page > $pages || $page < 1) {
-            $this->notFound();
-            return;
-        }
-
         $this->view->render("buses/buses.html.twig", $data);
     }
 
