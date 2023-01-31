@@ -90,11 +90,6 @@ class ResortsController extends BaseController implements ControllerInterface
             'header' => 'Курорты'
         ];
 
-        if ($page > $pages || $page < 1) {
-            $this->notFound();
-            return;
-        }
-
         $this->view->render("resorts/resorts.html.twig", $data);
     }
 
