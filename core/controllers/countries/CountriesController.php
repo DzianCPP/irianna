@@ -3,6 +3,7 @@
 namespace core\controllers\countries;
 
 use core\controllers\BaseController;
+use core\services\Paginator;
 use core\views\countries\CountriesView;
 use core\models\countries\CountriesModel;
 use core\controllers\AppController;
@@ -19,16 +20,17 @@ class CountriesController extends BaseController implements ControllerInterface
             $this->setModel(CountriesModel::class);
             $countries = $this->model->get();
             $this->setView(CountriesView::class);
-            $page = $this->getPage();
+            $page = Paginator::getPage();
             $pages = (int)ceil(count($countries) / self::PER_PAGE);
             if ($page) {
-                $this->limitRange($countries, $page);
+                Paginator::limitRange($countries, self::PER_PAGE, $page);
             } else {
-                $this->limitRange($countries);
+                $this->limitRange($countries, self::PER_PAGE);
             }
 
             $data = [
                 'countries' => $countries,
+                'entity' => 'countries',
                 'currentPage' => $page,
                 'pages' => $pages,
                 'countCountries' => count($countries),

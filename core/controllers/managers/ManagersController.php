@@ -6,6 +6,7 @@ use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\models\managers\ManagersModel;
 use core\services\IdGetter;
+use core\services\Paginator;
 use core\views\managers\ManagersView;
 
 class ManagersController extends BaseController implements ControllerInterface
@@ -62,17 +63,19 @@ class ManagersController extends BaseController implements ControllerInterface
         $this->setModel(ManagersModel::class);
         $this->setView(ManagersView::class);
         $managers = $this->model->get();
-        $page = $this->getPage();
-        $pages = (int)ceil(count($managers) / self::PER_PAGE);
+
+        $page = Paginator::getPage();
+        $pages = (int)ceil(count($managers) / parent::PER_PAGE);
 
         if ($page) {
-            $this->limitRange($managers, $page);
+            Paginator::limitRange($managers, self::PER_PAGE, $page);
         } else {
-            $this->limitRange($managers);
+            Paginator::limitRange($managers, self::PER_PAGE);
         }
 
         $data = [
             'managers' => $managers,
+            'entity' => 'managers',
             'currentPage' => $page,
             'pages' => $pages,
             'title' => 'Менеджеры',

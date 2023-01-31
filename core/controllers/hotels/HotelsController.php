@@ -5,6 +5,7 @@ namespace core\controllers\hotels;
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\models\resorts\ResortsModel;
+use core\services\Paginator;
 use core\views\hotels\HotelsView;
 use core\models\hotels\HotelsModel;
 use core\services\IdGetter;
@@ -65,16 +66,18 @@ class HotelsController extends BaseController implements ControllerInterface
         $resortsModel = new ResortsModel();
         $hotels = $this->model->get();
         $this->setView(HotelsView::class);
-        $page = $this->getPage();
+        $page = Paginator::getPage();
         $pages = (int)ceil(count($hotels) / parent::PER_PAGE);
+
         if ($page) {
-            $this->limitRange($hotels, $page);
+            Paginator::limitRange($hotels, self::PER_PAGE, $page);
         } else {
-            $this->limitRange($hotels);
+            Paginator::limitRange($hotels, self::PER_PAGE);
         }
 
         $data = [
             'hotels' => $hotels,
+            'entity' => 'hotels',
             'resorts' => $resortsModel->get(),
             'currentPage' => $page,
             'pages' => $pages,

@@ -5,6 +5,7 @@ namespace core\controllers\contracts;
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\services\IdGetter;
+use core\services\Paginator;
 use core\views\contracts\ContractsView;
 use core\models\contracts\ContractsModel;
 
@@ -76,11 +77,18 @@ class ContractsController extends BaseController implements ControllerInterface
 
         $contracts = $this->model->get();
 
-        $page = $this->getPage();
-        $pages = (int) ceil(count($contracts) / self::PER_PAGE);
+        $page = Paginator::getPage();
+        $pages = (int)ceil(count($contracts) / parent::PER_PAGE);
+
+        if ($page) {
+            Paginator::limitRange($contracts, self::PER_PAGE, $page);
+        } else {
+            Paginator::limitRange($contracts, self::PER_PAGE);
+        }
 
         $data = [
             'title' => 'Шаблоны документов',
+            'entity' => 'contracts',
             'header' => 'Шаблоны документов',
             'contracts' => $contracts,
             'login' => $_COOKIE['login'],
