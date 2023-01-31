@@ -1,79 +1,79 @@
 {% extends "base.html.twig" %}
 {% block content %}
-	<div class="container-xs container-sm container-md container-xl pt-5 w-100">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
-			<p class="h1 m-auto text-center mt-5 mb-3">{{ header | upper }}</p>
-		</div>
-		{% if resorts|length > 0 %}
-			<div class="row w-auto">
-				<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-				<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
-					<div class="table-responsive">
-						{% use 'components/resortsTable.html.twig' %}
-						{% block table %}
-							{{ parent() }}
-						{% endblock %}
-					</div>
-				</div>
-				<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-			</div>
-
-			<div class="row w-100">
-				<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-				<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
-					<div>
-						<a class="btn btn-outline-success w-100 mb-1" id="delete-btn">
-							Удалить выбранные
-						</a>
-					</div>
-				</div>
-				<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-			</div>
-
-		{% else %}
-			<div class="row w-100">
-				<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-				<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
-					<div>
-						<h1 class="h1 w-100 m-1">{{ "Не удалось найти курорты" }}</h1>
-					</div>
-				</div>
-				<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-			</div>
-		{% endif %}
-		{% if resorts|length > 1 %}
-			{% use
-  'components/pagination.html.twig' %}
-			{% block pagination %}
-				{{ parent() }}
-			{% endblock %}
-		{% endif %}
-
-		<div class="row w-100">
-			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
-				<div>
-					<a class="btn btn-outline-success w-100 mb-1" id="add-country" href="/resorts/new">
-						Добавить курорт
-					</a>
-				</div>
-			</div>
-			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-		</div>
-
-		<div class="row w-100">
-			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-			<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
-				<div>
-					<a class="btn btn-success w-100 mb-1" id="main-page" href="/admin">
-						Главная страница
-					</a>
-				</div>
-			</div>
-			<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
-		</div>
+<div class="container-xs container-sm container-md container-xl pt-5 w-100">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
+		<p class="h1 m-auto text-center mt-5 mb-3">{{ header | upper }}</p>
 	</div>
-	<script type="text/javascript" src="/assets/scripts/selectAll.js"></script>
-	<script type="text/javascript" src="/assets/scripts/resorts/delete.js"></script>
+	{% if resorts|length > 0 %}
+	<div class="row w-auto">
+		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+			<div class="table-responsive">
+				{% use 'components/resortsTable.html.twig' %}
+				{% block table %}
+				{{ parent() }}
+				{% endblock %}
+			</div>
+		</div>
+		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+	</div>
+
+	<div class="row w-100">
+		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+			<div>
+				<a class="btn btn-outline-success w-100 mb-1" id="delete-btn">
+					Удалить выбранные
+				</a>
+			</div>
+		</div>
+		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+	</div>
+
+	{% else %}
+	<div class="row w-100">
+		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+			<div>
+				<h1 class="h1 w-100 m-1">{{ "Не удалось найти курорты" }}</h1>
+			</div>
+		</div>
+		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+	</div>
+	{% endif %}
+	{% if pages > 1 %}
+	{% use
+	'components/pagination.html.twig' %}
+	{% block pagination %}
+	{{ parent() }}
+	{% endblock %}
+	{% endif %}
+
+	<div class="row w-100">
+		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+			<div>
+				<a class="btn btn-outline-success w-100 mb-1" id="add-country" href="/resorts/new">
+					Добавить курорт
+				</a>
+			</div>
+		</div>
+		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+	</div>
+
+	<div class="row w-100">
+		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+			<div>
+				<a class="btn btn-success w-100 mb-1" id="main-page" href="/admin">
+					Главная страница
+				</a>
+			</div>
+		</div>
+		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
+	</div>
+</div>
+<script type="text/javascript" src="/assets/scripts/selectAll.js"></script>
+<script type="text/javascript" src="/assets/scripts/resorts/delete.js"></script>
 
 {% endblock %}
