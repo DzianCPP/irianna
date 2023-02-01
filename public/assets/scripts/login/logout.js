@@ -9,7 +9,7 @@ async function logout() {
 
     let response = await fetch(url, getRequest);
 
-    if (response.status === 205) {
-        location.reload(true);
+    if (response.ok != false) {
+        window.location = "/";
     }
 }
