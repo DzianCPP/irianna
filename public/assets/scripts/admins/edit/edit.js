@@ -4,7 +4,7 @@ async function sendPutRequest() {
     let newEmail = document.getElementById("email").value;
     let newLogin = document.getElementById("login").value;
     let newPassword = document.getElementById("password").value;
-    let superAdmin = document.getElementById("super-admin").value;
+    let privileges = document.getElementById("super-admin").value;
     let _id = document.getElementById("id").value;
 
     let url = "/admins/update";
@@ -13,7 +13,7 @@ async function sendPutRequest() {
         email: newEmail,
         login: newLogin,
         password: newPassword,
-        super_admin: superAdmin,
+        privileges: privileges,
         id: _id
     };
 

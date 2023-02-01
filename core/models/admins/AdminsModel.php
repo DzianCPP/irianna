@@ -8,7 +8,7 @@ use core\models\admins\AdminsValidator;
 
 class AdminsModel extends Model implements ModelInterface
 {
-    protected array $fields = ['email' => 'email', 'login' => 'login', 'password' => 'password', 'super_admin' => 'super_admin', 'id' => 'id'];
+    protected array $fields = ['email' => 'email', 'login' => 'login', 'password' => 'password', 'privileges' => 'privileges', 'id' => 'id'];
     private const TABLE_NAME = "admins_table";
 
     public function __construct()
@@ -28,10 +28,6 @@ class AdminsModel extends Model implements ModelInterface
     public function update(array $newInfo): bool
     {
         $newAdmin = $this->validator->makeDataSafe($newInfo);
-
-        if (!$this->validator->isDataSafe($newAdmin['login'], number: $newAdmin['super_admin'], email: $newAdmin['email'])) {
-            return false;
-        }
 
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newAdmin)) {
             return false;
