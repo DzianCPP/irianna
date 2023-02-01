@@ -48,13 +48,8 @@ class LoginController extends BaseController
 
     public function logout(): void
     {
-        if ($this->isLogged()) {
-            setcookie("logged", "0", time() + 300, "/");
-            http_response_code(205);
-            return;
-        } else {
-            http_response_code(500);
-            return;
-        }
+        setcookie("logged", "0", time() + 300, "/");
+        http_response_code(200);
+        return;
     }
 }

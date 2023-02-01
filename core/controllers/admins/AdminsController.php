@@ -66,6 +66,7 @@ class AdminsController extends BaseController implements ControllerInterface
             'admin' => $admin[0],
             'title' => 'IriANNA',
             'author' => 'IriANNA',
+            'login' => $_COOKIE['login'],
             'message' => 'Введите новые данные'
         ];
         $this->view->render("admins/edit.html.twig", $data);
