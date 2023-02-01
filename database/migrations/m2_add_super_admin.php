@@ -12,8 +12,8 @@ class m2_add_super_admin extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "INSERT INTO admins_table(email, login, password, super_admin)
-                    VALUES ('dzian.cpp@gmail.com', 'sadmin', 'spass', true)";
+        $sqlQuery = "INSERT INTO admins_table(email, login, password, privileges)
+                    VALUES ('superadmin@gmail.com', 'sadmin', 'spass', 2)";
 
         $query = $conn->prepare($sqlQuery);
 
