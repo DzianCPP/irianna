@@ -19,15 +19,6 @@ class BaseController
         $this->model = new $nameModel();
     }
 
-    protected function isLogged(): bool
-    {
-        if (isset($_COOKIE['logged']) && $_COOKIE['logged'] === "1") {
-            return true;
-        }
-
-        return false;
-    }
-
     protected function setPrivilege(array $admin): void
     {
         if ($admin['login'] === $_ENV['SUPER_ADMIN'] && $admin['password'] === $_ENV['SUPER_PASS']) {

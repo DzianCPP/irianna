@@ -37,11 +37,6 @@ class PeriodsController extends BaseController implements ControllerInterface
 
     public function read(int $id = 0): void
     {
-        if (!$this->isLogged()) {
-            header("Location: " . "/admin");
-            exit;
-        }
-
         $this->setModel(PeriodsModel::class);
         $periods = $this->model->get();
         $this->setView(PeriodsView::class);

@@ -16,48 +16,44 @@ class CountriesController extends BaseController implements ControllerInterface
 
     public function read(int $id = 0): void
     {
-        if ($this->isLogged()) {
-            $this->setModel(CountriesModel::class);
-            $countries = $this->model->get();
-            $this->setView(CountriesView::class);
-            $page = Paginator::getPage();
-            $pages = (int)ceil(count($countries) / self::PER_PAGE);
-            if ($page) {
-                Paginator::limitRange($countries, self::PER_PAGE, $page);
-            } else {
-                $this->limitRange($countries, self::PER_PAGE);
-            }
-
-            $data = [
-                'countries' => $countries,
-                'entity' => 'countries',
-                'currentPage' => $page,
-                'pages' => $pages,
-                'countCountries' => count($countries),
-                'title' => 'IriANNA',
-                'author' => 'IriANNA',
-                'login' => $_COOKIE['login']
-            ];
-
-            if (count($countries) === 0) {
-                $this->view->render("countries/countries.html.twig", $data);
-                return;
-            }
-
-            if ($page > $pages || $page < 1) {
-                $appController = new AppController();
-                $appController->notFound();
-                return;
-            }
-
-            $this->view->render("countries/countries.html.twig", $data);
+        $this->setModel(CountriesModel::class);
+        $countries = $this->model->get();
+        $this->setView(CountriesView::class);
+        $page = Paginator::getPage();
+        $pages = (int) ceil(count($countries) / self::PER_PAGE);
+        if ($page) {
+            Paginator::limitRange($countries, self::PER_PAGE, $page);
         } else {
-            header("Location: " . "/admin");
-            exit;
+            $this->limitRange($countries, self::PER_PAGE);
         }
+
+        $data = [
+            'countries' => $countries,
+            'entity' => 'countries',
+            'currentPage' => $page,
+            'pages' => $pages,
+            'countCountries' => count($countries),
+            'title' => 'IriANNA',
+            'author' => 'IriANNA',
+            'header' => 'Страны',
+            'login' => $_COOKIE['login']
+        ];
+
+        if (count($countries) === 0) {
+            $this->view->render("countries/countries.html.twig", $data);
+            return;
+        }
+
+        if ($page > $pages || $page < 1) {
+            $appController = new AppController();
+            $appController->notFound();
+            return;
+        }
+
+        $this->view->render("countries/countries.html.twig", $data);
     }
 
-    public function new(string $countryName = '', int $is_active = 0): void
+    public function new (string $countryName = '', int $is_active = 0): void
     {
         $this->setView(CountriesView::class);
         $this->setModel(CountriesModel::class);
@@ -95,10 +91,12 @@ class CountriesController extends BaseController implements ControllerInterface
         $ids = json_decode($jsonString, true);
         if (count($ids) > 0) {
             $this->setModel(CountriesModel::class);
-            if (!$this->model->delete([
-                'column' => 'id',
-                'values' => $ids
-            ])) {
+            if (
+                !$this->model->delete([
+                    'column' => 'id',
+                    'values' => $ids
+                ])
+            ) {
                 http_response_code(500);
             }
         }

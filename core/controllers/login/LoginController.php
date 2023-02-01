@@ -13,14 +13,9 @@ class LoginController extends BaseController
 
     public function index(): void
     {
-        if (!$this->isLogged()) {
-            $this->setView(LoginView::class);
-            $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Войти в систему"];
-            $this->view->render("login/login.html.twig", $data);
-        } else {
-            header("Location: " . "/admin");
-            exit;
-        }
+        $this->setView(LoginView::class);
+        $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Войти в систему"];
+        $this->view->render("login/login.html.twig", $data);
     }
 
     public function login(): void
@@ -50,6 +45,6 @@ class LoginController extends BaseController
     {
         setcookie("logged", "0", time() + 300, "/");
         http_response_code(200);
-        return;
+        die();
     }
 }

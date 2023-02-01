@@ -11,7 +11,7 @@ use core\views\managers\ManagersView;
 
 class ManagersController extends BaseController implements ControllerInterface
 {
-    public function new(string $periodName = ""): void
+    public function new (string $periodName = ""): void
     {
         $this->setView(ManagersView::class);
         $this->setModel(ManagersModel::class);
@@ -32,7 +32,7 @@ class ManagersController extends BaseController implements ControllerInterface
         $this->setModel(ManagersModel::class);
         $id = IdGetter::getId();
         $manager = $this->model->get(
-            columnValue: [
+        columnValue: [
                 'column' => 'id',
                 'value' => $id
             ]
@@ -55,17 +55,12 @@ class ManagersController extends BaseController implements ControllerInterface
 
     public function read(int $id = 0): void
     {
-        if (!$this->isLogged()) {
-            header("Location: " . "/admin");
-            exit;
-        }
-
         $this->setModel(ManagersModel::class);
         $this->setView(ManagersView::class);
         $managers = $this->model->get();
 
         $page = Paginator::getPage();
-        $pages = (int)ceil(count($managers) / parent::PER_PAGE);
+        $pages = (int) ceil(count($managers) / parent::PER_PAGE);
 
         if ($page) {
             Paginator::limitRange($managers, self::PER_PAGE, $page);
@@ -104,12 +99,14 @@ class ManagersController extends BaseController implements ControllerInterface
         $ids = json_decode(file_get_contents("php://input"), true);
 
         $this->setModel(ManagersModel::class);
-        if (!$this->model->delete(
+        if (
+            !$this->model->delete(
             columnValues: [
-                'column' => 'id',
-                'values' => $ids
-            ]
-        )) {
+                    'column' => 'id',
+                    'values' => $ids
+                ]
+            )
+        ) {
             http_response_code(500);
         }
     }
