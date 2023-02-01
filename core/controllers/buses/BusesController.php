@@ -13,8 +13,8 @@ use core\controllers\buses\helpers\BusesHelper;
 class BusesController extends BaseController implements ControllerInterface
 {
     protected const PER_PAGE = 5;
-    
-    public function new(string $busName = ""): void
+
+    public function new (string $busName = ""): void
     {
         $this->setView(BusesView::class);
         $this->setModel(BusesModel::class);
@@ -55,26 +55,21 @@ class BusesController extends BaseController implements ControllerInterface
 
     public function readOne(): void
     {
-        $id = (int)IdGetter::getId();
+        $id = (int) IdGetter::getId();
         $this->setModel(BusesModel::class);
         $bus = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
         $bus = json_encode($bus);
         echo $bus;
-        
+
     }
 
     public function read(int $id = 0): void
     {
-        if (!$this->isLogged()) {
-            header("Location: " . "/admin");
-            exit;
-        }
-
         $this->setModel(BusesModel::class);
         $buses = $this->model->get();
         $this->setView(BusesView::class);
         $page = Paginator::getPage();
-        $pages = (int)ceil(count($buses) / self::PER_PAGE);
+        $pages = (int) ceil(count($buses) / self::PER_PAGE);
 
         if ($page) {
             Paginator::limitRange($buses, self::PER_PAGE, $page);
@@ -112,11 +107,14 @@ class BusesController extends BaseController implements ControllerInterface
         }
 
         $this->setModel(BusesModel::class);
-        if (!$this->model->delete([
-            'column' => 'id',
-            'values' => $ids
-        ])) {
+        if (
+            !$this->model->delete([
+                'column' => 'id',
+                'values' => $ids
+            ])
+        ) {
             http_response_code(500);
-        };
+        }
+        ;
     }
 }

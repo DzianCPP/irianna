@@ -12,7 +12,7 @@ use core\services\IdGetter;
 
 class HotelsController extends BaseController implements ControllerInterface
 {
-    public function new(string $hotelName = "", int $is_active = 0): void
+    public function new (string $hotelName = "", int $is_active = 0): void
     {
         $this->setView(HotelsView::class);
         $this->setModel(HotelsView::class);
@@ -57,17 +57,12 @@ class HotelsController extends BaseController implements ControllerInterface
 
     public function read(int $id = 0): void
     {
-        if (!$this->isLogged()) {
-            header("Location: " . "/admin");
-            exit;
-        }
-
         $this->setModel(HotelsModel::class);
         $resortsModel = new ResortsModel();
         $hotels = $this->model->get();
         $this->setView(HotelsView::class);
         $page = Paginator::getPage();
-        $pages = (int)ceil(count($hotels) / parent::PER_PAGE);
+        $pages = (int) ceil(count($hotels) / parent::PER_PAGE);
 
         if ($page) {
             Paginator::limitRange($hotels, self::PER_PAGE, $page);
@@ -87,11 +82,6 @@ class HotelsController extends BaseController implements ControllerInterface
             'header' => 'Гостиницы'
         ];
 
-        if ($page > $pages || $page < 1) {
-            $this->notFound();
-            return;
-        }
-
         $this->view->render("hotels/hotels.html.twig", $data);
     }
 
@@ -110,11 +100,14 @@ class HotelsController extends BaseController implements ControllerInterface
         }
 
         $this->setModel(HotelsModel::class);
-        if (!$this->model->delete([
-            'column' => 'id',
-            'values' => $ids
-        ])) {
+        if (
+            !$this->model->delete([
+                'column' => 'id',
+                'values' => $ids
+            ])
+        ) {
             http_response_code(500);
-        };
+        }
+        ;
     }
 }

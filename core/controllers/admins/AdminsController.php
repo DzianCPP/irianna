@@ -15,45 +15,40 @@ class AdminsController extends BaseController implements ControllerInterface
 
     public function read(int $id = 0): void
     {
-        if ($this->isLogged() && $this->isSuperAdmin()) {
-            $this->setModel(AdminsModel::class);
-            $admins = $this->model->get();
-            $this->setView(AdminsView::class);
-            $page = Paginator::getPage();
-            $pages = (int)ceil(count($admins) / self::PER_PAGE);
-            if ($page) {
-                Paginator::limitRange($admins, self::PER_PAGE, $page);
-            } else {
-                Paginator::limitRange($admins, self::PER_PAGE);
-            }
-
-            $data = [
-                'admins' => $admins,
-                'entity' => 'admins',
-                'thisPage' => $page,
-                'pages' => $pages,
-                'countAdmins' => count($admins),
-                'title' => 'IriANNA',
-                'author' => 'IriANNA',
-                'login' => $_COOKIE['login']
-            ];
-
-            if (count($admins) === 0) {
-                $this->view->render("admins/admins.html.twig", $data);
-                return;
-            }
-
-            if ($page > $pages || $page < 1) {
-                $appController = new AppController();
-                $appController->notFound();
-                return;
-            }
-
-            $this->view->render("admins/admins.html.twig", $data);
+        $this->setModel(AdminsModel::class);
+        $admins = $this->model->get();
+        $this->setView(AdminsView::class);
+        $page = Paginator::getPage();
+        $pages = (int) ceil(count($admins) / self::PER_PAGE);
+        if ($page) {
+            Paginator::limitRange($admins, self::PER_PAGE, $page);
         } else {
-            header("Location: " . "/admin");
-            exit;
+            Paginator::limitRange($admins, self::PER_PAGE);
         }
+
+        $data = [
+            'admins' => $admins,
+            'entity' => 'admins',
+            'thisPage' => $page,
+            'pages' => $pages,
+            'countAdmins' => count($admins),
+            'title' => 'IriANNA',
+            'author' => 'IriANNA',
+            'login' => $_COOKIE['login']
+        ];
+
+        if (count($admins) === 0) {
+            $this->view->render("admins/admins.html.twig", $data);
+            return;
+        }
+
+        if ($page > $pages || $page < 1) {
+            $appController = new AppController();
+            $appController->notFound();
+            return;
+        }
+
+        $this->view->render("admins/admins.html.twig", $data);
     }
 
     public function edit(): void
@@ -100,7 +95,7 @@ class AdminsController extends BaseController implements ControllerInterface
         }
     }
 
-    public function new(): void
+    public function new (): void
     {
         header("Location: /registration");
         exit;

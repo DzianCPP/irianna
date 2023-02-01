@@ -10,25 +10,15 @@ class AppController extends BaseController
 {
     public function index(): void
     {
-        if ($this->isLogged()) {
-            $this->setView(ToursView::class);
-            $data = ["author" => "IriAnna", "title" => "IriANNA", "header" => "Новый тур", "login" => $_COOKIE['login']];
-            $this->view->render("tours/new.html.twig", $data);
-        } else {
-            header("Location: " . "/login");
-            exit;
-        }
+        $this->setView(ToursView::class);
+        $data = ["author" => "IriAnna", "title" => "IriANNA", "header" => "Новый тур", "login" => $_COOKIE['login']];
+        $this->view->render("tours/new.html.twig", $data);
     }
 
     public function dashboard(): void
     {
-        if ($this->isLogged()) {
-            $this->setView(AppView::class);
-            $data = ["author" => "IriAnna", "title" => "IriANNA", "header" => "Панель управления", "login" => $_COOKIE['login']];
-            $this->view->render("main.html.twig", $data);
-        } else {
-            header("Location: " . "/login");
-            exit;
-        }
+        $this->setView(AppView::class);
+        $data = ["author" => "IriAnna", "title" => "IriANNA", "header" => "Панель управления", "login" => $_COOKIE['login']];
+        $this->view->render("main.html.twig", $data);
     }
 }

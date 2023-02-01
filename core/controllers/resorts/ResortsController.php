@@ -12,7 +12,7 @@ use core\services\IdGetter;
 
 class ResortsController extends BaseController implements ControllerInterface
 {
-    public function new(string $resortName = "", int $is_active = 0): void
+    public function new (string $resortName = "", int $is_active = 0): void
     {
         $this->setView(ResortsView::class);
         $this->setModel(ResortsModel::class);
@@ -58,19 +58,14 @@ class ResortsController extends BaseController implements ControllerInterface
 
     public function read(int $id = 0): void
     {
-        if (!$this->isLogged()) {
-            header("Location: " . "/admin");
-            exit;
-        }
-
         $this->setModel(ResortsModel::class);
         $countriesModel = new CountriesModel();
         $countries = $countriesModel->get();
         $resorts = $this->model->get();
         $this->setView(ResortsView::class);
-        
+
         $page = Paginator::getPage();
-        $pages = (int)ceil(count($resorts) / parent::PER_PAGE);
+        $pages = (int) ceil(count($resorts) / parent::PER_PAGE);
 
         if ($page) {
             Paginator::limitRange($resorts, self::PER_PAGE, $page);
@@ -108,11 +103,14 @@ class ResortsController extends BaseController implements ControllerInterface
         }
 
         $this->setModel(ResortsModel::class);
-        if (!$this->model->delete([
-            'column' => 'id',
-            'values' => $ids
-        ])) {
+        if (
+            !$this->model->delete([
+                'column' => 'id',
+                'values' => $ids
+            ])
+        ) {
             http_response_code(500);
-        };
+        }
+        ;
     }
 }
