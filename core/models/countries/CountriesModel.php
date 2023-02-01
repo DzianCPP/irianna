@@ -10,11 +10,6 @@ class CountriesModel extends Model implements ModelInterface
     protected array $fields = ['name', 'is_active', 'id'];
     private const TABLE_NAME = "countries_table";
 
-    public function __construct()
-    {
-        parent::__construct(CountriesValidator::class);
-    }
-
     public function get(array $columnValue = []): array
     {
         if ($columnValue != []) {
@@ -26,13 +21,9 @@ class CountriesModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
-        $newCountry = $this->validator->makeDataSafe($newInfo);
+        $this->dataSanitizer->SanitizeData($newInfo);
 
-        if (!$this->validator->isDataSafe($newCountry)) {
-            return false;
-        }
-
-        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newCountry)) {
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newInfo)) {
             return false;
         }
 
@@ -42,11 +33,7 @@ class CountriesModel extends Model implements ModelInterface
     public function create(): bool
     {
         $newCountryInfo = json_decode(file_get_contents("php://input"), true);
-        $newCountryInfo = $this->validator->makeDataSafe($newCountryInfo);
-
-        if (!$this->validator->isDataSafe($newCountryInfo)) {
-            return false;
-        }
+        $this->dataSanitizer->SanitizeData($newCountryInfo);
 
         $columns = [];
 
@@ -69,7 +56,6 @@ class CountriesModel extends Model implements ModelInterface
             columnValues: $columnValues,
             tableName: self::TABLE_NAME
         )) {
-
             return false;
         }
 

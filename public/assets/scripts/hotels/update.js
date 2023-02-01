@@ -8,6 +8,7 @@ async function update() {
     let _address = document.getElementById("address").value;
     let _rooms = document.getElementById("rooms").value;
     let _area = document.getElementById("area").value;
+    let _housing = document.getElementById("housing").value;
     let _beach = document.getElementById("beach").value;
     let _checkins = document.getElementById("number").value;
     let _water = document.getElementById("water").value;
@@ -25,6 +26,7 @@ async function update() {
         address: _address,
         rooms: _rooms,
         area: _area,
+        housing: _housing,
         beach: _beach,
         checkins: _checkins,
         water: _water,
