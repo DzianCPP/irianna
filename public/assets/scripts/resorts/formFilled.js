@@ -5,7 +5,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function formFilled() {
-    if (document.getElementById("name").value.length > 0) {
+    document.getElementById('save-btn').disabled = true;
+
+    let length = document.getElementById("name").value.length;
+    let contains_digits = /\d/.test(document.getElementById("name").value);
+
+    if (length > 2 && contains_digits != true) {
         document.getElementById("save-btn").disabled = false;
     } else {
         document.getElementById("save-btn").disabled = true;
