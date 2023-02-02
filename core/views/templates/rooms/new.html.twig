@@ -22,7 +22,7 @@
 							<th class="w-auto text-center">Описание номера</th>
 							{% for i in 0..hotel.rooms - 1 %}
 								<th>
-									<textarea class="border-1 w-auto" name="room-description"></textarea>
+									<textarea class="border-1 w-100" name="room-description"></textarea>
 								</th>
 							{% endfor %}
 						</tr>
@@ -38,10 +38,10 @@
 											<button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
 												Добавить
 											</button>
-											<ul class="dropdown-menu dropdown-menu-sm">
+											<ul class="dropdown-menu dropdown-menu-sm p-o">
 												{% for comfort in comforts %}
 													<li>
-														<button class="btn" name="comfort-option" value="room-comforts-{{ i }}-{{ comfort }}">{{ comfort }}</button>
+														<button class="btn btn-sm p-0 w-100 text-start btn-light text-dark" name="comfort-option" value="room-comforts-{{ i }}-{{ comfort }}">{{ comfort }}</button>
 													</li>
 												{% endfor %}
 											</ul>
@@ -64,7 +64,7 @@
 										<ul class="dropdown-menu">
 											{% for food_item in food %}
 												<li>
-													<button class="btn" name="food-option" value="room-food-{{ i }}-{{ food_item }}">{{ food_item }}</button>
+													<button class="btn btn-sm p-0 w-100 text-start btn-light text-dark" name="food-option" value="room-food-{{ i }}-{{ food_item }}">{{ food_item }}</button>
 												</li>
 											{% endfor %}
 										</ul>
@@ -91,7 +91,7 @@
 
 						{% endfor %}
 					</tr>
-
+{# 
 					<tr>
 						<td></td>
 						{% for i in 0..hotel.rooms - 1 %}
@@ -102,7 +102,7 @@
 							</td>
 						{% endfor %}
 					</tr>
-
+ #}
 
 					{% for i in 0..hotel.checkins %}{% endfor %}
 				</tr>
@@ -111,8 +111,7 @@
 
 		<div class="row">
 			<div class="input-group w-50 mx-auto">
-				<button class="btn btn-success w-75" name="save">Сохранить все</button>
-				<button class="btn btn-danger w-25">Очистить все</button>
+				<button class="btn btn-success w-100" name="save" disabled>Сохранить все</button>
 			</div>
 		</div>
 	</div>

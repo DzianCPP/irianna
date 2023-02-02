@@ -35,7 +35,7 @@ function formFilled() {
 
     if (_rooms.value.length < 1) {
         saveBtn.disabled = true;
-        _error_field.innerHTML = "Введите количетсов комнат";
+        _error_field.innerHTML = "Введите количество номеров";
         return;
     }
 

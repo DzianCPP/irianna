@@ -103,11 +103,12 @@
 				<div class="col-12 col-sm-12 col-md-4 col-xl-4"></div>
 				<div class="col-xs-12 col-sm-12 col-md-4 col-xl-4">
 					<div class="input-group mt-2">
-						<button type="button" class="btn btn-success w-75" name="save-btn" id="save-btn">
+						<button disabled type="button" class="btn btn-success w-75" name="save-btn" id="save-btn">
 							Сохранить
 						</button>
 						<button type"button" class="btn btn-outline-success w-25" name="add-subclient">+</button>
 					</div>
+					<div><p class="text-danger" id="error-field"></p></div>
 				</div>
 			</div>
 		</div>
@@ -118,4 +119,5 @@
 		{% endfor %}
 		<script type="text/javascript" src="/assets/scripts/clients/addForm.js"></script>
 		<script type="text/javascript" src="/assets/scripts/clients/update.js"></script>
+		<script type="text/javascript" src="/assets/scripts/clients/formFilled.js"></script>
 	{% endblock %}
