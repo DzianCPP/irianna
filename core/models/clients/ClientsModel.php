@@ -29,6 +29,13 @@ class ClientsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
+        $newInfo['sub_client']['_main_client_ids'] = [$newInfo['main_client']['id']];
+        if (!$this->updateSubClients($newInfo['sub_client'])) {
+            return false;
+        }
+
+        $newInfo = $newInfo['main_client'];
+
         $this->dataSanitizer->SanitizeData($newInfo);
         
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAMES[0], $this->fields[0], $newInfo, 'id')) {
