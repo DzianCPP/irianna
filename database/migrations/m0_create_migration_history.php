@@ -3,7 +3,6 @@
 namespace database\migrations;
 
 use core\application\Database;
-use PDO;
 
 class m0_create_migration_history extends BaseMigration
 {
