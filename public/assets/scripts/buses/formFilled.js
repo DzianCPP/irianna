@@ -9,7 +9,7 @@ function formFilled() {
     let _places = document.getElementById("places");
     let saveBtn = document.getElementById("save-btn");
 
-    if (_name.value.length > 2 && _route.value.length > 2 && _places.value.length > 1) {
+    if (_name.value.length > 2 && _route.value.length > 2 && _places.value > 1) {
         saveBtn.disabled = false;
     } else {
         saveBtn.disabled = true;

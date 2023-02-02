@@ -2,10 +2,8 @@
 
 namespace core\models\tours;
 
-use core\models\DatabaseSqlBuilder;
 use core\models\Model;
 use core\models\ModelInterface;
-use core\models\tours\ToursValidator;
 
 class ToursModel extends Model implements ModelInterface
 {
@@ -36,11 +34,6 @@ class ToursModel extends Model implements ModelInterface
     ];
     private const TABLE_NAME = "tours_table";
 
-    public function __construct()
-    {
-        parent::__construct(ToursValidator::class);
-    }
-
     public function get(array $columnValue = []): array
     {
         return $this->databaseSqlBuilder->select(self::TABLE_NAME);
@@ -48,6 +41,8 @@ class ToursModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
+        $this->dataSanitizer->SanitizeData($newInfo);
+        
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, 'id')) {
             return false;
         }
@@ -58,6 +53,7 @@ class ToursModel extends Model implements ModelInterface
     public function create(): bool
     {
         $tour = json_decode(file_get_contents("php://input"), true);
+        $this->dataSanitizer->SanitizeData($tour);
 
         if (!$this->databaseSqlBuilder->insert($tour, $this->fields, self::TABLE_NAME)) {
             return false;

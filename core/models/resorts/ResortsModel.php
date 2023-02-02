@@ -4,17 +4,11 @@ namespace core\models\resorts;
 
 use core\models\Model;
 use core\models\ModelInterface;
-use core\models\resorts\ResortsValidator;
 
 class ResortsModel extends Model implements ModelInterface
 {
     protected $fields = ['name', 'country_id', 'is_active', 'id'];
     private const TABLE_NAME = "resorts_table";
-
-    public function __construct()
-    {
-        parent::__construct(ResortsValidator::class);
-    }
 
     public function get(array $columnValue = []): array
     {
@@ -27,11 +21,7 @@ class ResortsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
-        $newInfo = $this->validator->makeDataSafe($newInfo);
-
-        if (!$this->validator->isDataSafe($newInfo)) {
-            return false;
-        }
+        $this->dataSanitizer->SanitizeData($newInfo);
 
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, "id")) {
             return false;
@@ -44,10 +34,7 @@ class ResortsModel extends Model implements ModelInterface
     {
         $resort = file_get_contents("php://input");
         $resort = json_decode($resort, true);
-
-        if (!$this->validator->isDataSafe($resort)) {
-            return false;
-        }
+        $this->dataSanitizer->SanitizeData($resort);
 
         if (!$this->databaseSqlBuilder->insert($resort, $this->fields, self::TABLE_NAME)) {
             return false;

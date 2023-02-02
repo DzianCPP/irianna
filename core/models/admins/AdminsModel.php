@@ -4,17 +4,12 @@ namespace core\models\admins;
 
 use core\models\ModelInterface;
 use core\models\Model;
-use core\models\admins\AdminsValidator;
+use core\services\DataSanitizer;
 
 class AdminsModel extends Model implements ModelInterface
 {
-    protected array $fields = ['email' => 'email', 'login' => 'login', 'password' => 'password', 'privileges' => 'privileges', 'id' => 'id'];
+    protected array $fields = ['email', 'login', 'password', 'privileges', 'id'];
     private const TABLE_NAME = "admins_table";
-
-    public function __construct()
-    {
-        parent::__construct(AdminsValidator::class);
-    }
 
     public function get(array $columnValue = []): array
     {
@@ -27,7 +22,8 @@ class AdminsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
-        $newAdmin = $this->validator->makeDataSafe($newInfo);
+        $newAdmin = $newInfo;
+        $this->dataSanitizer->SanitizeData($newAdmin);
 
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, column: "id", recordInfo: $newAdmin)) {
             return false;
@@ -39,11 +35,7 @@ class AdminsModel extends Model implements ModelInterface
     public function create(): bool
     {
         $newAdmin = json_decode(file_get_contents("php://input"), true);
-        $newAdmin = $this->validator->makeDataSafe($newAdmin);
-
-        if (!$this->validator->isDataSafe()) {
-            return false;
-        }
+        $this->dataSanitizer->SanitizeData($newAdmin);
 
         $columns = [$this->fields['email'], $this->fields['login'], $this->fields['password']];
 
@@ -58,6 +50,7 @@ class AdminsModel extends Model implements ModelInterface
     {
         $jsonString = file_get_contents("php://input");
         $ids = json_decode($jsonString, true);
+        $this->dataSanitizer->SanitizeData($ids);
 
         if (count($ids) < 1) {
             return false;

@@ -4,7 +4,6 @@ namespace core\models\hotels;
 
 use core\models\Model;
 use core\models\ModelInterface;
-use core\models\hotels\HotelsValidator;
 
 class HotelsModel extends Model implements ModelInterface
 {
@@ -26,11 +25,6 @@ class HotelsModel extends Model implements ModelInterface
     ];
     private const TABLE_NAME = "hotels_table";
 
-    public function __construct()
-    {
-        parent::__construct(HotelsValidator::class);
-    }
-
     public function get(array $columnValue = []): array
     {
         if ($columnValue != []) {
@@ -42,12 +36,8 @@ class HotelsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
-        $newInfo = $this->validator->makeDataSafe($newInfo);
-
-        if (!$this->validator->isDataSafe($newInfo)) {
-            return false;
-        }
-
+        $this->dataSanitizer->SanitizeData($newInfo);
+        
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, "id")) {
             return false;
         }
@@ -58,9 +48,8 @@ class HotelsModel extends Model implements ModelInterface
     public function create(): bool
     {
         $hotel = json_decode(file_get_contents("php://input"), true);
-
         $columns = array_keys($hotel);
-
+        $this->dataSanitizer->SanitizeData($hotel);
         $this->databaseSqlBuilder->insert($hotel, $columns, self::TABLE_NAME);
 
         return true;

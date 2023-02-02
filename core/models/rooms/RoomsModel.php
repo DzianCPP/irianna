@@ -2,10 +2,8 @@
 
 namespace core\models\rooms;
 
-use core\models\DatabaseSqlBuilder;
 use core\models\Model;
 use core\models\ModelInterface;
-use core\models\rooms\RoomsValidator;
 
 class RoomsModel extends Model implements ModelInterface
 {
@@ -13,11 +11,6 @@ class RoomsModel extends Model implements ModelInterface
     private const TABLE_NAME = "rooms_table";
     protected array $comforts = ['Телевизор', 'Холодильник', 'Кондиционер', 'Душ', 'Ванна', 'Джакузи', 'Туалет', 'Балкон', 'Чайник', 'Кухня'];
     protected array $food = ['Без питания', 'Завтрак', 'Обед', 'Ужин'];
-
-    public function __construct()
-    {
-        parent::__construct(RoomsValidator::class);
-    }
 
     public function get(array $columnValue = []): array
     {
@@ -30,7 +23,6 @@ class RoomsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
-        $newInfo = $this->validator->makeDataSafe($newInfo);
 
         $room = $newInfo;
 
@@ -45,9 +37,7 @@ class RoomsModel extends Model implements ModelInterface
 
             $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
 
-        if (!$this->validator->isDataSafe($newInfo)) {
-            return false;
-        }
+        $this->dataSanitizer->SanitizeData($room);
 
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $room, "id")) {
             return false;
@@ -77,6 +67,8 @@ class RoomsModel extends Model implements ModelInterface
                     continue 2;
                 }
             }
+
+            $this->dataSanitizer->SanitizeData($room);
             if (!$this->databaseSqlBuilder->insert($room, $this->fields, self::TABLE_NAME)) {
                 return false;
             }

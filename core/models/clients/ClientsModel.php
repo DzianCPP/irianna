@@ -14,11 +14,6 @@ class ClientsModel extends Model implements ModelInterface
     ];
     private const TABLE_NAMES = ["clients_table", "subclients_table"];
 
-    public function __construct()
-    {
-        parent::__construct(ClientsValidator::class);
-    }
-
     public function get(array $columnValue = []): array
     {
         $clients = [];
@@ -34,6 +29,15 @@ class ClientsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
+        $newInfo['sub_client']['_main_client_ids'] = [$newInfo['main_client']['id']];
+        if (!$this->updateSubClients($newInfo['sub_client'])) {
+            return false;
+        }
+
+        $newInfo = $newInfo['main_client'];
+
+        $this->dataSanitizer->SanitizeData($newInfo);
+        
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAMES[0], $this->fields[0], $newInfo, 'id')) {
             return false;
         }
@@ -49,6 +53,7 @@ class ClientsModel extends Model implements ModelInterface
 
         foreach ($sub_clients as &$sc) {
             $sc['main_client_id'] = $main_client_id;
+            $this->dataSanitizer->SanitizeData($sc);
             if (!$this->databaseSqlBuilder->update(self::TABLE_NAMES[1], $this->fields[1], $sc, 'main_client_id')) {
                 return false;
             }
@@ -61,6 +66,7 @@ class ClientsModel extends Model implements ModelInterface
     {
         $clients = json_decode(file_get_contents("php://input"), true);
         $main_client = $clients['main_client'];
+        $this->dataSanitizer->SanitizeData($main_client);
         $sub_clients = ClientsHelper::normalizeSubClients($clients['sub_client']);
 
         if (!$this->databaseSqlBuilder->insert($main_client, $this->fields[0], self::TABLE_NAMES[0])) {
@@ -71,6 +77,7 @@ class ClientsModel extends Model implements ModelInterface
 
         foreach ($sub_clients as $sc) {
             $sc['main_client_id'] = $clientId;
+            $this->dataSanitizer->SanitizeData($sc);
             if (!$this->databaseSqlBuilder->insert($sc, $this->fields[1], self::TABLE_NAMES[1])) {
                 return false;
             }
