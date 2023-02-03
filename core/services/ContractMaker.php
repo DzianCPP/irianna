@@ -59,7 +59,7 @@ class ContractMaker
         $new_att = str_replace('room_features', $data['room_features'], $new_att);
         $new_att = str_replace('from_minsk_date', $data['from_minsk_date'], $new_att);
         $new_att = str_replace('arrival_to_minsk', $data['arrival_to_minsk'], $new_att);
-        $new_att = str_replace('to_minsk_date', $data['to_minsk_date'], $new_att);
+        $new_att = str_replace('from_minsk_date', $data['to_minsk_date'], $new_att);
         $new_att = str_replace('hotel_address', $data['hotel_address'], $new_att);
         $new_att = str_replace('bus_route', $data['bus_route'], $new_att);
         $new_att = str_replace('_note', $data['_note'], $new_att);

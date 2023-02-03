@@ -76,7 +76,7 @@ class ToursModel extends Model implements ModelInterface
     {
         $tour = $this->databaseSqlBuilder->selectLastRecord(self::TABLE_NAME, 'id');
         
-        return $tour;
+        return $tour[0];
     }
 
     public function count(array $columnsValues): int

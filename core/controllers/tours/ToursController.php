@@ -293,9 +293,9 @@ class ToursController extends BaseController implements ControllerInterface
             'hotel_beach' => $hotel['beach'],
             'hotel_housing' => $hotel['housing'],
             'room_description' => $room['description'],
-            'room_water' => $room['water'],
+            'room_water' => $hotel['water'],
             'room_food' => $room['food'],
-            'room_features' => $room['features'],
+            'room_features' => $hotel['features'],
             'bus_route' => $bus['route'],
             'hotel_address' => $hotel['address'],
             'client_name' => $client['name'],
@@ -303,9 +303,9 @@ class ToursController extends BaseController implements ControllerInterface
         ];
 
         $attachment2 = ContractMaker::prepareAttachment2($attachment2, $documentData);
-        $attachment2 = '{% block contract %}' . $attachment2 . '{% endblock %}'
+        $attachment2 = '{% block attachment2 %}' . $attachment2 . '{% endblock %}'
         ;
-        $fileName = 'contract.html.twig';
+        $fileName = 'attachment2.html.twig';
         $fullFileName = 'core/views/templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $fullFileName, 'w');

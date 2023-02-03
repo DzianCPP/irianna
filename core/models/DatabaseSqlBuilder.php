@@ -104,7 +104,7 @@ class DatabaseSqlBuilder
             return 0;
         }
 
-        return $query->fetchAll()[0];
+        return $query->fetchAll();
     }
 
     private function getTableFields(array $fields): string
