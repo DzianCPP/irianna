@@ -424,9 +424,9 @@ return [
         'method' => 'GET'
     ],
 
-    'tours/places' => [
+    'tours/count' => [
         'controller' => ToursController::class,
-        'action' => 'getCountOfRegisteredTours',
+        'action' => 'count',
         'method' => 'POST'
     ],
 
