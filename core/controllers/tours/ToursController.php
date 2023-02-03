@@ -351,4 +351,68 @@ class ToursController extends BaseController implements ControllerInterface
 
         echo json_encode($count);
     }
+
+    public function printVoucher(): void
+    {
+        $this->setModel(ToursModel::class);
+        $tour = $this->model->getLastTour();
+        $clientsModel = new ClientsModel();
+        $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
+
+        $contractsModel = new ContractsModel();
+        $busesModel = new BusesModel();
+        $bus = $busesModel->get(['column' => 'id', 'value' => $tour['bus_id']])[0];
+
+        $roomsModel = new RoomsModel();
+        $room = $roomsModel->get(['column' => 'id', 'value' => $tour['room_id']])[0];
+
+        $voucher = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'voucher'])[0];
+        $voucher['html'] = htmlspecialchars_decode($voucher['html'], ENT_QUOTES);
+        $voucher = $voucher['html'];
+
+        $fileName = 'voucher.html.twig';
+        $fullFileName = 'core/views/templates/components/' . $fileName;
+
+        $fp = fopen(BASE_PATH . $fullFileName, 'w');
+        fwrite($fp, $voucher, strlen($voucher));
+        fclose($fp);
+        $documentData = [
+            'client_name' => $client['name'],
+            'client_birthdate' => $client['birth_date'],
+            'client_passport' => $client['passport'],
+            'client_main_phone' => $client['main_phone'],
+            'client_second_phone' => $client['second_phone'],
+            'client_address' => $client['address'],
+            'bus_route' => $bus['route'],
+            'from_minsk_date' => $tour['from_minsk_date'],
+            'arrival_to_minsk' => $tour['arrival_to_minsk'],
+            'service_cost_in_BYN' => $tour['total_travel_service_byn'],
+            'tour_price_in_curr' => explode(' ', $tour['total_travel_cost_currency'])[0],
+            'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
+            'room_description' => $room['description'],
+            'room_food' => $room['food'],
+            'transfer_direction' => 'Туда-Обратно',
+            'transfer_type' => $tour['is_only_transit'],
+            'today_date' => date('d-m-yy')
+        ];
+
+        $voucher = ContractMaker::prepareVoucher($voucher, $documentData);
+        $voucher = '{% block voucher %}' . $voucher . '{% endblock %}'
+        ;
+        $fileName = 'voucher.html.twig';
+        $fullFileName = 'core/views/templates/components/' . $fileName;
+
+        $fp = fopen(BASE_PATH . $fullFileName, 'w');
+        fwrite($fp, $voucher, strlen($voucher));
+        fclose($fp);
+
+        $data = [
+            'title' => 'Печать договора',
+            'header' => 'печать договора',
+            'login' => $_COOKIE['login']
+        ];
+
+        $this->setView(ToursView::class);
+        $this->view->render("tours/printVoucher.html.twig", $data);
+    }
 }

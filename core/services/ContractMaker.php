@@ -67,4 +67,30 @@ class ContractMaker
 
         return $new_att;
     }
+
+    public static function prepareVoucher(string $v, array $d): string
+    {
+        $new_v = $v;
+        
+        $new_v = str_replace('irianna_logo', '<img src="/assets/images/logos/logo.png">', $new_v);
+        $new_v = str_replace('client_name', $d['client_name'], $new_v);
+        $new_v = str_replace('client_birthdate', $d['client_birthdate'], $new_v);
+        $new_v = str_replace('client_passport', $d['client_passport'], $new_v);
+        $new_v = str_replace('client_main_phone', $d['client_main_phone'], $new_v);
+        $new_v = str_replace('client_second_phone', $d['client_second_phone'], $new_v);
+        $new_v = str_replace('client_address', $d['client_address'], $new_v);
+        $new_v = str_replace('bus_route', $d['bus_route'], $new_v);
+        $new_v = str_replace('from_minsk_date', $d['from_minsk_date'], $new_v);
+        $new_v = str_replace('arrival_to_minsk', $d['arrival_to_minsk'], $new_v);
+        $new_v = str_replace('service_cost_in_BYN', $d['service_cost_in_BYN'], $new_v);
+        $new_v = str_replace('tour_price_in_curr', $d['tour_price_in_curr'], $new_v);
+        $new_v = str_replace('currency', $d['currency'], $new_v);
+        $new_v = str_replace('room_description', $d['room_description'], $new_v);
+        $new_v = str_replace('room_food', $d['room_food'], $new_v);
+        $new_v = str_replace('transfer_direction', $d['transfer_direction'], $new_v);
+        $new_v = str_replace('transfer_type', $d['transfer_type'], $new_v);
+        $new_v = str_replace('today_date', $d['today_date'], $new_v);
+
+        return $new_v;
+    }
 }

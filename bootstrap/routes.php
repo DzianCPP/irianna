@@ -460,6 +460,12 @@ return [
         'method' => 'DELETE'
     ],
 
+    'tours/printVoucher' => [
+        'controller' => ToursController::class,
+        'action' => 'printVoucher',
+        'method' => 'GET'
+    ],
+
     'tours/new' => [
         'controller' => ToursController::class,
         'action' => 'new',
