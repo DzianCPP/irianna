@@ -5,13 +5,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function addFreePlacesFromResort() {
-    let url = "/tours/count";
+    let url = "/tours/countPlacesBack";
     let bus_id = document.getElementById("bus-from").value;
     let from_resort_date = document.getElementById("departure-from-resort").value;
 
     let info = {
         bus_id: bus_id,
-        from_resort_date: from_resort_date
+        to_minsk_date: from_resort_date
     };
 
     let POST = {

@@ -8,31 +8,13 @@ class ContractMaker
     {
         $new_contract = $contract;
 
-        // $contractData = [
-        //     'resort_name' => $resort['name'],
-        //     'hotel_name' => $hotel['name'],
-        //     'day' => date('d'),
-        //     'month' => date('m'),
-        //     'year' => date('Y'),
-        //     'from_minsk_date' => $tour['from_minsk_date'],
-        //     'arrival_to_minsk' => $bus['arrival_to_minsk'],
-        //     'manager_name' => $manager['name'],
-        //     'client_name' => $client['name'],
-        //     'total_people' => 1 + count($sub_clients),
-        //     'number_of_children' => $tour['number_of_children'],
-        //     'age_of_children' => $age_of_children,
-        //     'passport_number' => $client['passport'],
-        //     'main_phone' => $client['main_phone'],
-        //     'second_phone' => $client['second_phone']
-        // ];
-
         $new_contract = str_replace('day', '<b>' . $contractData['day'], $new_contract);
         $new_contract = str_replace('month', $contractData['month'], $new_contract);
         $new_contract = str_replace('year', $contractData['year'] . '</b>', $new_contract);
         $new_contract = str_replace('resort_name', $contractData['resort_name'], $new_contract);
         $new_contract = str_replace('hotel_name', $contractData['hotel_name'], $new_contract);
         $new_contract = str_replace('from_minsk_date', '<b>' . str_replace('-', '.', $contractData['from_minsk_date']), $new_contract);
-        $new_contract = str_replace('arrival_to_minsk', str_replace('-', '.', $contractData['to_minsk_date']) . '</b>', $new_contract);
+        $new_contract = str_replace('arrival_to_minsk', str_replace('-', '.', $contractData['arrival_to_minsk']) . '</b>', $new_contract);
         $new_contract = str_replace('manager_name', '<b>' . $contractData['manager_name'] . '</b>', $new_contract);
         $new_contract = str_replace('client_name', '<b>' . $contractData['client_name'] . '</b>', $new_contract);
         $new_contract = str_replace('total_people', '<b>' . $contractData['total_people'] . '</b>', $new_contract);
@@ -60,5 +42,29 @@ class ContractMaker
         $new_contract = str_replace('"Заказчик"', '<b>"Заказчик"</b>', $new_contract);
 
         return $new_contract;
+    }
+
+    public static function prepareAttachment2(string $att, array $data): string
+    {
+        $new_att = $att;
+        
+        $new_att = str_replace('hotel_name', $data['hotel_name'], $new_att);
+        $new_att = str_replace('resort_name', $data['resort_name'], $new_att);
+        $new_att = str_replace('hotel_area', $data['hotel_area'], $new_att);
+        $new_att = str_replace('hotel_beach', $data['hotel_beach'], $new_att);
+        $new_att = str_replace('hotel_housing', $data['hotel_housing'], $new_att);
+        $new_att = str_replace('room_description', $data['room_description'], $new_att);
+        $new_att = str_replace('room_water', $data['room_water'], $new_att);
+        $new_att = str_replace('room_food', $data['room_food'], $new_att);
+        $new_att = str_replace('room_features', $data['room_features'], $new_att);
+        $new_att = str_replace('from_minsk_date', $data['from_minsk_date'], $new_att);
+        $new_att = str_replace('arrival_to_minsk', $data['arrival_to_minsk'], $new_att);
+        $new_att = str_replace('to_minsk_date', $data['to_minsk_date'], $new_att);
+        $new_att = str_replace('hotel_address', $data['hotel_address'], $new_att);
+        $new_att = str_replace('bus_route', $data['bus_route'], $new_att);
+        $new_att = str_replace('_note', $data['_note'], $new_att);
+        $new_att = str_replace('client_name', $data['client_name'], $new_att);
+
+        return $new_att;
     }
 }

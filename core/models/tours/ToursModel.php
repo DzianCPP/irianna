@@ -29,6 +29,7 @@ class ToursModel extends Model implements ModelInterface
         'total_travel_cost_currency',
         'from_minsk_date',
         'to_minsk_date',
+        'arrival_to_minsk',
         'room_id',
         'id'
     ];

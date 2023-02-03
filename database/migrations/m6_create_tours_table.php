@@ -35,6 +35,7 @@ class m6_create_tours_table extends BaseMigration
                         total_travel_cost_currency text DEFAULT NULL,
                         from_minsk_date text(256) DEFAULT NULL,
                         to_minsk_date text(256) DEFAULT NULL,
+                        arrival_to_minsk text(256) DEFAULT NULL,
                         room_id int(11) DEFAULT NULL,                        
                         PRIMARY KEY (id))";
 

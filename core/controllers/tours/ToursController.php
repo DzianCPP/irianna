@@ -216,7 +216,7 @@ class ToursController extends BaseController implements ControllerInterface
             'month' => date('m'),
             'year' => date('Y'),
             'from_minsk_date' => $tour['from_minsk_date'],
-            'arrival_to_minsk' => $bus['arrival_to_minsk'],
+            'arrival_to_minsk' => $tour['arrival_to_minsk'],
             'to_minsk_date' => $tour['to_minsk_date'],
             'manager_name' => $manager['name'],
             'client_name' => $client['name'],
@@ -252,6 +252,76 @@ class ToursController extends BaseController implements ControllerInterface
         $this->view->render("tours/print.html.twig", $data);
     }
 
+    public function printAttachmentTwo(): void
+    {
+        $this->setModel(ToursModel::class);
+        $tour = $this->model->getLastTour();
+        $clientsModel = new ClientsModel();
+        $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
+
+        $contractsModel = new ContractsModel();
+
+        $resortsModel = new ResortsModel();
+        $resort = $resortsModel->get(['column' => 'id', 'value' => $tour['resort_id']])[0];
+
+        $hotelsModel = new HotelsModel();
+        $hotel = $hotelsModel->get(['column' => 'id', 'value' => $tour['hotel_id']])[0];
+
+        $busesModel = new BusesModel();
+        $bus = $busesModel->get(['column' => 'id', 'value' => $tour['bus_id']])[0];
+
+        $roomsModel = new RoomsModel();
+        $room = $roomsModel->get(['column' => 'id', 'value' => $tour['room_id']])[0];
+
+        $attachment2 = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'attachment-2'])[0];
+        $attachment2['html'] = htmlspecialchars_decode($attachment2['html'], ENT_QUOTES);
+        $attachment2 = $attachment2['html'];
+
+        $fileName = 'attachment2.html.twig';
+        $fullFileName = 'core/views/templates/components/' . $fileName;
+
+        $fp = fopen(BASE_PATH . $fullFileName, 'w');
+        fwrite($fp, $attachment2, strlen($attachment2));
+        fclose($fp);
+        $documentData = [
+            'resort_name' => $resort['name'],
+            'hotel_name' => $hotel['name'],
+            'from_minsk_date' => $tour['from_minsk_date'],
+            'arrival_to_minsk' => $tour['arrival_to_minsk'],
+            'to_minsk_date' => $tour['to_minsk_date'],
+            'hotel_area' => $hotel['area'],
+            'hotel_beach' => $hotel['beach'],
+            'hotel_housing' => $hotel['housing'],
+            'room_description' => $room['description'],
+            'room_water' => $room['water'],
+            'room_food' => $room['food'],
+            'room_features' => $room['features'],
+            'bus_route' => $bus['route'],
+            'hotel_address' => $hotel['address'],
+            'client_name' => $client['name'],
+            '_note' => 'дополнительные услуги оплачиваются туристами по месту отдыха (питание, экскурсии и т. д.). При открытых окнах в пансионатах и гостиницах возможно попадание насекомых в номера. В случае аварии на подстанциях возможны перебои с водой и электричеством. Время заселения/выселения на базы отдыха может быть увеличено из-за большой транспортной загруженности курорта. Расселением туристов по номерам занимается администрация. Время заселения (выселения) зависит от времени прибытия (убытия) автобуса и регламентируется руководителем тур. группы и администрацией базы отдыха. Туристы, прибывшие на автобусе, уведомляются о времени ожидания перед заселением (2-3 часа) для уборки номера. Туристы, закончившие свой отдых, должны освободить номера по требованию администрации к моменту приезда автобуса. Проверьте наличие паспорта перед выездом на отдых.'
+        ];
+
+        $attachment2 = ContractMaker::prepareAttachment2($attachment2, $documentData);
+        $attachment2 = '{% block contract %}' . $attachment2 . '{% endblock %}'
+        ;
+        $fileName = 'contract.html.twig';
+        $fullFileName = 'core/views/templates/components/' . $fileName;
+
+        $fp = fopen(BASE_PATH . $fullFileName, 'w');
+        fwrite($fp, $attachment2, strlen($attachment2));
+        fclose($fp);
+
+        $data = [
+            'title' => 'Печать договора',
+            'header' => 'печать договора',
+            'login' => $_COOKIE['login']
+        ];
+
+        $this->setView(ToursView::class);
+        $this->view->render("tours/printAttachment2.html.twig", $data);
+    }
+
     public function count(): void
     {
         $data = json_decode(file_get_contents("php://input"), true);
@@ -262,6 +332,21 @@ class ToursController extends BaseController implements ControllerInterface
         $count = $this->model->count(columnsValues: [
             'columns' => ['bus_id', 'from_minsk_date'],
             'values' => [$bus_id, $from_minsk_date]
+        ]);
+
+        echo json_encode($count);
+    }
+
+    public function countPlacesBack(): void
+    {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $bus_id = (int)$data['bus_id'];
+        $to_minsk_date = $data['to_minsk_date'];
+
+        $this->setModel(ToursModel::class);
+        $count = $this->model->count(columnsValues: [
+            'columns' => ['bus_id', 'to_minsk_date'],
+            'values' => [$bus_id, $to_minsk_date]
         ]);
 
         echo json_encode($count);
