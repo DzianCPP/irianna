@@ -140,7 +140,7 @@ class DatabaseSqlBuilder
 
     public function count(string $table_name, string $where_clause): array
     {
-        $sql = "SELECT COUNT(*) FROM $table_name WHERE $where_clause";
+        $sql = "SELECT * FROM $table_name WHERE $where_clause";
         $query = $this->conn->prepare($sql);
         if (!$query->execute()) {
             return 0;

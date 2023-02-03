@@ -97,9 +97,16 @@ class ToursModel extends Model implements ModelInterface
 
         $where_clause = $columns[0] . $values[0] . " AND " . $columns[1] . $values[1];
         
-        $result =  $this->databaseSqlBuilder->count(self::TABLE_NAME, $where_clause)[0][0];
+        $tours =  $this->databaseSqlBuilder->count(self::TABLE_NAME, $where_clause);
+        $total_people = count($tours);
 
-        return $result;
+        foreach ($tours as $t) {
+            $main_client_id = $t['owner_id'];
+            $count_sub_clients = count($this->databaseSqlBuilder->count('subclients_table', "main_client_id = $main_client_id"));
+            $total_people += $count_sub_clients;
+        }
+
+        return $total_people;
     }
 
     public function getLastTourId(): int
