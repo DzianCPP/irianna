@@ -252,10 +252,18 @@ class ToursController extends BaseController implements ControllerInterface
         $this->view->render("tours/print.html.twig", $data);
     }
 
-    public function getCountOfRegisteredTours(): void
+    public function count(): void
     {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $bus_id = (int)$data['bus_id'];
+        $from_minsk_date = $data['from_minsk_date'];
+
         $this->setModel(ToursModel::class);
-        $tour_identifiers = json_decode(file_get_contents("php://input"), true);
-        echo $this->model->getCountOfRegisteredTours($tour_identifiers['bus_id'], $tour_identifiers['date']);
+        $count = $this->model->count(columnsValues: [
+            'columns' => ['bus_id', 'from_minsk_date'],
+            'values' => [$bus_id, $from_minsk_date]
+        ]);
+
+        echo json_encode($count);
     }
 }

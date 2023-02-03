@@ -115,6 +115,5 @@ class BusesController extends BaseController implements ControllerInterface
         ) {
             http_response_code(500);
         }
-        ;
     }
 }

@@ -78,9 +78,27 @@ class ToursModel extends Model implements ModelInterface
         return $tour;
     }
 
-    public function getCountOfRegisteredTours(int $bus_id, string $date): int
+    public function count(array $columnsValues): int
     {
-        return $this->databaseSqlBuilder->getCount(self::TABLE_NAME, columns: ["bus_id", "departure_from_minsk"], values: [$bus_id, $date]);
+        $where_clause = "";
+
+        $columns = [];
+
+        foreach($columnsValues['columns'] as $c) {
+            $columns[] = $c . "=";
+        }
+
+        $values = [];
+
+        foreach($columnsValues['values'] as $v) {
+            $values[] = "'" . $v . "'";
+        }
+
+        $where_clause = $columns[0] . $values[0] . " AND " . $columns[1] . $values[1];
+        
+        $result =  $this->databaseSqlBuilder->count(self::TABLE_NAME, $where_clause)[0][0];
+
+        return $result;
     }
 
     public function getLastTourId(): int

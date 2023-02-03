@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("bus-from").addEventListener("focusout", function () {
-        addArrivalToMinskDates();
+        addDepartureFromResort();
     });
 });
 
-async function addArrivalToMinskDates() {
+async function addDepartureFromResort() {
     let url = "/roomsOne/" + document.getElementById("rooms").value;
     let GET = {
         method: "GET"
@@ -34,7 +34,7 @@ function addOptions(from_resort) {
         toMinskSelector.remove(i);
     }
 
-    for (let k = 1; k <= dates.length; k = k + 2) {
+    for (let k = dates.length/2; k < dates.length; k++) {
         var newOption = document.createElement('option');
         var optionText = document.createTextNode(dates[k]);
         newOption.appendChild(optionText);
