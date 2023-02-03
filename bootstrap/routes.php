@@ -430,6 +430,12 @@ return [
         'method' => 'POST'
     ],
 
+    'tours/countPlacesBack' => [
+        'controller' => ToursController::class,
+        'action' => 'countPlacesBack',
+        'method' => 'POST'
+    ],
+
     'tours/edit' => [
         'controller' => ToursController::class,
         'action' => 'edit',
@@ -454,6 +460,12 @@ return [
         'method' => 'DELETE'
     ],
 
+    'tours/printVoucher' => [
+        'controller' => ToursController::class,
+        'action' => 'printVoucher',
+        'method' => 'GET'
+    ],
+
     'tours/new' => [
         'controller' => ToursController::class,
         'action' => 'new',
@@ -463,6 +475,12 @@ return [
     'tours/printContract' => [
         'controller' => ToursController::class,
         'action' => 'printContract',
+        'method' => 'GET'
+    ],
+
+    'tours/printAttachmentTwo' => [
+        'controller' => ToursController::class,
+        'action' => 'printAttachmentTwo',
         'method' => 'GET'
     ],
 

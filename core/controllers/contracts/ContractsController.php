@@ -128,7 +128,7 @@ class ContractsController extends BaseController implements ControllerInterface
     public function addLabel(): void
     {
         $this->setModel(ContractsModel::class);
-        $lastDocument = $this->model->getLastDocument();
+        $lastDocument = $this->model->getLastDocument()[0];
 
         $label = json_decode(file_get_contents("php://input"), true)['label'];
 

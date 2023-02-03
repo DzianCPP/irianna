@@ -191,6 +191,7 @@ function getTour() {
         total_travel_cost_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency").innerHTML,
         from_minsk_date: _departure_from_minsk,
         to_minsk_date: _departure_from_resort,
+        arrival_to_minsk: document.getElementById("arrival-to-minsk").value,
         room_id: document.getElementById("rooms").value,
         id: Number(document.getElementById("tour-id").innerHTML)
     };

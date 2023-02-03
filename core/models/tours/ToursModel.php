@@ -29,6 +29,7 @@ class ToursModel extends Model implements ModelInterface
         'total_travel_cost_currency',
         'from_minsk_date',
         'to_minsk_date',
+        'arrival_to_minsk',
         'room_id',
         'id'
     ];
@@ -75,7 +76,7 @@ class ToursModel extends Model implements ModelInterface
     {
         $tour = $this->databaseSqlBuilder->selectLastRecord(self::TABLE_NAME, 'id');
         
-        return $tour;
+        return $tour[0];
     }
 
     public function count(array $columnsValues): int
