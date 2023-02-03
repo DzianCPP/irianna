@@ -6,6 +6,7 @@ use core\controllers\ControllerInterface;
 use core\controllers\BaseController;
 use core\models\hotels\HotelsModel;
 use core\models\rooms\RoomsModel;
+use core\models\tours\ToursModel;
 use core\views\rooms\RoomsView;
 use core\services\IdGetter;
 use core\controllers\rooms\helpers\RoomsHelper;
@@ -27,9 +28,9 @@ class RoomsController extends BaseController implements ControllerInterface
         $this->view->render("rooms/pickHotel.html.twig", $data);
     }
 
-    public function new(): void
+    public function new (): void
     {
-        $hotel_id = (int)filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
+        $hotel_id = (int) filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_NUMBER_INT);
         $hotelsModel = new HotelsModel();
         $this->setView(RoomsView::class);
         $rooms = new RoomsModel();
@@ -82,25 +83,49 @@ class RoomsController extends BaseController implements ControllerInterface
 
         if ($hotelId) {
             $rooms = $this->model->get(columnValue:
-            [
-                'column' => 'hotel_id',
-                'value' => $hotelId
-            ]);
+                [
+                    'column' => 'hotel_id',
+                    'value' => $hotelId
+                ]);
         } else {
             $rooms = $this->model->get();
         }
 
         if ($hotelId) {
             $hotel = $hotelsModel->get(columnValue:
-            [
-                'column' => 'id',
-                'value' => $hotelId
-            ])[0];
+                [
+                    'column' => 'id',
+                    'value' => $hotelId
+                ])[0];
         } else {
             $hotel = $hotelsModel->get()[0];
         }
-        
+
         $rooms = $roomsHelper->normalizeRooms($rooms);
+
+        $toursModel = new ToursModel();
+        $tours_set = [];
+
+        foreach ($rooms as $room) {
+            $tours_set[] = $toursModel->get(columnValue: ['column' => 'room_id', 'value' => $room['id']]);
+        }
+
+        foreach ($rooms as &$room) {
+            foreach ($room['checkin_checkout_dates'] as &$date) {
+                foreach ($tours_set as $tours) {
+                    foreach ($tours as $tour) {
+                        if (($d = 'f' . $tour['checkout_date']) == $date) {
+                            $date = str_replace('f', 'b', $date);
+                            for($i = 0; $i <= count($room['checkin_checkout_dates']); $i++) {
+                                if ($room['checkin_checkout_dates'][$i] == $date) {
+                                    $room['checkin_checkout_dates'][$i-1] = str_replace('f', 'b', $room['checkin_checkout_dates'][$i-1]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         $data = [
             'title' => 'Номера',
@@ -117,12 +142,12 @@ class RoomsController extends BaseController implements ControllerInterface
 
     public function readOne(): void
     {
-        $id = (int)IdGetter::getId();
+        $id = (int) IdGetter::getId();
         $this->setModel(RoomsModel::class);
         $room = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
         $room = json_encode($room);
         echo $room;
-        
+
     }
 
     public function update(int $id = 0): void
@@ -140,11 +165,14 @@ class RoomsController extends BaseController implements ControllerInterface
         }
 
         $this->setModel(RoomsModel::class);
-        if (!$this->model->delete([
-            'column' => 'id',
-            'values' => $ids
-        ])) {
+        if (
+            !$this->model->delete([
+                'column' => 'id',
+                'values' => $ids
+            ])
+        ) {
             http_response_code(500);
-        };
+        }
+        ;
     }
 }
