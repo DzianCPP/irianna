@@ -25,15 +25,16 @@ class m15_create_tours_archive_table extends BaseMigration
                         bus_id int(11) DEFAULT NULL,
                         owner_id int(100) DEFAULT NULL,
                         owner_travel_service int(11) DEFAULT NULL,
-                        owner_travel_cost int(11) DEFAULT NULL,
+                        owner_travel_cost text(256) DEFAULT NULL,
                         number_of_children int(11) DEFAULT NULL,
                         ages varchar(255) DEFAULT NULL,
                         total_travel_service_byn int(11) DEFAULT NULL,
-                        total_travel_cost_byn int(11) DEFAULT NULL,
+                        total_travel_cost_byn text(256) DEFAULT NULL,
                         total_travel_service_currency text DEFAULT NULL,
                         total_travel_cost_currency text DEFAULT NULL,
                         from_minsk_date text(256) DEFAULT NULL,
                         to_minsk_date text(256) DEFAULT NULL,
+                        arrival_to_minsk text(256) DEFAULT NULL,
                         room_id int(11) DEFAULT NULL,                        
                         PRIMARY KEY (id))";
 

@@ -35,6 +35,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("main-client-currency-1").addEventListener("keyup", function () {
+        document.getElementById("total-currency-1").innerHTML = document.getElementById("main-client-currency-1").value;
+    });
+});
+
 
 
 document.addEventListener("DOMContentLoaded", function () {

@@ -18,7 +18,6 @@ class DataSanitizer
                 $d = (int) $d;
                 $d = filter_var($d, FILTER_SANITIZE_NUMBER_INT);
             }
-            $d = htmlspecialchars($d);
         }
     }
 }

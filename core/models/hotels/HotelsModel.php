@@ -50,7 +50,10 @@ class HotelsModel extends Model implements ModelInterface
         $hotel = json_decode(file_get_contents("php://input"), true);
         $columns = array_keys($hotel);
         $this->dataSanitizer->SanitizeData($hotel);
-        $this->databaseSqlBuilder->insert($hotel, $columns, self::TABLE_NAME);
+        if (!$this->databaseSqlBuilder->insert($hotel, $columns, self::TABLE_NAME)) {
+            http_response_code(500);
+            return false;
+        }
 
         return true;
     }

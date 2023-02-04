@@ -59,7 +59,6 @@ class ToursModel extends Model implements ModelInterface
     {
         $tour = json_decode(file_get_contents("php://input"), true);
         $this->dataSanitizer->SanitizeData($tour);
-
         if (!$this->databaseSqlBuilder->insert($tour, $this->fields, self::TABLE_NAME)) {
             return false;
         }
