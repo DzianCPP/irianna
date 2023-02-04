@@ -4,6 +4,7 @@
     <th scope="col"><input type="checkbox" id="check-all" /></th>
     <th scope="col">id</th>
     <th scope="col">Название</th>
+    <th scope="col">Тип документа</th>
     <th scope="col"></th>
   </tr>
   {% for c in contracts %}
@@ -11,6 +12,11 @@
     <td><input name="select" type="checkbox" value="{{ c.id }}" /></td>
     <td>{{ c.id }}</td>
     <td>{{ c.name }}</td>
+    <td>
+    {% if c.label == 'contract' %}{{ 'Договор' }}{% endif %}
+    {% if c.label == 'voucher' %}{{ 'Ваучер (путевка)' }}{% endif %}
+    {% if c.label == 'attachment-2' %}{{ 'Приложение 2' }}{% endif %}
+    {% if c.label == 'attachment-1' %}{{ 'Приложение 1' }}{% endif %}</td>
     <td>
       <a class="btn btn-success" href="/contracts/edit/{{ c.id }}"
         >Исправить</a

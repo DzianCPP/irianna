@@ -28,6 +28,8 @@ class Application
         $controllerObject = new $controllerName;
         $actionName = $track->getActionName();
 
+        
+
         if ($actionName == 'login' || $actionName == 'index' || $actionName == 'logout') {
             $controllerObject->$actionName();
             die();
