@@ -174,7 +174,13 @@ class ToursController extends BaseController implements ControllerInterface
     public function printContract(): void
     {
         $this->setModel(ToursModel::class);
-        $tour = $this->model->getLastTour();
+        $id = IdGetter::getId();
+        $tour = [];
+        if ($id) {
+        $tour = $this->model->get(['column' => 'id', 'value' => $id])[0];
+        } else {
+            $tour = $this->model->getLastTour();
+        }
         $clientsModel = new ClientsModel();
         $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
 
@@ -255,7 +261,12 @@ class ToursController extends BaseController implements ControllerInterface
     public function printAttachmentTwo(): void
     {
         $this->setModel(ToursModel::class);
-        $tour = $this->model->getLastTour();
+        $id = IdGetter::getId();
+        if ($id) {
+            $tour = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
+        } else {
+            $tour = $this->model->getLastTour();
+        }
         $clientsModel = new ClientsModel();
         $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
 
@@ -355,7 +366,13 @@ class ToursController extends BaseController implements ControllerInterface
     public function printVoucher(): void
     {
         $this->setModel(ToursModel::class);
-        $tour = $this->model->getLastTour();
+        $id = IdGetter::getId();
+        if ($id) {
+            $tour = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
+        } else {
+            $tour = $this->model->getLastTour();
+        }
+
         $clientsModel = new ClientsModel();
         $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
 

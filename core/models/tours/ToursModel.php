@@ -37,7 +37,11 @@ class ToursModel extends Model implements ModelInterface
 
     public function get(array $columnValue = []): array
     {
-        return $this->databaseSqlBuilder->select(self::TABLE_NAME);
+        if (!$columnValue) {
+            return $this->databaseSqlBuilder->select(self::TABLE_NAME);
+        }
+
+        return $this->databaseSqlBuilder->select(self::TABLE_NAME, $columnValue);
     }
 
     public function update(array $newInfo): bool

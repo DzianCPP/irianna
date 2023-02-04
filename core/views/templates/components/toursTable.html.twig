@@ -63,7 +63,12 @@
             {% if tour.transit == 1 %}{{ 'Обратно' }}{% endif %}
             {% if tour.transit == 2 %}{{ 'Туда-Обратно' }}{% endif %}
         </td>
-        <td><a class="btn btn-sm btn-success" href="/tours/edit/{{ tour.id }}">Изменить</a></td>
+        <td>
+        <a class="btn btn-sm btn-success" href="/tours/edit/{{ tour.id }}">Изменить</a>
+        <a class="btn btn-sm btn-success m-1" href="/tours/printContract/{{ tour.id }}">Печать Договора</a>
+        <a class="btn btn-sm btn-success m-1" href="/tours/printAttachmentTwo/{{ tour.id }}">Печать Приложения 2</a>
+        <a class="btn btn-sm btn-success m-1" href="/tours/printVoucher/{{ tour.id }}">Печать Путевки</a>
+        </td>
     </tr>
     {% endfor %}
 </table>
