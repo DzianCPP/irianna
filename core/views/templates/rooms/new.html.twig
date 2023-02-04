@@ -21,7 +21,7 @@
 						<tr>
 							<th class="w-auto text-center">Описание номера</th>
 							{% for i in 0..hotel.rooms - 1 %}
-								<th>
+								<th style="min-width: 300px;">
 									<textarea class="border-1 w-100" name="room-description"></textarea>
 								</th>
 							{% endfor %}
@@ -32,7 +32,7 @@
 							<td class="w-auto text-center">Удобства</td>
 							{% for i in 0..hotel.rooms - 1 %}
 								<td>
-									<div class="input-group mb-3">
+									<div class="input-group mb-3" style="min-height: 150px;">
 										<textarea class="form-control border-0" name="comfort" id="room-comforts-{{ i }}"></textarea>
 										<div class="btn-group dropend">
 											<button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
@@ -55,7 +55,7 @@
 						<td class="w-auto text-center">Питание</td>
 						{% for i in 0..hotel.rooms - 1 %}
 							<td>
-								<div class="input-group mb-3">
+								<div class="input-group mb-3" style="min-height: 80px;">
 									<textarea class="form-control border-0" name="food" id="room-food-{{ i }}"></textarea>
 									<div class="btn-group dropend">
 										<button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
@@ -83,7 +83,7 @@
 									<input type="date" class="btn btn-sm border-0 w-50" name="date" id="date-out-{{ i }}">
 								</div>
 
-								<div class="input-group w-100">
+								<div class="input-group w-100" style="min-height: 80px;">
 									<textarea placeholder="Заезды" class="form-control w-50" name="checkins" aria-label="With textarea" id="field-date-in-{{ i }}"></textarea>
 									<textarea placeholder="Выезды" class="form-control w-50" name="checkouts" aria-label="With textarea" id="field-date-out-{{ i }}"></textarea>
 								</div>

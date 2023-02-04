@@ -12,11 +12,6 @@ class ContractsModel extends Model implements ModelInterface
     protected array $fields = ['name', 'label', 'html', 'id'];
     private const TABLE_NAME = "contracts_table";
 
-    public function __construct()
-    {
-        parent::__construct(ContractsValidator::class);
-    }
-
     public function get(array $columnValue = []): array
     {
         if ($columnValue != []) {
