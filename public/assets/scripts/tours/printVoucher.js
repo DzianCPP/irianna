@@ -5,5 +5,5 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function printVoucher() {
-    window.location = "/tours/printVoucher";
+    window.open("/tours/printVoucher");
 }
