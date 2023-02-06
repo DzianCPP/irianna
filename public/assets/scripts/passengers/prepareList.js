@@ -22,5 +22,7 @@ async function prepareList() {
     if (!response.ok) {
         console.log("Ошибка! Не удалось найти пассажиров");
         alert("Ошибка!"); return;
+    } else {
+        window.location = "/passengers_list";
     }
 }

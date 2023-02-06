@@ -38,7 +38,7 @@ class ContractsController extends BaseController implements ControllerInterface
         $contract = $contract['html'];
 
         $fileName = 'contract.html.twig';
-        $contractFileName = 'core/views/templates/components/' . $fileName;
+        $contractFileName = 'templates/components/' . $fileName;
         $contract = '{% block contract %}' . $contract . '{% endblock %}';
 
         $fp = fopen(BASE_PATH . $contractFileName, 'w');

@@ -542,5 +542,11 @@ return [
         'controller' => ContractsController::class,
         'action' => 'delete',
         'method' => 'DELETE'
+    ],
+
+    'passengers_list' => [
+        'controller' => ClientsController::class,
+        'action' => 'passengers_list',
+        'method' => 'GET'
     ]
 ];
