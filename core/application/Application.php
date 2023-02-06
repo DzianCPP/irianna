@@ -2,7 +2,6 @@
 
 namespace core\application;
 
-use core\controllers\login\LoginController;
 use core\services\PrivilegesChecker;
 use core\services\LoginChecker;
 use core\views\AppView;
