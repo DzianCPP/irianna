@@ -9,8 +9,7 @@ class DatabaseSqlBuilder
 {
     protected PDO $conn;
     protected Database $database;
-    protected Validator $validator;
-
+    
     public function __construct()
     {
         $this->database = Database::getInstance();
@@ -31,14 +30,21 @@ class DatabaseSqlBuilder
         return true;
     }
 
-    public function select(string $tableName, array $columnValue = []): array
+    public function select(string $tableName, array $columnValue = [], array $columnsValues = []): array
     {
         $sqlQuery = "SELECT * FROM $tableName";
+
         if ($columnValue != []) {
             $column = $columnValue['column'];
             $value = $columnValue['value'];
             $sqlQuery .= " WHERE ${column}='${value}'";
         }
+
+        if ($columnsValues != []) {
+            $where_clause = $this->setWhereClause($columnsValues);
+            $sqlQuery .= "WHERE $where_clause";
+        }
+
         $query = $this->conn->prepare($sqlQuery);
         $query->execute();
 
@@ -136,6 +142,19 @@ class DatabaseSqlBuilder
         }
 
         return implode(",", $fields);
+    }
+
+    private function setWhereClause(array $columnsValues): string
+    {
+        $where_clause = "";
+        for ($i = 0; $i < count($columnsValues['columns']); $i++) {
+            $item = $columnsValues['columns'][$i] . "='" . $columnsValues['values'][$i] . "', ";
+            $where_clause .= $item;
+        }
+
+        $where_clause = rtrim($where_clause, "', ");
+
+        return $where_clause;
     }
 
     public function count(string $table_name, string $where_clause): array

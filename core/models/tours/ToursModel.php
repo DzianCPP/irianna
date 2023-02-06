@@ -118,4 +118,9 @@ class ToursModel extends Model implements ModelInterface
 
         return $id;
     }
+
+    public function list(array $columnsValues = []): array
+    {
+        return $this->databaseSqlBuilder->select(tableName: self::TABLE_NAME, columnsValues: $columnsValues);
+    }
 }

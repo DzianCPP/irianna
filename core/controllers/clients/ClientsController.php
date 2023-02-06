@@ -4,11 +4,13 @@ namespace core\controllers\clients;
 
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
+use core\models\tours\ToursModel;
 use core\services\Paginator;
 use core\views\clients\ClientsView;
 use core\models\clients\ClientsModel;
 use core\models\clients\helpers\ClientsHelper;
 use core\services\IdGetter;
+use core\views\tours\ToursView;
 
 class ClientsController extends BaseController implements ControllerInterface
 {
@@ -131,5 +133,49 @@ class ClientsController extends BaseController implements ControllerInterface
         }
 
         return;
+    }
+
+    public function list(): void
+    {
+        $this->setModel(ClientsModel::class);
+        $data = json_decode(file_get_contents("php://input"));
+        // $data = [ 'bus_id', 'from_minsk_date', 'to_minsk_date' ]
+        $toursModel = new ToursModel();
+        $tours = $toursModel->list(columnsValues: [
+            'columns' => ['bus_id', 'from_minsk_date', 'to_minsk_date'],
+            'values' => [$data['bus_id'], $data['from_minsk_date'], $data['to_minsk_date']]
+        ]);
+
+        $main_clients = [];
+
+        foreach($tours as $tour) {
+            $main_clients[] = $this->model->get(['column' => 'id', 'value' => $tour['owner_id']])[0];
+        }
+
+        $sub_clients = [];
+
+        foreach($main_clients as $mc) {
+            $sub_clients[] = $this->model->getSubClients([
+                'column' => 'main-client_id',
+                'value' => $mc['id']
+            ]);
+        }
+
+        $passengers = ['main_clients' => [], 'sub_clients' => []];
+
+        for ($i = 0; $i < count($main_clients); $i++) {
+            $passengers['main_clients'][] = $main_clients[$i];
+            $passengers['sub_clients'][] = $sub_clients[$i];
+        }
+
+        $data = [
+            'title' => 'Список пассажиров',
+            'header' => 'Список пассажиров',
+            'login' => $_COOKIE['login'],
+            'passengers' => $passengers
+        ];
+
+        $this->setView(ToursView::class);
+        $this->view->render("tours/passengers.html.twig", $data);
     }
 }
