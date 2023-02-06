@@ -418,6 +418,12 @@ return [
         'method' => 'GET'
     ],
 
+    'clients/list' => [
+        'controller' => ClientsController::class,
+        'action' => 'list',
+        'method' => 'POST'
+    ],
+
     'tours' => [
         'controller' => ToursController::class,
         'action' => 'read',
