@@ -4,6 +4,7 @@ namespace core\controllers\clients;
 
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
+use core\models\buses\BusesModel;
 use core\models\tours\ToursModel;
 use core\services\Paginator;
 use core\views\clients\ClientsView;
@@ -133,6 +134,22 @@ class ClientsController extends BaseController implements ControllerInterface
         }
 
         return;
+    }
+
+    public function passengers(): void
+    {
+        $busesModel = new BusesModel();
+        $buses = $busesModel->get();
+
+        $this->setView(ClientsView::class);
+        $data = [
+            'title' => 'Список пассажиров',
+            'header' => 'Список пассажиров',
+            'login' => $_COOKIE['login'],
+            'buses' => $buses
+        ];
+
+        $this->view->render("passengers/form.html.twig", $data);
     }
 
     public function list(): void

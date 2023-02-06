@@ -418,6 +418,12 @@ return [
         'method' => 'GET'
     ],
 
+    'clients/passengers' => [
+        'controller' => ClientsController::class,
+        'action' => 'passengers',
+        'method' => 'GET'
+    ],
+
     'clients/list' => [
         'controller' => ClientsController::class,
         'action' => 'list',
