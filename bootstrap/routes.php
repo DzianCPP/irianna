@@ -208,6 +208,12 @@ return [
         'method' => 'GET'
     ],
 
+    'buses/readOne' => [
+        'controller' => BusesController::class,
+        'action' => 'readOne',
+        'method' => 'GET'
+    ],
+
     'buses' => [
         'controller' => BusesController::class,
         'action' => 'read',

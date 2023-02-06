@@ -42,7 +42,7 @@ class DatabaseSqlBuilder
 
         if ($columnsValues != []) {
             $where_clause = $this->setWhereClause($columnsValues);
-            $sqlQuery .= "WHERE $where_clause";
+            $sqlQuery .= " WHERE $where_clause";
         }
 
         $query = $this->conn->prepare($sqlQuery);
@@ -148,11 +148,11 @@ class DatabaseSqlBuilder
     {
         $where_clause = "";
         for ($i = 0; $i < count($columnsValues['columns']); $i++) {
-            $item = $columnsValues['columns'][$i] . "='" . $columnsValues['values'][$i] . "', ";
+            $item = $columnsValues['columns'][$i] . "='" . $columnsValues['values'][$i] . "' AND ";
             $where_clause .= $item;
         }
 
-        $where_clause = rtrim($where_clause, "', ");
+        $where_clause = rtrim($where_clause, " AND ");
 
         return $where_clause;
     }

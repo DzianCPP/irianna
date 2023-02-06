@@ -155,11 +155,11 @@ class ClientsController extends BaseController implements ControllerInterface
     public function list(): void
     {
         $this->setModel(ClientsModel::class);
-        $data = json_decode(file_get_contents("php://input"));
+        $data = json_decode(file_get_contents("php://input"), true);
         // $data = [ 'bus_id', 'from_minsk_date', 'to_minsk_date' ]
         $toursModel = new ToursModel();
         $tours = $toursModel->list(columnsValues: [
-            'columns' => ['bus_id', 'from_minsk_date', 'to_minsk_date'],
+            'columns' => ['bus_id', 'from_minsk_date', 'arrival_to_minsk'],
             'values' => [$data['bus_id'], $data['from_minsk_date'], $data['to_minsk_date']]
         ]);
 
@@ -173,7 +173,7 @@ class ClientsController extends BaseController implements ControllerInterface
 
         foreach($main_clients as $mc) {
             $sub_clients[] = $this->model->getSubClients([
-                'column' => 'main-client_id',
+                'column' => 'main_client_id',
                 'value' => $mc['id']
             ]);
         }

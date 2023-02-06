@@ -1,1 +1,71 @@
-{% for bus in buses %}{{ bus.name }}{% endfor %}
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+<div class="container-xs container-sm container-md container-xl">
+
+    <div class="row w-100 mt-5 mb-5">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
+            <h1 class="h1 m-1" id="main-page-h1">{{ header }}</h1>
+        </div>
+    </div>
+
+    <div class="row w-100 mb-2">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
+            <div class="input-group">
+                <span class="input-group-text w-25">Автобус
+                    <span class="text-danger">*</span>
+                </span>
+                <select id="bus" class="btn btn-outline-success dropdown-toggle w-75">
+                    {% for b in buses %}
+                    <option class="bg-light text-success" value="{{ b.id }}">{{ b.name }}{{ ': ' }}{{ b.route }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row w-100 mb-2">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
+            <div class="input-group">
+                <span class="input-group-text w-50">Выезд из Минска</span>
+                <select id="from-minsk-date" class="btn btn-outline-success dropdown-toggle w-50"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row w-100 mb-2">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
+            <div class="input-group">
+                <span class="input-group-text w-50">Прибытие в Минск</span>
+                <select id="to-minsk-date" class="btn btn-outline-success dropdown-toggle w-50"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row w-100 mb-2">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
+            <div class="input-group w-100 mb-2">
+                <button type="button" class="btn btn-success w-100" id="prepare-list">Подготовить список</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row w-100">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
+            <p id="error-field"></p>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/assets/scripts/countries/create.js"></script>
+    <script type="text/javascript" src="/assets/scripts/countries/formFilled.js"></script>
+    <script type="text/javascript" src="/assets/scripts/passengers/form/addDates.js"></script>
+    <script type="text/javascript" src="/assets/scripts/passengers/prepareList.js"></script>
+</div>
+{% endblock %}
