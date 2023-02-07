@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("bus-from").addEventListener("focusout", function () {
+    document.getElementById("bus-from").addEventListener("click", function () {
         addDepartureFromResort();
     });
 });
