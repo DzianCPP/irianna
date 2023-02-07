@@ -4,15 +4,18 @@ namespace core\controllers\clients;
 
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
+use core\models\buses\BusesModel;
+use core\models\tours\ToursModel;
 use core\services\Paginator;
 use core\views\clients\ClientsView;
 use core\models\clients\ClientsModel;
 use core\models\clients\helpers\ClientsHelper;
 use core\services\IdGetter;
+use core\views\tours\ToursView;
 
 class ClientsController extends BaseController implements ControllerInterface
 {
-    public function new(): void
+    public function new (): void
     {
         $data = [
             'title' => 'Добавить клиента',
@@ -59,7 +62,7 @@ class ClientsController extends BaseController implements ControllerInterface
         $clients = $this->model->get();
 
         $page = Paginator::getPage();
-        $pages = (int)ceil(count($clients) / parent::PER_PAGE);
+        $pages = (int) ceil(count($clients) / parent::PER_PAGE);
 
         if ($page) {
             Paginator::limitRange($clients, self::PER_PAGE, $page);
@@ -131,5 +134,85 @@ class ClientsController extends BaseController implements ControllerInterface
         }
 
         return;
+    }
+
+    public function passengers(): void
+    {
+        $busesModel = new BusesModel();
+        $buses = $busesModel->get();
+
+        $this->setView(ClientsView::class);
+        $data = [
+            'title' => 'Список пассажиров',
+            'header' => 'Список пассажиров',
+            'login' => $_COOKIE['login'],
+            'buses' => $buses
+        ];
+
+        $this->view->render("passengers/form.html.twig", $data);
+    }
+
+    public function list(): void
+    {
+        $this->setModel(ClientsModel::class);
+        $data = json_decode(file_get_contents("php://input"), true);
+        // $data = [ 'bus_id', 'from_minsk_date', 'to_minsk_date' ]
+        $toursModel = new ToursModel();
+        $tours = $toursModel->list(columnsValues: [
+            'columns' => ['bus_id', 'from_minsk_date', 'arrival_to_minsk'],
+            'values' => [$data['bus_id'], $data['from_minsk_date'], $data['to_minsk_date']]
+        ]);
+
+        $main_clients = [];
+
+        foreach ($tours as $tour) {
+            $main_clients[] = $this->model->get(['column' => 'id', 'value' => $tour['owner_id']])[0];
+        }
+
+        $sub_clients = [];
+
+        foreach ($main_clients as $mc) {
+            $sub_clients[] = $this->model->getSubClients([
+                'column' => 'main_client_id',
+                'value' => $mc['id']
+            ]);
+        }
+
+        $passengers = ['main_clients' => [], 'sub_clients' => []];
+
+        for ($i = 0; $i < count($main_clients); $i++) {
+            $passengers['main_clients'][] = $main_clients[$i];
+            $passengers['sub_clients'][] = $sub_clients[$i];
+        }
+
+        $busesModel = new BusesModel();
+        $bus = $busesModel->get(['column' => 'id', 'value' => $data['bus_id']])[0];
+
+        $data = [
+            'title' => 'Список пассажиров',
+            'header' => 'Список пассажиров',
+            'login' => $_COOKIE['login'],
+            'passengers' => $passengers,
+            'from_minsk_date' => $tours[0]['from_minsk_date'],
+            'arrival_to_minsk' => $tours[0]['arrival_to_minsk'],
+            'bus' => $bus
+        ];
+
+        $f = fopen(BASE_PATH . "static/passengers/passengers.json", 'w');
+        if (!$f) {
+            http_response_code(500);
+            return;
+        }
+
+        fwrite($f, json_encode($data), strlen(json_encode($data)));
+
+        http_response_code(200);
+    }
+
+    public function passengers_list(): void
+    {
+        $this->setView(ClientsView::class);
+        $data = json_decode(file_get_contents(BASE_PATH . "static/passengers/passengers.json"), true);
+        $this->view->render("passengers/passengers.html.twig", $data);
     }
 }

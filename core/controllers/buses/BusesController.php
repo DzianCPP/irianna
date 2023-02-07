@@ -60,7 +60,6 @@ class BusesController extends BaseController implements ControllerInterface
         $bus = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
         $bus = json_encode($bus);
         echo $bus;
-
     }
 
     public function read(int $id = 0): void

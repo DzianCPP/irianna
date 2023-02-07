@@ -1,0 +1,59 @@
+{% block table %}
+<table class="table table-responsive table-sm table-xl table-md table-xs table-hover
+		  text-center w-100" id="table">
+	<tr>
+		<th scope="col"><input type="checkbox" id="check-all" /></th>
+		<th scope="col">id</th>
+		<th scope="col" style="min-width: 150px;">Название</th>
+		<th scope="col" style="min-width: 100px;">Курорт</th>
+		<th scope="col" style="min-width: 150px;">Адрес</th>
+		<th scope="col">Кол-во номеров</th>
+		<th scope="col" style="min-width: 200px;">Территория</th>
+		<th scope="col" style="min-width: 200px;">Корпуса</th>
+		<th scope="col" style="min-width: 200px;">Пляж</th>
+		<th scope="col">Заезды</th>
+		<th scope="col" style="min-width: 200px;">Вода</th>
+		<th scope="col" style="min-width: 200px;">Питание</th>
+		<th scope="col" style="min-width: 300px;">Особенности</th>
+		<th scope="col" style="min-width: 300px;">Описание</th>
+		<th scope="col">Статус</th>
+		<th scope="col"></th>
+	</tr>
+	{% for hotel in hotels %}
+	<tr>
+		<td class="big-cell"><input name="select" type="checkbox" value="{{ hotel.id }}" /></td>
+		<td>{{ hotel.id }}</td>
+		<td>{{ hotel.name }}</td>
+		<td>
+			{% for resort in resorts %}
+			{% if resort.id == hotel.resort_id %}
+			{{ resort.name }}
+			{% endif %}
+			{% endfor %}
+		</td>
+		<td>{{ hotel.address }}</td>
+		<td>{{ hotel.rooms }}</td>
+		<td><textarea class="border-0 bg-transparent" style="width: 300px; height: 150px;" disabled>{{ hotel.area }}</textarea></td>
+		<td>{{ hotel.housing }}</td>
+		<td><textarea class="border-0 bg-transparent" style="width: 300px; height: 150px;" disabled>{{ hotel.beach }}</textarea></td>
+		<td>{{ hotel.checkins }}</td>
+		<td><textarea class="border-0 bg-transparent" style="width: 300px; height: 150px;" disabled>{{ hotel.water }}</textarea></td>
+		<td><textarea class="border-0 bg-transparent" style="width: 300px; height: 150px;" disabled>{{ hotel.food }}</textarea></td>
+		<td><textarea class="border-0 bg-transparent" style="width: 300px; height: 150px;" disabled>{{ hotel.features }}</textarea></td>
+		<td><textarea class="border-0 bg-transparent" style="width: 350px; height: 150px;" disabled>{{ hotel.description }}</textarea></td>
+		<td>
+			{% if hotel.is_active > 0 %}
+			{{ "Доступна" }}
+			{% else %}
+			{{
+			"Не доступна"
+			}}
+			{% endif %}
+		</td>
+		<td>
+			<a class="btn btn-success" href="/hotels/edit/{{ hotel.id }}">Исправить</a>
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

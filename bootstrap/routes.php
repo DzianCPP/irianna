@@ -208,6 +208,12 @@ return [
         'method' => 'GET'
     ],
 
+    'buses/readOne' => [
+        'controller' => BusesController::class,
+        'action' => 'readOne',
+        'method' => 'GET'
+    ],
+
     'buses' => [
         'controller' => BusesController::class,
         'action' => 'read',
@@ -418,6 +424,18 @@ return [
         'method' => 'GET'
     ],
 
+    'clients/passengers' => [
+        'controller' => ClientsController::class,
+        'action' => 'passengers',
+        'method' => 'GET'
+    ],
+
+    'clients/list' => [
+        'controller' => ClientsController::class,
+        'action' => 'list',
+        'method' => 'POST'
+    ],
+
     'tours' => [
         'controller' => ToursController::class,
         'action' => 'read',
@@ -524,5 +542,11 @@ return [
         'controller' => ContractsController::class,
         'action' => 'delete',
         'method' => 'DELETE'
+    ],
+
+    'passengers_list' => [
+        'controller' => ClientsController::class,
+        'action' => 'passengers_list',
+        'method' => 'GET'
     ]
 ];

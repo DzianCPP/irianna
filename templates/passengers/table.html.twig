@@ -1,0 +1,30 @@
+{% block table %}
+{% set main = passengers.main_clients %}
+{% set subs = passengers.sub_clients %}
+{% if main|length > 0 %}
+<table class="table table-responsive table-sm table-xl table-md table-xs table-hover text-center w-100" id="table">
+    <tr>
+        <th>Имя</th>
+        <th>Паспорт</th>
+        <th>Телефон</th>
+    </tr>
+    {% for m in main %}
+    <tr>
+        <td>{{ m.name }}</td>
+        <td>{{ m.passport }}</td>
+        <td>{{ m.main_phone }}</td>
+        <td><input type="checkbox" class="checkbox"></input></td>
+    </tr>
+    {% for sub in subs %} {% set s = sub %}
+    {% for c in s %} {% if c.main_client_id == m.id %}
+    <tr>
+        <td>{{ c.name }}</td>
+        <td>{{ c.passport}}</td>
+        <td></td>
+        <td><input type="checkbox" class="checkbox"></input></td>
+    </tr>
+    {% endif %}{% endfor %}{% endfor %}
+    {% endfor %}
+</table>
+{% else %}<span class="h1">Нет пассажиров на этом рейсе</span>{% endif %}
+{% endblock %}
