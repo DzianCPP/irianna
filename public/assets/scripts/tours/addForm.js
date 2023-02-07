@@ -122,7 +122,8 @@ function createTourCost() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group mt-2");
     _input_group.appendChild(createSpan("input-group-text w-50 bg-primary text-light", "Стоимость тура"));
-    _input_group.appendChild(createInputText("form-control", "text", "tour-cost", "Стоимость тура в BYN"));
+    _input_group.appendChild(createInputText("form-control", "text", "tour-cost", ""));
+    _input_group.appendChild(createSpan("input-group-text", document.getElementById("main-client-currency-1").value));
 
     return _input_group;
 }
@@ -132,6 +133,6 @@ function createTourCostCurrency() {
     _input_group.setAttribute("class", "input-group mt-2");
     _input_group.appendChild(createSpan("input-group-text w-50 bg-primary text-light", "Стоимость тура"));
     _input_group.appendChild(createInputText("form-control", "text", "tour-cost-currency", ""));
-    _input_group.appendChild(createInputText("form-control", "text", "currency", "Валюта"));
+    _input_group.appendChild(createSpan("input-group-text", document.getElementById("main-client-currency").value));
     return _input_group;
 }
