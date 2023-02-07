@@ -4,11 +4,33 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-async function addDates() {
-    let free_dates = await getDates(document.getElementById("hotels").value);
+function addDates() {
+    let free_dates = JSON.parse(document.getElementById("free-dates").innerHTML);
 
-    let checkin_dates = free_dates['checkin_dates'];
-    let checkout_dates = free_dates['checkout_dates'];
+    let checkin_dates = free_dates['in_dates'];
+    let checkout_dates = free_dates['out_dates'];
+
+    let unique = [];
+
+    for (let in_date of checkin_dates) {
+        if (!unique.includes(in_date)) {
+            unique.push(in_date);
+        }
+    }
+
+    checkin_dates = unique.sort();
+
+    unique = [];
+
+    for (let out_date of checkout_dates) {
+        if (!unique.includes(out_date)) {
+            unique.push(out_date);
+        }
+    }
+
+    checkout_dates = unique.sort();
+
+    unique = [];
 
     for (let i = document.getElementById("room-checkin-date").length; i >= 0; i--) {
         document.getElementById("room-checkin-date").remove(i);
@@ -33,17 +55,4 @@ async function addDates() {
         option.setAttribute('value', text.textContent);
         document.getElementById("room-checkout-date").appendChild(option);
     }
-}
-
-async function getDates(room_id) {
-    let url = "/rooms/free/" + room_id;
-
-    let response = await fetch(url);
-    if (!response.ok) {
-        console.log("Не удалось получить свободные даты");
-        alert("Ошибка! Не удалось получить свободные даты");
-        return;
-    }
-
-    return await response.json();
 }

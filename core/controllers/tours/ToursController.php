@@ -17,12 +17,11 @@ use core\models\countries\CountriesModel;
 use core\models\resorts\ResortsModel;
 use core\models\rooms\RoomsModel;
 use core\services\IdGetter;
-use DateTime;
 use core\services\ContractMaker;
 
 class ToursController extends BaseController implements ControllerInterface
 {
-    public function new (string $resortName = "", int $is_active = 0): void
+    public function new(string $resortName = "", int $is_active = 0): void
     {
         $managers = new ManagersModel();
         $countries = new CountriesModel();
@@ -56,16 +55,18 @@ class ToursController extends BaseController implements ControllerInterface
             unset($room['checkin_checkout_dates']);
         }
 
+        $free_dates = [ 'in_dates' => [], 'out_dates' => [] ];
+
         foreach ($rooms as &$room) {
             $tours = $this->model->get(['column' => 'room_id', 'value' => $room['id']]);
             $busy_checkin_dates = [];
             $busy_checkout_dates = [];
             foreach($tours as $tour) {
-                if (array_search($tour['checkin_date'], $room['checkin_dates'])) {
+                if (array_search($tour['checkin_date'], $room['checkin_dates']) !== false) {
                     $busy_checkin_dates[] = $tour['checkin_date'];
                 }
 
-                if (array_search($tour['checkout_date'], $room['checkout_dates'])) {
+                if (array_search($tour['checkout_date'], $room['checkout_dates']) !== false) {
                     $busy_checkout_dates[] = $tour['checkout_date'];
                 }
             }
@@ -77,16 +78,18 @@ class ToursController extends BaseController implements ControllerInterface
             $free_checkout_dates = [];
 
             foreach ($room['checkin_dates'] as $in_date) {
-                if (array_search($in_date, $room['busy_checkin_dates']) == false) {
+                if (array_search($in_date, $room['busy_checkin_dates']) === false) {
                     $free_checkin_dates[] = $in_date;
+                    $free_dates['in_dates'][] = $in_date;
                 }
             }
 
             $room['checkin_dates'] = $free_checkin_dates;
 
             foreach ($room['checkout_dates'] as $out_date) {
-                if (array_search($out_date, $room['busy_checkout_dates']) == false) {
+                if (array_search($out_date, $room['busy_checkout_dates']) === false) {
                     $free_checkout_dates[] = $out_date;
+                    $free_dates['out_dates'][] = $out_date;
                 }
             }
 
@@ -102,7 +105,8 @@ class ToursController extends BaseController implements ControllerInterface
             'resorts' => json_encode($resorts->get()),
             'hotels' => json_encode($hotels->get()),
             'buses' => $buses->get(),
-            'rooms' => json_encode($rooms)
+            'rooms' => json_encode($rooms),
+            'free_dates' => json_encode($free_dates)
         ];
 
         $this->setView(ToursView::class);

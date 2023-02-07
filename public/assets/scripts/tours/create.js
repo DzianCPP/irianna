@@ -18,7 +18,7 @@ async function createTour() {
     let _bus_id = document.getElementById("bus-to").value;
     let _departure_from_minsk = document.getElementById("departure-from-minsk").value;
     let _bus_back_id = document.getElementById("bus-from").value;
-    let _departure_from_resort = document.getElementById("departure-from-resort").value;
+    let _departure_from_resort = document.getElementById("room-checkout-date").value;
     let _created = new Date();
 
     let tour = {
