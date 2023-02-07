@@ -5,6 +5,7 @@ namespace core\controllers\hotels;
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\models\resorts\ResortsModel;
+use core\models\rooms\RoomsModel;
 use core\services\Paginator;
 use core\views\hotels\HotelsView;
 use core\models\hotels\HotelsModel;
@@ -100,14 +101,13 @@ class HotelsController extends BaseController implements ControllerInterface
         }
 
         $this->setModel(HotelsModel::class);
-        if (
-            !$this->model->delete([
-                'column' => 'id',
-                'values' => $ids
-            ])
-        ) {
+        if (!$this->model->delete(['column' => 'id', 'values' => $ids])) {
             http_response_code(500);
+        } else {
+            $roomsModel = new RoomsModel();
+            if (!$roomsModel->delete(['column' => 'hotel_id', 'values' => $ids])) {
+                http_response_code(500);
+            }
         }
-        ;
     }
 }
