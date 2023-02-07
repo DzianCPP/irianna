@@ -152,26 +152,47 @@ class RoomsController extends BaseController implements ControllerInterface
 
     public function free(): void
     {
-        $id = (int) IdGetter::getId();
+        $hotel_id = (int) IdGetter::getId();
         $this->setModel(RoomsModel::class);
-        $room = $this->model->get(['column' => 'id', 'value' => $id])[0];
+        $rooms = $this->model->get(['column' => 'hotel_id', 'value' => $hotel_id]);
         $roomsHelper = new RoomsHelper();
-        $room = $roomsHelper->normalizeRoom($room);
+
+        foreach ($rooms as &$room) {
+            $room = $roomsHelper->normalizeRoom($room);
+        }
+
         $toursModel = new ToursModel();
-        $tours = $toursModel->get(['column' => 'room_id', 'value' => $room['id']]);
+
+        $tours_sets = [];
+
+        foreach ($rooms as &$room) {
+            $tours_sets[] = $toursModel->get(['column' => 'room_id', 'value' => $room['id']]);
+        }
+
+        $tours = [];
+
+        foreach ($tours_sets as $tour_set) {
+            foreach ($tour_set as $tour) {
+                $tours[] = $tour;
+            }
+        }
+
+        unset($tours_set);
 
         $checkin_dates = [];
         $checkout_dates = [];
 
-        for ($i = 0; $i < count($room['checkin_checkout_dates']); $i++) {
-            if ($i % 2 > 0) {
-                $checkout_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
-            } else {
-                $checkin_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
+        foreach ($rooms as &$room) {
+            for ($i = 0; $i < count($room['checkin_checkout_dates']); $i++) {
+                if ($i % 2 > 0) {
+                    $checkout_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
+                } else {
+                    $checkin_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
+                }
             }
         }
 
-        $all_dates = ['checkin_dates' => $checkin_dates, 'checkout_dates' => $checkout_dates];
+        $all_dates = ['checkin_dates' => array_unique($checkin_dates), 'checkout_dates' => array_unique($checkout_dates)];
 
         $free_dates = ['checkin_dates' => [], 'checkout_dates' => []];
 
