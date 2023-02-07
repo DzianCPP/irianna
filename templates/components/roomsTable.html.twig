@@ -72,13 +72,13 @@
 				{% if i == 0 %}
 				<div class="btn-group">
 					<button {% set dateStatus=date|first %}
-						class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-dark disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
+						class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-light disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
 						{{ date|trim(dateStatus) }}
 					</button>
 					{% endif %}
 					{% if i == 1 %}
 					<button {% set dateStatus=date|first %}
-						class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-dark disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
+						class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-light disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
 						{{ date|trim(dateStatus) }}
 					</button>
 				</div>
