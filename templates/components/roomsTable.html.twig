@@ -1,93 +1,108 @@
 {% block table %}
-	<table class="table table-bordered border-secondary table-responsive table-sm table-xl table-md table-xs table-hover text-center w-100" id="table">
-		<tr>
-		<th colspan="{{ rooms|length + 1}}">Еще можно создать номеров:  {% set freeRooms = hotel.rooms - rooms|length %}{{ freeRooms }}</th>
-		</tr>
-		<tr>
-			<th scope="col"><input type="checkbox" id="check-all"/></th>
-			{% for room in rooms %}
-			{% if room.hotel_id == hotel.id %}
-				<th scope="col">
-					<input type="checkbox" name="select" value="{{ room.id }}"/>
-				</th>
+<table
+	class="table table-bordered border-secondary table-responsive table-sm table-xl table-md table-xs table-hover text-center w-100"
+	id="table">
+	<tr>
+		<th colspan="{{ rooms|length + 1}}">Еще можно создать номеров: {% set freeRooms = hotel.rooms - rooms|length
+			%}{{ freeRooms }}</th>
+	</tr>
+	<tr>
+		<th scope="col"><input type="checkbox" id="check-all" /></th>
+		{% for room in rooms %}
+		{% if room.hotel_id == hotel.id %}
+		<th scope="col">
+			<input type="checkbox" name="select" value="{{ room.id }}" />
+		</th>
+		{% endif %}
+		{% endfor %}
+	</tr>
+
+	<tr>
+		<th scope="col">Описание</th>
+		{% for room in rooms %}
+		{% if room.hotel_id == hotel.id %}
+		<th scope="col">
+			<span>
+				{{ room.description }}
+			</span>
+		</th>
+		{% endif %}
+		{% endfor %}
+	</tr>
+
+	<tr class="bg-warning text-dark">
+		<td class="w-auto text-center">Удобства</td>
+		{% for room in rooms %}
+		{% if room.hotel_id == hotel.id %}
+		<td>
+			<span>
+				{% for comfort in room.comforts %}
+				{{ comfort }}
+				{% endfor %}
+			</span>
+		</td>
+		{% endif %}
+		{% endfor %}
+	</tr>
+
+	<tr>
+		<td class="w-auto text-center">Питание</td>
+		{% for room in rooms %}
+		{% if room.hotel_id == hotel.id %}
+		<td>
+			<span>
+				{% for food_item in room.food %}
+				{{ food_item }}
+				{% endfor %}
+			</span>
+		</td>
+		{% endif %}
+		{% endfor %}
+	</tr>
+
+	<tr>
+		<th>Заезды/Выезды</th>
+		{% for room in rooms %}
+		{% if room.hotel_id == hotel.id %}
+		{% set dates = room.checkin_checkout_dates %}
+		<td>
+			<div class="btn-group-vertical">
+				{% set i = 0 %}
+				{% for date in dates %}
+				{% if i == 0 %}
+				<div class="btn-group">
+					<button {% set dateStatus=date|first %}
+						class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-dark disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
+						{{ date|trim(dateStatus) }}
+					</button>
+					{% set i = i + 1 %}
+					{% endif %}
+					{% if i == 1 %}
+					<button {% set dateStatus=date|first %}
+						class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-dark disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
+						{{ date|trim(dateStatus) }}
+					</button>
+				</div>
+				{% set i = 0 %}
 				{% endif %}
-			{% endfor %}
-		</tr>
+				{% endfor %}
+			</div>
+		</td>
+		{% endif %}
+		{% endfor %}
+	</tr>
 
-		<tr>
-			<th scope="col">Описание</th>
-			{% for room in rooms %}
-				{% if room.hotel_id == hotel.id %}
-					<th scope="col">
-						<span>
-							{{ room.description }}
-						</span>
-					</th>
-				{% endif %}
-			{% endfor %}
-		</tr>
-
-		<tr class="bg-warning text-dark">
-			<td class="w-auto text-center">Удобства</td>
-			{% for room in rooms %}
-				{% if room.hotel_id == hotel.id %}
-					<td>
-						<span>
-							{% for comfort in room.comforts %}
-								{{ comfort }}
-							{% endfor %}
-						</span>
-					</td>
-				{% endif %}
-			{% endfor %}
-		</tr>
-
-		<tr>
-			<td class="w-auto text-center">Питание</td>
-			{% for room in rooms %}
-				{% if room.hotel_id == hotel.id %}
-					<td>
-						<span>
-							{% for food_item in room.food %}
-								{{ food_item }}
-							{% endfor %}
-						</span>
-					</td>
-				{% endif %}
-			{% endfor %}
-		</tr>
-
-		<tr>
-			<th>Заезды/Выезды</th>
-			{% for room in rooms %}
-				{% if room.hotel_id == hotel.id %}
-				{% set dates = room.checkin_checkout_dates %}
-					<td>
-						<div class="btn-group-vertical">
-							{% for date in dates %}
-							{% if date|length > 4 %}
-								<button {% set dateStatus = date|first %} class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-dark disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
-									{{ date|trim(dateStatus) }}
-								</button>
-								{% endif %}
-							{% endfor %}
-						</div>
-					</td>
-				{% endif %}
-			{% endfor %}
-		</tr>
-
-		<tr>
-			<td class="w-auto text-center"></td>
-			{% for room in rooms %}
-				{% if room.hotel_id == hotel.id %}
-					<td>
-						<a class="btn btn-warning" href="/rooms/edit/{{ room.id }}">Изменить</a>
-					</td>
-				{% endif %}
-			{% endfor %}
-		</tr>
+	<tr>
+		<td class="w-auto text-center"></td>
+		{% for room in rooms %}
+		{% if room.hotel_id == hotel.id %}
+		<td>
+			<a class="btn btn-warning" href="/rooms/edit/{{ room.id }}">Изменить</a>
+		</td>
+		{% endif %}
+		{% endfor %}
+	</tr>
 
 
-	</table>
+</table>
 {% endblock %}
