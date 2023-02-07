@@ -8,13 +8,15 @@ function addRooms() {
     let rooms = JSON.parse(document.getElementById("rooms-array").innerHTML);
 
     for (let i = 0; i < roomsSelector.length; i++) {
-        roomsSelector.removeChild(roomsSelector.options[i]);
+        roomsSelector.remove(i);
     }
+
+    let i = 0;
 
     for (var room of rooms) {
         if (room.hotel_id == hotel) {
             var newOption = document.createElement('option');
-            var optionText = document.createTextNode(room.description);
+            var optionText = document.createTextNode(++i + ": " + room.description);
             newOption.appendChild(optionText);
             newOption.setAttribute('value', room.id);
             roomsSelector.appendChild(newOption);

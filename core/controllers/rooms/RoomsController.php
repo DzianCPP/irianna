@@ -150,6 +150,66 @@ class RoomsController extends BaseController implements ControllerInterface
 
     }
 
+    public function free(): void
+    {
+        $id = (int) IdGetter::getId();
+        $this->setModel(RoomsModel::class);
+        $room = $this->model->get(['column' => 'id', 'value' => $id])[0];
+        $roomsHelper = new RoomsHelper();
+        $room = $roomsHelper->normalizeRoom($room);
+        $toursModel = new ToursModel();
+        $tours = $toursModel->get(['column' => 'room_id', 'value' => $room['id']]);
+
+        $checkin_dates = [];
+        $checkout_dates = [];
+
+        for ($i = 0; $i < count($room['checkin_checkout_dates']); $i++) {
+            if ($i % 2 > 0) {
+                $checkout_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
+            } else {
+                $checkin_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
+            }
+        }
+
+        $all_dates = ['checkin_dates' => $checkin_dates, 'checkout_dates' => $checkout_dates];
+
+        $free_dates = ['checkin_dates' => [], 'checkout_dates' => []];
+
+
+        foreach ($tours as $tour) {
+            foreach($all_dates['checkin_dates'] as &$date) {
+                if ($date == $tour['checkin_date']) {
+                    $date = "b" . $date;
+                } else {
+                    $date = "f" . $date;
+                }
+            }
+
+            foreach($all_dates['checkout_dates'] as &$date) {
+                if ($date == $tour['checkout_date']) {
+                    $date = "b" . $date;
+                } else {
+                    $date = "f" . $date;
+                }
+            }
+        }
+
+        foreach($all_dates['checkin_dates'] as $d) {
+            if (str_contains($d, 'f')) {
+                $free_dates['checkin_dates'][] = substr($d, 1);
+            }
+        }
+
+
+        foreach($all_dates['checkout_dates'] as $d) {
+            if (str_contains($d, 'f')) {
+                $free_dates['checkout_dates'][] = substr($d, 1);
+            }
+        }
+
+        echo json_encode($free_dates);
+    }
+
     public function update(int $id = 0): void
     {
         $room = json_decode(file_get_contents("php://input"), true);

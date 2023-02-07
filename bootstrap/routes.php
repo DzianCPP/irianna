@@ -548,5 +548,11 @@ return [
         'controller' => ClientsController::class,
         'action' => 'passengers_list',
         'method' => 'GET'
+    ],
+
+    'rooms/free' => [
+        'controller' => RoomsController::class,
+        'action' => 'free',
+        'method' => 'GET'
     ]
 ];
