@@ -176,6 +176,13 @@ class RoomsController extends BaseController implements ControllerInterface
         $free_dates = ['checkin_dates' => [], 'checkout_dates' => []];
 
 
+        if (!$tours) {
+            $free_dates = $all_dates;
+            echo json_encode($free_dates);
+            http_response_code(200);
+            die();
+        }
+        
         foreach ($tours as $tour) {
             foreach($all_dates['checkin_dates'] as &$date) {
                 if ($date == $tour['checkin_date']) {
