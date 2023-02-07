@@ -75,7 +75,6 @@
 						class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-dark disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
 						{{ date|trim(dateStatus) }}
 					</button>
-					{% set i = i + 1 %}
 					{% endif %}
 					{% if i == 1 %}
 					<button {% set dateStatus=date|first %}
@@ -83,8 +82,8 @@
 						{{ date|trim(dateStatus) }}
 					</button>
 				</div>
-				{% set i = 0 %}
 				{% endif %}
+				{% if i == 0 %} {% set i = 1 %} {% else %} {% set i = 0 %} {% endif %}
 				{% endfor %}
 			</div>
 		</td>
