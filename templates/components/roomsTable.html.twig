@@ -65,7 +65,7 @@
 		{% for room in rooms %}
 		{% if room.hotel_id == hotel.id %}
 		{% set dates = room.checkin_checkout_dates %}
-		<td>
+		<td style="min-width: 150px;">
 			<div class="btn-group-vertical">
 				{% set i = 0 %}
 				{% for date in dates %}
