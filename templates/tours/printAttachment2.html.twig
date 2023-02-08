@@ -36,16 +36,20 @@
       page-break-before: always;
     }
   }
+
+  .navbar {
+    background-color: rgb(204, 198, 153);
+  }
 </style>
 
-<body>
+<body style="background-color: rgb(0, 57, 57); height: fit-content; width: 100%;">
   {% use 'components/navBar.html.twig' %}
   {% block nav %}
   {{ parent() }}
   {% endblock %}
 
   {% use 'components/attachment2.html.twig' %}
-  <div class="container">
+  <div class="container mt-3" style="background-color: white; width: 80%; padding: 50px 30px; position: relative; margin: auto; border-radius: 10px; box-shadow: 0 25px 50px rgba(7, 20, 35, 0.2); height: fit-content;">
     <div id="summernote" class="text-left">
       {% block attachment2 %}
       {{ parent() }}
@@ -77,13 +81,14 @@
         ['style', ['bold', 'italic', 'underline', 'clear']],
         ['insert', ['table', 'picture', 'link']],
         ['fontsize', ['fontsize']],
+        ['color', ['color']],
         ['font', ['strikethrough']],
         ['pagebreak', ['pagebreak']],
         ['para', ['paragraph', 'ul', 'ol']],
         ['misc', ['undo', 'redo', 'print']]
       ]
     });
-      $('#summernote').summernote('lineHeight', 1);
+    $('#summernote').summernote('lineHeight', 1);
     $('#summernote').summernote('fontSize', 12);
   </script>
   <script src="/assets/scripts/contracts/update.js"></script>
