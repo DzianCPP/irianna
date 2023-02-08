@@ -356,7 +356,7 @@ class ToursController extends BaseController implements ControllerInterface
         $attachment2 = $attachment2['html'];
 
         $fileName = 'attachment2.html.twig';
-        $fullFileName = 'core/views/templates/components/' . $fileName;
+        $fullFileName = 'templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $fullFileName, 'w');
         fwrite($fp, $attachment2, strlen($attachment2));
@@ -384,7 +384,7 @@ class ToursController extends BaseController implements ControllerInterface
         $attachment2 = '{% block attachment2 %}' . $attachment2 . '{% endblock %}'
         ;
         $fileName = 'attachment2.html.twig';
-        $fullFileName = 'core/views/templates/components/' . $fileName;
+        $fullFileName = 'templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $fullFileName, 'w');
         fwrite($fp, $attachment2, strlen($attachment2));
@@ -455,7 +455,7 @@ class ToursController extends BaseController implements ControllerInterface
         $voucher = $voucher['html'];
 
         $fileName = 'voucher.html.twig';
-        $fullFileName = 'core/views/templates/components/' . $fileName;
+        $fullFileName = 'templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $fullFileName, 'w');
         fwrite($fp, $voucher, strlen($voucher));
@@ -484,7 +484,7 @@ class ToursController extends BaseController implements ControllerInterface
         $voucher = '{% block voucher %}' . $voucher . '{% endblock %}'
         ;
         $fileName = 'voucher.html.twig';
-        $fullFileName = 'core/views/templates/components/' . $fileName;
+        $fullFileName = 'templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $fullFileName, 'w');
         fwrite($fp, $voucher, strlen($voucher));
