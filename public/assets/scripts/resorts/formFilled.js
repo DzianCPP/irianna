@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("name").addEventListener("keyup", formFilled);
     document.getElementById("country").addEventListener("click", formFilled);
     document.getElementById("is-active").addEventListener("click", formFilled);
+    document.body.addEventListener("mouseover", formFilled);
 });
 
 function formFilled() {

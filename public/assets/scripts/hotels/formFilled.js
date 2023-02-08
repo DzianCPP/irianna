@@ -3,6 +3,7 @@ document.getElementById("resort-id").addEventListener("click", formFilled);
 document.getElementById("is-active").addEventListener("click", formFilled);
 document.getElementById("rooms").addEventListener("keyup", formFilled);
 document.getElementById("rooms").addEventListener("click", formFilled);
+document.body.addEventListener("mouseover", formFilled);
 
 
 function formFilled() {

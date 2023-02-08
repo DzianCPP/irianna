@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("main-client-passport").addEventListener("keyup", formFilled);
     document.getElementById("main-client-phone-main").addEventListener("keyup", formFilled);
     document.getElementById("main-client-birth-date").addEventListener("click", formFilled);
+    document.body.addEventListener("mouseover", formFilled);
+
 });
 
 function formFilled() {

@@ -1,4 +1,5 @@
 document.getElementById("name").addEventListener("keyup", formFilled);
+document.body.addEventListener("mouseover", formFilled);
 document.getElementById("is-active").addEventListener("change", formFilled);
 
 function formFilled() {

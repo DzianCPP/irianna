@@ -3,6 +3,7 @@ let loginField = document.getElementById("login");
 loginField.addEventListener("keyup", formFilled);
 let passwordField = document.getElementById("password");
 passwordField.addEventListener("keyup", formFilled);
+document.body.addEventListener("mouseover", formFilled);
 
 function formFilled() {
     let loginField = document.getElementById("login");

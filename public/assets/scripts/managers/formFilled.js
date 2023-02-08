@@ -1,4 +1,5 @@
 document.getElementById("name").addEventListener("keyup", formFilled);
+document.body.addEventListener("mouseover", formFilled);
 
 function formFilled() {
     let _name = document.getElementById("name").value.length;

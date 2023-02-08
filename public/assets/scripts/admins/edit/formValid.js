@@ -2,6 +2,8 @@ document.getElementById("email").addEventListener("keyup", formFilled);
 document.getElementById("password").addEventListener("keyup", formFilled);
 document.getElementById("login").addEventListener("keyup", formFilled);
 document.getElementById("super-admin").addEventListener("change", formFilled);
+document.body.addEventListener("mouseover", formFilled);
+
 
 function formFilled() {
     let email = document.getElementById("email");
