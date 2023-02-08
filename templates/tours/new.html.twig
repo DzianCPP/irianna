@@ -59,38 +59,6 @@ data to use:
 					<select class="form-select" name="resorts" id="resort"></select>
 				</div>
 
-
-				<div class="input-group mt-2">
-					<span class="input-group-text">Гостиница<span class="text-danger">*</span>
-					</span>
-					<select class="form-select" name="hotels" id="hotels">
-						{% for hotel in hotels %}
-						<option value="{{ hotel.id }}">{{ hotel.name }}</option>
-						{% endfor %}
-					</select>
-				</div>
-
-
-				<div class="input-group mt-2">
-					<div class="input-group w-100">
-						<span class="input-group-text w-25">
-							Дата<br>заселения
-						</span>
-						<select class="form-select  w-25" name="rooms-checkin-date" id="room-checkin-date"></select>
-						<span class="input-group-text  w-25">
-							Дата<br>выселения
-						</span>
-						<select class="form-select  w-25" name="rooms-checkin-date" id="room-checkout-date"></select>
-					</div>
-					<div class="input-group w-100">
-						<span class="input-group-text w-25">
-							Номер
-							<span class="text-danger">*</span>
-						</span>
-						<select class="form-select w-75" name="rooms" id="rooms"></select>
-					</div>
-				</div>
-
 				<div class="input-group mt-2">
 					<span class="input-group-text">Проезд</span>
 					<select class="form-select" name="rooms" id="transits">
@@ -138,6 +106,37 @@ data to use:
 					<select class="form-select" name="departure-from-resort" id="arrival-to-minsk"></select>
 				</div>
 
+
+				<div class="input-group mt-2">
+					<span class="input-group-text">Гостиница<span class="text-danger">*</span>
+					</span>
+					<select class="form-select" name="hotels" id="hotels">
+						{% for hotel in hotels %}
+						<option value="{{ hotel.id }}">{{ hotel.name }}</option>
+						{% endfor %}
+					</select>
+				</div>
+
+
+				<div class="input-group mt-2">
+					<div class="input-group w-100">
+						<span class="input-group-text w-25">
+							Дата<br>заселения
+						</span>
+						<select class="form-select  w-25" name="rooms-checkin-date" id="room-checkin-date"></select>
+						<span class="input-group-text  w-25">
+							Дата<br>выселения
+						</span>
+						<select class="form-select  w-25" name="rooms-checkin-date" id="room-checkout-date"></select>
+					</div>
+					<div class="input-group w-100">
+						<span class="input-group-text w-25">
+							Номер
+							<span class="text-danger">*</span>
+						</span>
+						<select class="form-select w-75" name="rooms" id="rooms"></select>
+					</div>
+				</div>
 
 				<div class="input-group mt-2">
 					<span class="input-group-text bg-success text-light w-75">Свободно мест туда:</span>
