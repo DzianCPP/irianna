@@ -81,9 +81,12 @@
                                 {% set allDates = room.checkin_checkout_dates %}
 								{% set middle = allDates|length / 2 %}
 								{% set end = allDates|length %}
-									<textarea placeholder="Заезды" class="form-control w-50" name="checkins" aria-label="With textarea" id="field-date-in-{{ room.id }}">{% for date in allDates|slice(0, middle) %}{% set dateStatus = date|first %}{{ date|trim(dateStatus) }}{{ '\n' }}{% endfor %}</textarea>
+									<textarea placeholder="Заезды" class="form-control w-50" name="checkins" aria-label="With textarea" id="field-date-in-{{ room.id }}">{% set i = 0 %}{% for date in allDates %}{% set dateStatus = date|first %}{% if i % 2 < 1 %}{{ date|trim(dateStatus) }}{{ '\n' }}{% endif %}{% set i = i + 1 %}{% endfor %}</textarea>
+									<textarea placeholder="Выезды" class="form-control w-50" name="checkouts" aria-label="With textarea" id="field-date-out-{{ room.id }}">{% set i = 0 %}{% for date in allDates %}{% set dateStatus = date|first %}{% if i % 2 > 0 %}{{ date|trim(dateStatus) }}{{ '\n' }}{% endif %}{% set i = i + 1 %}{% endfor %}</textarea>
+									
+									{# <textarea placeholder="Заезды" class="form-control w-50" name="checkins" aria-label="With textarea" id="field-date-in-{{ room.id }}">{% for date in allDates|slice(0, middle) %}{% set dateStatus = date|first %}{{ date|trim(dateStatus) }}{{ '\n' }}{% endfor %}</textarea>
 									<textarea placeholder="Выезды" class="form-control w-50" name="checkouts" aria-label="With textarea" id="field-date-out-{{ room.id }}">{% for date in allDates|slice(middle, end) %}{% set dateStatus = date|first %}{{ date|trim(dateStatus) }}{{ '\n' }}{% endfor %}</textarea>
-								</div>
+								#}</div>
 							</td>
 						</tr>
 						<tr>

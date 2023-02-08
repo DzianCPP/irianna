@@ -40,6 +40,7 @@ class BusesModel extends Model implements ModelInterface
         $bus['arrival_to_minsk'] = str_replace("\n", "", $bus['arrival_to_minsk']);
         $bus['arrival_to_minsk'] = str_split($bus['arrival_to_minsk'], 10);
         $bus['arrival_to_minsk'] = implode("\n", $bus['arrival_to_minsk']);
+        
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $bus, 'id')) {
             return false;
         }

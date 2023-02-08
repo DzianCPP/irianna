@@ -23,20 +23,20 @@ class RoomsModel extends Model implements ModelInterface
 
     public function update(array $newInfo): bool
     {
-
         $room = $newInfo;
 
         $room['comforts'] = str_replace("\n", ", ", $room['comforts']);
-            $room['food'] = str_replace("\n", ", ", $room['food']);
-            $room['checkin_checkout_dates'] = str_replace("\n", ", ", $room['checkin_checkout_dates']);
-            $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
-            $room['checkin_checkout_dates'] = explode(", ", $room['checkin_checkout_dates'], strlen($room['checkin_checkout_dates']));
-            foreach ($room['checkin_checkout_dates'] as &$date) {
-                $date = "f" . $date;
-            }
+        $room['food'] = str_replace("\n", ", ", $room['food']);
+        $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");        
 
-            $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
+        $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
+        $room['checkin_checkout_dates'] = str_split($room['checkin_checkout_dates'], 10);
+        
+        foreach ($room['checkin_checkout_dates'] as &$date) {
+            $date = "f" . $date;
+        }
 
+        $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
         $this->dataSanitizer->SanitizeData($room);
 
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $room, "id")) {
@@ -60,8 +60,14 @@ class RoomsModel extends Model implements ModelInterface
                 $date = "f" . $date;
             }
 
+            $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
+            $room['checkin_checkout_dates'] = str_split($room['checkin_checkout_dates'], 11);
             $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
-
+    
+            $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
+            $room['checkin_checkout_dates'] = str_split($room['checkin_checkout_dates'], 11);
+            $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
+    
             foreach ($room as $attribute) {
                 if ($attribute == NULL || $attribute == "") {
                     continue 2;
@@ -79,10 +85,12 @@ class RoomsModel extends Model implements ModelInterface
 
     public function delete(array $columnValues = [], string $column = "", mixed $value = NULL): bool
     {
-        if (!$this->databaseSqlBuilder->delete(
+        if (
+            !$this->databaseSqlBuilder->delete(
             columnValues: $columnValues,
             tableName: self::TABLE_NAME
-        )) {
+            )
+        ) {
 
             return false;
         }
