@@ -10,7 +10,7 @@ async function create() {
     let _rooms = document.getElementById("rooms").value;
     let _area = document.getElementById("area").value;
     let _beach = document.getElementById("beach").value;
-    let _checkins = document.getElementById("number").value;
+    let _checkins = 1;
     let _housing = document.getElementById("housing").value;
     let _water = document.getElementById("water").value;
     let _food = document.getElementById("food").value;
