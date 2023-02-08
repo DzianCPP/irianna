@@ -1,7 +1,5 @@
 {% block table %}
-<table
-	class="table table-bordered border-secondary table-responsive table-sm table-xl table-md table-xs table-hover text-center w-100"
-	id="table">
+<table class="table table-sm table-secondary table-striped table-hover text-center" id="table">
 	<tr>
 		<th colspan="{{ rooms|length + 1}}">Еще можно создать номеров: {% set freeRooms = hotel.rooms - rooms|length
 			%}{{ freeRooms }}</th>
@@ -37,7 +35,7 @@
 		<td>
 			<span>
 				{% for comfort in room.comforts %}
-				{{ comfort }}
+				{{ comfort }}{{ '<br>' }}
 				{% endfor %}
 			</span>
 		</td>
@@ -52,7 +50,7 @@
 		<td>
 			<span>
 				{% for food_item in room.food %}
-				{{ food_item }}
+				{{ food_item }}{{ '<br>' }}
 				{% endfor %}
 			</span>
 		</td>

@@ -82,6 +82,7 @@ class BusesController extends BaseController implements ControllerInterface
             'currentPage' => $page,
             'pages' => $pages,
             'title' => 'Автобусы',
+            'header' => 'Автобусы',
             'author' => 'IriANNA',
             'login' => $_COOKIE['login']
         ];

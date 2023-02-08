@@ -1,8 +1,5 @@
 {% block table %}
-<table
-    class="table table-responsive table-sm table-xl table-md table-xs
-    table-hover text-center w-100"
-    id="table">
+<table class="table table-sm table-secondary table-striped table-hover" id="table">
     <tr>
         <th scope="col"><input type="checkbox" id="check-all" /></th>
         <th scope="col">id</th>
@@ -19,8 +16,10 @@
         <td>{{ bus.id }}</td>
         <td>{{ bus.name }}</td>
         <td>{{ bus.route }}</td>
-        <td>{% set from_minsk = bus.departure_from_minsk|split('\n') %}{% for f in from_minsk %}{{ f }}{{ '<br>' }}{% endfor %}</td>
-        <td>{% set arrival_to_minsk = bus.arrival_to_minsk|split('\n') %}{% for a in arrival_to_minsk %}{{ a }}{{ '<br>' }}{% endfor %}</td>
+        <td>{% set from_minsk = bus.departure_from_minsk|split('\n') %}{% for f in from_minsk %}{{ f }}{{ '<br>' }}{%
+            endfor %}</td>
+        <td>{% set arrival_to_minsk = bus.arrival_to_minsk|split('\n') %}{% for a in arrival_to_minsk %}{{ a }}{{ '<br>'
+            }}{% endfor %}</td>
         <td>{{ bus.places }}</td>
         <td>
             <a class="btn btn-success" href="/buses/edit/{{ bus.id }}">Исправить</a>

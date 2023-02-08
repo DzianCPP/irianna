@@ -2,23 +2,23 @@
 
 {% block content %}
 
-<div class="container-xs container-sm container-md container-xl">
-
-    <div class="row w-100 mt-5 mb-5">
-        <div class="col-md-1 col-xl-3"></div>
-        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
-            <h1 class="h1 m-1" id="main-page-h1">{{ header }}</h1>
-        </div>
+<div class="row w-100 mt-2 mb-2">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
+        <h1 class="h1 m-1" id="main-page-h1">{{ header }}</h1>
     </div>
+</div>
+
+
+<div class="container container-sm container-md container-xl mt-1 mb-5">
 
     <div class="row w-100 mb-2">
         <div class="col-md-1 col-xl-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
             <div class="input-group">
-                <span class="input-group-text w-25">Автобус
+                <span class="input-group-text w-25 border-secondary">Автобус
                     <span class="text-danger">*</span>
                 </span>
-                <select id="bus" class="btn btn-outline-success dropdown-toggle w-75">
+                <select id="bus" class="btn btn-outline-dark dropdown-toggle w-75">
                     {% for b in buses %}
                     <option class="bg-light text-success" value="{{ b.id }}">{{ b.name }}{{ ': ' }}{{ b.route }}</option>
                     {% endfor %}
@@ -31,8 +31,8 @@
         <div class="col-md-1 col-xl-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
             <div class="input-group">
-                <span class="input-group-text w-50">Выезд из Минска</span>
-                <select id="from-minsk-date" class="btn btn-outline-success dropdown-toggle w-50"></select>
+                <span class="input-group-text w-50 border-secondary">Выезд из Минска</span>
+                <select id="from-minsk-date" class="btn btn-outline-dark dropdown-toggle w-50"></select>
             </div>
         </div>
     </div>
@@ -41,8 +41,8 @@
         <div class="col-md-1 col-xl-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
             <div class="input-group">
-                <span class="input-group-text w-50">Прибытие в Минск</span>
-                <select id="to-minsk-date" class="btn btn-outline-success dropdown-toggle w-50"></select>
+                <span class="input-group-text w-50 border-secondary">Прибытие в Минск</span>
+                <select id="to-minsk-date" class="btn btn-outline-dark dropdown-toggle w-50"></select>
             </div>
         </div>
     </div>
