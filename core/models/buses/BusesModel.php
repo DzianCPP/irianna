@@ -30,8 +30,17 @@ class BusesModel extends Model implements ModelInterface
     public function update(array $newInfo): bool
     {
         $this->dataSanitizer->SanitizeData($newInfo);
-        
-        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, 'id')) {
+
+        $bus = $newInfo;
+
+        $bus['departure_from_minsk'] = str_replace("\n", "", $bus['departure_from_minsk']);
+        $bus['departure_from_minsk'] = str_split($bus['departure_from_minsk'], 10);
+        $bus['departure_from_minsk'] = implode("\n", $bus['departure_from_minsk']);
+
+        $bus['arrival_to_minsk'] = str_replace("\n", "", $bus['arrival_to_minsk']);
+        $bus['arrival_to_minsk'] = str_split($bus['arrival_to_minsk'], 10);
+        $bus['arrival_to_minsk'] = implode("\n", $bus['arrival_to_minsk']);
+        if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $bus, 'id')) {
             return false;
         }
 
@@ -43,7 +52,15 @@ class BusesModel extends Model implements ModelInterface
         $bus = json_decode(file_get_contents("php://input"), true);
         $this->dataSanitizer->SanitizeData($bus);
 
-        if (!$this->databaseSqlBuilder->insert($bus, $this->fields, self::TABLE_NAME)) {
+        $bus['departure_from_minsk'] = str_replace("\n", "", $bus['departure_from_minsk']);
+        $bus['departure_from_minsk'] = str_split($bus['departure_from_minsk'], 10);
+        $bus['departure_from_minsk'] = implode("\n", $bus['departure_from_minsk']);
+
+        $bus['arrival_to_minsk'] = str_replace("\n", "", $bus['arrival_to_minsk']);
+        $bus['arrival_to_minsk'] = str_split($bus['arrival_to_minsk'], 10);
+        $bus['arrival_to_minsk'] = implode("\n", $bus['arrival_to_minsk']);
+
+    if (!$this->databaseSqlBuilder->insert($bus, $this->fields, self::TABLE_NAME)) {
             return false;
         }
         
