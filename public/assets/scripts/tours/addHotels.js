@@ -11,6 +11,12 @@ function addHotels() {
         hotelsSelector.removeChild(hotelsSelector.options[i]);
     }
 
+    var newOption = document.createElement('option');
+    var optionText = document.createTextNode('');
+    newOption.appendChild(optionText);
+    newOption.setAttribute('value', 0);
+    hotelsSelector.appendChild(newOption);
+
     for (var hotel of hotels) {
         if (hotel.resort_id == resort) {
             var newOption = document.createElement('option');
