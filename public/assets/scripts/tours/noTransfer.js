@@ -17,7 +17,7 @@ function noTransfer() {
         document.getElementById("bus-to").disabled = false;
         document.getElementById("bus-from").disabled = false;
         document.getElementById("departure-from-minsk").disabled = false;
-        document.getElementById("arrival-to-minsk").disabled = true;
+        document.getElementById("arrival-to-minsk").disabled = false;
         document.getElementById("save-tour").disabled = true;
     }
 }

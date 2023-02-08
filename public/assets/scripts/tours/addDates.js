@@ -40,6 +40,12 @@ function addDates() {
         document.getElementById("room-checkout-date").remove(i);
     }
 
+    let option_1 = document.createElement('option');
+    let text_1 = document.createTextNode('');
+    option_1.appendChild(text_1);
+    option_1.setAttribute('value', text_1.textContent);
+    document.getElementById("room-checkin-date").appendChild(option_1);
+
     for (let date of checkin_dates) {
         let option = document.createElement('option');
         let text = document.createTextNode(date);
@@ -47,6 +53,12 @@ function addDates() {
         option.setAttribute('value', text.textContent);
         document.getElementById("room-checkin-date").appendChild(option);
     }
+
+    let option_2 = document.createElement('option');
+    let text_2 = document.createTextNode('');
+    option_2.appendChild(text_2);
+    option_2.setAttribute('value', '0');
+    document.getElementById("room-checkout-date").appendChild(option_2);
 
     for (let date of checkout_dates) {
         let option = document.createElement('option');
