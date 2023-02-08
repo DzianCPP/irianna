@@ -14,6 +14,8 @@ use core\controllers\rooms\RoomsController;
 use core\controllers\clients\ClientsController;
 use core\controllers\tours\ToursController;
 use core\controllers\contracts\ContractsController;
+use core\controllers\currencies\CurrenciesController;
+
 
 return [
     'admin' => [
@@ -554,5 +556,23 @@ return [
         'controller' => RoomsController::class,
         'action' => 'free',
         'method' => 'GET'
+    ],
+
+    'currencies' => [
+        'controller' => CurrenciesController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'currencies/new' => [
+        'controller' => CurrenciesController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'currencies/create' => [
+        'controller' => CurrenciesController::class,
+        'action' => 'create',
+        'method' => 'POST'
     ]
 ];

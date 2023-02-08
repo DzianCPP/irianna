@@ -106,6 +106,7 @@ class ToursController extends BaseController implements ControllerInterface
             'hotels' => json_encode($hotels->get()),
             'buses' => $buses->get(),
             'rooms' => json_encode($rooms),
+            'currencies' => json_decode(file_get_contents(BASE_PATH . "config/currencies.json"), true),
             'free_dates' => json_encode($free_dates)
         ];
 

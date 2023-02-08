@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+<div class="container-xs container-sm container-md container-xl">
+
+    <div class="row w-100 mt-5 mb-5">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
+            <h1 class="h1 m-1" id="main-page-h1">{{ header }}</h1>
+        </div>
+    </div>
+
+    <div class="row w-100 mb-2">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
+            <div class="input-group">
+                <span class="input-group-text w-25">Валюты
+                    <span class="text-danger">*</span>
+                </span>
+                <input type="text" class="form-control" id="currencies" placeholder="Введите валюты через ЗАПЯТУЮ" value="{% if current_currencies|length > 0 %}{% for c in current_currencies %}{{ c }}{{ ', ' }}{% endfor %}{% endif %}"></input>
+            </div>
+        </div>
+    </div>
+
+    <div class="row w-100 mb-2">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
+            <div class="input-group w-100 mb-2">
+                <button type="button" class="btn btn-success w-100" id="save-btn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row w-100">
+        <div class="col-md-1 col-xl-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
+            <p id="error-field"></p>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/assets/scripts/countries/create.js"></script>
+    <script type="text/javascript" src="/assets/scripts/currencies/set.js"></script>
+</div>
+{% endblock %}

@@ -218,14 +218,21 @@ data to use:
 					<div class="input-group mt-2">
 						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
 						<input type="text" class="form-control" name="tour-cost" id="main-client-tour-cost"></input>
-						<input type="text" class="form-control" placeholder="Валюта"
-							id="main-client-currency-1"></input>
+						<select type="text" class="form-select" placeholder="Валюта" id="main-client-currency-1">
+							{% for c in currencies %}
+							<option value="{{ c }}">{{ c }}</option>
+							{% endfor %}
+						</select>
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
 						<input type="text" class="form-control" name="tour-cost-currency"
 							id="main-client-total-cost-currency"></input>
-						<input type="text" class="form-control" placeholder="Валюта" id="main-client-currency"></input>
+						<select type="text" class="form-select" placeholder="Валюта" id="main-client-currency">
+							{% for c in currencies %}
+							<option value="{{ c }}">{{ c }}</option>
+							{% endfor %}
+						</select>
 					</div>
 				</div>
 			</div>
@@ -255,7 +262,8 @@ data to use:
 					<div class="input-group m-1">
 						<button class="btn btn-outline-success w-50" id="print-contract" disabled>Печать
 							договора</button>
-						<button class="btn btn-outline-success w-50" id="print-attachment-2" disabled>Печать приложения 2</button>
+						<button class="btn btn-outline-success w-50" id="print-attachment-2" disabled>Печать приложения
+							2</button>
 					</div>
 					<div class="input-group m-1">
 						<button class="btn btn-outline-success w-100" id="print-voucher" disabled>Печать
