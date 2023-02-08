@@ -274,7 +274,7 @@ class ToursController extends BaseController implements ControllerInterface
         $contract = $contract['html'];
 
         $fileName = 'contract.html.twig';
-        $contractFileName = 'core/views/templates/components/' . $fileName;
+        $contractFileName = 'templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $contractFileName, 'w');
         fwrite($fp, $contract, strlen($contract));
@@ -309,7 +309,7 @@ class ToursController extends BaseController implements ControllerInterface
         $contract = '{% block contract %}' . $contract . '{% endblock %}'
         ;
         $fileName = 'contract.html.twig';
-        $contractFileName = 'core/views/templates/components/' . $fileName;
+        $contractFileName = 'templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $contractFileName, 'w');
         fwrite($fp, $contract, strlen($contract));
