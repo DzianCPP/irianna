@@ -38,6 +38,7 @@ data to use:
 					<span class="input-group-text">Менеджер<span class="text-danger">*</span>
 					</span>
 					<select class="form-select" name="manager" id="manager">
+						<option></option>
 						{% for manager in managers %}
 						<option value="{{ manager.id }}">{{ manager.name }}</option>
 						{% endfor %}
@@ -47,6 +48,7 @@ data to use:
 					<span class="input-group-text">Страна<span class="text-danger">*</span>
 					</span>
 					<select class="form-select" name="country" id="country">
+						<option></option>
 						{% for country in countries %}
 						<option value="{{ country.id }}">{{ country.name }}</option>
 						{% endfor %}
@@ -76,6 +78,7 @@ data to use:
 					<span class="input-group-text">Автобус<span class="text-danger">*</span>
 					</span>
 					<select class="form-select" name="bus-to-resort" id="bus-to">
+						<option></option>
 						{% for bus in buses %}
 						<option value="{{ bus.id }}">
 							{{ bus.name }}{{ ': ' }}{{ bus.route }}
@@ -95,6 +98,7 @@ data to use:
 				<div class="input-group mt-2">
 					<span class="input-group-text">Обратный автобус</span>
 					<select class="form-select" name="bus-from-resort" id="bus-from">
+						<option></option>
 						{% for bus in buses %}
 						<option value="{{ bus.id }}">{{ bus.name}}{{ ': '}}{{ bus.route }}</option>
 						{% endfor %}
@@ -275,16 +279,16 @@ data to use:
 			<div class="col-xs-12 col-sm-12 col-md-5 col-xl-5">
 				<div class="container w-100">
 					<div class="input-group m-1">
-						<span class="input-group-text bg-primary text-light w-50">Тур. услуга</span>
+						<span class="input-group-text bg-primary text-light w-50">Тур. услуга<span class="text-danger">*</span></span>
 						<span class="form-control" id="total-service-cost"></span>
 					</div>
 					<div class="input-group m-1">
-						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
+						<span class="input-group-text bg-primary text-light w-50">Стоимость тура<span class="text-danger">*</span></span>
 						<span class="form-control" id="total-tour-cost"></span>
 						<span class="form-control" id="total-currency-1">-</span>
 					</div>
 					<div class="input-group m-1">
-						<span class="input-group-text bg-primary text-light w-50">Итого стоимость тура</span>
+						<span class="input-group-text bg-primary text-light w-50">Итого стоимость тура<span class="text-danger">*</span></span>
 						<span class="form-control" id="total-cost-currency"></span>
 						<span class="form-control" placeholder="Валюта" id="total-currency">-</span>
 					</div>

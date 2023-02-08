@@ -11,6 +11,12 @@ function addResorts() {
         resortsSelect.removeChild(resortsSelect.options[i]);
     }
 
+    var newOption = document.createElement('option');
+            var optionText = document.createTextNode('');
+            newOption.appendChild(optionText);
+            newOption.setAttribute('value', 0);
+            resortsSelect.appendChild(newOption);
+
     for (var resort of resorts) {
         if (resort.country_id == country) {
             var newOption = document.createElement('option');
