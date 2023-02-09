@@ -18,7 +18,11 @@ function addDates() {
         }
     }
 
-    checkin_dates = unique.sort();
+    checkin_dates = unique.sort(function(a, b){
+        var aa = a.split('.').reverse().join(),
+            bb = b.split('.').reverse().join();
+        return aa < bb ? -1 : (aa > bb ? 1 : 0);
+    });
 
     unique = [];
 
@@ -28,7 +32,11 @@ function addDates() {
         }
     }
 
-    checkout_dates = unique.sort();
+    checkout_dates = unique.sort(function(a, b){
+        var aa = a.split('.').reverse().join(),
+            bb = b.split('.').reverse().join();
+        return aa < bb ? -1 : (aa > bb ? 1 : 0);
+    });
 
     unique = [];
 
