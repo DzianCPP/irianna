@@ -8,6 +8,8 @@ class ContractMaker
     {
         $new_contract = $contract;
 
+        $new_contract = str_replace('tour_price_in_curr_1', $contractData['total_travel_cost_curr_1'], $new_contract);
+        $new_contract = str_replace('currency_1', $contractData['currency_1'], $new_contract);
         $new_contract = str_replace('day', '<b>' . $contractData['day'], $new_contract);
         $new_contract = str_replace('month', $contractData['month'], $new_contract);
         $new_contract = str_replace('year', $contractData['year'] . '</b>', $new_contract);
@@ -25,8 +27,8 @@ class ContractMaker
         $new_contract = str_replace('main_phone', '<b>' . $contractData['main_phone'] . '</b>', $new_contract);
         $new_contract = str_replace('second_phone', '<b>' . $contractData['second_phone'] . '</b>', $new_contract);
         $new_contract = str_replace('service_cost_in_BYN', '<b>' . $contractData['service_cost_in_BYN'] . '</b>', $new_contract);
-        $new_contract = str_replace('tour_price_in_curr', '<b>' . $contractData['tour_price_in_curr'], $new_contract);
-        $new_contract = str_replace('currency', $contractData['currency'] . '</b>', $new_contract);
+        $new_contract = str_replace('tour_price_in_curr_2', '<b>' . $contractData['tour_price_in_curr'], $new_contract);
+        $new_contract = str_replace('currency_2', $contractData['currency'] . '</b>', $new_contract);
         $new_contract = str_replace('irianna_logo', '<img src="/assets/images/logos/logo.png">', $new_contract);
         $new_contract = str_replace('country', '<b>' . $contractData['country'] . '</b>', $new_contract);
         $new_contract = str_replace('чем за 20 дней до его начала', '<b>чем за 20 дней до его начала</b>', $new_contract);
@@ -64,6 +66,7 @@ class ContractMaker
         $new_att = str_replace('bus_route', $data['bus_route'], $new_att);
         $new_att = str_replace('_note', $data['_note'], $new_att);
         $new_att = str_replace('client_name', $data['client_name'], $new_att);
+        $new_att = str_replace('room_comforts', rtrim($data['room_comforts'], ','), $new_att);
 
         return $new_att;
     }
@@ -86,7 +89,7 @@ class ContractMaker
         $new_v = str_replace('tour_price_in_curr', $d['tour_price_in_curr'], $new_v);
         $new_v = str_replace('currency', $d['currency'], $new_v);
         $new_v = str_replace('room_description', $d['room_description'], $new_v);
-        $new_v = str_replace('room_food', $d['room_food'], $new_v);
+        $new_v = str_replace('room_food', rtrim($d['room_food'], ','), $new_v);
         $new_v = str_replace('transfer_direction', $d['transfer_direction'], $new_v);
         $new_v = str_replace('transfer_type', $d['transfer_type'], $new_v);
         $new_v = str_replace('today_date', $d['today_date'], $new_v);

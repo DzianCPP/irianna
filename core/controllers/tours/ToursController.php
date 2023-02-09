@@ -302,6 +302,8 @@ class ToursController extends BaseController implements ControllerInterface
             'second_phone' => $client['second_phone'],
             'service_cost_in_BYN' => $tour['total_travel_service_byn'],
             'tour_price_in_curr' => explode(' ', $tour['total_travel_cost_currency'])[0],
+            'total_travel_cost_curr_1' => explode(' ', $tour['total_travel_cost_byn'])[0],
+            'currency_1' => explode(' ', $tour['total_travel_cost_byn'])[1],
             'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
             'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name']
         ];
@@ -374,16 +376,18 @@ class ToursController extends BaseController implements ControllerInterface
             'room_description' => $room['description'],
             'room_water' => $hotel['water'],
             'room_food' => $room['food'],
+            'room_comforts' => $room['comforts'],
             'room_features' => $hotel['features'],
             'bus_route' => $bus['route'],
             'hotel_address' => $hotel['address'],
             'client_name' => $client['name'],
+            'main_phone' => $client['main_phone'],
+            'second_phone' => $client['second_phone'],
             '_note' => 'дополнительные услуги оплачиваются туристами по месту отдыха (питание, экскурсии и т. д.). При открытых окнах в пансионатах и гостиницах возможно попадание насекомых в номера. В случае аварии на подстанциях возможны перебои с водой и электричеством. Время заселения/выселения на базы отдыха может быть увеличено из-за большой транспортной загруженности курорта. Расселением туристов по номерам занимается администрация. Время заселения (выселения) зависит от времени прибытия (убытия) автобуса и регламентируется руководителем тур. группы и администрацией базы отдыха. Туристы, прибывшие на автобусе, уведомляются о времени ожидания перед заселением (2-3 часа) для уборки номера. Туристы, закончившие свой отдых, должны освободить номера по требованию администрации к моменту приезда автобуса. Проверьте наличие паспорта перед выездом на отдых.'
         ];
 
         $attachment2 = ContractMaker::prepareAttachment2($attachment2, $documentData);
-        $attachment2 = '{% block attachment2 %}' . $attachment2 . '{% endblock %}'
-        ;
+        $attachment2 = '{% block attachment2 %}' . $attachment2 . '{% endblock %}';
         $fileName = 'attachment2.html.twig';
         $fullFileName = 'templates/components/' . $fileName;
 
