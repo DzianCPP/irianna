@@ -45,9 +45,9 @@ function getCheckinCheckoutDates() {
 }
 
 function getCheckins() {
-    return document.getElementsByName("checkins")[0].value;
+    return document.getElementsByName("checkins")[0].value.trim()+"\n";
 }
 
 function getCheckouts() {
-    return document.getElementsByName("checkouts")[0].value;
+    return document.getElementsByName("checkouts")[0].value.trim()+"\n";
 }

@@ -9,8 +9,8 @@ async function create() {
     let _name = document.getElementById("name").value;
     let _route = document.getElementById("route").value;
     let _places = document.getElementById("places").value;
-    let _from_minsk = document.getElementById("from-minsk").value;
-    let _to_minsk = document.getElementById("to-minsk").value;
+    let _from_minsk = document.getElementById("from-minsk").value.trim()+"\n";
+    let _to_minsk = document.getElementById("to-minsk").value.trim()+"\n";
 
     let info = {
         name: _name,

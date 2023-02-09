@@ -60,13 +60,8 @@ class RoomsModel extends Model implements ModelInterface
                 $date = "f" . $date;
             }
 
-            $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
-            $room['checkin_checkout_dates'] = str_split($room['checkin_checkout_dates'], 11);
             $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
-    
             $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
-            $room['checkin_checkout_dates'] = str_split($room['checkin_checkout_dates'], 11);
-            $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
     
             foreach ($room as $attribute) {
                 if ($attribute == NULL || $attribute == "") {
