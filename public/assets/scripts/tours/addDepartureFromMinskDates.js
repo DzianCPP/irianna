@@ -22,6 +22,11 @@ async function addDepartureFromMinskDates() {
 function addOptionsFromResort(from_minsk) {
     let fromMinskSelector = document.getElementById("departure-from-minsk");
     let dates = from_minsk.trim().split("\n");
+    dates = dates.sort(function(a, b){
+        var aa = a.split('.').reverse().join(),
+            bb = b.split('.').reverse().join();
+        return aa < bb ? -1 : (aa > bb ? 1 : 0);
+    });
 
     console.log(dates);
 

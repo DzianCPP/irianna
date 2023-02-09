@@ -17,5 +17,5 @@ function formatDateDMY(dateRaw) {
     let day = dateRaw.substring(8);
     let month = dateRaw.substring(5, 7);
 
-    return day + "-" + month + "-" + year;
+    return day + "." + month + "." + year;
 }
