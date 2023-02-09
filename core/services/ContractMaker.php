@@ -57,7 +57,7 @@ class ContractMaker
         $new_att = str_replace('hotel_housing', $data['hotel_housing'], $new_att);
         $new_att = str_replace('room_description', $data['room_description'], $new_att);
         $new_att = str_replace('room_water', $data['room_water'], $new_att);
-        $new_att = str_replace('room_food', $data['room_food'], $new_att);
+        $new_att = str_replace('room_food', rtrim($data['room_food'], ','), $new_att);
         $new_att = str_replace('room_features', $data['room_features'], $new_att);
         $new_att = str_replace('from_minsk_date', $data['from_minsk_date'], $new_att);
         $new_att = str_replace('arrival_to_minsk', $data['arrival_to_minsk'], $new_att);
@@ -85,14 +85,18 @@ class ContractMaker
         $new_v = str_replace('bus_route', $d['bus_route'], $new_v);
         $new_v = str_replace('from_minsk_date', $d['from_minsk_date'], $new_v);
         $new_v = str_replace('arrival_to_minsk', $d['arrival_to_minsk'], $new_v);
-        $new_v = str_replace('service_cost_in_BYN', $d['service_cost_in_BYN'], $new_v);
-        $new_v = str_replace('tour_price_in_curr', $d['tour_price_in_curr'], $new_v);
-        $new_v = str_replace('currency', $d['currency'], $new_v);
+        $new_v = str_replace('service_cost', $d['service_cost_in_BYN'], $new_v);
+        $new_v = str_replace('tour_price_in_curr_1', $d['tour_price_in_curr_1'], $new_v);
+        $new_v = str_replace('currency_1', $d['currency_1'], $new_v);
+        $new_v = str_replace('tour_price_in_curr_2', $d['total_travel_cost_curr_2'], $new_v);
+        $new_v = str_replace('currency_2', $d['currency_2'], $new_v);
         $new_v = str_replace('room_description', $d['room_description'], $new_v);
         $new_v = str_replace('room_food', rtrim($d['room_food'], ','), $new_v);
         $new_v = str_replace('transfer_direction', $d['transfer_direction'], $new_v);
         $new_v = str_replace('transfer_type', $d['transfer_type'], $new_v);
         $new_v = str_replace('today_date', $d['today_date'], $new_v);
+        $new_v = str_replace('hotel_name', $d['hotel_name'], $new_v);
+        $new_v = str_replace('resort_name', $d['resort_name'], $new_v);
 
         return $new_v;
     }

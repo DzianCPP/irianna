@@ -455,6 +455,13 @@ class ToursController extends BaseController implements ControllerInterface
         $roomsModel = new RoomsModel();
         $room = $roomsModel->get(['column' => 'id', 'value' => $tour['room_id']])[0];
 
+        $hotelsModel = new HotelsModel();
+        $hotel = $hotelsModel->get(['column' => 'id', 'value' => $tour['hotel_id']])[0];
+
+        $resortsModel = new ResortsModel();
+        $resort = $resortsModel->get(['column' => 'id', 'value' => $tour['resort_id']])[0];
+
+
         $voucher = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'voucher'])[0];
         $voucher['html'] = htmlspecialchars_decode($voucher['html'], ENT_QUOTES);
         $voucher = $voucher['html'];
@@ -476,11 +483,15 @@ class ToursController extends BaseController implements ControllerInterface
             'from_minsk_date' => $tour['from_minsk_date'],
             'arrival_to_minsk' => $tour['arrival_to_minsk'],
             'service_cost_in_BYN' => $tour['total_travel_service_byn'],
-            'tour_price_in_curr' => explode(' ', $tour['total_travel_cost_currency'])[0],
-            'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
+            'tour_price_in_curr_1' => explode(' ', $tour['total_travel_cost_currency'])[0],
+            'total_travel_cost_curr_2' => explode(' ', $tour['total_travel_cost_byn'])[0],
+            'currency_1' => explode(' ', $tour['total_travel_cost_byn'])[1],
+            'currency_2' => explode(' ', $tour['total_travel_cost_currency'])[1],
             'room_description' => $room['description'],
             'room_food' => $room['food'],
             'transfer_direction' => 'Туда-Обратно',
+            'hotel_name' => $hotel['name'],
+            'resort_name' => $resort['name'],
             'transfer_type' => $tour['is_only_transit'],
             'today_date' => date('d-m-yy')
         ];
