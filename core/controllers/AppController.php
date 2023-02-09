@@ -11,7 +11,12 @@ class AppController extends BaseController
     public function index(): void
     {
         $this->setView(ToursView::class);
-        $data = ["author" => "IriAnna", "title" => "IriANNA", "header" => "Новый тур", "login" => $_COOKIE['login']];
+        $data = [
+            "author" => "IriAnna",
+            "title" => "IriANNA",
+            "header" => "Новый тур",
+            "login" => $_COOKIE['login']
+        ];
         $this->view->render("tours/new.html.twig", $data);
     }
 

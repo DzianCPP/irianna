@@ -38,7 +38,7 @@ return [
 
     'login' => [
         'controller' => LoginController::class,
-        'action' => 'index',
+        'action' => 'form',
         'method' => 'GET'
     ],
 
