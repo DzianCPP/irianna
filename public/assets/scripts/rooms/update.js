@@ -30,7 +30,7 @@ async function update() {
     let response = await fetch(url, PUT);
 
     if (response.ok != false) {
-        window.location = "/rooms";
+        window.location = "/rooms/" + _room_hotel_id;
     } else {
         alert("Что-то пошло не так!");
     }
@@ -45,9 +45,9 @@ function getCheckinCheckoutDates() {
 }
 
 function getCheckins() {
-    return document.getElementsByName("checkins")[0].value;
+    return document.getElementsByName("checkins")[0].value.trim()+"\n";
 }
 
 function getCheckouts() {
-    return document.getElementsByName("checkouts")[0].value;
+    return document.getElementsByName("checkouts")[0].value.trim()+"\n";
 }

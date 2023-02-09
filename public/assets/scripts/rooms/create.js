@@ -78,7 +78,7 @@ function getCheckinCheckoutDates() {
     let dates = {};
 
     for (var i = 0; i < getCountOfRooms(); i++) {
-        var json = checkins[i].value + checkouts[i].value;
+        var json = checkins[i].value.trim()+"\n" + checkouts[i].value.trim()+"\n";
         Object.defineProperty(dates, "room-" + i, {
             value: json
         });
