@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("bus-from").addEventListener("focusout", function () {
+    document.body.addEventListener("mouseover", function () {
         addFreePlacesFromResort();
     });
 });
@@ -8,6 +8,11 @@ async function addFreePlacesFromResort() {
     let url = "/tours/countPlacesBack";
     let bus_id = document.getElementById("bus-from").value;
     let from_resort_date = document.getElementById("room-checkout-date").value;
+
+    if (bus_id < 1) {
+        document.getElementById("places-from").innerHTML = '-';
+        return;
+    }
 
     let info = {
         bus_id: bus_id,

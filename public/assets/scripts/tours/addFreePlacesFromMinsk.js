@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("departure-from-minsk").addEventListener("focusout", function () {
+    document.body.addEventListener("mouseover", function () {
         addFreePlacesFromMinsk();
     });
 });
@@ -8,6 +8,11 @@ async function addFreePlacesFromMinsk() {
     let url = "/tours/count";
     let bus_id = document.getElementById("bus-to").value;
     let from_minsk_date = document.getElementById("departure-from-minsk").value;
+
+    if (bus_id < 1) {
+        document.getElementById("places-to").innerHTML = '-';
+        return;
+    }
 
     let info = {
         bus_id: bus_id,
