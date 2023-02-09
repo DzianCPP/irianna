@@ -22,7 +22,7 @@ async function saveRooms() {
     let response = await fetch(url, POST);
 
     if (response.ok != false) {
-        window.location = "/rooms";
+        window.location = "/rooms/" + document.getElementById("hotel-id").innerHTML;
     } else {
         alert("Что-то пошло не так!");
     }
