@@ -24,6 +24,11 @@ async function addArrivalToMinsk() {
 function addArrivalToMinskOptions(arrival_to_minsk) {
     let arrival_to_minsk_selector = document.getElementById("arrival-to-minsk");
     let dates = arrival_to_minsk.trim().split("\n");
+    dates = dates.sort(function(a, b){
+        var aa = a.split('.').reverse().join(),
+            bb = b.split('.').reverse().join();
+        return aa < bb ? -1 : (aa > bb ? 1 : 0);
+    });
 
     console.log(dates);
 
