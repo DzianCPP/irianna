@@ -13,8 +13,8 @@ async function update() {
             name: document.getElementById("name").value,
             route: document.getElementById("route").value,
             places: document.getElementById("places").value,
-            departure_from_minsk: document.getElementById("from-minsk").value,
-            arrival_to_minsk: document.getElementById("to-minsk").value,
+            departure_from_minsk: document.getElementById("from-minsk").value.trim()+"\n",
+            arrival_to_minsk: document.getElementById("to-minsk").value.trim()+"\n",
             id: document.getElementById("bus-id").innerHTML
         })
     });
