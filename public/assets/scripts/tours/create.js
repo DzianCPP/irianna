@@ -58,8 +58,10 @@ async function createTour() {
 
         if (response.ok) {
             console.log("Тур сохранен");
+            alert("Тур сохранен");
         } else {
             console.log("Тур не удалось сохранить");
+            alert("Тур НЕ сохранен");
         }
     }
 }
