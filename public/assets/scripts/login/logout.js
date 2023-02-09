@@ -10,7 +10,7 @@ async function logout() {
     let response = await fetch(url, POST);
 
     if (response.ok != false) {
-        window.location = "/index";
+        window.location = "/";
     } else {
         alert('Не удалооь выйти');
     }

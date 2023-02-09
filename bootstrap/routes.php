@@ -20,7 +20,7 @@ use core\controllers\currencies\CurrenciesController;
 return [
     'admin' => [
         'controller' => AppController::class,
-        'action' => 'index',
+        'action' => 'main',
         'method' => 'GET'
     ],
 
@@ -32,7 +32,7 @@ return [
 
     '' => [
         'controller' => AppController::class,
-        'action' => 'index',
+        'action' => 'tours_new',
         'method' => 'GET'
     ],
 
@@ -62,7 +62,7 @@ return [
 
     'register' => [
         'controller' => RegisterController::class,
-        'action' => 'index',
+        'action' => 'form',
         'method' => 'GET'
     ],
 

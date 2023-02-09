@@ -8,7 +8,7 @@ use core\views\NotFoundView;
 
 class AppController extends BaseController
 {
-    public function index(): void
+    public function tours_new(): void
     {
         $this->setView(ToursView::class);
         $data = [
