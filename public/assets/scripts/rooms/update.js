@@ -30,7 +30,7 @@ async function update() {
     let response = await fetch(url, PUT);
 
     if (response.ok != false) {
-        window.location = "/rooms";
+        window.location = "/rooms/" + _room_hotel_id;
     } else {
         alert("Что-то пошло не так!");
     }
