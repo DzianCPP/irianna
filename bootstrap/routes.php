@@ -15,6 +15,7 @@ use core\controllers\clients\ClientsController;
 use core\controllers\tours\ToursController;
 use core\controllers\contracts\ContractsController;
 use core\controllers\currencies\CurrenciesController;
+use core\controllers\net\NetController;
 
 
 return [
@@ -574,5 +575,11 @@ return [
         'controller' => CurrenciesController::class,
         'action' => 'create',
         'method' => 'POST'
+    ],
+
+    'net' => [
+        'controller' => NetController::class,
+        'action' => 'read',
+        'method' => 'GET'
     ]
 ];

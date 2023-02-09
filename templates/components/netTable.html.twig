@@ -1,0 +1,22 @@
+{% block table %}
+<table class="table table-sm table-secondary table-striped table-hover" id="table">
+    <tr>
+        <th style="min-width: 200px;">Описание номера --></th>
+        {% for r in rooms %}
+        <th>{{ r.description }}</th>
+        {% endfor %}
+    </tr>
+
+    {% set i = 0 %}
+    {% for d in raw_dates %}
+    {% if i == 0 %}<tr><td>{{ d|trim('f') }}{{ ' -' }}{% endif %}
+    {% if i == 1 %}{{ d|trim('f') }}</td>
+    {% for r in rooms %}
+    {% for d in r.checkin_checkout_dates %}
+    <td>{{ d }}</td>
+    {% endfor %}
+    {% endfor %}</tr>{% endif %}
+    {% if i == 0 %}{% set i = 1 %}{% else %}{% set i = 0 %}{% endif %}
+    {% endfor %}
+</table>
+{% endblock %}
