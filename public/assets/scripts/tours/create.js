@@ -5,59 +5,62 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function createTour() {
-    createClient();
-    let lastClientId = await getLastClientId();
-    console.log(lastClientId);
+    let ifClientReady = await createClient();
 
-    let url = "/tours/create";
-    let _manager_id = document.getElementById("manager").value;
-    let _only_transit = document.getElementById("only-transit");
-    let _resort_id = document.getElementById("resort").value;
-    let _hotel_id = document.getElementById("hotels").value;
-    let _room_id = document.getElementById("rooms").value;
-    let _bus_id = document.getElementById("bus-to").value;
-    let _departure_from_minsk = document.getElementById("departure-from-minsk").value;
-    let _bus_back_id = document.getElementById("bus-from").value;
-    let _departure_from_resort = document.getElementById("room-checkout-date").value;
-    let _created = new Date();
+    if (ifClientReady) {
+        let lastClientId = await getLastClientId();
+        console.log(lastClientId);
 
-    let tour = {
-        created: _created.getDay() + "-" + _created.getMonth() + "-" + _created.getFullYear(),
-        manager_id: _manager_id,
-        is_only_transit: Number(_only_transit.checked),
-        transit: document.getElementById("transits").value,
-        resort_id: _resort_id,
-        hotel_id: _hotel_id,
-        checkin_date: document.getElementById("room-checkin-date").value,
-        checkout_date: document.getElementById("room-checkout-date").value,
-        count_of_day: 7,
-        bus_id: _bus_id,
-        owner_id: await getLastClientId(),
-        owner_travel_service: document.getElementById("main-client-service-cost").value,
-        owner_travel_cost: document.getElementById("main-client-tour-cost").value + " " + document.getElementById("main-client-currency-1").value,
-        number_of_children: document.getElementById("number-of-children").value,
-        ages: document.getElementById("age-of-children").value,
-        total_travel_service_byn: document.getElementById("total-service-cost").innerHTML,
-        total_travel_cost_byn: document.getElementById("total-tour-cost").innerHTML + " " + document.getElementById("total-currency-1").innerHTML,
-        total_travel_service_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency"). innerHTML,
-        total_travel_cost_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency"). innerHTML,
-        from_minsk_date: _departure_from_minsk,
-        to_minsk_date: _departure_from_resort,
-        arrival_to_minsk: document.getElementById("arrival-to-minsk").value,
-        room_id: document.getElementById("rooms").value
-    };
+        let url = "/tours/create";
+        let _manager_id = document.getElementById("manager").value;
+        let _only_transit = document.getElementById("only-transit");
+        let _resort_id = document.getElementById("resort").value;
+        let _hotel_id = document.getElementById("hotels").value;
+        let _room_id = document.getElementById("rooms").value;
+        let _bus_id = document.getElementById("bus-to").value;
+        let _departure_from_minsk = document.getElementById("departure-from-minsk").value;
+        let _bus_back_id = document.getElementById("bus-from").value;
+        let _departure_from_resort = document.getElementById("room-checkout-date").value;
+        let _created = new Date();
 
-    let POST = {
-        method: "POST",
-        body: JSON.stringify(tour)
-    };
+        let tour = {
+            created: _created.getDay() + "-" + _created.getMonth() + "-" + _created.getFullYear(),
+            manager_id: _manager_id,
+            is_only_transit: Number(_only_transit.checked),
+            transit: document.getElementById("transits").value,
+            resort_id: _resort_id,
+            hotel_id: _hotel_id,
+            checkin_date: document.getElementById("room-checkin-date").value,
+            checkout_date: document.getElementById("room-checkout-date").value,
+            count_of_day: 7,
+            bus_id: _bus_id,
+            owner_id: await getLastClientId(),
+            owner_travel_service: document.getElementById("main-client-service-cost").value,
+            owner_travel_cost: document.getElementById("main-client-tour-cost").value + " " + document.getElementById("main-client-currency-1").value,
+            number_of_children: document.getElementById("number-of-children").value,
+            ages: document.getElementById("age-of-children").value,
+            total_travel_service_byn: document.getElementById("total-service-cost").innerHTML,
+            total_travel_cost_byn: document.getElementById("total-tour-cost").innerHTML + " " + document.getElementById("total-currency-1").innerHTML,
+            total_travel_service_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency"). innerHTML,
+            total_travel_cost_currency: document.getElementById("total-cost-currency").innerHTML + " " + document.getElementById("total-currency"). innerHTML,
+            from_minsk_date: _departure_from_minsk,
+            to_minsk_date: _departure_from_resort,
+            arrival_to_minsk: document.getElementById("arrival-to-minsk").value,
+            room_id: document.getElementById("rooms").value
+        };
 
-    let response = await fetch(url, POST);
+        let POST = {
+            method: "POST",
+            body: JSON.stringify(tour)
+        };
 
-    if (response.ok) {
-        console.log("Тур сохранен");
-    } else {
-        console.log("Тур не удалось сохранить");
+        let response = await fetch(url, POST);
+
+        if (response.ok) {
+            console.log("Тур сохранен");
+        } else {
+            console.log("Тур не удалось сохранить");
+        }
     }
 }
 
@@ -74,8 +77,10 @@ async function createClient() {
 
     if (response.ok != false) {
         console.log("Новый клиент создан");
+        return true;
     } else {
         alert("Что-то пошло не так");
+        return false;
     }
 }
 
