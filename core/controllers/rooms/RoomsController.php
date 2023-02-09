@@ -111,12 +111,13 @@ class RoomsController extends BaseController implements ControllerInterface
         }
 
         foreach ($rooms as &$room) {
-            foreach ($room['checkin_checkout_dates'] as &$date) {
+            for ($l = 1; $l < count($room['checkin_checkout_dates']); $l += 2) {
+                $date = &$room['checkin_checkout_dates'][$l];
                 foreach ($tours_set as $tours) {
                     foreach ($tours as $tour) {
                         if (($d = 'f' . $tour['checkout_date']) == $date && $room['id'] == $tour['room_id']) {
                             $date = str_replace('f', 'b', $date);
-                            for($i = 0; $i < count($room['checkin_checkout_dates']); $i++) {
+                            for($i = 1; $i < count($room['checkin_checkout_dates']); $i += 2) {
                                 if ($room['checkin_checkout_dates'][$i] == $date) {
                                     $room['checkin_checkout_dates'][$i-1] = str_replace('f', 'b', $room['checkin_checkout_dates'][$i-1]);
                                 }
