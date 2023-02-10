@@ -34,19 +34,9 @@ class AdminsController extends BaseController implements ControllerInterface
             'countAdmins' => count($admins),
             'title' => 'IriANNA',
             'author' => 'IriANNA',
-            'login' => $_COOKIE['login']
+            'login' => $_COOKIE['login'],
+            'header' => 'Менеджеры'
         ];
-
-        if (count($admins) === 0) {
-            $this->view->render("admins/admins.html.twig", $data);
-            return;
-        }
-
-        if ($page > $pages || $page < 1) {
-            $appController = new AppController();
-            $appController->notFound();
-            return;
-        }
 
         $this->view->render("admins/admins.html.twig", $data);
     }

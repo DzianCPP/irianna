@@ -11,7 +11,7 @@ class LoginController extends BaseController
 {
     private AdminsController $adminsController;
 
-    public function index(): void
+    public function form(): void
     {
         $this->setView(LoginView::class);
         $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Войти в систему"];

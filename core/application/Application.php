@@ -2,6 +2,7 @@
 
 namespace core\application;
 
+use core\controllers\login\LoginController;
 use core\services\PrivilegesChecker;
 use core\services\LoginChecker;
 use core\views\AppView;
@@ -29,7 +30,7 @@ class Application
 
         
 
-        if ($actionName == 'login' || $actionName == 'index' || $actionName == 'logout') {
+        if ($actionName == 'form' || $actionName == 'logout' || $actionName ==  'login') {
             $controllerObject->$actionName();
             die();
         }
@@ -88,7 +89,7 @@ class Application
 
     private function loginPage(): void
     {
+        $loginController = new LoginController();
         header('Location: /login');
-        die();
     }
 }
