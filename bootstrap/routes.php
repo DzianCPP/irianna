@@ -15,12 +15,13 @@ use core\controllers\clients\ClientsController;
 use core\controllers\tours\ToursController;
 use core\controllers\contracts\ContractsController;
 use core\controllers\currencies\CurrenciesController;
+use core\controllers\net\NetController;
 
 
 return [
     'admin' => [
         'controller' => AppController::class,
-        'action' => 'index',
+        'action' => 'main',
         'method' => 'GET'
     ],
 
@@ -32,13 +33,13 @@ return [
 
     '' => [
         'controller' => AppController::class,
-        'action' => 'index',
+        'action' => 'tours_new',
         'method' => 'GET'
     ],
 
     'login' => [
         'controller' => LoginController::class,
-        'action' => 'index',
+        'action' => 'form',
         'method' => 'GET'
     ],
 
@@ -62,7 +63,7 @@ return [
 
     'register' => [
         'controller' => RegisterController::class,
-        'action' => 'index',
+        'action' => 'form',
         'method' => 'GET'
     ],
 
@@ -574,5 +575,11 @@ return [
         'controller' => CurrenciesController::class,
         'action' => 'create',
         'method' => 'POST'
+    ],
+
+    'net' => [
+        'controller' => NetController::class,
+        'action' => 'read',
+        'method' => 'GET'
     ]
 ];

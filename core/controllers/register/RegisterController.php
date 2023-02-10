@@ -7,7 +7,7 @@ use core\views\register\RegisterView;
 
 class RegisterController extends BaseController
 {
-    public function index(): void
+    public function form(): void
     {
         $this->setView(RegisterView::class);
         $data = ["author" => "IriAnna", "title" => "IriANNA", "message" => "Регистрация"];
