@@ -6,57 +6,25 @@
     </div>
 </div>
 
-
 <div class="container container-sm container-md container-xl mt-1 mb-5">
-
-    <div class="container-fluid">
-        <div class="row w-100 mb-3">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4"></div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
-                <div class="input-group">
-                    <span class="input-group-text bg-success text-light">Тип документа</span>
-                    <select class="dropdown form-select" id="document-label">
-                        <option value="contract">Договор</option>
-                        <option value="attachment-1">Приложение 1</option>
-                        <option value="attachment-2">Приложение 2</option>
-                        <option value="voucher">Ваучер(путевка)</option>
-                    </select>
-                </div>
-            </div>
+        <textarea id="tinyMCE" placeholder="Введите текст документа"></textarea>
+        <div class="input-group mt-2">
+            <select class="form-select text-center" id="type-of-document">
+                <option value="contract">Договор</option>
+                <option value="attachment-2">Приложение 2</option>
+                <option value="attachment-2">Приложение 1</option>
+                <option value="voucher">Ваучер (путевка)</option>
+            </select>
+            <input type="button" class="btn btn-success w-25 mx-auto" id="save-btn" value="Сохранить"></input>
         </div>
-
-        <div class="row w-100">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4"></div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
-                <div class="row w-100 mb-2">
-                    <label for="formFile" class="form-label">Выберите файл в формате .rtf</label>
-                    <input class="custom-file-input" type="file" accept=".rtf" id="formFile">
-                </div>
-            </div>
-        </div>
-
-        <div class="row w-100 mb-2">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4"></div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4">
-                <div class="input-group w-100 mb-2">
-                    <button type="button" class="btn btn-success w-100" id="save-btn" disabled>
-                        Сохранить
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="row w-100 mb-2">
-            <p id="error-field"></p>
-        </div>
-
-    </div>
+    <p id="error-field" style="color: red;"></p>
+    <script>
+        tinymce.init({
+            selector: '#tinyMCE',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat'
+        });
+    </script>
 </div>
-</div>
-
-
 <script type="text/javascript" src="/assets/scripts/contracts/create.js"></script>
-<script type="text/javascript" src="/assets/scripts/contracts/isFilePicked.js"></script>
-
-</div>
 {% endblock %}

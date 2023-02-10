@@ -32,27 +32,31 @@ class ContractsModel extends Model implements ModelInterface
 
     public function create(): bool
     {
-        if (!isset($_FILES['file'])) {
-            return false;
+        $data = json_decode(file_get_contents("php://input"), true);
+        $name = "";
+
+        if ($data['label'] == 'contract') {
+            $name = "Договор";
         }
 
-        $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
-        $new_name = time() . '.' . $ext;
-        move_uploaded_file($_FILES['file']['tmp_name'], "../static/contracts/" . $new_name);
+        if ($data['label'] == 'attachment-2') {
+            $name = "Приложение 2";
+        }
 
-        $rtf = file_get_contents(BASE_PATH . "static/contracts/" . $new_name);
-        $document = new Document($rtf);
+        if ($data['label'] == 'attachment-1') {
+            $name = "Приложение 1";
+        }
 
-        $formatter = new HtmlFormatter('UTF-8');
-
-        $html = $formatter->Format($document);
+        if ($data['label'] == 'voucher') {
+            $name = "Ваучер (путевка)";
+        }
 
         if (
             !$this->databaseSqlBuilder->insert(
             recordInfo: [
-                    'name' => $_FILES['file']['name'],
-                    'label' => $_FILES['file']['name'],
-                    'html' => $html
+                    'name' => $name,
+                    'label' => $data['label'],
+                    'html' => $data['html']
                 ],
             columns: $this->fields,
             tableName: self::TABLE_NAME
