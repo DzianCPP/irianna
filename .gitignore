@@ -6,5 +6,7 @@ node_modules/
 /core/views/cache/
 static/contracts/
 static/passengers/
-core/views/templates/components/contract.html.twig
+templates/components/contract.html.twig
+templates/components/voucher.html.twig
+templates/components/attachment2.html.twig
 todo.php
