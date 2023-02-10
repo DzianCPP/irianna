@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4306a0336bd20ee4f186cb82096020e6",
+    "content-hash": "7004aa18602079ac220ceaaaf3c16bbb",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -114,61 +114,6 @@
                 "source": "https://github.com/henck/rtf-html-php/tree/v1.2"
             },
             "time": "2021-09-10T15:19:14+00:00"
-        },
-        {
-            "name": "kartik-v/krajee-markdown-editor",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kartik-v/krajee-markdown-editor.git",
-                "reference": "04afdef50d3f2aedff86f850bf783810cb41318d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/krajee-markdown-editor/zipball/04afdef50d3f2aedff86f850bf783810cb41318d",
-                "reference": "04afdef50d3f2aedff86f850bf783810cb41318d",
-                "shasum": ""
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "kartik\\plugins\\markdown-editor\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Kartik Visweswaran",
-                    "email": "kartikv2@gmail.com",
-                    "homepage": "http://www.krajee.com/"
-                }
-            ],
-            "description": "A Boostrap styled markdown editor that offers configurable toolbar, live preview, export, fullscreen mode, and more features.",
-            "homepage": "https://github.com/kartik-v/krajee-markdown-editor",
-            "keywords": [
-                "bootstrap",
-                "editor",
-                "export",
-                "extra",
-                "input",
-                "markdown",
-                "markdown it",
-                "preview"
-            ],
-            "support": {
-                "issues": "https://github.com/kartik-v/krajee-markdown-editor/issues",
-                "source": "https://github.com/kartik-v/krajee-markdown-editor/tree/master"
-            },
-            "time": "2022-12-08T14:33:49+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -1051,16 +996,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.5.0",
+            "version": "v3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3ffcf4b7d890770466da3b2666f82ac054e7ec72"
+                "reference": "a6e0510cc793912b451fd40ab983a1d28f611c15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3ffcf4b7d890770466da3b2666f82ac054e7ec72",
-                "reference": "3ffcf4b7d890770466da3b2666f82ac054e7ec72",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/a6e0510cc793912b451fd40ab983a1d28f611c15",
+                "reference": "a6e0510cc793912b451fd40ab983a1d28f611c15",
                 "shasum": ""
             },
             "require": {
@@ -1111,7 +1056,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.5.0"
+                "source": "https://github.com/twigphp/Twig/tree/v3.5.1"
             },
             "funding": [
                 {
@@ -1123,7 +1068,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-27T12:28:18+00:00"
+            "time": "2023-02-08T07:49:20+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -1213,9 +1158,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kartik-v/krajee-markdown-editor": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
