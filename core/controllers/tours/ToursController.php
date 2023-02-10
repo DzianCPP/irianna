@@ -320,7 +320,7 @@ class ToursController extends BaseController implements ControllerInterface
 
         $data = [
             'title' => 'Печать договора',
-            'header' => 'печать договора',
+            'header' => 'Печать договора',
             'login' => $_COOKIE['login']
         ];
 
@@ -396,8 +396,8 @@ class ToursController extends BaseController implements ControllerInterface
         fclose($fp);
 
         $data = [
-            'title' => 'Печать договора',
-            'header' => 'печать договора',
+            'title' => 'Печать приложения 2',
+            'header' => 'Печать приложения 2',
             'login' => $_COOKIE['login']
         ];
 
@@ -507,8 +507,8 @@ class ToursController extends BaseController implements ControllerInterface
         fclose($fp);
 
         $data = [
-            'title' => 'Печать договора',
-            'header' => 'печать договора',
+            'title' => 'Печать путевки',
+            'header' => 'Печать путевки',
             'login' => $_COOKIE['login']
         ];
 

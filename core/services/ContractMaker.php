@@ -85,10 +85,10 @@ class ContractMaker
         $new_v = str_replace('bus_route', $d['bus_route'], $new_v);
         $new_v = str_replace('from_minsk_date', $d['from_minsk_date'], $new_v);
         $new_v = str_replace('arrival_to_minsk', $d['arrival_to_minsk'], $new_v);
-        $new_v = str_replace('service_cost', $d['service_cost_in_BYN'], $new_v);
-        $new_v = str_replace('tour_price_in_curr_1', $d['tour_price_in_curr_1'], $new_v);
+        $new_v = str_replace('service_cost_in_BYN', $d['service_cost_in_BYN'], $new_v);
+        $new_v = str_replace('tour_price_in_curr_1', $d['total_travel_cost_curr_2'], $new_v);
         $new_v = str_replace('currency_1', $d['currency_1'], $new_v);
-        $new_v = str_replace('tour_price_in_curr_2', $d['total_travel_cost_curr_2'], $new_v);
+        $new_v = str_replace('tour_price_in_curr_2', $d['tour_price_in_curr_1'], $new_v);
         $new_v = str_replace('currency_2', $d['currency_2'], $new_v);
         $new_v = str_replace('room_description', $d['room_description'], $new_v);
         $new_v = str_replace('room_food', rtrim($d['room_food'], ','), $new_v);
