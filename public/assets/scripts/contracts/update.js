@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function update() {
     let url = "/contracts/update";
-    let _html = document.getElementsByClassName("note-editable card-block")[0].innerHTML;
+    let _html = tinymce.activeEditor.getContent();
     let _name = document.getElementById("document-name").innerHTML;
     let _label = document.getElementById("document-label").innerHTML;
     let _id = document.getElementById("document-id").innerHTML;

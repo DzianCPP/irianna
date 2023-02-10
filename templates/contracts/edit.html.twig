@@ -1,4 +1,43 @@
-<!DOCTYPE html>
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="row w-100 mt-2 mb-2">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
+        <h1 class="h1 m-1" id="main-page-h1">{{ header }}</h1>
+    </div>
+</div>
+
+<div class="container container-sm container-md container-xl mt-1 mb-5">
+        <textarea id="tinyMCE" placeholder="Введите текст документа">{% use 'components/contract.html.twig' %}
+          {% block contract %}
+          {{ parent() }}
+          {% endblock %}</textarea>
+        <div class="input-group mt-2">
+            <select class="form-select text-center" id="type_of-docuement">
+                <option value="contract">Договор</option>
+                <option value="attachment-2">Приложение 2</option>
+                <option value="attachment-2">Приложение 1</option>
+                <option value="voucher">Ваучер (путевка)</option>
+            </select>
+            <input type="button" class="btn btn-success w-25 mx-auto" id="save-btn" value="Сохранить"></input>
+            <p hidden id="document-name">{{ document_name }}</p>
+            <p hidden id="document-label">{{ document_label }}</p>
+            <p hidden id="document-id">{{ document_id }}</p>
+        </div>
+    <p id="error-field" style="color: red;"></p>
+    <script>
+        tinymce.init({
+            selector: '#tinyMCE',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat'
+        });
+    </script>
+</div>
+<script type="text/javascript" src="/assets/scripts/contracts/update.js"></script>
+{% endblock %}
+
+
+
+{# <!DOCTYPE html>
 <html>
 
 <head>
@@ -88,4 +127,4 @@
   <script src="/assets/scripts/contracts/update.js"></script>
 </body>
 
-</html>
+</html> #}
