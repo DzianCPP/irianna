@@ -21,7 +21,7 @@ class NetController extends BaseController
 
         $hotelsModel = new HotelsModel();
 
-        if ($hotel_id !== 0) {
+        if ($hotel_id != 0) {
             $hotel = $hotelsModel->get(['column' => 'id', 'value' => $hotel_id])[0];
         } else {
             $hotel = $hotelsModel->get()[0];
@@ -55,6 +55,34 @@ class NetController extends BaseController
 
         $this->magic($rooms, $tours, $clients);
 
+        $table_headers = [];
+        $table_headers[] = 'Описание номеров -->';
+
+        foreach ($rooms as &$room) {
+            $table_headers[] = $room['description'];
+        }
+
+        $table_rows = [];
+
+        for ($i = 0; $i < count($raw_checkin_checkout_dates); ) {
+            $table_rows[]['col_0'] = ltrim($raw_checkin_checkout_dates[$i], 'f') . ' - ' . ltrim($raw_checkin_checkout_dates[$i + 1], 'f');
+            $i = $i + 2;
+        }
+
+        for ( $r = 0, $tr = 0, $d = 0; $r < count($rooms); ) {
+            $table_rows[$tr]['cols'][] = $rooms[$r]['checkin_checkout_dates'][$d];
+            $r++;
+            if ($r == count($rooms)) {
+                $r = 0;
+                $tr++;
+                $d += 2;
+
+                if ($tr == count($table_rows)) {
+                    break;
+                }
+            }
+        }
+
         $data = [
             'title' => 'Сетка номеров',
             'header' => 'Сетка номеров',
@@ -62,7 +90,10 @@ class NetController extends BaseController
             'rooms' => $rooms,
             'hotel' => $hotel,
             'raw_dates' => $raw_checkin_checkout_dates,
-            'hotels' => $hotelsModel->get()
+            'hotels' => $hotelsModel->get(),
+            'table_headers' => $table_headers,
+            'table_rows' => $table_rows,
+            'current_hotel_id' => $hotel_id
         ];
 
         $this->view->render("net/net.html.twig", $data);
@@ -70,7 +101,7 @@ class NetController extends BaseController
 
     private function magic(array &$rooms, array &$tours, array &$clients): void
     {
-     
+
         foreach ($rooms as &$room) {
             for ($l = 1; $l < count($room['checkin_checkout_dates']); $l += 2) {
                 $date = & $room['checkin_checkout_dates'][$l];
@@ -96,6 +127,6 @@ class NetController extends BaseController
                     }
                 }
             }
-        }   
+        }
     }
 }
