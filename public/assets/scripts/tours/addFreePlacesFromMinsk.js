@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("mouseover", function () {
-        addFreePlacesFromMinsk();
+        document.getElementById("bus-to").addEventListener("focusout", function () {
+            addFreePlacesFromMinsk();
+        });
+
+        document.getElementById("departure-from-minsk").addEventListener("click", function () {
+            addFreePlacesFromMinsk();
+        });
     });
 });
 

@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("mouseover", function () {
-        addFreePlacesFromResort();
+        document.getElementById("bus-from").addEventListener("focusout", function () {
+            addFreePlacesFromResort();
+        });
+
+        document.getElementById("arrival-to-minsk").addEventListener("click", function () {
+            addFreePlacesFromResort();
+        });
     });
 });
 
@@ -8,6 +14,7 @@ async function addFreePlacesFromResort() {
     let url = "/tours/countPlacesBack";
     let bus_id = document.getElementById("bus-from").value;
     let from_resort_date = document.getElementById("room-checkout-date").value;
+    let arrival_to_minsk = document.getElementById("arrival-to-minsk").value;
 
     if (bus_id < 1) {
         document.getElementById("places-from").innerHTML = '-';
@@ -16,7 +23,7 @@ async function addFreePlacesFromResort() {
 
     let info = {
         bus_id: bus_id,
-        to_minsk_date: from_resort_date
+        arrival_to_minsk: arrival_to_minsk
     };
 
     let POST = {
