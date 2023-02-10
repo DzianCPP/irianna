@@ -68,9 +68,11 @@ class NetController extends BaseController
             $table_rows[]['col_0'] = ltrim($raw_checkin_checkout_dates[$i], 'f') . ' - ' . ltrim($raw_checkin_checkout_dates[$i + 1], 'f');
             $i = $i + 2;
         }
-
-        for ( $r = 0, $tr = 0, $d = 0; $r < count($rooms); ) {
-            $table_rows[$tr]['cols'][] = $rooms[$r]['checkin_checkout_dates'][$d];
+        
+      for ($r = 0, $tr = 0, $d = 0; $r < count($rooms); ) {
+            if (isset($rooms[$r]) && isset($rooms[$r]['checkin_checkout_dates'][$d])) {
+                $table_rows[$tr]['cols'][] = $rooms[$r]['checkin_checkout_dates'][$d];
+            }
             $r++;
             if ($r == count($rooms)) {
                 $r = 0;
@@ -82,6 +84,7 @@ class NetController extends BaseController
                 }
             }
         }
+
 
         $data = [
             'title' => 'Сетка номеров',
