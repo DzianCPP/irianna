@@ -6,11 +6,10 @@
     </div>
 </div>
 
-<div class="container container-sm container-md container-xl mt-1 mb-5">
+<div class="container container-sm container-md container-xl mt-1 mb-5 w-100">
     {% if rooms|length > 0 %}
 	<div class="row w-auto">
-		<div class="col-xl-1"></div>
-		<div class="col-xs-12 col-sm-12 col-md-12 col-xl-10 text-center">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
 			<div class="table-responsive w-100">
 				{% use 'components/netTable.html.twig' %}
 				{% block table %}

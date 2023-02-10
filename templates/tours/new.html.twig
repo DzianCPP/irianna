@@ -225,8 +225,10 @@ data to use:
 						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
 						<input type="text" class="form-control" name="tour-cost" id="main-client-tour-cost"></input>
 						<select type="text" class="form-select" placeholder="Валюта" id="main-client-currency-1">
+							{% set i = 0 %}
 							{% for c in currencies %}
-							<option value="{{ c }}">{{ c }}</option>
+							<option value="{{ c }}"{% if i == 0 %}{{ 'selected="selected"' }}{% endif %}>{{ c }}</option>
+							{% set i = i + 1 %}
 							{% endfor %}
 						</select>
 					</div>
@@ -235,8 +237,10 @@ data to use:
 						<input type="text" class="form-control" name="tour-cost-currency"
 							id="main-client-total-cost-currency"></input>
 						<select type="text" class="form-select" placeholder="Валюта" id="main-client-currency">
+							{% set i = 0 %}
 							{% for c in currencies %}
-							<option value="{{ c }}">{{ c }}</option>
+							<option value="{{ c }}"{% if i == 1 %}{{ 'selected="selected"' }}{% endif %}>{{ c }}</option>
+							{% set i = i + 1 %}
 							{% endfor %}
 						</select>
 					</div>
