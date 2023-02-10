@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(content);
         let url = "/contracts/create";
         let document_html = content;
-        let type_of_document = document.getElementById("type-of-document");
+        let type_of_document = document.getElementById("type-of-document").value;
         let info = {
             label: type_of_document,
             html: document_html

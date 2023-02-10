@@ -55,7 +55,7 @@ class ContractsModel extends Model implements ModelInterface
             !$this->databaseSqlBuilder->insert(
             recordInfo: [
                     'name' => $name,
-                    'label' => $data['lable'],
+                    'label' => $data['label'],
                     'html' => $data['html']
                 ],
             columns: $this->fields,
