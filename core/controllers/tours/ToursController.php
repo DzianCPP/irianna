@@ -424,12 +424,12 @@ class ToursController extends BaseController implements ControllerInterface
     {
         $data = json_decode(file_get_contents("php://input"), true);
         $bus_id = (int)$data['bus_id'];
-        $to_minsk_date = $data['to_minsk_date'];
+        $arrival_to_minsk = $data['arrival_to_minsk'];
 
         $this->setModel(ToursModel::class);
         $count = $this->model->count(columnsValues: [
-            'columns' => ['bus_id', 'to_minsk_date'],
-            'values' => [$bus_id, $to_minsk_date]
+            'columns' => ['bus_id', 'arrival_to_minsk'],
+            'values' => [$bus_id, $arrival_to_minsk]
         ]);
 
         echo json_encode($count);
