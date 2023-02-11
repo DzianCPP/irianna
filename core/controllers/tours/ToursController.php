@@ -448,7 +448,7 @@ class ToursController extends BaseController implements ControllerInterface
         $clientsModel = new ClientsModel();
         $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
 
-        $sub_clients = $clientsModel->get(['column' => 'main_client_id', 'value' => $client['id']]);
+        $sub_clients = $clientsModel->getSubClients(columnValue: ['column' => 'main_client_id', 'value' => $client['id']]);
 
         if (count($sub_clients) < 1) {
             $sub_clients = "----";
