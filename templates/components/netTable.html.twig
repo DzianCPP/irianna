@@ -1,13 +1,16 @@
 {% block table %}
 
-<select class="form-select text-secondary mb-2 text-center" id="hotels">
-    {% for hotel in hotels %}
-    <option value="{{ hotel.id }}" class="btn btn-outline-secondary" {% if current_hotel_id==hotel.id
-        %}{{ 'selected="selected"' }}{% endif %}>
-        {{ hotel.name }}
-    </option>
-    {% endfor %}
-</select>
+<div class="input-group mb-2">
+    <select class="form-select text-secondary text-center w-50" id="hotels">
+        {% for hotel in hotels %}
+        <option value="{{ hotel.id }}" class="btn btn-outline-secondary" {% if current_hotel_id==hotel.id
+            %}{{ 'selected="selected"' }}{% endif %}>
+            {{ hotel.name }}
+        </option>
+        {% endfor %}
+    </select>
+    <button class="btn btn-success w-50" id="hotels-btn">Найти</button>
+</div>
 <table class="table table-sm table-secondary table-bordered border-light table-hover" id="table">
     <tr>
         {% for th in table_headers %}
