@@ -18,7 +18,7 @@ function addDates() {
         }
     }
 
-    checkin_dates = unique.sort(function(a, b){
+    checkin_dates = unique.sort(function (a, b) {
         var aa = a.split('.').reverse().join(),
             bb = b.split('.').reverse().join();
         return aa < bb ? -1 : (aa > bb ? 1 : 0);
@@ -32,7 +32,7 @@ function addDates() {
         }
     }
 
-    checkout_dates = unique.sort(function(a, b){
+    checkout_dates = unique.sort(function (a, b) {
         var aa = a.split('.').reverse().join(),
             bb = b.split('.').reverse().join();
         return aa < bb ? -1 : (aa > bb ? 1 : 0);
@@ -54,12 +54,23 @@ function addDates() {
     option_1.setAttribute('value', text_1.textContent);
     document.getElementById("room-checkin-date").appendChild(option_1);
 
+    let departure_from_minsk = document.getElementById("departure-from-minsk").value;
+    let ISO_dep_from_minsk = departure_from_minsk.substring(6) + '-' + departure_from_minsk.substring(3, 5) + '-' + departure_from_minsk.substring(0, 2);
+    let dep_date = new Date(ISO_dep_from_minsk);
+    let arrival_to_minsk = document.getElementById("arrival-to-minsk").value;
+    let ISO_arrival_to_minsk = arrival_to_minsk.substring(6) + '-' + arrival_to_minsk.substring(3, 5) + '-' + arrival_to_minsk.substring(0, 2);
+    let arr_date = new Date(ISO_arrival_to_minsk);
+
     for (let date of checkin_dates) {
-        let option = document.createElement('option');
-        let text = document.createTextNode(date);
-        option.appendChild(text);
-        option.setAttribute('value', text.textContent);
-        document.getElementById("room-checkin-date").appendChild(option);
+        let ISO_date = date.substring(6) + '-' + date.substring(3, 5) + '-' + date.substring(0, 2);
+        let d = new Date(ISO_date);
+        if (dep_date <= d) {
+            let option = document.createElement('option');
+            let text = document.createTextNode(date);
+            option.appendChild(text);
+            option.setAttribute('value', text.textContent);
+            document.getElementById("room-checkin-date").appendChild(option);
+        }
     }
 
     let option_2 = document.createElement('option');
@@ -69,10 +80,14 @@ function addDates() {
     document.getElementById("room-checkout-date").appendChild(option_2);
 
     for (let date of checkout_dates) {
-        let option = document.createElement('option');
-        let text = document.createTextNode(date);
-        option.appendChild(text);
-        option.setAttribute('value', text.textContent);
-        document.getElementById("room-checkout-date").appendChild(option);
+        let ISO_date = date.substring(6) + '-' + date.substring(3, 5) + '-' + date.substring(0, 2);
+        let d = new Date(ISO_date);
+        if (arr_date >= d && d >= dep_date) {
+            let option = document.createElement('option');
+            let text = document.createTextNode(date);
+            option.appendChild(text);
+            option.setAttribute('value', text.textContent);
+            document.getElementById("room-checkout-date").appendChild(option);
+        }
     }
 }
