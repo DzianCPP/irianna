@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.body.addEventListener("mouseover", function () {
+    document.getElementById("save-tour").addEventListener("focusout", function () {
         if (document.getElementById("save-tour").disabled == false) {
             let print_contract_btn = document.getElementById("print-contract");
             print_contract_btn.disabled = false;

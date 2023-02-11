@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    this.body.addEventListener("mouseover", function () {
+    document.getElementById("save-tour").addEventListener("mouseover", function () {
         activateSaveTourButton();
     });
 });

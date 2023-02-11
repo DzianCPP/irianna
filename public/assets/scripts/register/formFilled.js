@@ -8,7 +8,6 @@ let repeatPassword = document.getElementById("repeat-password");
 repeatPassword.addEventListener("keyup", formFilled);
 let login = document.getElementById("login");
 login.addEventListener("keyup", formFilled);
-document.body.addEventListener("mouseover", formFilled);
 
 function formFilled() {
     let email = document.getElementById("email");
