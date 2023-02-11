@@ -17,5 +17,6 @@ return [
     ['m13' => 'm13_create_contracts_table'],
     ['m14' => 'm14_create_clients_archive_table'],
     ['m15' => 'm15_create_tours_archive_table'],
-    ['m16' => 'm16_create_subclients_archive_table']
+    ['m16' => 'm16_create_subclients_archive_table'],
+    ['m17' => 'm17_modify_tours_table_ownerTravelCost_column']
 ];
