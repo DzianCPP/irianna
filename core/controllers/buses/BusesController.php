@@ -57,7 +57,15 @@ class BusesController extends BaseController implements ControllerInterface
     {
         $id = (int) IdGetter::getId();
         $this->setModel(BusesModel::class);
-        $bus = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
+        $bus = $this->model->get(columnValue: ['column' => 'id', 'value' => $id]);
+        if (count($bus) >= 1) {
+            $bus = $bus[0];
+        }
+
+        if (count ($bus) < 1) {
+            http_response_code(500);
+            return;
+        }
         $bus = json_encode($bus);
         echo $bus;
     }

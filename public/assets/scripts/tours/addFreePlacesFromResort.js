@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.body.addEventListener("mouseover", function () {
+    window.addEventListener("load", function () {
         document.getElementById("bus-from").addEventListener("focusout", function () {
             addFreePlacesFromResort();
         });

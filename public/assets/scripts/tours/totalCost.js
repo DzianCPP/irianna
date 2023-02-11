@@ -30,13 +30,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.body.addEventListener("mouseover", function () {
+    window.addEventListener("load", function () {
         document.getElementById("total-currency").innerHTML = document.getElementById("main-client-currency").value;
     });
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.body.addEventListener("mouseover", function () {
+    window.addEventListener("load", function () {
         document.getElementById("total-currency-1").innerHTML = document.getElementById("main-client-currency-1").value;
     });
 });
