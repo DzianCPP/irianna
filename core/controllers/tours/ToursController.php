@@ -489,6 +489,7 @@ class ToursController extends BaseController implements ControllerInterface
             'currency_2' => explode(' ', $tour['total_travel_cost_currency'])[1],
             'room_description' => $room['description'],
             'room_food' => $room['food'],
+            'room_comforts' => $room['comforts'],
             'transfer_direction' => 'Туда-Обратно',
             'hotel_name' => $hotel['name'],
             'resort_name' => $resort['name'],
