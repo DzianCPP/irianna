@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("bus-to").addEventListener("click", function () {
+    document.getElementById("bus-to").addEventListener("change", function () {
         addDepartureFromMinskDates();
     });
 });
