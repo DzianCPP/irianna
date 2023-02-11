@@ -455,7 +455,7 @@ class ToursController extends BaseController implements ControllerInterface
         } else if (count($sub_clients) > 1) {
             $str = "";
             foreach ($sub_clients as &$s) {
-                $str = $s['name'] . ', ' . $s['passport'] . ', ' . $s['birth_date'] . '<br>';
+                $str .= $s['name'] . ', ' . $s['passport'] . ', ' . $s['birth_date'] . '<br>';
             }
             $str = rtrim($str, "<br>");
             $sub_clients = $str;
