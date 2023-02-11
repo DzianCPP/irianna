@@ -2,6 +2,14 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("hotels").addEventListener("click", function () {
         addDates();
     });
+
+    document.getElementById("departure-from-minsk").addEventListener("change", function () {
+        addDates();
+    });
+
+    document.getElementById("arrival-to-minsk").addEventListener("change", function () {
+        addDates();
+    });
 });
 
 function addDates() {
