@@ -98,6 +98,7 @@ class ContractMaker
         $new_v = str_replace('hotel_name', $d['hotel_name'], $new_v);
         $new_v = str_replace('resort_name', $d['resort_name'], $new_v);
         $new_v = str_replace('room_comforts', rtrim($d['room_comforts'], ','), $new_v);
+        $new_v = str_replace('sub_clients', rtrim($d['sub_clients'], ','), $new_v);
 
         return $new_v;
     }
