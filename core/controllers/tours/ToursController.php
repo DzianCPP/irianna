@@ -448,6 +448,23 @@ class ToursController extends BaseController implements ControllerInterface
         $clientsModel = new ClientsModel();
         $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
 
+        $sub_clients = $clientsModel->get(['column' => 'main_client_id', 'value' => $client['id']]);
+
+        if (count($sub_clients) < 1) {
+            $sub_clients = "----";
+        } else if (count($sub_clients) > 1) {
+            $str = "";
+            foreach ($sub_clients as &$s) {
+                $str = $s['name'] . ', ' . $s['passport'] . ', ' . $s['birth_date'] . '<br>';
+            }
+
+            $str = rtrim($str, "<br>");
+
+            $sub_clients = $str;
+        } else {
+            $str = $sub_clients['name'] . ', ' . $sub_clients['passport'] . ', ' . $sub_clients['birth_date'];
+        }
+
         $contractsModel = new ContractsModel();
         $busesModel = new BusesModel();
         $bus = $busesModel->get(['column' => 'id', 'value' => $tour['bus_id']])[0];
