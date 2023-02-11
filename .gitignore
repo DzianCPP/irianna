@@ -9,4 +9,5 @@ static/passengers/
 templates/components/contract.html.twig
 templates/components/voucher.html.twig
 templates/components/attachment2.html.twig
+config/currencies.json
 todo.php
