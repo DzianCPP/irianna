@@ -457,12 +457,11 @@ class ToursController extends BaseController implements ControllerInterface
             foreach ($sub_clients as &$s) {
                 $str = $s['name'] . ', ' . $s['passport'] . ', ' . $s['birth_date'] . '<br>';
             }
-
             $str = rtrim($str, "<br>");
-
             $sub_clients = $str;
         } else {
             $str = $sub_clients['name'] . ', ' . $sub_clients['passport'] . ', ' . $sub_clients['birth_date'];
+            $sub_clients = $str;
         }
 
         $contractsModel = new ContractsModel();
@@ -511,7 +510,8 @@ class ToursController extends BaseController implements ControllerInterface
             'hotel_name' => $hotel['name'],
             'resort_name' => $resort['name'],
             'transfer_type' => $tour['is_only_transit'],
-            'today_date' => date('d-m-yy')
+            'today_date' => date('d-m-yy'),
+            'sub_clients' => $sub_clients
         ];
 
         $voucher = ContractMaker::prepareVoucher($voucher, $documentData);
