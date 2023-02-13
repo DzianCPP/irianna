@@ -1,43 +1,84 @@
 {% block table %}
 <table class="table table-sm table-secondary table-striped table-hover" id="table">
     <tr>
-        <th scope="col"><input type="checkbox" id="check-all" /></th>
-        <th scope="col">id</th>
-        <th scope="col">Менеджер</th>
-        <th style="min-width: 150px;" scope="col">Гостиница</th>
-        <th style="min-width: 100px;" scope="col">Из Минска</th>
-        <th style="min-width: 100px;" scope="col">Из курорта</th>
-        <th style="min-width: 60px;" scope="col">Автобус</th>
-        <th style="min-width: 100px;" scope="col">Номер</th>
-        <th scope="col">Удобства</th>
-        <th scope="col">Питание</th>
-        <th style="min-width: 200px;" scope="col">Клиент</th>
-        <th scope="col">Всего человек</th>
-        <th style="min-width: 200px;" scope="col">Стоимость тур.услуги</th>
-        <th style="min-width: 200px;" scope="col">Стоимость тура</th>
-        <th scope="col">Только проезд</th>
-        <th style="min-width: 150px;" scope="col">Тип проезда</th>
         <th scope="col"></th>
+        <th style="min-width: 125px;" class="align-middle" scope="col">
+            <div class="input-group w-100 align-middle">
+                <select class="form-select">
+                    <option value="0">Выбрать</option>
+                    {% for hotel in hotels %}
+                    <option value="{{ hotel.id }}">{{ hotel.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </th>
+        <th style="min-width: 95px;" scope="col" class="align-middle">
+            <div class="input-group w-100 align-middle">
+                <select class="form-select">
+                    <option value="0">Выбрать</option>
+                    {% for bus in buses %}
+                    <option value="{{ bus.id }}">{{ bus.name }}{{ ': ' }}{{ bus.route }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </th>
+        <th style="min-width: 95px;" scope="col" class="align-middle">
+            <div class="input-group w-100 align-middle">
+                <select class="form-select">
+                    <option value="0">Выбрать</option>
+                    {% for tour in tours %}
+                    <option value="{{ tour.from_minsk_date }}">{{ tour.from_minsk_date }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </th>
+        <th style="min-width: 95px;" scope="col" class="align-middle">
+            <div class="input-group w-100 align-middle">
+                <select class="form-select">
+                    <option value="0">Выбрать</option>
+                    {% for tour in tours %}
+                    <option value="{{ tour.to_minsk_date }}">{{ tour.to_minsk_date }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </th>
+        <th style="min-width: 95px;" scope="col" class="align-middle"></th>
+        <th style="min-width: 140px;" scope="col" class="align-middle">
+            <input type="text" placeholder="Фамилия" class="form-control">
+        </th>
+        <th scope="col"></th>
+        <th style="min-width: 110px;" scope="col" class="align-middle"></th>
+        <th style="min-width: 120px;" scope="col" class="align-middle"></th>
+        <th scope="col" style="min-width: 200px;" class="align-middle">
+            <button class="btn btn-success w-100">Найти</button>
+        </th>
+    </tr>
+    <tr>
+        <th scope="col" class="align-middle"><input type="checkbox" id="check-all" /></th>
+        <th style="min-width: 125px;" scope="col" class="align-middle">Гостиница</th>
+        <th style="min-width: 120px;" scope="col" class="align-middle">Автобус</th>
+        <th style="min-width: 95px;" scope="col" class="align-middle">Выезд из Минска</th>
+        <th style="min-width: 95px;" scope="col" class="align-middle">Выезд из курорта</th>
+        <th style="min-width: 95px;" scope="col" class="align-middle">Номер</th>
+        <th style="min-width: 90px;" scope="col" class="align-middle">Клиент</th>
+        <th scope="col" class="align-middle">Всего человек</th>
+        <th style="min-width: 110px;" scope="col" class="align-middle">Стоимость тур.услуги</th>
+        <th style="min-width: 120px;" scope="col" class="align-middle">Стоимость тура</th>
+        <th scope="col" style="min-width: 200px;" class="align-middle"></th>
     </tr>
     {% for tour in tours %}
     <tr>
         <td><input name="select" type="checkbox" value="{{ tour.id }}" /></td>
-        <td>{{ tour.id }}</td>
-        {% for manager in managers %}{% if manager.id == tour.manager_id %}
-        <td style="min-width: 250px;">{{ manager.name }}</td>
-        {% endif %}{% endfor %}
         {% for hotel in hotels %}{% if hotel.id == tour.hotel_id %}
         <td>{{ hotel.name }}</td>
         {% endif %}{% endfor %}
+        {% for bus in buses %}{% if bus.id == tour.bus_id %}
+        <td>{{ bus.name}}{{ ': ' }}{{ bus.route }}</td>
+        {% endif %}{% endfor %}
         <td>{{ tour.from_minsk_date }}</td>
         <td>{{ tour.to_minsk_date }}</td>
-        {% for bus in buses %}{% if bus.id == tour.bus_id %}
-        <td>{{ bus.name }}</td>
-        {% endif %}{% endfor %}
         {% for room in rooms %}{% if room.id == tour.room_id %}
         <td>{{ room.description|trim(', ') }}</td>
-        <td>{% set comforts = room.comforts|split(',') %}{% for comfort in comforts %}{{ comfort }}{{ '<br>' }}{% endfor %}</td>
-        <td>{% set foods = room.food|split(',') %}{% for food in foods %}{{ food }}{{ '<br>' }}{% endfor %}</td>
         {% endif %}{% endfor %}
         {% for client in clients %}{% if client.id == tour.owner_id %}
         <td>{{ client.name }}</td>
@@ -56,18 +97,16 @@
             <span>{{ tour.total_travel_service_currency }}</span>
         </td>
         <td>
-            <input type="checkbox" {% if tour.is_only_transit !=0 %}{{ 'checked' }}{% endif %}>
-        </td>
-        <td>
-            {% if tour.transit == 0 %}{{ 'Туда' }}{% endif %}
-            {% if tour.transit == 1 %}{{ 'Обратно' }}{% endif %}
-            {% if tour.transit == 2 %}{{ 'Туда-Обратно' }}{% endif %}
-        </td>
-        <td>
-        {# <a class="btn btn-sm btn-success" href="/tours/edit/{{ tour.id }}">Изменить</a> #}
-        <a class="btn btn-sm btn-success m-1" href="/tours/printContract/{{ tour.id }}">Печать Договора</a>
-        <a class="btn btn-sm btn-success m-1" href="/tours/printAttachmentTwo/{{ tour.id }}">Печать Приложения 2</a>
-        <a class="btn btn-sm btn-success m-1" href="/tours/printVoucher/{{ tour.id }}">Печать Путевки</a>
+            <div class="input-group w-100 mb-1">
+                <a class="btn btn-sm btn-warning w-50 disabled" href="/tours/edit/{{ tour.id }}">Изменить<br>тур</a>
+                <a class="btn btn-sm btn-success w-50" href="/tours/printContract/{{ tour.id }}">Печать<br>Договора</a>
+            </div>
+            <div class="input-group w-100">
+                <a class="btn btn-sm btn-success w-50"
+                    href="/tours/printAttachmentTwo/{{ tour.id }}">Печать<br>Приложения 2</a>
+                <a class="btn btn-sm btn-outline-success w-50"
+                    href="/tours/printVoucher/{{ tour.id }}">Печать<br>Путевки</a>
+            </div>
         </td>
     </tr>
     {% endfor %}

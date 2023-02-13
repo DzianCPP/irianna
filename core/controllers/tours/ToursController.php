@@ -212,6 +212,11 @@ class ToursController extends BaseController implements ControllerInterface
         $this->view->render("tours/tours.html.twig", $data);
     }
 
+    public function search(): void
+    {
+        
+    }
+
     public function update(int $id = 0): void
     {
         $this->setModel(ToursModel::class);

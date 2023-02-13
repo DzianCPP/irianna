@@ -44,6 +44,11 @@ class ToursModel extends Model implements ModelInterface
         return $this->databaseSqlBuilder->select(self::TABLE_NAME, $columnValue);
     }
 
+    public function search(): array
+    {
+        return [];
+    }
+
     public function update(array $newInfo): bool
     {
         $this->dataSanitizer->SanitizeData($newInfo);
