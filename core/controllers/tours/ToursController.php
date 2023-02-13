@@ -214,7 +214,47 @@ class ToursController extends BaseController implements ControllerInterface
 
     public function search(): void
     {
-        
+        $this->setModel(ToursModel::class);
+        $this->setView(ToursView::class);
+        $tours = $this->model->search();
+        $clients = new ClientsModel();
+        $sub_clients = $clients->getSubClients();
+        $clients = $clients->get();
+        $hotels = new HotelsModel();
+        $rooms = new RoomsModel();
+        $resorts = new ResortsModel();
+        $managers = new ManagersModel();
+        $buses = new BusesModel();
+
+        $page = Paginator::getPage();
+        $pages = (int)ceil(count($tours) / parent::PER_PAGE);
+
+        if ($page) {
+            Paginator::limitRange($tours, self::PER_PAGE, $page);
+        } else {
+            Paginator::limitRange($tours, self::PER_PAGE);
+        }
+
+
+        $data = [
+            'tours' => $tours,
+            'entity' => 'tours',
+            'clients' => $clients,
+            'hotels' => $hotels->get(),
+            'rooms' => $rooms->get(),
+            'resorts' => $resorts->get(),
+            'managers' => $managers->get(),
+            'buses' => $buses->get(),
+            'sub_clients' => $sub_clients,
+            'header' => 'Туры',
+            'title' => 'Туры',
+            'login' => $_COOKIE['login'],
+            'currentPage' => $page,
+            'pages' => $pages
+        ];
+
+
+        $this->view->render("tours/tours.html.twig", $data);
     }
 
     public function update(int $id = 0): void
