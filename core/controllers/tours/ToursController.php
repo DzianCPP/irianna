@@ -21,7 +21,7 @@ use core\services\ContractMaker;
 
 class ToursController extends BaseController implements ControllerInterface
 {
-    public function new(string $resortName = "", int $is_active = 0): void
+    public function new (string $resortName = "", int $is_active = 0): void
     {
         $managers = new ManagersModel();
         $countries = new CountriesModel();
@@ -40,8 +40,8 @@ class ToursController extends BaseController implements ControllerInterface
 
         foreach ($rooms as &$room) {
 
-        $checkin_dates = [];
-        $checkout_dates = [];
+            $checkin_dates = [];
+            $checkout_dates = [];
             for ($i = 0; $i < count($room['checkin_checkout_dates']); $i++) {
                 if ($i % 2 > 0) {
                     $checkout_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
@@ -55,13 +55,13 @@ class ToursController extends BaseController implements ControllerInterface
             unset($room['checkin_checkout_dates']);
         }
 
-        $free_dates = [ 'in_dates' => [], 'out_dates' => [] ];
+        $free_dates = ['in_dates' => [], 'out_dates' => []];
 
         foreach ($rooms as &$room) {
             $tours = $this->model->get(['column' => 'room_id', 'value' => $room['id']]);
             $busy_checkin_dates = [];
             $busy_checkout_dates = [];
-            foreach($tours as $tour) {
+            foreach ($tours as $tour) {
                 if (array_search($tour['checkin_date'], $room['checkin_dates']) !== false) {
                     $busy_checkin_dates[] = $tour['checkin_date'];
                 }
@@ -182,7 +182,7 @@ class ToursController extends BaseController implements ControllerInterface
         $buses = new BusesModel();
 
         $page = Paginator::getPage();
-        $pages = (int)ceil(count($tours) / parent::PER_PAGE);
+        $pages = (int) ceil(count($tours) / parent::PER_PAGE);
 
         if ($page) {
             Paginator::limitRange($tours, self::PER_PAGE, $page);
@@ -209,6 +209,61 @@ class ToursController extends BaseController implements ControllerInterface
         ];
 
 
+        $this->view->render("tours/tours.html.twig", $data);
+    }
+
+    public function search(): void
+    {
+        $this->setModel(ToursModel::class);
+        $this->setView(ToursView::class);
+        $tours = $this->model->search();
+        $clients = new ClientsModel();
+        $sub_clients = $clients->getSubClients();
+        $clients = $clients->get();
+        $hotels = new HotelsModel();
+        $rooms = new RoomsModel();
+        $resorts = new ResortsModel();
+        $managers = new ManagersModel();
+        $buses = new BusesModel();
+
+        $page = Paginator::getPage();
+        $pages = (int) ceil(count($tours) / parent::PER_PAGE);
+
+        if ($page) {
+            Paginator::limitRange($tours, self::PER_PAGE, $page);
+        } else {
+            Paginator::limitRange($tours, self::PER_PAGE);
+        }
+
+        $data = [
+            'message' => 'No such tours',
+            'header' => 'Нет туров',
+            'title' => 'Нет туров',
+            'login' => $_COOKIE['login'],
+        ];
+
+
+        if ($tours != []) {
+            $data = [
+                'tours' => $tours,
+                'entity' => 'tours',
+                'clients' => $clients,
+                'hotels' => $hotels->get(),
+                'rooms' => $rooms->get(),
+                'resorts' => $resorts->get(),
+                'managers' => $managers->get(),
+                'buses' => $buses->get(),
+                'sub_clients' => $sub_clients,
+                'header' => 'Туры',
+                'title' => 'Туры',
+                'login' => $_COOKIE['login'],
+                'currentPage' => $page,
+                'pages' => $pages,
+                'message' => 'Found tours'
+            ];
+        }
+
+        $this->setView(ToursView::class);
         $this->view->render("tours/tours.html.twig", $data);
     }
 
@@ -245,7 +300,7 @@ class ToursController extends BaseController implements ControllerInterface
         $id = IdGetter::getId();
         $tour = [];
         if ($id) {
-        $tour = $this->model->get(['column' => 'id', 'value' => $id])[0];
+            $tour = $this->model->get(['column' => 'id', 'value' => $id])[0];
         } else {
             $tour = $this->model->getLastTour();
         }
@@ -408,7 +463,7 @@ class ToursController extends BaseController implements ControllerInterface
     public function count(): void
     {
         $data = json_decode(file_get_contents("php://input"), true);
-        $bus_id = (int)$data['bus_id'];
+        $bus_id = (int) $data['bus_id'];
         $from_minsk_date = $data['from_minsk_date'];
 
         $this->setModel(ToursModel::class);
@@ -423,7 +478,7 @@ class ToursController extends BaseController implements ControllerInterface
     public function countPlacesBack(): void
     {
         $data = json_decode(file_get_contents("php://input"), true);
-        $bus_id = (int)$data['bus_id'];
+        $bus_id = (int) $data['bus_id'];
         $arrival_to_minsk = $data['arrival_to_minsk'];
 
         $this->setModel(ToursModel::class);
@@ -532,5 +587,19 @@ class ToursController extends BaseController implements ControllerInterface
 
         $this->setView(ToursView::class);
         $this->view->render("tours/printVoucher.html.twig", $data);
+    }
+
+    public function request(): void
+    {
+        $request = json_encode(json_decode(file_get_contents("php://input"), true));
+        $f = fopen(BASE_PATH . 'static/search/request.json', 'w');
+        if (!$f) {
+            http_response_code(500);
+        }
+
+        fwrite($f, $request, strlen($request));
+        fclose($f);
+
+        http_response_code(200);
     }
 }

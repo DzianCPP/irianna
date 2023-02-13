@@ -23,7 +23,9 @@ class DatabaseSqlBuilder
         $sqlQuery = "INSERT INTO ${tableName} (${tableColumns})
                     VALUES (${values})";
         $query = $this->conn->prepare($sqlQuery);
-        if (!$query->execute()) {
+        try {
+            $query->execute();
+        } catch (\PDOException $e) {
             return false;
         }
 
@@ -46,7 +48,11 @@ class DatabaseSqlBuilder
         }
 
         $query = $this->conn->prepare($sqlQuery);
+        try {
         $query->execute();
+        } catch (\PDOException $e) {
+            return [];
+        }
 
         return $query->fetchAll();
     }
@@ -60,7 +66,9 @@ class DatabaseSqlBuilder
         ";
         $query = $this->conn->prepare($sqlQuery);
 
-        if (!$query->execute($recordInfo)) {
+        try {
+            $query->execute();
+        } catch (\PDOException $e) {
             return false;
         }
 
@@ -73,7 +81,9 @@ class DatabaseSqlBuilder
         $column = $columnValues['column'];
         $sqlQuery = "DELETE FROM ${tableName} WHERE ${column} IN (${values})";
         $query = $this->conn->prepare($sqlQuery);
-        if (!$query->execute()) {
+        try {
+            $query->execute();
+        } catch (\PDOException $e) {
             return false;
         }
 
@@ -84,7 +94,9 @@ class DatabaseSqlBuilder
     {
         $sqlQuery = "SELECT COUNT(*) FROM $table_name WHERE $columns[0] = '$values[0]'";
         $query = $this->conn->prepare($sqlQuery);
-        if (!$query->execute()) {
+        try {
+            $query->execute();
+        } catch (\PDOException $e) {
             return 0;
         }
 
@@ -95,7 +107,9 @@ class DatabaseSqlBuilder
     {
         $sql = "SELECT MAX($column) FROM $tableName";
         $query = $this->conn->prepare($sql);
-        if (!$query->execute()) {
+        try {
+            $query->execute();
+        } catch (\PDOException $e) {
             return 0;
         }
 
@@ -106,8 +120,10 @@ class DatabaseSqlBuilder
     {
         $sql = "SELECT * FROM $tableName WHERE $column=(SELECT MAX($column) FROM $tableName)";
         $query = $this->conn->prepare($sql);
-        if (!$query->execute()) {
-            return 0;
+        try {
+            $query->execute();
+        } catch (\PDOException $e) {
+            return [];
         }
 
         return $query->fetchAll();
@@ -161,8 +177,10 @@ class DatabaseSqlBuilder
     {
         $sql = "SELECT * FROM $table_name WHERE $where_clause";
         $query = $this->conn->prepare($sql);
-        if (!$query->execute()) {
-            return 0;
+        try {
+            $query->execute();
+        } catch (\PDOException $e) {
+            return [0];
         }
 
         return $query->fetchAll();

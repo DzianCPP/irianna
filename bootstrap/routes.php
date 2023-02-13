@@ -451,6 +451,18 @@ return [
         'method' => 'POST'
     ],
 
+    'tours/request' => [
+        'controller' => ToursController::class,
+        'action' => 'request',
+        'method' => 'POST'
+    ],
+
+    'tours/search' => [
+        'controller' => ToursController::class,
+        'action' => 'search',
+        'method' => 'GET'
+    ],
+
     'tours/countPlacesBack' => [
         'controller' => ToursController::class,
         'action' => 'countPlacesBack',
