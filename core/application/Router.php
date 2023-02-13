@@ -82,10 +82,6 @@ class Router
             $route = substr($request_route, 0, $questionPos);
         }
 
-        if (str_contains($route, "params")) {
-            $route = substr($route, 0, strpos($route, "params", 0));
-        }
-
         $route = ltrim(rtrim($route, "/"), "/");
 
         return $route;

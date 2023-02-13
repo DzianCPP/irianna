@@ -47,39 +47,39 @@ class ToursModel extends Model implements ModelInterface
 
     public function search(): array
     {
-        $data = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], 'params', 0) + 7);
-        $columns = [];
-        $values = [];
-
-        $data = explode("/", $data);
-
-        $new_data = [];
-        foreach ($data as $field) {
-            $key_value = explode('=', $field);
-            if ($key_value[1] != 0 && $key_value[1] != '') {
-                $new_data[$key_value[0]] = $key_value[1];
+        $params = json_decode(file_get_contents("php://input"), true);
+        $new_tours = $columnsValues = $columns = $values = [];
+        foreach ($params as $k => $v) {
+            if ($k != 'name') {
+                $columns[] = $k;
+                $values[] = $v;
             }
         }
-        $data = $new_data;
-        unset($new_data);
 
-        $columns = array_keys($data);
-        $values = array_values($data);
-
-        $columnsValues = [];
+        if (count($columns) > 0) {
+            $columnsValues = ['columns' => $columns, 'values' => $values];
+        }
 
         $tours = $this->databaseSqlBuilder->select(self::TABLE_NAME, columnsValues: $columnsValues);
 
-        $new_tours = [];
         $clientsModel = new ClientsModel();
 
         foreach ($tours as $t) {
-            $client = $clientsModel->get(['column' => 'id', 'value' => $t['owner_id']])[0];
-            if (str_contains($client['name'], $data['name'])) {
-                $new_tours[] = $t;
+            $client = $clientsModel->get(['column' => 'id', 'value' => $t['owner_id']]);
+            if ($client != []) {
+                $client = $client[0];
+                if (str_contains($client['name'], $params['name'])) {
+                    $new_tours[] = $t;
+                }
             }
         }
-        return $new_tours;
+
+        if (count($new_tours) > 0) {
+            $tours = $new_tours;
+            return $tours;
+        }
+        
+        return [];
     }
 
     public function update(array $newInfo): bool

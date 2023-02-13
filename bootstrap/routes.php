@@ -454,7 +454,7 @@ return [
     'tours/search' => [
         'controller' => ToursController::class,
         'action' => 'search',
-        'method' => 'GET'
+        'method' => 'POST'
     ],
 
     'tours/countPlacesBack' => [
