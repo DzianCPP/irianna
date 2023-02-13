@@ -4,7 +4,7 @@
         <th scope="col"></th>
         <th style="min-width: 125px;" class="align-middle" scope="col">
             <div class="input-group w-100 align-middle">
-                <select class="form-select">
+                <select class="form-select" id="search-hotel">
                     <option value="0">Выбрать</option>
                     {% for hotel in hotels %}
                     <option value="{{ hotel.id }}">{{ hotel.name }}</option>
@@ -14,7 +14,7 @@
         </th>
         <th style="min-width: 95px;" scope="col" class="align-middle">
             <div class="input-group w-100 align-middle">
-                <select class="form-select">
+                <select class="form-select" id="search-bus">
                     <option value="0">Выбрать</option>
                     {% for bus in buses %}
                     <option value="{{ bus.id }}">{{ bus.name }}{{ ': ' }}{{ bus.route }}</option>
@@ -24,7 +24,7 @@
         </th>
         <th style="min-width: 95px;" scope="col" class="align-middle">
             <div class="input-group w-100 align-middle">
-                <select class="form-select">
+                <select class="form-select" id="search-from-minsk-date">
                     <option value="0">Выбрать</option>
                     {% for tour in tours %}
                     <option value="{{ tour.from_minsk_date }}">{{ tour.from_minsk_date }}</option>
@@ -34,7 +34,7 @@
         </th>
         <th style="min-width: 95px;" scope="col" class="align-middle">
             <div class="input-group w-100 align-middle">
-                <select class="form-select">
+                <select class="form-select" id="search-to-minsk-date">
                     <option value="0">Выбрать</option>
                     {% for tour in tours %}
                     <option value="{{ tour.to_minsk_date }}">{{ tour.to_minsk_date }}</option>
@@ -44,13 +44,13 @@
         </th>
         <th style="min-width: 95px;" scope="col" class="align-middle"></th>
         <th style="min-width: 140px;" scope="col" class="align-middle">
-            <input type="text" placeholder="Фамилия" class="form-control">
+            <input type="text" placeholder="Фамилия" class="form-control" id="search-name">
         </th>
         <th scope="col"></th>
         <th style="min-width: 110px;" scope="col" class="align-middle"></th>
         <th style="min-width: 120px;" scope="col" class="align-middle"></th>
         <th scope="col" style="min-width: 200px;" class="align-middle">
-            <button class="btn btn-success w-100">Найти</button>
+            <button class="btn btn-success w-100" id="find-tour">Найти</button>
         </th>
     </tr>
     <tr>
