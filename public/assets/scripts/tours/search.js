@@ -11,7 +11,7 @@ async function searchTours() {
     let to_minsk_date = String(document.getElementById("search-to-minsk-date").value);
     let name = String(document.getElementById("search-name").value);
 
-    let url = "/tours/search";
+    let url = "/tours/request";
 
     let params = {};
 
@@ -47,18 +47,7 @@ async function searchTours() {
     if (!response.ok) {
         alert("Ошибка! Не удалось выполнить поиск!");
         return;
+    } else {
+        window.location = "/tours/search";
     }
-
-    let data = await response.json();
-
-    if (data.message == 'No such tours') {
-        alert("Нет туров, подходящих под заданные параметры");
-        return;
-    }
-
-    renderTable(data.tours);
-}
-
-function renderTable(tours) {
-    let table = document.getElementById("table");
 }

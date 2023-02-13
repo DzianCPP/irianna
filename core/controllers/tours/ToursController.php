@@ -262,8 +262,9 @@ class ToursController extends BaseController implements ControllerInterface
                 'message' => 'Found tours'
             ];
         }
-        
-        echo (json_encode($data));
+
+        $this->setView(ToursView::class);
+        $this->view->render("tours/tours.html.twig", $data);
     }
 
     public function update(int $id = 0): void
@@ -586,5 +587,19 @@ class ToursController extends BaseController implements ControllerInterface
 
         $this->setView(ToursView::class);
         $this->view->render("tours/printVoucher.html.twig", $data);
+    }
+
+    public function request(): void
+    {
+        $request = json_encode(json_decode(file_get_contents("php://input"), true));
+        $f = fopen(BASE_PATH . 'static/search/request.json', 'w');
+        if (!$f) {
+            http_response_code(500);
+        }
+
+        fwrite($f, $request, strlen($request));
+        fclose($f);
+
+        http_response_code(200);
     }
 }

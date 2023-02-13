@@ -47,7 +47,7 @@ class ToursModel extends Model implements ModelInterface
 
     public function search(): array
     {
-        $params = json_decode(file_get_contents("php://input"), true);
+        $params = json_decode(file_get_contents(BASE_PATH . "static/search/request.json"), true);
         $new_tours = $columnsValues = $columns = $values = [];
         foreach ($params as $k => $v) {
             if ($k != 'name') {
@@ -64,22 +64,26 @@ class ToursModel extends Model implements ModelInterface
 
         $clientsModel = new ClientsModel();
 
-        foreach ($tours as $t) {
-            $client = $clientsModel->get(['column' => 'id', 'value' => $t['owner_id']]);
-            if ($client != []) {
-                $client = $client[0];
-                if (str_contains($client['name'], $params['name'])) {
-                    $new_tours[] = $t;
+        if (isset($params['name'])) {
+            foreach ($tours as $t) {
+                $client = $clientsModel->get(['column' => 'id', 'value' => $t['owner_id']]);
+                if ($client != []) {
+                    $client = $client[0];
+                    if (str_contains($client['name'], $params['name'])) {
+                        $new_tours[] = $t;
+                    }
                 }
+            }
+
+            if (count($new_tours) > 0) {
+                $tours = $new_tours;
+                return $tours;
+            } else {
+                return [];
             }
         }
 
-        if (count($new_tours) > 0) {
-            $tours = $new_tours;
-            return $tours;
-        }
-        
-        return [];
+        return $tours;
     }
 
     public function update(array $newInfo): bool
