@@ -8,6 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
             addFreePlacesFromResort();
         });
     });
+
+    window.addEventListener("load", function () {
+        if (this.document.getElementById("arrival-to-minsk").value.length > 3) {
+            addFreePlacesFromResort();
+        }
+    });
 });
 
 async function addFreePlacesFromResort() {
