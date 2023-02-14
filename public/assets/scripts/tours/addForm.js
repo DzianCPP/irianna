@@ -12,14 +12,13 @@ function addForm() {
     const cont = createContainer();
     const row = createRow();
     const _cols = setCols("col-xs-12 col-sm-12 col-md-12 col-xl-12");
-    _cols.appendChild(createLastNameInputGroup());
-    _cols.appendChild(createFirstNameInputGroup());
-    _cols.appendChild(createSecondNameInputGroup());
+    _cols.appendChild(createNameInputGroup());
     _cols.appendChild(createPassportInputGroup());
     _cols.appendChild(createBirthDateInputGroup());
     _cols.appendChild(createServiceCost());
     _cols.appendChild(createTourCost());
     _cols.appendChild(createTourCostCurrency())
+    _cols.appendChild(createMinusButton());
     row.appendChild(_cols);
     cont.appendChild(row);
     document.getElementById("clients").appendChild(cont);
@@ -31,6 +30,21 @@ function createContainer() {
     _container.setAttribute("name", "sub-client");
 
     return _container;
+}
+
+function createMinusButton() {
+    const _input_group = document.createElement('div');
+    _input_group.setAttribute("class", "input-group");
+    _input_group.appendChild(createButton("btn btn-danger w-100 mt-2", "-"));
+    return _input_group;
+}
+
+function createButton(_class, _text) {
+    const btn = document.createElement('button');
+    btn.setAttribute('class', _class);
+    btn.setAttribute('value', _text);
+    btn.innerHTML = _text;
+    return btn;
 }
 
 function createRow() {
@@ -47,29 +61,11 @@ function setCols(className) {
     return _cols;
 }
 
-function createLastNameInputGroup() {
+function createNameInputGroup() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group");
-    _input_group.appendChild(createSpan("input-group-text w-25", "Фамилия"));
-    _input_group.appendChild(createInputText("form-control", "text", "sub-client-last-name", "Введите фамилию клиента"));
-    return _input_group;
-}
-
-function createFirstNameInputGroup() {
-    const _input_group = document.createElement('div');
-    _input_group.setAttribute("class", "input-group mt-2");
-    _input_group.appendChild(createSpan("input-group-text w-25", "Имя"));
-    _input_group.appendChild(createInputText("form-control", "text", "sub-client-first-name", "Введите имя клиента"));
-
-    return _input_group;
-}
-
-function createSecondNameInputGroup() {
-    const _input_group = document.createElement('div');
-    _input_group.setAttribute("class", "input-group mt-2");
-    _input_group.appendChild(createSpan("input-group-text w-25", "Отчество"));
-    _input_group.appendChild(createInputText("form-control", "text", "sub-client-second-name", "Введите отчество клиента"));
-
+    _input_group.appendChild(createSpan("input-group-text w-25", "ФИО"));
+    _input_group.appendChild(createInputText("form-control", "text", "sub-client-name", "Введите ФИО клиента"));
     return _input_group;
 }
 
