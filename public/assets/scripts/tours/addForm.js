@@ -18,6 +18,7 @@ function addForm() {
     _cols.appendChild(createServiceCost());
     _cols.appendChild(createTourCost());
     _cols.appendChild(createTourCostCurrency())
+    _cols.appendChild(createMinusButton());
     row.appendChild(_cols);
     cont.appendChild(row);
     document.getElementById("clients").appendChild(cont);
@@ -29,6 +30,21 @@ function createContainer() {
     _container.setAttribute("name", "sub-client");
 
     return _container;
+}
+
+function createMinusButton() {
+    const _input_group = document.createElement('div');
+    _input_group.setAttribute("class", "input-group");
+    _input_group.appendChild(createButton("btn btn-danger w-100 mt-2", "-"));
+    return _input_group;
+}
+
+function createButton(_class, _text) {
+    const btn = document.createElement('button');
+    btn.setAttribute('class', _class);
+    btn.setAttribute('value', _text);
+    btn.innerHTML = _text;
+    return btn;
 }
 
 function createRow() {
