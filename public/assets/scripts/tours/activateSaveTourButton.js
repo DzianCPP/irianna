@@ -21,9 +21,7 @@ function fieldsAreValid() {
     let hotel = document.getElementById("hotels").value;
     let room = document.getElementById("rooms").value;
     let departure_from_minsk = document.getElementById("departure-from-minsk").value;
-    let main_client_last_name = document.getElementById("main-client-last-name").value;
-    let main_client_first_name = document.getElementById("main-client-first-name").value;
-    let main_client_main_phone = document.getElementById("main-client-phone-main").value;
+    let main_client_name = document.getElementById("main-client-name").value;
 
     if (!manager) {
         return false;
@@ -49,15 +47,7 @@ function fieldsAreValid() {
         return false;
     }
 
-    if (main_client_last_name.length < 2) {
-        return false;
-    }
-
-    if (main_client_first_name.length < 2) {
-        return false;
-    }
-
-    if (main_client_main_phone.length < 7) {
+    if (main_client_name.length < 2) {
         return false;
     }
 

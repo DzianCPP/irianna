@@ -113,9 +113,7 @@ function getClients() {
 }
 
 function getMainClient() {
-    let _lastName = document.getElementById("main-client-last-name").value;
-    let _firstName = document.getElementById("main-client-first-name").value;
-    let _secondName = document.getElementById("main-client-second-name").value;
+    let _name = document.getElementById("main-client-name").value;
     let _mainPhone = document.getElementById("main-client-phone-main").value;
     let _secondPhone = document.getElementById("main-client-phone-second").value;
     let _passport = document.getElementById("main-client-passport").value;
@@ -123,7 +121,7 @@ function getMainClient() {
     let _address = document.getElementById("main-client-address").value;
 
     return {
-        name: _lastName + " " + _firstName + " " + _secondName,
+        name: _name,
         main_phone: _mainPhone,
         second_phone: _secondPhone,
         passport: _passport,
