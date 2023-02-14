@@ -67,7 +67,7 @@ class DatabaseSqlBuilder
         $query = $this->conn->prepare($sqlQuery);
 
         try {
-            $query->execute();
+            $query->execute($recordInfo);
         } catch (\PDOException $e) {
             return false;
         }
