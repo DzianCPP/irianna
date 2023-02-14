@@ -58,10 +58,16 @@ async function createTour() {
 
         if (response.ok) {
             console.log("Тур сохранен");
-            alert("Тур сохранен");
+            let _alert = document.getElementById("alert");
+            _alert.setAttribute('class', 'alert alert-success mt-2');
+            _alert.innerHTML = 'Тур сохранен';
+            _alert.hidden = false;
         } else {
             console.log("Тур не удалось сохранить");
-            alert("Тур НЕ сохранен");
+            let _alert = document.getElementById("alert");
+            _alert.setAttribute('class', 'alert alert-danger mt-2');
+            _alert.innerHTML = 'Тур не удалось сохранить';
+            _alert.hidden = false;
         }
     }
 }
