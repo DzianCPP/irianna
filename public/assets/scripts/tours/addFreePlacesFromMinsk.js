@@ -8,6 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
             addFreePlacesFromMinsk();
         });
     });
+
+    window.addEventListener("load", function () {
+        if (this.document.getElementById("departure-from-minsk").value.length > 3) {
+            addFreePlacesFromMinsk();
+        }
+    });
 });
 
 async function addFreePlacesFromMinsk() {
