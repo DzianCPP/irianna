@@ -385,6 +385,24 @@ return [
         'method' => 'POST'
     ],
 
+    'clients/guests' => [
+        'controller' => ClientsController::class,
+        'action' => 'guests',
+        'method' => 'GET'
+    ],
+
+    'clients/hotel_list' => [
+        'controller' => ClientsController::class,
+        'action' => 'hotel_list',
+        'method' => 'POST'
+    ],
+
+    'clients/guests_list' => [
+        'controller' => ClientsController::class,
+        'action' => 'guests_list',
+        'method' => 'GET'
+    ],
+
     'clients/last' => [
         'controller' => ClientsController::class,
         'action' => 'getLastClientId',
