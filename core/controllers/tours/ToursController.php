@@ -168,7 +168,7 @@ class ToursController extends BaseController implements ControllerInterface
             die();
         }
 
-        return;
+        http_response_code(200);
     }
 
     public function read(int $id = 0): void

@@ -20,6 +20,7 @@ async function update() {
     }
 
     console.log("Тур обновлен");
+    window.location = "/";
 }
 
 async function _delete() {
@@ -94,8 +95,10 @@ async function create() {
 
         if (response.ok) {
             console.log("Тур сохранен");
+            return true;
         } else {
             console.log("Тур не удалось сохранить");
+            return false;
         }
     }
 }
