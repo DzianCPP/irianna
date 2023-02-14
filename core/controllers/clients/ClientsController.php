@@ -4,7 +4,10 @@ namespace core\controllers\clients;
 
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
+use core\controllers\rooms\helpers\RoomsHelper;
 use core\models\buses\BusesModel;
+use core\models\hotels\HotelsModel;
+use core\models\rooms\RoomsModel;
 use core\models\tours\ToursModel;
 use core\services\Paginator;
 use core\views\clients\ClientsView;
@@ -104,7 +107,7 @@ class ClientsController extends BaseController implements ControllerInterface
         $ids = json_decode(file_get_contents("php://input"), true);
 
         foreach ($ids as $id) {
-            if (!$this->model->deleteSubClients((int)$id)) {
+            if (!$this->model->deleteSubClients((int) $id)) {
                 http_response_code(500);
                 return;
             }
@@ -160,11 +163,107 @@ class ClientsController extends BaseController implements ControllerInterface
         $this->view->render("passengers/form.html.twig", $data);
     }
 
+    public function guests(): void
+    {
+        $hotelsModel = new HotelsModel();
+        $hotels = $hotelsModel->get();
+
+        $roomsModel = new RoomsModel();
+        $rooms_sets = [];
+
+        foreach ($hotels as $hotel) {
+            $rooms_sets[] = $roomsModel->get(columnValue: ['column' => 'hotel_id', 'value' => $hotel['id']]);
+        }
+
+        $roomsHelper = new RoomsHelper();
+
+        foreach ($rooms_sets as &$rooms) {
+            foreach ($rooms as &$room) {
+                $room = $roomsHelper->normalizeRoom($room);
+            }
+        }
+
+        $this->setView(ClientsView::class);
+        $data = [
+            'title' => 'Список гостей',
+            'header' => 'Список гостей',
+            'login' => $_COOKIE['login'],
+            'hotels' => $hotels,
+            'rooms_sets' => json_encode($rooms_sets)
+        ];
+
+        $this->view->render("guests/form.html.twig", $data);
+    }
+
+    public function hotel_list(): void
+    {
+        $this->setModel(ClientsController::class);
+        $data = json_decode(file_get_contents("php://input"), true);
+        $this->setModel(ClientsModel::class);
+        $toursModel = new ToursModel();
+        $tours = $toursModel->list(columnsValues: [
+            'columns' => ['hotel_id', 'checkin_date', 'checkout_date'],
+            'values' => [$data['hotel_id'], $data['checkin_date'], $data['checkout_date']]
+        ]);
+
+        $main_clients = [];
+
+        foreach ($tours as $tour) {
+            $main_clients[] = $this->model->get(['column' => 'id', 'value' => $tour['owner_id']])[0];
+        }
+
+        $sub_clients = [];
+
+        foreach ($main_clients as $mc) {
+            $sub_clients[] = $this->model->getSubClients([
+                'column' => 'main_client_id',
+                'value' => $mc['id']
+            ]);
+        }
+
+        $passengers = ['main_clients' => [], 'sub_clients' => []];
+
+        for ($i = 0; $i < count($main_clients); $i++) {
+            $passengers['main_clients'][] = $main_clients[$i];
+            $passengers['sub_clients'][] = $sub_clients[$i];
+        }
+
+        $hotelsModel = new BusesModel();
+        $hotel = $hotelsModel->get(['column' => 'id', 'value' => $data['hotel_id']])[0];
+
+        $data = [
+            'title' => 'Список пассажиров',
+            'header' => 'Список пассажиров',
+            'login' => $_COOKIE['login'],
+            'passengers' => $passengers,
+            'checkin_date' => $tours[0]['checkin_date'],
+            'checkout_date' => $tours[0]['checkout_date'],
+            'hotel' => $hotel
+        ];
+
+        $f = fopen(BASE_PATH . "static/passengers/passengers.json", 'w');
+        if (!$f) {
+            http_response_code(500);
+            return;
+        }
+
+        fwrite($f, json_encode($data), strlen(json_encode($data)));
+
+        http_response_code(200);
+
+    }
+
+    public function guests_list(): void
+    {
+        $this->setView(ClientsView::class);
+        $data = json_decode(file_get_contents(BASE_PATH . "static/passengers/passengers.json"), true);
+        $this->view->render("guests/guests.html.twig", $data);
+    }
+
     public function list(): void
     {
         $this->setModel(ClientsModel::class);
         $data = json_decode(file_get_contents("php://input"), true);
-        // $data = [ 'bus_id', 'from_minsk_date', 'to_minsk_date' ]
         $toursModel = new ToursModel();
         $tours = $toursModel->list(columnsValues: [
             'columns' => ['bus_id', 'from_minsk_date', 'arrival_to_minsk'],
