@@ -95,6 +95,15 @@ class ClientsModel extends Model implements ModelInterface
         return true;
     }
 
+    public function deleteSubClients(int $main_client_id): bool
+    {
+        if (!$this->databaseSqlBuilder->delete(['column' => 'main_client_id', 'values' => [$main_client_id]], self::TABLE_NAMES[1])) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function getSubClients(array $columnValue = []): array
     {
         $sub_clients =  $this->databaseSqlBuilder->select(self::TABLE_NAMES[1], $columnValue);

@@ -151,6 +151,7 @@ class ToursController extends BaseController implements ControllerInterface
             'buses' => $buses->get(),
             'client' => $client,
             'sub_clients' => $sub_clients,
+            'currencies' => json_decode(file_get_contents(BASE_PATH . "config/currencies.json"), true),
             'title' => 'Изменить тур',
             'header' => 'Изменить тур',
             'login' => $_COOKIE['login']
@@ -288,6 +289,31 @@ class ToursController extends BaseController implements ControllerInterface
     {
         $this->setModel(ToursModel::class);
         $ids = json_decode(file_get_contents("php://input"), true);
+
+        $tours = [];
+
+        foreach ($ids as $id) {
+            $tour = $this->model->get(['column' => 'id', 'value' => $id]);
+            if (count($tour) < 1) {
+                continue;
+            }
+
+            $tours[] = $tour[0];
+        }
+
+        $clientsModel = new ClientsModel();
+
+        foreach ($tours as $tour) {
+            if (!$clientsModel->deleteSubClients((int) $tour['owner_id'])) {
+                http_response_code(500);
+                return;
+            }
+
+            if (!$clientsModel->delete(columnValues:['column' =>  'id', 'values' => [$tour['owner_id']]])) {
+                http_response_code(500);
+                return;
+            }
+        }
 
         if (!$this->model->delete(columnValues: ['column' => 'id', 'values' => $ids])) {
             http_response_code(500);

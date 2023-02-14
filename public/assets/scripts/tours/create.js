@@ -131,22 +131,12 @@ function getMainClient() {
 }
 
 function getSubClients() {
-    let lastNames = [];
-    let firstNames = [];
-    let secondNames = [];
+    let names = [];
     let passports = [];
     let birthDates = [];
 
-    for (var el of document.getElementsByName("sub-client-last-name")) {
-        lastNames.push(el.value);
-    }
-
-    for (var el of document.getElementsByName("sub-client-first-name")) {
-        firstNames.push(el.value);
-    }
-
-    for (var el of document.getElementsByName("sub-client-second-name")) {
-        secondNames.push(el.value);
+    for (var el of document.getElementsByName("sub-client-name")) {
+        names.push(el.value);
     }
 
     for (var el of document.getElementsByName("sub-client-passport")) {
@@ -155,12 +145,6 @@ function getSubClients() {
 
     for (var el of document.getElementsByName("sub-client-birth-date")) {
         birthDates.push(el.value);
-    }
-
-    let names = [];
-
-    for (var i = 0; i < lastNames.length; i++) {
-        names.push(lastNames[i] + " " + firstNames[i] + " " + secondNames[i]);
     }
 
     return {

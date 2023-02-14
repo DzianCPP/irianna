@@ -102,6 +102,14 @@ class ClientsController extends BaseController implements ControllerInterface
         $this->setModel(ClientsModel::class);
 
         $ids = json_decode(file_get_contents("php://input"), true);
+
+        foreach ($ids as $id) {
+            if (!$this->model->deleteSubClients((int)$id)) {
+                http_response_code(500);
+                return;
+            }
+        }
+
         if (!$this->model->delete(columnValues: ['column' => 'id', 'values' => $ids])) {
             http_response_code(500);
             die();
