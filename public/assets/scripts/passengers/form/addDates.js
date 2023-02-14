@@ -1,11 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("bus").addEventListener("click", function () {
+    document.getElementById("bus").addEventListener("change", function () {
         addFromMinskDates();
     });
 });
 
 async function addFromMinskDates() {
     let bus_id = document.getElementById("bus").value;
+    
+    for (let i = document.getElementById("from-minsk-date").length; i >= 0; --i) {
+        document.getElementById("from-minsk-date").remove(i);
+    }
+
+    for (let i = document.getElementById("to-minsk-date").length; i >= 0; --i) {
+        document.getElementById("to-minsk-date").remove(i);
+    }
+    if (bus_id == 0) {
+        return;
+    }
     let bus = {};
     let bus_info = await getBusDates(bus_id);
 

@@ -19,6 +19,7 @@
                     <span class="text-danger">*</span>
                 </span>
                 <select id="bus" class="btn btn-outline-dark dropdown-toggle w-75">
+                    <option value="0"></option>
                     {% for b in buses %}
                     <option class="bg-light text-success" value="{{ b.id }}">{{ b.name }}{{ ': ' }}{{ b.route }}</option>
                     {% endfor %}
