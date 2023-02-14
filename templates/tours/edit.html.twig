@@ -42,7 +42,8 @@ data to use:
 					<select class="form-select" name="manager" id="manager">
 						<option></option>
 						{% for manager in managers %}
-						<option {% if manager.id == tour.manager_id %}{{ 'selected="selected"' }}{% endif%} value="{{ manager.id }}">{{ manager.name }}</option>
+						<option {% if manager.id==tour.manager_id %}{{ 'selected="selected"' }}{% endif%}
+							value="{{ manager.id }}">{{ manager.name }}</option>
 						{% endfor %}
 					</select>
 				</div>
@@ -52,7 +53,9 @@ data to use:
 					<select class="form-select" name="country" id="country">
 						<option></option>
 						{% for country in countries %}
-						<option {% for r in resorts_array %}{% if tour.resort_id == r.id %}{% if country.id == r.country_id %}{{ 'selected="selected"' }}{% endif %}{% endif %}{% endfor %} value="{{ country.id }}">{{ country.name }}</option>
+						<option {% for r in resorts_array %}{% if tour.resort_id==r.id %}{% if country.id==r.country_id
+							%}{{ 'selected="selected"' }}{% endif %}{% endif %}{% endfor %} value="{{ country.id }}">{{
+							country.name }}</option>
 						{% endfor %}
 					</select>
 				</div>
@@ -61,19 +64,22 @@ data to use:
 					<span class="input-group-text">Курорт<span class="text-danger">*</span>
 					</span>
 					<select class="form-select" name="resorts" id="resort">
-                        {% for r in resorts_array %} {% if r.id == tour.resort_id %}
-                        <option value="{{ r.id }}">{{ r.name }}</option>
-                        {% endif %} {% endfor %}
-                    </select>
+						{% for r in resorts_array %} {% if r.id == tour.resort_id %}
+						<option value="{{ r.id }}">{{ r.name }}</option>
+						{% endif %} {% endfor %}
+					</select>
 				</div>
 
 				<div class="input-group mt-2">
 					<span class="input-group-text">Проезд</span>
 					<select class="form-select" name="rooms" id="transits">
-						<option {% if tour.transit == 2 %}{{ 'selected="selected"' }}{% endif %} value="2">Туда-Обратно</option>
-						<option {% if tour.transit == 0 %}{{ 'selected="selected"' }}{% endif %} value="0">Туда</option>
-						<option {% if tour.transit == 1 %}{{ 'selected="selected"' }}{% endif %} value="1">Обратно</option>
-						<option {% if tour.transit == 3 %}{{ 'selected="selected"' }}{% endif %} value="3">Без проезда</option>
+						<option {% if tour.transit==2 %}{{ 'selected="selected"' }}{% endif %} value="2">Туда-Обратно
+						</option>
+						<option {% if tour.transit==0 %}{{ 'selected="selected"' }}{% endif %} value="0">Туда</option>
+						<option {% if tour.transit==1 %}{{ 'selected="selected"' }}{% endif %} value="1">Обратно
+						</option>
+						<option {% if tour.transit==3 %}{{ 'selected="selected"' }}{% endif %} value="3">Без проезда
+						</option>
 					</select>
 					<span class="input-group-text">Только проезд</span>
 					<span class="input-group-text"><input type="checkbox" class="checkbox" id="only-transit"></input>
@@ -86,7 +92,7 @@ data to use:
 					<select class="form-select" name="bus-to-resort" id="bus-to">
 						<option></option>
 						{% for bus in buses %}
-						<option {% if tour.bus_id == bus.id %}{{ 'selected="selected"' }}{% endif %} value="{{ bus.id }}">
+						<option {% if tour.bus_id==bus.id %}{{ 'selected="selected"' }}{% endif %} value="{{ bus.id }}">
 							{{ bus.name }}{{ ': ' }}{{ bus.route }}
 						</option>
 						{% endfor %}
@@ -98,8 +104,8 @@ data to use:
 					<span class="input-group-text">Выезд из Минска<span class="text-danger">*</span>
 					</span>
 					<select class="form-select" name="departure-from-minsk" id="departure-from-minsk">
-                        <option value="{{ tour.from_minsk_date }}">{{ tour.from_minsk_date }}</option>
-                    </select>
+						<option value="{{ tour.from_minsk_date }}">{{ tour.from_minsk_date }}</option>
+					</select>
 				</div>
 
 
@@ -108,7 +114,8 @@ data to use:
 					<select class="form-select" name="bus-from-resort" id="bus-from">
 						<option></option>
 						{% for bus in buses %}
-						<option {% if tour.bus_id == bus.id %}{{ 'selected="selected"' }}{% endif %} value="{{ bus.id }}">{{ bus.name}}{{ ': '}}{{ bus.route }}</option>
+						<option {% if tour.bus_id==bus.id %}{{ 'selected="selected"' }}{% endif %} value="{{ bus.id }}">
+							{{ bus.name}}{{ ': '}}{{ bus.route }}</option>
 						{% endfor %}
 					</select>
 				</div>
@@ -116,8 +123,8 @@ data to use:
 				<div class="input-group mt-2">
 					<span class="input-group-text">Прибытие в Минск</span>
 					<select class="form-select" name="departure-from-resort" id="arrival-to-minsk">
-                        <option value="{{ tour.arrival_to_minsk }}">{{ tour.arrival_to_minsk }}</option>
-                    </select>
+						<option value="{{ tour.arrival_to_minsk }}">{{ tour.arrival_to_minsk }}</option>
+					</select>
 				</div>
 
 
@@ -126,7 +133,8 @@ data to use:
 					</span>
 					<select class="form-select" name="hotels" id="hotels">
 						{% for hotel in hotels_array %}
-						<option {% if tour.hotel_id == hotel.id %}{{ 'selected="selected"' }}{% endif %} value="{{ hotel.id }}">{{ hotel.name }}</option>
+						<option {% if tour.hotel_id==hotel.id %}{{ 'selected="selected"' }}{% endif %}
+							value="{{ hotel.id }}">{{ hotel.name }}</option>
 						{% endfor %}
 					</select>
 				</div>
@@ -138,14 +146,14 @@ data to use:
 							Дата<br>заселения
 						</span>
 						<select class="form-select  w-25" name="rooms-checkin-date" id="room-checkin-date">
-                            <option value="{{ tour.checkin_date }}">{{ tour.checkin_date }}</option>
-                        </select>
+							<option value="{{ tour.checkin_date }}">{{ tour.checkin_date }}</option>
+						</select>
 						<span class="input-group-text  w-25">
 							Дата<br>выселения
 						</span>
 						<select class="form-select  w-25" name="rooms-checkin-date" id="room-checkout-date">
-                            <option value="{{ tour.checkout_date }}">{{ tour.checkout_date }}</option>
-                        </select>
+							<option value="{{ tour.checkout_date }}">{{ tour.checkout_date }}</option>
+						</select>
 					</div>
 					<div class="input-group w-100">
 						<span class="input-group-text w-25">
@@ -153,10 +161,10 @@ data to use:
 							<span class="text-danger">*</span>
 						</span>
 						<select class="form-select w-75" name="rooms" id="rooms">
-                            {% for r in rooms_array %}{% if r.id == tour.room_id %}
-                            <option value="{{ r.id }}">{{ r.description }}</option>
-                            {% endif %}{% endfor %}
-                        </select>
+							{% for r in rooms_array %}{% if r.id == tour.room_id %}
+							<option value="{{ r.id }}">{{ r.description }}</option>
+							{% endif %}{% endfor %}
+						</select>
 					</div>
 				</div>
 
@@ -179,33 +187,33 @@ data to use:
 		</div>
 
 		<div class="col-xs-12 col-sm-12 col-md-5 col-xl-5">
-			<div class="container p-4 w-100" name="clients" id="clients"  style="background-color:beige;">
+			<div class="container p-4 w-100" name="clients" id="clients" style="background-color:beige;">
 				<div class="row w-100 mb-2">
 					<div class="input-group">
 						<span class="input-group-text w-25">ФИО
 							<span class="text-danger">*</span>
 						</span>
 						<input type="text" class="form-control" name="name" id="main-client-name"
-							placeholder="Введите ФИО клиента" value="{{ client.name }}"/>
+							placeholder="Введите ФИО клиента" value="{{ client.name }}" />
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-auto">Телефон 1
 							<span class="text-danger">*</span>
 						</span>
 						<input type="text" class="form-control" name="phone" id="main-client-phone-main"
-							placeholder="Введите телефон клиента" value="{{ client.main_phone }}"/>
+							placeholder="Введите телефон клиента" value="{{ client.main_phone }}" />
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-25">Телефон 2</span>
 						<input type="text" class="form-control" name="phone" id="main-client-phone-second"
-							placeholder="Введите телефон клиента" value="{{ client.second_phone }}"/>
+							placeholder="Введите телефон клиента" value="{{ client.second_phone }}" />
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-25">Паспорт
 							<span class="text-danger">*</span>
 						</span>
 						<input type="text" class="form-control" name="passport" id="main-client-passport"
-							placeholder="Введите серию и номер паспорта" />
+							placeholder="Введите серию и номер паспорта" value="{{ client.passport }}" />
 						<button class="btn btn-outline-success" id="find-client">Найти</button>
 					</div>
 					<div class="input-group mt-2">
@@ -213,12 +221,12 @@ data to use:
 							<span class="text-danger">*</span>
 						</span>
 						<input type="date" class="form-control" name="birth-date" id="main-client-birth-date"
-							placeholder="Введите дату рождения клиента" />
+							placeholder="Введите дату рождения клиента" value="{{ client.birth_date }}" />
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text w-25">Адрес</span>
 						<input type="text" class="form-control" name="address" id="main-client-address"
-							placeholder="Введите адрес прописки клиента" />
+							placeholder="Введите адрес прописки клиента" value="{{ client.address }}" />
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text bg-primary text-light w-50">Тур. услуга</span>
@@ -231,7 +239,7 @@ data to use:
 						<select type="text" class="form-select" placeholder="Валюта" id="main-client-currency-1">
 							{% set i = 0 %}
 							{% for c in currencies %}
-							<option value="{{ c }}"{% if i == 0 %}{{ 'selected="selected"' }}{% endif %}>{{ c }}</option>
+							<option value="{{ c }}" {% if i==0 %}{{ 'selected="selected"' }}{% endif %}>{{ c }}</option>
 							{% set i = i + 1 %}
 							{% endfor %}
 						</select>
@@ -243,14 +251,72 @@ data to use:
 						<select type="text" class="form-select" placeholder="Валюта" id="main-client-currency">
 							{% set i = 0 %}
 							{% for c in currencies %}
-							<option value="{{ c }}"{% if i == 1 %}{{ 'selected="selected"' }}{% endif %}>{{ c }}</option>
+							<option value="{{ c }}" {% if i==1 %}{{ 'selected="selected"' }}{% endif %}>{{ c }}</option>
 							{% set i = i + 1 %}
 							{% endfor %}
 						</select>
 					</div>
 				</div>
+
+				{% for s in sub_clients %}
+				<div class="container-fluid w-100 border border-dark border-1 border-start-0 border-end-0 border-bottom-0 rounded-0 pt-2 mb-2">
+					<div class="input-group mt-2">
+						<span class="input-group-text w-25">ФИО
+							<span class="text-danger">*</span>
+						</span>
+						<input type="text" class="form-control" name="sub-client-name"
+							placeholder="Введите ФИО" value="{{ s.name }}" />
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text w-25">Паспорт
+							<span class="text-danger">*</span>
+						</span>
+						<input type="text" class="form-control" name="sub-client-passport"
+							placeholder="Введите паспорт" value="{{ s.passport }}" />
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text w-50">Дата рождение
+							<span class="text-danger">*</span>
+						</span>
+						<input type="date" class="form-control" name="sub-client-birth-date"
+							placeholder="Введите дату рождения" value="{{ s.birth_date }}" />
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text bg-primary text-light w-50">Тур. услуга</span>
+						<input type="text" class="form-control" name="service-cost" id="main-client-service-cost"
+							placeholder="Стоимость услуги в BYN" />
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
+						<input type="text" class="form-control" name="tour-cost" id="main-client-tour-cost"></input>
+						<select type="text" class="form-select" placeholder="Валюта" id="main-client-currency-1">
+							{% set i = 0 %}
+							{% for c in currencies %}
+							<option value="{{ c }}" {% if i==0 %}{{ 'selected="selected"' }}{% endif %}>{{ c }}</option>
+							{% set i = i + 1 %}
+							{% endfor %}
+						</select>
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text bg-primary text-light w-50">Стоимость тура</span>
+						<input type="text" class="form-control" name="tour-cost-currency"
+							id="main-client-total-cost-currency"></input>
+						<select type="text" class="form-select" placeholder="Валюта" id="main-client-currency">
+							{% set i = 0 %}
+							{% for c in currencies %}
+							<option value="{{ c }}" {% if i==1 %}{{ 'selected="selected"' }}{% endif %}>{{ c }}</option>
+							{% set i = i + 1 %}
+							{% endfor %}
+						</select>
+					</div>
+					<div class="input-group mt-2">
+						<button type="button" class="btn btn-danger w-100" name="su-client-minus"
+							placeholder="Введите дату рождения">-</button>
+					</div>
+				</div>
+				{% endfor %}
 			</div>
-			<div class="container w-100 mt-2 p-4" name="clients"  style="background-color:beige;">
+			<div class="container w-100 mt-2 p-4" name="clients" style="background-color:beige;">
 				<div class="row w-100 mb-2">
 					<div class="input-group mt-2">
 						<button type"button" class="btn btn-outline-success w-100" name="add-subclient">+</button>
@@ -258,12 +324,12 @@ data to use:
 					<div class="input-group mt-2">
 						<span class="input-group-text bg-warning text-dark w-auto">Кол-во детей</span>
 						<input type="number" class="form-control" id="number-of-children" placeholder="Кол-во детей"
-							value="0" />
+							value="{{ tour.number_of_children }}" />
 					</div>
 					<div class="input-group mt-2">
 						<span class="input-group-text bg-warning text-dark w-auto">Возраст детей</span>
 						<input type="text" class="form-control" id="age-of-children"
-							placeholder="Возраст детей через запятую" value="0" />
+							placeholder="Возраст детей через запятую" value="{{ tour.ages }}" />
 					</div>
 				</div>
 			</div>
@@ -289,16 +355,19 @@ data to use:
 			<div class="col-xs-12 col-sm-12 col-md-5 col-xl-5">
 				<div class="container w-100 mt-2 p-4" style="background-color:beige;">
 					<div class="input-group m-1">
-						<span class="input-group-text bg-primary text-light w-50">Тур. услуга<span class="text-danger">*</span></span>
+						<span class="input-group-text bg-primary text-light w-50">Тур. услуга<span
+								class="text-danger">*</span></span>
 						<span class="form-control" id="total-service-cost"></span>
 					</div>
 					<div class="input-group m-1">
-						<span class="input-group-text bg-primary text-light w-50">Стоимость тура<span class="text-danger">*</span></span>
+						<span class="input-group-text bg-primary text-light w-50">Стоимость тура<span
+								class="text-danger">*</span></span>
 						<span class="form-control" id="total-tour-cost"></span>
 						<span class="form-control" id="total-currency-1">-</span>
 					</div>
 					<div class="input-group m-1">
-						<span class="input-group-text bg-primary text-light w-50">Итого стоимость тура<span class="text-danger">*</span></span>
+						<span class="input-group-text bg-primary text-light w-50">Итого стоимость тура<span
+								class="text-danger">*</span></span>
 						<span class="form-control" id="total-cost-currency"></span>
 						<span class="form-control" placeholder="Валюта" id="total-currency">-</span>
 					</div>

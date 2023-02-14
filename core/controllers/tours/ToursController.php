@@ -151,6 +151,7 @@ class ToursController extends BaseController implements ControllerInterface
             'buses' => $buses->get(),
             'client' => $client,
             'sub_clients' => $sub_clients,
+            'currencies' => json_decode(file_get_contents(BASE_PATH . "config/currencies.json"), true),
             'title' => 'Изменить тур',
             'header' => 'Изменить тур',
             'login' => $_COOKIE['login']

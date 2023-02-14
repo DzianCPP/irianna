@@ -12,9 +12,7 @@ function addForm() {
     const cont = createContainer();
     const row = createRow();
     const _cols = setCols("col-xs-12 col-sm-12 col-md-12 col-xl-12");
-    _cols.appendChild(createLastNameInputGroup());
-    _cols.appendChild(createFirstNameInputGroup());
-    _cols.appendChild(createSecondNameInputGroup());
+    _cols.appendChild(createNameInputGroup());
     _cols.appendChild(createPassportInputGroup());
     _cols.appendChild(createBirthDateInputGroup());
     _cols.appendChild(createServiceCost());
@@ -47,29 +45,11 @@ function setCols(className) {
     return _cols;
 }
 
-function createLastNameInputGroup() {
+function createNameInputGroup() {
     const _input_group = document.createElement('div');
     _input_group.setAttribute("class", "input-group");
-    _input_group.appendChild(createSpan("input-group-text w-25", "Фамилия"));
-    _input_group.appendChild(createInputText("form-control", "text", "sub-client-last-name", "Введите фамилию клиента"));
-    return _input_group;
-}
-
-function createFirstNameInputGroup() {
-    const _input_group = document.createElement('div');
-    _input_group.setAttribute("class", "input-group mt-2");
-    _input_group.appendChild(createSpan("input-group-text w-25", "Имя"));
-    _input_group.appendChild(createInputText("form-control", "text", "sub-client-first-name", "Введите имя клиента"));
-
-    return _input_group;
-}
-
-function createSecondNameInputGroup() {
-    const _input_group = document.createElement('div');
-    _input_group.setAttribute("class", "input-group mt-2");
-    _input_group.appendChild(createSpan("input-group-text w-25", "Отчество"));
-    _input_group.appendChild(createInputText("form-control", "text", "sub-client-second-name", "Введите отчество клиента"));
-
+    _input_group.appendChild(createSpan("input-group-text w-25", "ФИО"));
+    _input_group.appendChild(createInputText("form-control", "text", "sub-client-name", "Введите ФИО клиента"));
     return _input_group;
 }
 
