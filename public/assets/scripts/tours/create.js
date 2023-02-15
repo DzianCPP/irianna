@@ -5,6 +5,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function createTour() {
+    if (document.getElementById("saved-times").innerHTML != 0) {
+        let _alert = document.getElementById("alert");
+            _alert.setAttribute('class', 'alert alert-danger mt-2');
+            _alert.innerHTML = 'Нельзя сохранить два раза один и тот же тур';
+            _alert.hidden = false;
+            return;
+    }
     let ifClientReady = await createClient();
 
     if (ifClientReady) {
@@ -62,6 +69,7 @@ async function createTour() {
             _alert.setAttribute('class', 'alert alert-success mt-2');
             _alert.innerHTML = 'Тур сохранен';
             _alert.hidden = false;
+            document.getElementById("saved-times").innerHTML = 1;
         } else {
             console.log("Тур не удалось сохранить");
             let _alert = document.getElementById("alert");
@@ -87,7 +95,10 @@ async function createClient() {
         console.log("Новый клиент создан");
         return true;
     } else {
-        alert("Что-то пошло не так");
+        let _alert = document.getElementById("alert");
+            _alert.setAttribute('class', 'alert alert-danger mt-2');
+            _alert.innerHTML = 'Тур не удалось сохранить';
+            _alert.hidden = false;
         return false;
     }
 }
