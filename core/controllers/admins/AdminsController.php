@@ -11,8 +11,6 @@ use core\controllers\ControllerInterface;
 
 class AdminsController extends BaseController implements ControllerInterface
 {
-    protected const PER_PAGE = 5;
-
     public function read(int $id = 0): void
     {
         $this->setModel(AdminsModel::class);

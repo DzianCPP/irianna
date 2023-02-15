@@ -4,6 +4,7 @@ namespace core\controllers\periods;
 
 use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
+use core\services\Paginator;
 use core\views\periods\PeriodsView;
 use core\models\periods\PeriodsModel;
 use core\models\buses\BusesModel;
@@ -40,14 +41,14 @@ class PeriodsController extends BaseController implements ControllerInterface
         $this->setModel(PeriodsModel::class);
         $periods = $this->model->get();
         $this->setView(PeriodsView::class);
-        $page = $this->getPage();
+        $page = Paginator::getPage();
         $busesModel = new BusesModel();
         $pages = (int)ceil(count($periods) / self::PER_PAGE);
 
         if ($page) {
-            $this->limitRange($periods, $page);
+            Paginator::limitRange($periods, self::PER_PAGE, $page);
         } else {
-            $this->limitRange($periods);
+            Paginator::limitRange($periods, self::PER_PAGE);
         }
 
         $data = [
