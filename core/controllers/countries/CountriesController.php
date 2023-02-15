@@ -24,7 +24,7 @@ class CountriesController extends BaseController implements ControllerInterface
         if ($page) {
             Paginator::limitRange($countries, self::PER_PAGE, $page);
         } else {
-            $this->limitRange($countries, self::PER_PAGE);
+            Paginator::limitRange($countries, self::PER_PAGE);
         }
 
         $data = [
