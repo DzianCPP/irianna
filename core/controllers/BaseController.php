@@ -7,7 +7,7 @@ class BaseController
     protected $view;
     protected $model;
 
-    protected const PER_PAGE = 5;
+    protected const PER_PAGE = 10;
 
     protected function setView(string $nameView): void
     {

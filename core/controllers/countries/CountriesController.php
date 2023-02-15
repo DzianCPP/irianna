@@ -12,8 +12,6 @@ use core\services\IdGetter;
 
 class CountriesController extends BaseController implements ControllerInterface
 {
-    protected const PER_PAGE = 5;
-
     public function read(int $id = 0): void
     {
         $this->setModel(CountriesModel::class);
@@ -24,7 +22,7 @@ class CountriesController extends BaseController implements ControllerInterface
         if ($page) {
             Paginator::limitRange($countries, self::PER_PAGE, $page);
         } else {
-            $this->limitRange($countries, self::PER_PAGE);
+            Paginator::limitRange($countries, self::PER_PAGE);
         }
 
         $data = [

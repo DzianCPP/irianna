@@ -12,8 +12,6 @@ use core\controllers\buses\helpers\BusesHelper;
 
 class BusesController extends BaseController implements ControllerInterface
 {
-    protected const PER_PAGE = 5;
-
     public function new (string $busName = ""): void
     {
         $this->setView(BusesView::class);
