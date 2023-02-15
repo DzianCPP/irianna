@@ -12,8 +12,6 @@ use core\services\IdGetter;
 
 class CountriesController extends BaseController implements ControllerInterface
 {
-    protected const PER_PAGE = 5;
-
     public function read(int $id = 0): void
     {
         $this->setModel(CountriesModel::class);
