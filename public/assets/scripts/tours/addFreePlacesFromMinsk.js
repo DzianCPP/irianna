@@ -19,6 +19,9 @@ document.addEventListener("DOMContentLoaded", function () {
 async function addFreePlacesFromMinsk() {
     let url = "/tours/count";
     let bus_id = document.getElementById("bus-to").value;
+    if (bus_id == 0) {
+        return;
+    }
     let from_minsk_date = document.getElementById("departure-from-minsk").value;
 
     if (bus_id < 1) {

@@ -11,14 +11,14 @@
 
 <div class="container container-sm container-md container-xl mt-1 mb-5">
 
-    <div class="row w-100 mb-2">
+    <div class="row mb-2">
         <div class="col-md-1 col-xl-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
-            <div class="input-group">
-                <span class="input-group-text w-25 border-secondary">Автобус
+            <div class="input-group w-100">
+                <span class="input-group-text border-secondary w-50">Автобус
                     <span class="text-danger">*</span>
                 </span>
-                <select id="bus" class="btn btn-outline-dark dropdown-toggle w-75">
+                <select id="bus" class="btn btn-outline-dark dropdown-toggle w-50">
                     <option value="0"></option>
                     {% for b in buses %}
                     <option class="bg-light text-success" value="{{ b.id }}">{{ b.name }}{{ ': ' }}{{ b.route }}</option>
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div class="row w-100 mb-2">
+    <div class="row mb-2">
         <div class="col-md-1 col-xl-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
             <div class="input-group">
@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <div class="row w-100 mb-2">
+    <div class="row mb-2">
         <div class="col-md-1 col-xl-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
             <div class="input-group">
@@ -48,16 +48,16 @@
         </div>
     </div>
 
-    <div class="row w-100 mb-2">
+    <div class="row mb-2">
         <div class="col-md-1 col-xl-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
-            <div class="input-group w-100 mb-2">
+            <div class="input-group mb-2">
                 <button type="button" class="btn btn-success w-100" id="prepare-list">Подготовить список</button>
             </div>
         </div>
     </div>
 
-    <div class="row w-100">
+    <div class="row">
         <div class="col-md-1 col-xl-3"></div>
         <div class="col-xs-12 col-sm-12 col-md-10 col-xl-6 text-center">
             <p id="error-field"></p>

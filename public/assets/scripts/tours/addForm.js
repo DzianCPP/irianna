@@ -49,7 +49,7 @@ function createButton(_class, _text) {
 
 function createRow() {
     const _row = document.createElement('div');
-    _row.setAttribute("class", "row w-100 mb-2");
+    _row.setAttribute("class", "row mb-2");
 
     return _row;
 }
