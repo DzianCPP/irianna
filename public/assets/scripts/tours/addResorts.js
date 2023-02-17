@@ -11,6 +11,10 @@ function addResorts() {
         resortsSelect.removeChild(resortsSelect.options[i]);
     }
 
+    for (let l = resortsSelect.length; l >= 0; l--) {
+        resortsSelect.remove(l);
+    }
+
     var newOption = document.createElement('option');
             var optionText = document.createTextNode('');
             newOption.appendChild(optionText);

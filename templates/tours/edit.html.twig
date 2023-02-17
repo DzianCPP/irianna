@@ -53,7 +53,7 @@ data to use:
 					<select class="form-select" name="country" id="country">
 						<option></option>
 						{% for country in countries %}
-						<option {% for r in resorts_array %}{% if tour.resort_id==r.id %}{% if country.id==r.country_id
+						<option {% for r in resorts_array %}{% if tour.resort_id == r.id %}{% if country.id == r.country_id
 							%}{{ 'selected="selected"' }}{% endif %}{% endif %}{% endfor %} value="{{ country.id }}">{{
 							country.name }}</option>
 						{% endfor %}
@@ -64,9 +64,9 @@ data to use:
 					<span class="input-group-text">Курорт<span class="text-danger">*</span>
 					</span>
 					<select class="form-select" name="resorts" id="resort">
-						{% for r in resorts_array %} {% if r.id == tour.resort_id %}
-						<option value="{{ r.id }}">{{ r.name }}</option>
-						{% endif %} {% endfor %}
+						{% for r in resorts_array %}
+						<option {% if r.id == tour.resort_id %} {{ 'selected="selected"' }} {% endif %} value="{{ r.id }}">{{ r.name }}</option>
+						{% endfor %}
 					</select>
 				</div>
 
@@ -90,7 +90,7 @@ data to use:
 					<span class="input-group-text">Автобус<span class="text-danger">*</span>
 					</span>
 					<select class="form-select" name="bus-to-resort" id="bus-to">
-						<option></option>
+						<option value="0"></option>
 						{% for bus in buses %}
 						<option {% if tour.bus_id==bus.id %}{{ 'selected="selected"' }}{% endif %} value="{{ bus.id }}">
 							{{ bus.name }}{{ ': ' }}{{ bus.route }}

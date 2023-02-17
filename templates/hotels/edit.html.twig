@@ -32,7 +32,7 @@
 					<select required name="country" id="resort-id" name="select"
 						class="btn btn-success dropdown-toggle w-75">
 						{% for resort in resorts %}
-						<option value="{{ resort.id }}" {%if resrt.id==hotel.resort_id %} {{ 'selected="selected"' }} {%
+						<option value="{{ resort.id }}" {% if resort.id == hotel.resort_id %} {{ 'selected="selected"' }} {%
 							endif %}>{{ resort.name }}</option>
 						{% endfor %}
 					</select>

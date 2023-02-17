@@ -15,11 +15,11 @@ async function addDepartureFromMinskDates() {
     } else {
         let bus_info = await bus.json();
         let from_minsk = bus_info.departure_from_minsk;
-        addOptionsFromResort(from_minsk);
+        addOptionsFromMinsk(from_minsk);
     }
 }
 
-function addOptionsFromResort(from_minsk) {
+function addOptionsFromMinsk(from_minsk) {
     let fromMinskSelector = document.getElementById("departure-from-minsk");
     let dates = from_minsk.trim().split("\n");
     dates = dates.sort(function(a, b){
