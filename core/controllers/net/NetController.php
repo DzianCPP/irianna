@@ -31,96 +31,78 @@ class NetController extends BaseController
         }
 
         $tours = $this->getTours($hotel['id']);
-        if (!$tours) {
-            $this->renderEmptyPage('Не удалось найти туры');
-            return;
-        }
 
         $clients = $this->getClients($tours);
         $roomsHelper->normalizeRooms($rooms);
         $this->removeF($rooms);
         $raw_dates = $this->getRawDates($rooms);
-        $this->dateToMySQLDate($raw_dates);
-        sort($raw_dates);
-        foreach ($rooms as &$room) {
-            $this->dateToMySQLDate($room['checkin_checkout_dates']);
-            sort($room['checkin_checkout_dates']);
-        }
 
         $table = [];
 
         $this->setTableHeaders($table, $rooms);
-        $this->setNoDates($raw_dates, $rooms);
-        //$this->setTableRows($table, $rooms, $raw_dates, $clients, $tours);
-    }
+        $this->setTableRows($table, $rooms, $raw_dates, $clients, $tours);
 
-    private function setNoDates(array &$raw_dates, array &$rooms): void
-    {
-        for ($i = 0; $i < count($raw_dates); $i+=2) {
-            foreach ($rooms as &$room) {
-                if ($room['checkin_checkout_dates'][$i] != $raw_dates[$i]) {
-                    $beginning = array_slice($room['checkin_checkout_dates'], 0, $i);
-                    $end = array_slice($room['checkin_checkout_dates'], $i);
-                    $insert_array = [ "no", "no" ];
-                    $new_array = [];
-                    foreach ($beginning as &$b) {
-                        $new_array[] = $b;
-                    }
-                    foreach ($insert_array as &$ia) {
-                        $new_array[] = $ia;
-                    }
-                    foreach ($end as &$e) {
-                        $new_array[] = $e;
-                    }
+        $hotelsModel = new HotelsModel();
 
-                    $room['checkin_checkout_dates'] = $new_array;
-                }
-            }
-        }
-    }
+        $data = [
+            'title' => 'Сетка номеров',
+            'header' => 'Сетка номеров',
+            'table' => $table,
+            'login' => $_COOKIE['login'],
+            'hotels' => $hotelsModel->get(),
+            'last_year_number' => substr(date('y'), 1)
+        ];
 
-    private function dateToMySQLDate(array &$dates) {
-        foreach ($dates as &$date) {
-            $date = substr($date, 6) . '-' . substr($date, 3, 2) . '-' . substr($date, 0, 2);
-        }
+        $this->view->render("net/net.html.twig", $data);
     }
 
     private function setTableRows(array &$table, array &$rooms, array &$raw_dates, array &$clients, array &$tours): void
     {
         $table['rows'] = [];
+        $table_rows = count($raw_dates) / 2;
+        for ($table_row = 0, $raw_date_index = 0; $table_row < $table_rows;) {
+            // create row headers
+            $table['rows'][$table_row][] = $raw_dates[$raw_date_index] .' - '.$raw_dates[$raw_date_index+1];
 
-        for ($i = 0, $table_row = 0; $i < count($raw_dates); $i += 2) {
-            $table['rows'][$table_row][] = $raw_dates[$i] . ' - ' . $raw_dates[$i + 1];
+            // fill table cells with 'free room', 'no room available' or 'taken room' options
             foreach ($rooms as &$room) {
-                if ($room['checkin_checkout_dates'][$i] != $raw_dates[$i]) {
-                    $table['rows'][$table_row][] = 'no';
-                    $this->setEmptyCell($table, $room, $raw_dates, $i, $table_row);
+                for ($i = 0; $i < count ($room['checkin_checkout_dates']);) {
+                    if (($room['checkin_checkout_dates'][$i].' - '.$room['checkin_checkout_dates'][$i + 1]) == $table['rows'][$table_row][0]) {
+                        
+                        // find if there is a client taken this room on these dates
+
+                        foreach ($tours as &$tour) {
+                            if ($tour['checkin_date'] == $room['checkin_checkout_dates'][$i] && $tour['checkout_date'] == $room['checkin_checkout_dates'][$i + 1]) {
+
+                                // find client who took the room
+
+                                foreach ($clients as $client) {
+                                    if ($client['id'] == $tour['owner_id']) {
+                                        $table['rows'][$table_row][] = $client['name'];
+                                        break 3;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        $table['rows'][$table_row][] = 'свободно';
+                        break;
+                    } else {
+                        $i += 2;
+                    }
+
+                    if ($i == count($room['checkin_checkout_dates'])) {
+                        $table['rows'][$table_row][] = 'недоступно';
+                    }
                 }
             }
-            $table_row++;
+
+            // switch to next row and date we are checking
+            $raw_date_index += 2;
+            ++$table_row;
         }
     }
 
-
-    private function setEmptyCell(array &$table, array &$room, array &$raw_dates, int $i, int $table_row): void
-    {
-        $table['rows'][$table_row][] = 'no';
-        $beginning = array_slice($room['checkin_checkout_dates'], 0, $i);
-        $insert_array = [$raw_dates[$i], $raw_dates[$i + 1]];
-        $end = array_slice($room['checkin_checkout_dates'], $i, count($room['checkin_checkout_dates']));
-        $total_array = [];
-        foreach ($beginning as $b) {
-            $total_array[] = $b;
-        }
-        foreach ($insert_array as $ia) {
-            $total_array[] = $ia;
-        }
-        foreach ($end as $e) {
-            $total_array[] = $e;
-        }
-
-        $room['checkin_checkout_dates'] = $total_array;
-    }
     private function removeF(array &$rooms): void
     {
         foreach ($rooms as &$room) {

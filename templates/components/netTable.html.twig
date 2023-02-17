@@ -13,22 +13,17 @@
 </div>
 <table class="table table-sm table-secondary table-bordered border-light table-hover" id="table">
     <tr>
-        {% for th in table_headers %}
+        <th>Описание номеров --></th>
+        {% for th in table.headers %}
         <th style="width: fit-content;">{{ th }}</th>
         {% endfor %}
     </tr>
 
-    {% for tr in table_rows %}
+    {% for tr in table.rows %}
     <tr>
-        <td style="width: 200px;">{{ tr.col_0 }}</td>
-        {% for col in tr.cols %}
-        <td style="width: 70px;" {% if col|first=='f' %}{{ 'class="text-light bg-success">' }}{{ 'Свободно' }}{% else
-            %}{{ 'class="text-light bg-danger">' }}{% set name=col|split(' ', 3)|slice(0, 2) %}{% set i = 1 %}
-            {% for n in name %}
-            {% if i == 1 %}{{ n }}{{ ' <br>' }}{% endif %}
-            {% if i == 2 %}{{ n }}{% endif %}
-            {% if i == 1 %}{% set i = 2 %}{% else %}{% set i = 1 %}{% endif %}
-            {% endfor %}{% endif %}</td>{% endfor %}
+        {% for td in tr %}
+        <td {% if td == 'недоступно' %} {{ 'class="bg-dark text-light"' }}{% endif %}{% if td == 'свободно' %} {{ 'class="bg-success text-light"' }} {% else %}{% if td|last != last_year_number %} {{ 'class="bg-danger text-light"' }}{% endif %}{% endif %}>{{ td }}</td>
+        {% endfor %}
     </tr>
     {% endfor %}
 </table>
