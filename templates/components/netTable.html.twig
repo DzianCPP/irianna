@@ -22,7 +22,11 @@
     {% for tr in table.rows %}
     <tr>
         {% for td in tr %}
-        <td {% if td == 'недоступно' %} {{ 'class="bg-dark text-light"' }}{% endif %}{% if td == 'свободно' %} {{ 'class="bg-success text-light"' }} {% else %}{% if td|last != last_year_number %} {{ 'class="bg-danger text-light"' }}{% endif %}{% endif %}>{{ td }}</td>
+        <td {% if td == 'недоступно' %} {{ 'class="bg-dark text-light"' }}{% endif %}{% if td == 'свободно' %} {{ 'class="bg-success text-light"' }} {% else %}{% if td|last != last_year_number %} {{ 'class="bg-danger text-light"' }}{% endif %}{% endif %}>
+        {% if td|split(' ')|length <2 %}{{ td }}{% endif %}
+        {% if td|split(' ')|length == 2 %}{% for n in td|split(' ') %}{{ n }}{{ '<br>' }}{% endfor %}{% endif %}
+        {% if td|split(' ')|length >= 3 %}{{ td }}{% endif %}
+        </td>
         {% endfor %}
     </tr>
     {% endfor %}

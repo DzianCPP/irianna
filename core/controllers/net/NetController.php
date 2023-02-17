@@ -77,8 +77,20 @@ class NetController extends BaseController
                                 // find client who took the room
 
                                 foreach ($clients as $client) {
-                                    if ($client['id'] == $tour['owner_id']) {
-                                        $table['rows'][$table_row][] = $client['name'];
+                                    if ($client['id'] == $tour['owner_id'] && $tour['room_id'] == $room['id']) {
+                                        $client_name = explode(' ', str_replace('  ', ' ', $client['name']), 3);
+                                        $n = 0;
+                                        $new_name = "";
+                                        foreach ($client_name as &$name) {
+                                            $new_name .= $name . ' ';
+                                            $n++;
+                                            if ($n == 2) {
+                                                break;
+                                            }
+                                        }
+
+                                        $client_name = trim($new_name);
+                                        $table['rows'][$table_row][] = $client_name;
                                         break 3;
                                     }
                                 }
