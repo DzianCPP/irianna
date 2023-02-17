@@ -104,6 +104,7 @@ data to use:
 					</span>
 					<select class="form-select" name="departure-from-minsk" id="departure-from-minsk">
 						<option value="{{ tour.from_minsk_date }}">{{ tour.from_minsk_date }}</option>
+						<option value="0"></option>
 					</select>
 				</div>
 
@@ -123,6 +124,7 @@ data to use:
 					<span class="input-group-text">Прибытие в Минск</span>
 					<select class="form-select" name="departure-from-resort" id="arrival-to-minsk">
 						<option value="{{ tour.arrival_to_minsk }}">{{ tour.arrival_to_minsk }}</option>
+						<option value="0"></option>
 					</select>
 				</div>
 
@@ -131,6 +133,7 @@ data to use:
 					<span class="input-group-text">Гостиница<span class="text-danger">*</span>
 					</span>
 					<select class="form-select" name="hotels" id="hotels">
+						<option value="0"></option>
 						{% for hotel in hotels_array %}
 						<option {% if tour.hotel_id==hotel.id %}{{ 'selected="selected"' }}{% endif %}
 							value="{{ hotel.id }}">{{ hotel.name }}</option>
@@ -146,12 +149,14 @@ data to use:
 						</span>
 						<select class="form-select  w-25" name="rooms-checkin-date" id="room-checkin-date">
 							<option value="{{ tour.checkin_date }}">{{ tour.checkin_date }}</option>
+							<option value="0"></option>
 						</select>
 						<span class="input-group-text  w-25">
 							Дата<br>выселения
 						</span>
 						<select class="form-select  w-25" name="rooms-checkin-date" id="room-checkout-date">
 							<option value="{{ tour.checkout_date }}">{{ tour.checkout_date }}</option>
+							<option value="0"></option>
 						</select>
 					</div>
 					<div class="input-group w-100">
@@ -163,6 +168,7 @@ data to use:
 							{% for r in rooms_array %}{% if r.id == tour.room_id %}
 							<option value="{{ r.id }}">{{ r.description }}</option>
 							{% endif %}{% endfor %}
+							<option value="0"></option>
 						</select>
 					</div>
 				</div>
@@ -387,4 +393,5 @@ data to use:
 		<script type="text/javascript" src="/assets/scripts/tours/addDates.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/noTransfer.js"></script>
 		<script type="text/javascript" src="/assets/scripts/tours/removeForm.js"></script>
+		<script type="text/javascript" src="/assets/scripts/tours/reset.js"></script>
 		{% endblock %}

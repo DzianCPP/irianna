@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function addDepartureFromMinskDates() {
+    if (document.getElementById("bus-to").value == 0) {
+        return;
+    }
     let url = "/busesOne/" + document.getElementById("bus-to").value;
     let GET = {
         method: "GET"
