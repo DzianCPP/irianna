@@ -33,9 +33,8 @@ data to use:
 
 
 	<div class="row pb-2">
-		<div class="col-md-1 col-xl-1"></div>
-		<div class="col-xs-12 col-sm-12 col-md-5 col-xl-5 mt-3">
-			<div class="container w-100 p-4" style="background-color:beige;">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-xl-6 mt-3">
+			<div class="container w-100 p-2" style="background-color:beige;">
 				<div class="input-group">
 					<span class="input-group-text">Менеджер<span class="text-danger">*</span>
 					</span>
@@ -179,16 +178,60 @@ data to use:
 					<span class="input-group-text w-25" id="places-from"></span>
 				</div>
 
+				<div class="input-group mt-2">
+					<span class="input-group-text bg-warning text-dark w-auto">Кол-во детей</span>
+					<input type="number" class="form-control" id="number-of-children" placeholder="Кол-во детей"
+						value="{{ tour.number_of_children }}" />
+				</div>
+				<div class="input-group mt-2">
+					<span class="input-group-text bg-warning text-dark w-auto">Возраст детей</span>
+					<input type="text" class="form-control" id="age-of-children"
+						placeholder="Возраст детей через запятую" value="{{ tour.ages }}" />
+				</div>
+
+				<div class="input-group m-1">
+					<span class="input-group-text bg-primary text-light w-50">Тур. услуга<span
+							class="text-danger">*</span></span>
+					<span class="form-control" id="total-service-cost"></span>
+				</div>
+				<div class="input-group m-1">
+					<span class="input-group-text bg-primary text-light w-50">Стоимость тура<span
+							class="text-danger">*</span></span>
+					<span class="form-control" id="total-tour-cost"></span>
+					<span class="form-control" id="total-currency-1">-</span>
+				</div>
+				<div class="input-group m-1">
+					<span class="input-group-text bg-primary text-light w-50">Итого стоимость тура<span
+							class="text-danger">*</span></span>
+					<span class="form-control" id="total-cost-currency"></span>
+					<span class="form-control" placeholder="Валюта" id="total-currency">-</span>
+				</div>
+				<div class="input-group m-1">
+					<button class="btn btn-warning text-dark w-100" id="calculate-total-cost">Посчитать общую
+						стоимость</button>
+				</div>
+
 
 				<div class="input-group mt-2">
 					<button type="button" class="btn btn-success w-100" id="save-tour" disabled>Сохранить</button>
 				</div>
 				<div hidden class="alert alert-success mt-2" role="alert" id="alert"></div>
+
+				<div class="input-group m-1 mt-2">
+					<button class="btn btn-outline-success w-50" id="print-contract" disabled>Печать
+						договора</button>
+					<button class="btn btn-outline-success w-50" id="print-attachment-2" disabled>Печать приложения
+						2</button>
+				</div>
+				<div class="input-group m-1">
+					<button class="btn btn-outline-success w-100" id="print-voucher" disabled>Печать
+						путевки</button>
+				</div>
 			</div>
 		</div>
 
-		<div class="col-xs-12 col-sm-12 col-md-5 col-xl-5">
-			<div class="container p-4 w-100" name="clients" id="clients" style="background-color:beige;">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-xl-6 mt-3">
+			<div class="container p-2 w-100" name="clients" id="clients" style="background-color:beige;">
 				<div class="row w-100 mb-2">
 					<div class="input-group">
 						<span class="input-group-text w-25">ФИО
@@ -316,67 +359,6 @@ data to use:
 					</div>
 				</div>
 				{% endfor %}
-			</div>
-			<div class="container w-100 mt-2 p-4" name="clients" style="background-color:beige;">
-				<div class="row w-100 mb-2">
-					<div class="input-group mt-2">
-						<button type"button" class="btn btn-outline-success w-100" name="add-subclient">+</button>
-					</div>
-					<div class="input-group mt-2">
-						<span class="input-group-text bg-warning text-dark w-auto">Кол-во детей</span>
-						<input type="number" class="form-control" id="number-of-children" placeholder="Кол-во детей"
-							value="{{ tour.number_of_children }}" />
-					</div>
-					<div class="input-group mt-2">
-						<span class="input-group-text bg-warning text-dark w-auto">Возраст детей</span>
-						<input type="text" class="form-control" id="age-of-children"
-							placeholder="Возраст детей через запятую" value="{{ tour.ages }}" />
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row mb-5 pb-5 pt-2">
-			<div class="col-md-1 col-xl-1"></div>
-			<div class="col-xs-12 col-sm-12 col-md-5 col-xl-5">
-				<div class="container w-100 mt-2 p-4" style="background-color:beige;">
-					<div class="input-group m-1">
-						<button class="btn btn-outline-success w-50" id="print-contract" disabled>Печать
-							договора</button>
-						<button class="btn btn-outline-success w-50" id="print-attachment-2" disabled>Печать приложения
-							2</button>
-					</div>
-					<div class="input-group m-1">
-						<button class="btn btn-outline-success w-100" id="print-voucher" disabled>Печать
-							путевки</button>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-5 col-xl-5">
-				<div class="container w-100 mt-2 p-4" style="background-color:beige;">
-					<div class="input-group m-1">
-						<span class="input-group-text bg-primary text-light w-50">Тур. услуга<span
-								class="text-danger">*</span></span>
-						<span class="form-control" id="total-service-cost"></span>
-					</div>
-					<div class="input-group m-1">
-						<span class="input-group-text bg-primary text-light w-50">Стоимость тура<span
-								class="text-danger">*</span></span>
-						<span class="form-control" id="total-tour-cost"></span>
-						<span class="form-control" id="total-currency-1">-</span>
-					</div>
-					<div class="input-group m-1">
-						<span class="input-group-text bg-primary text-light w-50">Итого стоимость тура<span
-								class="text-danger">*</span></span>
-						<span class="form-control" id="total-cost-currency"></span>
-						<span class="form-control" placeholder="Валюта" id="total-currency">-</span>
-					</div>
-					<div class="input-group m-1">
-						<button class="btn btn-warning text-dark w-100" id="calculate-total-cost">Посчитать общую
-							стоимость</button>
-					</div>
-				</div>
 			</div>
 		</div>
 		<p hidden id="tour-id">{{ tour.id }}</p>
