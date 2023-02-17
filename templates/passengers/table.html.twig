@@ -4,13 +4,16 @@
 {% if main|length > 0 %}
 <table class="table table-responsive table-sm table-xl table-md table-xs table-hover text-center w-100" id="table">
     <tr>
+        <th></th>
         <th style="min-width: 250px;">Имя</th>
         <th style="min-width: 250px;">Паспорт</th>
         <th style="min-width: 250px;">Телефон</th>
         <th style="min-width: 150px;"></th>
     </tr>
+    {% set i = 1 %}
     {% for m in main %}
     <tr>
+        <td>{{ i }}{% set i = i + 1 %}</td>
         <td>{{ m.name }}</td>
         <td>{{ m.passport }}</td>
         <td>{{ m.main_phone }}</td>
@@ -19,6 +22,7 @@
     {% for sub in subs %} {% set s = sub %}
     {% for c in s %} {% if c.main_client_id == m.id %}
     <tr>
+        <td>{{ i }}{% set i = i + 1 %}</td>
         <td>{{ c.name }}</td>
         <td>{{ c.passport}}</td>
         <td></td>
