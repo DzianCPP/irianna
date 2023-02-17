@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function addArrivalToMinsk() {
     let url = "/busesOne/" + document.getElementById('bus-from').value;
+    if (document.getElementById("bus-from").value == 0) {
+        return;
+    }
     let GET = {
         method: 'GET'
     };
