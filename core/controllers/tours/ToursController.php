@@ -168,13 +168,14 @@ class ToursController extends BaseController implements ControllerInterface
             $tours = $this->model->get(['column' => 'room_id', 'value' => $room['id']]);
             $busy_checkin_dates = [];
             $busy_checkout_dates = [];
-            foreach ($tours as $tour) {
-                if (array_search($tour['checkin_date'], $room['checkin_dates']) !== false) {
-                    $busy_checkin_dates[] = $tour['checkin_date'];
+
+            foreach ($tours as $t) {
+                if (array_search($t['checkin_date'], $room['checkin_dates']) !== false) {
+                    $busy_checkin_dates[] = $t['checkin_date'];
                 }
 
-                if (array_search($tour['checkout_date'], $room['checkout_dates']) !== false) {
-                    $busy_checkout_dates[] = $tour['checkout_date'];
+                if (array_search($t['checkout_date'], $room['checkout_dates']) !== false) {
+                    $busy_checkout_dates[] = $t['checkout_date'];
                 }
             }
 
