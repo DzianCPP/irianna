@@ -10,6 +10,7 @@ use core\models\tours\ToursModel;
 use core\views\rooms\RoomsView;
 use core\services\IdGetter;
 use core\controllers\rooms\helpers\RoomsHelper;
+use database\migrations\m11_create_rooms_table;
 
 class RoomsController extends BaseController implements ControllerInterface
 {
@@ -112,14 +113,14 @@ class RoomsController extends BaseController implements ControllerInterface
 
         foreach ($rooms as &$room) {
             for ($l = 1; $l < count($room['checkin_checkout_dates']); $l += 2) {
-                $date = &$room['checkin_checkout_dates'][$l];
+                $date = & $room['checkin_checkout_dates'][$l];
                 foreach ($tours_set as $tours) {
                     foreach ($tours as $tour) {
                         if (($d = 'f' . $tour['checkout_date']) == $date && $room['id'] == $tour['room_id']) {
                             $date = str_replace('f', 'b', $date);
-                            for($i = 1; $i < count($room['checkin_checkout_dates']); $i += 2) {
+                            for ($i = 1; $i < count($room['checkin_checkout_dates']); $i += 2) {
                                 if ($room['checkin_checkout_dates'][$i] == $date) {
-                                    $room['checkin_checkout_dates'][$i-1] = str_replace('f', 'b', $room['checkin_checkout_dates'][$i-1]);
+                                    $room['checkin_checkout_dates'][$i - 1] = str_replace('f', 'b', $room['checkin_checkout_dates'][$i - 1]);
                                 }
                             }
                         }
@@ -153,37 +154,21 @@ class RoomsController extends BaseController implements ControllerInterface
 
     public function free(): void
     {
-        $hotel_id = (int) IdGetter::getId();
         $this->setModel(RoomsModel::class);
+        $hotel_id = IdGetter::getId();
         $rooms = $this->model->get(['column' => 'hotel_id', 'value' => $hotel_id]);
+        $free_dates = ['in_dates' => [], 'out_dates' => []];
+        $toursModel = new ToursModel();
         $roomsHelper = new RoomsHelper();
 
         foreach ($rooms as &$room) {
             $room = $roomsHelper->normalizeRoom($room);
         }
 
-        $toursModel = new ToursModel();
-
-        $tours_sets = [];
-
         foreach ($rooms as &$room) {
-            $tours_sets[] = $toursModel->get(['column' => 'room_id', 'value' => $room['id']]);
-        }
 
-        $tours = [];
-
-        foreach ($tours_sets as $tour_set) {
-            foreach ($tour_set as $tour) {
-                $tours[] = $tour;
-            }
-        }
-
-        unset($tours_set);
-
-        $checkin_dates = [];
-        $checkout_dates = [];
-
-        foreach ($rooms as &$room) {
+            $checkin_dates = [];
+            $checkout_dates = [];
             for ($i = 0; $i < count($room['checkin_checkout_dates']); $i++) {
                 if ($i % 2 > 0) {
                     $checkout_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
@@ -191,53 +176,141 @@ class RoomsController extends BaseController implements ControllerInterface
                     $checkin_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
                 }
             }
+
+            $room['checkin_dates'] = $checkin_dates;
+            $room['checkout_dates'] = $checkout_dates;
+            unset($room['checkin_checkout_dates']);
         }
 
-        $all_dates = ['checkin_dates' => array_unique($checkin_dates), 'checkout_dates' => array_unique($checkout_dates)];
+        foreach ($rooms as &$room) {
+            $tours = $toursModel->get(['column' => 'room_id', 'value' => $room['id']]);
+            $busy_checkin_dates = [];
+            $busy_checkout_dates = [];
+            foreach ($tours as $tour) {
+                if (array_search($tour['checkin_date'], $room['checkin_dates']) !== false) {
+                    $busy_checkin_dates[] = $tour['checkin_date'];
+                }
 
-        $free_dates = ['checkin_dates' => [], 'checkout_dates' => []];
-
-
-        if (!$tours) {
-            $free_dates = $all_dates;
-            echo json_encode($free_dates);
-            http_response_code(200);
-            die();
-        }
-        
-        foreach ($tours as $tour) {
-            foreach($all_dates['checkin_dates'] as &$date) {
-                if ($date == $tour['checkin_date']) {
-                    $date = "b" . $date;
-                } else {
-                    $date = "f" . $date;
+                if (array_search($tour['checkout_date'], $room['checkout_dates']) !== false) {
+                    $busy_checkout_dates[] = $tour['checkout_date'];
                 }
             }
 
-            foreach($all_dates['checkout_dates'] as &$date) {
-                if ($date == $tour['checkout_date']) {
-                    $date = "b" . $date;
-                } else {
-                    $date = "f" . $date;
+            $room['busy_checkin_dates'] = $busy_checkin_dates;
+            $room['busy_checkout_dates'] = $busy_checkout_dates;
+
+            $free_checkin_dates = [];
+            $free_checkout_dates = [];
+
+            foreach ($room['checkin_dates'] as $in_date) {
+                if (array_search($in_date, $room['busy_checkin_dates']) === false) {
+                    $free_checkin_dates[] = $in_date;
+                    $free_dates['in_dates'][] = $in_date;
                 }
             }
-        }
 
-        foreach($all_dates['checkin_dates'] as $d) {
-            if (str_contains($d, 'f')) {
-                $free_dates['checkin_dates'][] = substr($d, 1);
+            $room['checkin_dates'] = $free_checkin_dates;
+
+            foreach ($room['checkout_dates'] as $out_date) {
+                if (array_search($out_date, $room['busy_checkout_dates']) === false) {
+                    $free_checkout_dates[] = $out_date;
+                    $free_dates['out_dates'][] = $out_date;
+                }
             }
-        }
 
-
-        foreach($all_dates['checkout_dates'] as $d) {
-            if (str_contains($d, 'f')) {
-                $free_dates['checkout_dates'][] = substr($d, 1);
-            }
+            $room['checkout_dates'] = $free_checkout_dates;
         }
 
         echo json_encode($free_dates);
     }
+
+    // public function free(): void
+    // {
+    //     $hotel_id = (int) IdGetter::getId();
+    //     $this->setModel(RoomsModel::class);
+    //     $rooms = $this->model->get(['column' => 'hotel_id', 'value' => $hotel_id]);
+    //     $roomsHelper = new RoomsHelper();
+
+    //     foreach ($rooms as &$room) {
+    //         $room = $roomsHelper->normalizeRoom($room);
+    //     }
+
+    //     $toursModel = new ToursModel();
+
+    //     $tours_sets = [];
+
+    //     foreach ($rooms as &$room) {
+    //         $tours_sets[] = $toursModel->get(['column' => 'room_id', 'value' => $room['id']]);
+    //     }
+
+    //     $tours = [];
+
+    //     foreach ($tours_sets as $tour_set) {
+    //         foreach ($tour_set as $tour) {
+    //             $tours[] = $tour;
+    //         }
+    //     }
+
+    //     unset($tours_set);
+
+    //     $checkin_dates = [];
+    //     $checkout_dates = [];
+
+    //     foreach ($rooms as &$room) {
+    //         for ($i = 0; $i < count($room['checkin_checkout_dates']); $i++) {
+    //             if ($i % 2 > 0) {
+    //                 $checkout_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
+    //             } else {
+    //                 $checkin_dates[] = substr($room['checkin_checkout_dates'][$i], 1);
+    //             }
+    //         }
+    //     }
+
+    //     $all_dates = ['checkin_dates' => array_unique($checkin_dates), 'checkout_dates' => array_unique($checkout_dates)];
+
+    //     $free_dates = ['checkin_dates' => [], 'checkout_dates' => []];
+
+
+    //     if (!$tours) {
+    //         $free_dates = $all_dates;
+    //         echo json_encode($free_dates);
+    //         http_response_code(200);
+    //         die();
+    //     }
+
+    //     foreach ($tours as $tour) {
+    //         foreach($all_dates['checkin_dates'] as &$date) {
+    //             if ($date == $tour['checkin_date']) {
+    //                 $date = "b" . $date;
+    //             } else {
+    //                 $date = "f" . $date;
+    //             }
+    //         }
+
+    //         foreach($all_dates['checkout_dates'] as &$date) {
+    //             if ($date == $tour['checkout_date']) {
+    //                 $date = "b" . $date;
+    //             } else {
+    //                 $date = "f" . $date;
+    //             }
+    //         }
+    //     }
+
+    //     foreach($all_dates['checkin_dates'] as $d) {
+    //         if (str_contains($d, 'f')) {
+    //             $free_dates['checkin_dates'][] = substr($d, 1);
+    //         }
+    //     }
+
+
+    //     foreach($all_dates['checkout_dates'] as $d) {
+    //         if (str_contains($d, 'f')) {
+    //             $free_dates['checkout_dates'][] = substr($d, 1);
+    //         }
+    //     }
+
+    //     echo json_encode($free_dates);
+    // }
 
     public function update(int $id = 0): void
     {

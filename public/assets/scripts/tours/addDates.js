@@ -2,19 +2,14 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("hotels").addEventListener("click", function () {
         addDates();
     });
-
-    document.getElementById("departure-from-minsk").addEventListener("change", function () {
-        addDates();
-    });
-
-    document.getElementById("arrival-to-minsk").addEventListener("change", function () {
-        addDates();
-    });
 });
 
-function addDates() {
-    let free_dates = JSON.parse(document.getElementById("free-dates").innerHTML);
+async function addDates() {
+    // let free_dates = JSON.parse(document.getElementById("free-dates").innerHTML);
 
+    let json_dates_raw = await getFreeDates();
+    
+    let free_dates = json_dates_raw;
     let checkin_dates = free_dates['in_dates'];
     let checkout_dates = free_dates['out_dates'];
 
@@ -98,4 +93,17 @@ function addDates() {
             document.getElementById("room-checkout-date").appendChild(option);
         }
     }
+}
+
+async function getFreeDates() {
+    let url = "/rooms/free/" + document.getElementById("hotels").value;
+    let response = await fetch(url);
+    if (!response.ok) {
+        console.log("Не удалось получить свободные даты");
+        return false;
+    }
+
+    json_dates = await response.json();
+
+    return json_dates;
 }
