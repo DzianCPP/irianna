@@ -469,6 +469,12 @@ return [
         'method' => 'POST'
     ],
 
+    'tours/last' => [
+        'controller' => ToursController::class,
+        'action' => 'last',
+        'method' => 'GET'
+    ],
+
     'tours/request' => [
         'controller' => ToursController::class,
         'action' => 'request',

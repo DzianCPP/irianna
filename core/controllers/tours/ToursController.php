@@ -697,4 +697,12 @@ class ToursController extends BaseController implements ControllerInterface
 
         http_response_code(200);
     }
+
+    public function last(): void
+    {
+        $this->setModel(ToursModel::class);
+        $last = $this->model->getLastTour();
+        $last_id = $last['id'];
+        echo json_encode($last_id);
+    }
 }

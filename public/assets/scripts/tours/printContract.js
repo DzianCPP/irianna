@@ -5,5 +5,5 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function printTour() {
-    window.open("/tours/printContract");
+    window.open("/tours/printContract/" + document.getElementById("tour-to-print-id").innerHTML);
 }
