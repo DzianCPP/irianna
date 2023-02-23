@@ -70,6 +70,7 @@ async function createTour() {
             _alert.innerHTML = 'Тур сохранен';
             _alert.hidden = false;
             document.getElementById("saved-times").innerHTML = 1;
+            setTourToPrintId();
         } else {
             console.log("Тур не удалось сохранить");
             let _alert = document.getElementById("alert");
@@ -78,6 +79,21 @@ async function createTour() {
             _alert.hidden = false;
         }
     }
+}
+
+async function setTourToPrintId() {
+    var url = "/tours/last";
+    var response = await fetch(url);
+    if (!response.ok) {
+        var _alert = document.getElementById("alert");
+        _alert.setAttribute('class', 'alert alert-danger mt-2');
+        _alert.innerHTML = 'Тур не удалось сохранить';
+        _alert.hidden = false;
+        return;
+    }
+
+    var last_id = await response.json();
+    document.getElementById("tour-to-print-id").innerHTML = last_id;
 }
 
 async function createClient() {
