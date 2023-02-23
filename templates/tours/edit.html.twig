@@ -203,13 +203,13 @@ data to use:
 				<div class="input-group m-1">
 					<span class="input-group-text bg-primary text-light w-50">Стоимость тура<span
 							class="text-danger">*</span></span>
-					<span class="form-control" id="total-tour-cost">{{ tour.total_travel_cost_byn }}</span>
+					<span class="form-control" id="total-tour-cost">{{ tour.total_travel_cost_byn|split(' ')|first }}</span>
 					<span class="form-control" id="total-currency-1">-</span>
 				</div>
 				<div class="input-group m-1">
 					<span class="input-group-text bg-primary text-light w-50">Итого стоимость тура<span
 							class="text-danger">*</span></span>
-					<span class="form-control" id="total-cost-currency">{{ tour.total_travel_cost_currency }}</span>
+					<span class="form-control" id="total-cost-currency">{{ tour.total_travel_cost_currency|split(' ')|first }}</span>
 					<span class="form-control" placeholder="Валюта" id="total-currency">-</span>
 				</div>
 				<div class="input-group m-1">
