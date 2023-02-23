@@ -11,6 +11,9 @@ function activateSaveTourButton() {
     if (fieldsAreValid()) {
         save_tour_btn.disabled = false;
         return;
+    } else {
+        save_tour_btn.disabled = true;
+        return;
     }
 }
 
@@ -22,6 +25,7 @@ function fieldsAreValid() {
     let room = document.getElementById("rooms").value;
     let departure_from_minsk = document.getElementById("departure-from-minsk").value;
     let main_client_name = document.getElementById("main-client-name").value;
+    let main_client_main_phone = document.getElementById("main-client-phone-main").value;
 
     if (!manager) {
         return false;
@@ -60,6 +64,10 @@ function fieldsAreValid() {
     }
 
     if (document.getElementById("total-service-cost").innerHTML.length < 1) {
+        return false;
+    }
+
+    if (main_client_main_phone.length < 2) {
         return false;
     }
     
