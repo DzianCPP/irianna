@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let service_costs = document.getElementsByName("service-cost");
+    let service_costs = document.getElementsByName("sub-service-cost");
     document.getElementById("calculate-total-cost").addEventListener("click", function () {
         let service_costs_values = 0;
 
         for (let sc of service_costs) {
             service_costs_values += Number(sc.value);
         }
+
+        service_costs_values += Number(document.getElementById("main-client-service-cost").value);
 
         document.getElementById("total-service-cost").innerHTML = service_costs_values;
     });
@@ -14,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    let tour_costs = document.getElementsByName("tour-cost");
+    let tour_costs = document.getElementsByName("sub-tour-cost");
 
     document.getElementById("calculate-total-cost").addEventListener("click", function () {
         let tour_costs_values = 0;
@@ -22,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let tc of tour_costs) {
             tour_costs_values += Number(tc.value);
         }
+
+        tour_costs_values += Number(document.getElementById("main-client-tour-cost").value);
 
         document.getElementById("total-tour-cost").innerHTML = tour_costs_values;
     });
@@ -44,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    let tour_costs_currency = document.getElementsByName("tour-cost-currency");
+    let tour_costs_currency = document.getElementsByName("sub-tour-cost-currency");
 
     document.getElementById("calculate-total-cost").addEventListener("click", function () {
         let tour_costs_currency_values = 0;
@@ -52,6 +56,8 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let tc of tour_costs_currency) {
             tour_costs_currency_values += Number(tc.value);
         }
+
+        tour_costs_currency_values += Number(document.getElementById("main-client-total-cost-currency").value);
 
         if (tour_costs_currency_values != 0) {
             document.getElementById("total-cost-currency").innerHTML = tour_costs_currency_values;

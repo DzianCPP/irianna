@@ -14,7 +14,10 @@ class ClientsHelper
             $sub_clients[] = [
                 'name' => $sub_clients_data['_names'][$i],
                 'passport' => $sub_clients_data['_passport'][$i],
-                'birth_date' => $sub_clients_data['_birthDates'][$i]
+                'birth_date' => $sub_clients_data['_birthDates'][$i],
+                'travel_service' => $sub_clients_data['_travel_services'][$i],
+                'travel_cost_currency_1' => $sub_clients_data['_travel_cost_currency_1s'][$i],
+                'travel_cost_currency_2' => $sub_clients_data['_travel_cost_currency_2s'][$i]
             ];
         }
 
