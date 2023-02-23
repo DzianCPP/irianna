@@ -5,5 +5,5 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function printAttachment2() {
-    window.open("/tours/printAttachmentTwo");
+    window.open("/tours/printAttachmentTwo/" + document.getElementById("tour-to-print-id").innerHTML);
 }
