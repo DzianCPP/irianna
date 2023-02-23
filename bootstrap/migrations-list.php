@@ -18,5 +18,11 @@ return [
     ['m14' => 'm14_create_clients_archive_table'],
     ['m15' => 'm15_create_tours_archive_table'],
     ['m16' => 'm16_create_subclients_archive_table'],
-    ['m17' => 'm17_modify_tours_table_ownerTravelCost_column']
+    ['m17' => 'm17_modify_tours_table_ownerTravelCost_column'],
+    ['m18' => 'm18_modify_add_travel_service_column'],
+    ['m19' => 'm19_modify_add_travel_cost_currency_1_column'],
+    ['m20' => 'm20_modify_add_travel_cost_currency_2_column'],
+    ['m21' => 'm21_modify_subclients_table_add_travel_service_column'],
+    ['m22' => 'm22_modify_subclients_table_add_travel_cost_currency_1_column'],
+    ['m23' => 'm23_modify_subclients_table_add_travel_cost_currency_2_column']
 ];

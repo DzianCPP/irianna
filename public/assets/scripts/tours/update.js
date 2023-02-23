@@ -165,6 +165,9 @@ function getMainClient() {
     let _passport = document.getElementById("main-client-passport").value;
     let _birthDate = document.getElementById("main-client-birth-date").value;
     let _address = document.getElementById("main-client-address").value;
+    let _travel_service = document.getElementById("main-client-service-cost").value;
+    let _travel_cost_currency_1 = document.getElementById("main-client-tour-cost").value + " " + document.getElementById("main-client-currency-1").value;
+    let _travel_cost_currency_2 = document.getElementById("main-client-total-cost-currency").value + " " + document.getElementById("main-client-currency").value;
 
     return {
         name: _name,
@@ -172,7 +175,10 @@ function getMainClient() {
         second_phone: _secondPhone,
         passport: _passport,
         birthday: _birthDate,
-        address: _address
+        address: _address,
+        travel_service: _travel_service,
+        travel_cost_currency_1: _travel_cost_currency_1,
+        travel_cost_currency_2: _travel_cost_currency_2
     };
 }
 
@@ -180,6 +186,9 @@ function getSubClients() {
     let names = [];
     let passports = [];
     let birthDates = [];
+    let travel_services = [];
+    let travel_cost_currency_1 = [];
+    let travel_cost_currency_2 = [];
 
     for (var el of document.getElementsByName("sub-client-name")) {
         names.push(el.value);
@@ -193,9 +202,24 @@ function getSubClients() {
         birthDates.push(el.value);
     }
 
+    for (var el of document.getElementsByName("sub-service-cost")) {
+        travel_services.push(el.value);
+    }
+
+    for (var el of document.getElementsByName("sub-tour-cost")) {
+        travel_cost_currency_1.push(el.value + " " + document.getElementById("main-client-currency-1").value);
+    }
+
+    for (var el of document.getElementsByName("sub-tour-cost-currency")) {
+        travel_cost_currency_2.push(el.value + " " + document.getElementById("main-client-currency").value);
+    }
+
     return {
         _names: names,
         _passport: passports,
-        _birthDates: birthDates
+        _birthDates: birthDates,
+        _travel_services: travel_services,
+        _travel_cost_currency_1s: travel_cost_currency_1,
+        _travel_cost_currency_2s: travel_cost_currency_2
     };
 }
