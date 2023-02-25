@@ -26,9 +26,9 @@
             <div class="input-group w-100 align-middle">
                 <select class="form-select" id="search-from-minsk-date">
                     <option value="0">Выбрать</option>
-                    {% for tour in tours %}
-                    <option value="{{ tour.from_minsk_date }}">{{ tour.from_minsk_date }}</option>
-                    {% endfor %}
+                    {% for bus in buses %}{% for date in bus.departure_from_minsk|split('\n') %}
+                    <option value="{{ date }}">{{ date }}</option>
+                    {% endfor %}{% endfor %}
                 </select>
             </div>
         </th>
@@ -36,9 +36,9 @@
             <div class="input-group w-100 align-middle">
                 <select class="form-select" id="search-to-minsk-date">
                     <option value="0">Выбрать</option>
-                    {% for tour in tours %}
-                    <option value="{{ tour.to_minsk_date }}">{{ tour.to_minsk_date }}</option>
-                    {% endfor %}
+                    {% for bus in buses %}{% for date in bus.arrival_to_minsk|split('\n') %}
+                    <option value="{{ date }}">{{ date }}</option>
+                    {% endfor %}{% endfor %}
                 </select>
             </div>
         </th>
