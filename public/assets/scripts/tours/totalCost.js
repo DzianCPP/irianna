@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         service_costs_values += Number(document.getElementById("main-client-service-cost").value);
-
         document.getElementById("total-service-cost").innerHTML = service_costs_values;
     });
 });
@@ -23,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         service_costs_values += Number(document.getElementById("main-client-service-cost").value);
-
         document.getElementById("total-service-cost").innerHTML = service_costs_values;
     });
 });
@@ -88,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         tour_costs_currency_values += Number(document.getElementById("main-client-total-cost-currency").value);
-
         if (tour_costs_currency_values != 0) {
             document.getElementById("total-cost-currency").innerHTML = tour_costs_currency_values;
         } else {
@@ -108,7 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         tour_costs_currency_values += Number(document.getElementById("main-client-total-cost-currency").value);
-
         if (tour_costs_currency_values != 0) {
             document.getElementById("total-cost-currency").innerHTML = tour_costs_currency_values;
         } else {
