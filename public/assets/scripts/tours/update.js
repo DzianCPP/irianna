@@ -29,8 +29,10 @@ async function update() {
 
     var _alert = document.getElementById("alert");
     _alert.setAttribute('class', 'alert alert-success mt-2');
+    document.getElementById("save-tour").disabled = true;
     _alert.innerHTML = 'Тур обновлен';
     _alert.hidden = false;
+    window.location = document.referrer;
 }
 
 async function _delete() {
