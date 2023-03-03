@@ -198,44 +198,6 @@ class ClientsController extends BaseController implements ControllerInterface
 
     public function hotel_list(): void
     {
-        // $dataToPRint = [
-        //     'header' => $room_description,
-        //     'guests' => ['client_name', 'client_passport']
-        // ];
-        // $this->setModel(ClientsController::class);
-        // $data = json_decode(file_get_contents("php://input"), true);
-        // $this->setModel(ClientsModel::class);
-        // $toursModel = new ToursModel();
-        // $tours = $toursModel->list(columnsValues: [
-        //     'columns' => ['hotel_id', 'checkin_date', 'checkout_date'],
-        //     'values' => [$data['hotel_id'], $data['checkin_date'], $data['checkout_date']]
-        // ]);
-
-        // $main_clients = [];
-
-        // foreach ($tours as $tour) {
-        //     $main_clients[] = $this->model->get(['column' => 'id', 'value' => $tour['owner_id']])[0];
-        // }
-
-        // $sub_clients = [];
-
-        // foreach ($main_clients as $mc) {
-        //     $sub_clients[] = $this->model->getSubClients([
-        //         'column' => 'main_client_id',
-        //         'value' => $mc['id']
-        //     ]);
-        // }
-
-        // $passengers = ['main_clients' => [], 'sub_clients' => []];
-
-        // for ($i = 0; $i < count($main_clients); $i++) {
-        //     $passengers['main_clients'][] = $main_clients[$i];
-        //     $passengers['sub_clients'][] = $sub_clients[$i];
-        // }
-
-        // $hotelsModel = new BusesModel();
-        // $hotel = $hotelsModel->get(['column' => 'id', 'value' => $data['hotel_id']])[0];
-
         $this->setModel(ClientsModel::class);
         $toursModel = new ToursModel();
         $roomsModel = new RoomsModel();
@@ -365,6 +327,16 @@ class ClientsController extends BaseController implements ControllerInterface
 
         $busesModel = new BusesModel();
         $bus = $busesModel->get(['column' => 'id', 'value' => $data['bus_id']])[0];
+
+        foreach ($passengers['main_clients'] as &$m) {
+            $m['birth_date'] = DateConverter::YMDtoDMY($m['birth_date']);
+        }
+
+        foreach ($passengers['sub_clients'] as &$ss) {
+            foreach ($ss as &$sc) {
+                $sc['birth_date'] = DateConverter::YMDtoDMY($sc['birth_date']);
+            }
+        }
 
         $data = [
             'title' => 'Список пассажиров',

@@ -8,7 +8,8 @@
         <th style="min-width: 250px;">Имя</th>
         <th style="min-width: 250px;">Паспорт</th>
         <th style="min-width: 250px;">Телефон</th>
-        <th style="min-width: 150px;"></th>
+        <th style="min-width: 250px;">Дата рождения</th>
+        <th style="min-width: 100px;"></th>
     </tr>
     {% set i = 1 %}
     {% for m in main %}
@@ -17,6 +18,7 @@
         <td>{{ m.name }}</td>
         <td>{{ m.passport }}</td>
         <td>{{ m.main_phone }}</td>
+        <td>{{ m.birth_date }}</td>
         <td><input type="checkbox" class="checkbox">На месте</input></td>
     </tr>
     {% for sub in subs %} {% set s = sub %}
@@ -26,6 +28,7 @@
         <td>{{ c.name }}</td>
         <td>{{ c.passport}}</td>
         <td></td>
+        <td>{{ c.birth_date }}  </td>
         <td class="text-center"><input type="checkbox" class="checkbox">На месте</input></td>
     </tr>
     {% endif %}{% endfor %}{% endfor %}
