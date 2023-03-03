@@ -9,6 +9,7 @@ use core\models\buses\BusesModel;
 use core\models\hotels\HotelsModel;
 use core\models\rooms\RoomsModel;
 use core\models\tours\ToursModel;
+use core\services\DateConverter;
 use core\services\Paginator;
 use core\views\clients\ClientsView;
 use core\models\clients\ClientsModel;
@@ -197,48 +198,118 @@ class ClientsController extends BaseController implements ControllerInterface
 
     public function hotel_list(): void
     {
-        $this->setModel(ClientsController::class);
-        $data = json_decode(file_get_contents("php://input"), true);
+        // $dataToPRint = [
+        //     'header' => $room_description,
+        //     'guests' => ['client_name', 'client_passport']
+        // ];
+        // $this->setModel(ClientsController::class);
+        // $data = json_decode(file_get_contents("php://input"), true);
+        // $this->setModel(ClientsModel::class);
+        // $toursModel = new ToursModel();
+        // $tours = $toursModel->list(columnsValues: [
+        //     'columns' => ['hotel_id', 'checkin_date', 'checkout_date'],
+        //     'values' => [$data['hotel_id'], $data['checkin_date'], $data['checkout_date']]
+        // ]);
+
+        // $main_clients = [];
+
+        // foreach ($tours as $tour) {
+        //     $main_clients[] = $this->model->get(['column' => 'id', 'value' => $tour['owner_id']])[0];
+        // }
+
+        // $sub_clients = [];
+
+        // foreach ($main_clients as $mc) {
+        //     $sub_clients[] = $this->model->getSubClients([
+        //         'column' => 'main_client_id',
+        //         'value' => $mc['id']
+        //     ]);
+        // }
+
+        // $passengers = ['main_clients' => [], 'sub_clients' => []];
+
+        // for ($i = 0; $i < count($main_clients); $i++) {
+        //     $passengers['main_clients'][] = $main_clients[$i];
+        //     $passengers['sub_clients'][] = $sub_clients[$i];
+        // }
+
+        // $hotelsModel = new BusesModel();
+        // $hotel = $hotelsModel->get(['column' => 'id', 'value' => $data['hotel_id']])[0];
+
         $this->setModel(ClientsModel::class);
         $toursModel = new ToursModel();
-        $tours = $toursModel->list(columnsValues: [
-            'columns' => ['hotel_id', 'checkin_date', 'checkout_date'],
-            'values' => [$data['hotel_id'], $data['checkin_date'], $data['checkout_date']]
-        ]);
+        $roomsModel = new RoomsModel();
+        $hotelsModel = new HotelsModel();
+        $request_data = json_decode(file_get_contents("php://input"), true);
+        $tours = $toursModel->get(columnValue: ['column' => 'hotel_id', 'value' => $request_data['hotel_id']]);
+        foreach ($tours as &$tour) {
+            if ($tour['checkin_date'] != $request_data['checkin_date'] && $tour['checkout_date'] != $request_data['checkout_date']) {
+                unset($tour);
+            }
+        }
+
+        $rooms = [];
+        foreach ($tours as &$tour) {
+            $rooms[] = $roomsModel->get(columnValue: ['column' => 'id', 'value' => $tour['room_id']])[0];
+        }
 
         $main_clients = [];
-
         foreach ($tours as $tour) {
-            $main_clients[] = $this->model->get(['column' => 'id', 'value' => $tour['owner_id']])[0];
+            $main_clients[] = $this->model->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
         }
 
-        $sub_clients = [];
-
+        $sub_clients_sets = [];
         foreach ($main_clients as $mc) {
-            $sub_clients[] = $this->model->getSubClients([
-                'column' => 'main_client_id',
-                'value' => $mc['id']
-            ]);
+            $sub_clients_sets[] = $this->model->getSubClients(columnValue: ['column' => 'main_client_id', 'value' => $mc['id']]);
         }
 
-        $passengers = ['main_clients' => [], 'sub_clients' => []];
-
+        $guests = [];
         for ($i = 0; $i < count($main_clients); $i++) {
-            $passengers['main_clients'][] = $main_clients[$i];
-            $passengers['sub_clients'][] = $sub_clients[$i];
+            $guests['main_clients'][] = $main_clients[$i];
+            $guests['sub_clients'][] = $sub_clients_sets[$i];
         }
 
-        $hotelsModel = new BusesModel();
-        $hotel = $hotelsModel->get(['column' => 'id', 'value' => $data['hotel_id']])[0];
+        $table_cells = [];
+        foreach($tours as $t) {
+            $cell_html = "";
+            foreach ($rooms as $r) {
+                if ($r['id'] == $tour['room_id']) {
+                    $cell_html .= "<p><u>{$r['description']}</u></p>";
+                }
+            }
+
+            $main_client_id = 0;
+
+            foreach ($guests['main_clients'] as $m) {
+                if ($m['id'] == $t['owner_id']) {
+                    $cell_html .= "<p><b>" . $m['name'] . "</b> - ";
+                    $cell_html .= DateConverter::YMDtoDMY($m['birth_date']) . " - ";
+                    $cell_html .= $m['passport'] . "</p>";
+                    $main_client_id = $m['id'];
+                }
+            }
+
+            foreach ($guests['sub_clients'] as $set) {
+                foreach ($set as $sc) {
+                    if ($sc['main_client_id'] == $main_client_id) {
+                        $cell_html .= "<p><b>" . $sc['name'] . "</b> - ";
+                        $cell_html .= DateConverter::YMDtoDMY($sc['birth_date']) . " - ";
+                        $cell_html .= $sc['passport'] . "</p>";
+                    }
+                }
+            }
+            $table_cells[] = $cell_html;
+        }
 
         $data = [
-            'title' => 'Список пассажиров',
-            'header' => 'Список пассажиров',
+            'title' => 'Список гостей',
+            'header' => 'Список гостей',
             'login' => $_COOKIE['login'],
-            'passengers' => $passengers,
-            'checkin_date' => $tours[0]['checkin_date'],
-            'checkout_date' => $tours[0]['checkout_date'],
-            'hotel' => $hotel
+            'guests' => $guests,
+            'checkin_date' => $request_data['checkin_date'],
+            'checkout_date' => $request_data['checkout_date'],
+            'hotel' => $hotelsModel->get(columnValue: ['column' => 'id', 'value' => $request_data['hotel_id']])[0],
+            'table_cells' => $table_cells
         ];
 
         $f = fopen(BASE_PATH . "static/passengers/passengers.json", 'w');
@@ -248,9 +319,9 @@ class ClientsController extends BaseController implements ControllerInterface
         }
 
         fwrite($f, json_encode($data), strlen(json_encode($data)));
+        fclose($f);
 
         http_response_code(200);
-
     }
 
     public function guests_list(): void
