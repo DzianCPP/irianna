@@ -24,7 +24,7 @@ class Database
         $dbPassword = $_ENV['DB_PASSWORD'];
         $dbUserName = $_ENV['DB_USER_NAME'];
         $dbName = $_ENV['DB_NAME'];
-        $dsn = "mysql:host=" . $dbHostName . "; port=3307; dbname=" . $dbName;
+        $dsn = "mysql:host=" . $dbHostName . "; port=3307; dbname=" . $dbName . ";charset=utf8mb4;";
 
         $this->connection = new PDO($dsn, $dbUserName, $dbPassword);
     }
