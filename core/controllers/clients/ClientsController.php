@@ -227,7 +227,7 @@ class ClientsController extends BaseController implements ControllerInterface
             $sub_clients = $this->model->getSubClients(columnValue: ['column' => 'main_client_id', 'value' => $main_client['id']]);
             foreach ($sub_clients as $sc) {
                 $cell_html .= "<b><u>{$sc['name']}</u></b> - ";
-                $cell_html .= DateConverter::YMDtoDMY($sc['birth_date']) . " - " . $sc['passport'] . "<br>";
+                $cell_html .= DateConverter::YMDtoDMY($sc['birth_date']) . " - " . $sc['passport'] . "<br><br>";
             }
 
             $table_cells[] = $cell_html;
