@@ -214,11 +214,11 @@ class ClientsController extends BaseController implements ControllerInterface
         $guests = [];
         foreach ($tours as $t) {
             $cell_html = "";
-            $room = $roomsModel->get(['column' => 'id', 'value' => $t['room_id']])[0];
+            $room = $roomsModel->get(['column' => 'id', 'value' => $t['room_id']]);
             $cell_html .= "<b><u>" . $room['description'] . "</u></b><br>";
             $guests[] = $main_client;
 
-            $main_client = $this->model->get(columnValue: ['column' => 'id', 'value' => $t['owner_id']])[0];
+            $main_client = $this->model->get(columnValue: ['column' => 'id', 'value' => $t['owner_id']]);
             $cell_html .= "<b><u>{$main_client['name']}</u></b> - ";
             $cell_html .= DateConverter::YMDtoDMY($main_client['birth_date']) . " - " . $main_client['passport'] . "<br>";
 
