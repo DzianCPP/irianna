@@ -214,7 +214,7 @@ class ClientsController extends BaseController implements ControllerInterface
         $guests = [];
         foreach ($tours as $t) {
             $cell_html = "";
-            $room = $roomsModel->get(columnValue: ['column' => 'id', 'value' => $t['room_id']]);
+            $room = $roomsModel->get(columnValue: ['column' => 'id', 'value' => $t['room_id']])[0];
             $cell_html .= "<b><u>" . $room['description'] . "</u></b><br>";
 
             $main_client = $this->model->get(columnValue: ['column' => 'id', 'value' => $t['owner_id']])[0];
