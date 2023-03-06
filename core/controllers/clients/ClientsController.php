@@ -210,56 +210,24 @@ class ClientsController extends BaseController implements ControllerInterface
             }
         }
 
-        $rooms = [];
-        foreach ($tours as &$tour) {
-            $rooms[] = $roomsModel->get(columnValue: ['column' => 'id', 'value' => $tour['room_id']])[0];
-        }
-
-        $main_clients = [];
-        foreach ($tours as $tour) {
-            $main_clients[] = $this->model->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
-        }
-
-        $sub_clients_sets = [];
-        foreach ($main_clients as $mc) {
-            $sub_clients_sets[] = $this->model->getSubClients(columnValue: ['column' => 'main_client_id', 'value' => $mc['id']]);
-        }
-
-        $guests = [];
-        for ($i = 0; $i < count($main_clients); $i++) {
-            $guests['main_clients'][] = $main_clients[$i];
-            $guests['sub_clients'][] = $sub_clients_sets[$i];
-        }
-
         $table_cells = [];
-        foreach($tours as $t) {
+        $guests = [];
+        foreach ($tours as $t) {
             $cell_html = "";
-            foreach ($rooms as $r) {
-                if ($r['id'] == $tour['room_id']) {
-                    $cell_html .= "<p><u>{$r['description']}</u></p>";
-                }
+            $room = $roomsModel->get(['column' => 'id', 'value' => $t['room_id']])[0];
+            $cell_html .= "<b><u>" . $room['description'] . "</u></b><br>";
+            $guests[] = $main_client;
+
+            $main_client = $this->model->get(columnValue: ['column' => 'id', 'value' => $t['owner_id']])[0];
+            $cell_html .= "<b><u>{$main_client['name']}</u></b> - ";
+            $cell_html .= DateConverter::YMDtoDMY($main_client['birth_date']) . " - " . $main_client['passport'] . "<br>";
+
+            $sub_clients = $this->model->getSubClients(columnValue: ['column' => 'main_client_id', 'value' => $main_client['id']])[0];
+            foreach ($sub_clients as $sc) {
+                $cell_html .= "<b><u>{$sc['name']}</u></b> - ";
+                $cell_html .= DateConverter::YMDtoDMY($sc['birth_date']) . " - " . $sc['passport'] . "<br>";
             }
 
-            $main_client_id = 0;
-
-            foreach ($guests['main_clients'] as $m) {
-                if ($m['id'] == $t['owner_id']) {
-                    $cell_html .= "<p><b>" . $m['name'] . "</b> - ";
-                    $cell_html .= DateConverter::YMDtoDMY($m['birth_date']) . " - ";
-                    $cell_html .= $m['passport'] . "</p>";
-                    $main_client_id = $m['id'];
-                }
-            }
-
-            foreach ($guests['sub_clients'] as $set) {
-                foreach ($set as $sc) {
-                    if ($sc['main_client_id'] == $main_client_id) {
-                        $cell_html .= "<p><b>" . $sc['name'] . "</b> - ";
-                        $cell_html .= DateConverter::YMDtoDMY($sc['birth_date']) . " - ";
-                        $cell_html .= $sc['passport'] . "</p>";
-                    }
-                }
-            }
             $table_cells[] = $cell_html;
         }
 
