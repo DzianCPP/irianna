@@ -222,7 +222,7 @@ class ClientsController extends BaseController implements ControllerInterface
 
         $sub_clients_sets = [];
         foreach ($main_clients as $mc) {
-            $sub_clients_sets[] = $this->model->getSubClients(columnValue: ['column' => 'main_client_id', 'value' => $mc['id']]);
+            $sub_clients_sets[] = $this->model->getSubClients(columnValue: ['column' => 'main_client_id', 'value' => $mc['id']])[0];
         }
 
         $guests = [];
