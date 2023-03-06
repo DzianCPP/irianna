@@ -204,11 +204,14 @@ class ClientsController extends BaseController implements ControllerInterface
         $hotelsModel = new HotelsModel();
         $request_data = json_decode(file_get_contents("php://input"), true);
         $tours = $toursModel->get(columnValue: ['column' => 'hotel_id', 'value' => $request_data['hotel_id']]);
+        $filtered_tours = [];
         foreach ($tours as &$tour) {
-            if ($tour['checkin_date'] != $request_data['checkin_date'] || $tour['checkout_date'] != $request_data['checkout_date'] || $tour['room_id'] != $request_data['room_id']) {
-                unset($tour);
+            if ($tour['checkin_date'] == $request_data['checkin_date'] && $tour['checkout_date'] == $request_data['checkout_date']) {
+                $filtered_tours[] = $tour;
             }
         }
+
+        $tours = $filtered_tours;
 
         $table_cells = [];
         $guests = [];
