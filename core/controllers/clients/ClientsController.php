@@ -217,7 +217,7 @@ class ClientsController extends BaseController implements ControllerInterface
             $room = $roomsModel->get(columnValue: ['column' => 'id', 'value' => $t['room_id']]);
             $cell_html .= "<b><u>" . $room['description'] . "</u></b><br>";
 
-            $main_client = $this->model->get(columnValue: ['column' => 'id', 'value' => $t['owner_id']]);
+            $main_client = $this->model->get(columnValue: ['column' => 'id', 'value' => $t['owner_id']])[0];
             $cell_html .= "<b><u>{$main_client['name']}</u></b> - ";
             $cell_html .= DateConverter::YMDtoDMY($main_client['birth_date']) . " - " . $main_client['passport'] . "<br>";
             $guests[] = $main_client;
