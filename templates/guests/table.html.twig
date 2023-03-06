@@ -1,8 +1,5 @@
 {% block table %}
-{% set main = guests.main_clients %}
-{% set subs = guests.sub_clients %}
-
-{% if main|length > 0 %}
+{% if guests|length > 0 %}
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 col-xxl-12 text-center">
         <div style="text-align: center;">Общество с ограниченной ответсвенностью</div>
