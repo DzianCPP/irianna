@@ -218,7 +218,7 @@ class ClientsController extends BaseController implements ControllerInterface
         foreach ($tours as $t) {
             $cell_html = "";
             $room = $roomsModel->get(columnValue: ['column' => 'id', 'value' => $t['room_id']])[0];
-            $cell_html .= "<b><u>" . $room['description'] . "</u></b><br>";
+            $cell_html .= "<br><b><u>" . $room['description'] . "</u></b><br>";
 
             $main_client = $this->model->get(columnValue: ['column' => 'id', 'value' => $t['owner_id']])[0];
             $cell_html .= "<b><u>{$main_client['name']}</u></b> - ";
@@ -227,7 +227,7 @@ class ClientsController extends BaseController implements ControllerInterface
             $sub_clients = $this->model->getSubClients(columnValue: ['column' => 'main_client_id', 'value' => $main_client['id']]);
             foreach ($sub_clients as $sc) {
                 $cell_html .= "<b><u>{$sc['name']}</u></b> - ";
-                $cell_html .= DateConverter::YMDtoDMY($sc['birth_date']) . " - " . $sc['passport'] . "<br><br>";
+                $cell_html .= DateConverter::YMDtoDMY($sc['birth_date']) . " - " . $sc['passport'] . "<br>";
             }
 
             $table_cells[] = $cell_html;
