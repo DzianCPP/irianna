@@ -20,8 +20,8 @@ use core\controllers\net\NetController;
 
 return [
     'admin' => [
-        'controller' => AppController::class,
-        'action' => 'main',
+        'controller' => ToursController::class,
+        'action' => 'tours/new',
         'method' => 'GET'
     ],
 
