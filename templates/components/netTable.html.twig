@@ -3,8 +3,7 @@
 <div class="input-group mb-2">
     <select class="form-select text-secondary text-center w-50" id="hotels">
         {% for hotel in hotels %}
-        <option value="{{ hotel.id }}" class="btn btn-outline-secondary" {% if current_hotel_id==hotel.id
-            %}{{ 'selected="selected"' }}{% endif %}>
+        <option value="{{ hotel.id }}" class="btn btn-outline-secondary" {% if current_hotel_id == hotel.id %}{{ 'selected="selected"' }}{% endif %}>
             {{ hotel.name }}
         </option>
         {% endfor %}
