@@ -50,6 +50,7 @@ class NetController extends BaseController
             'table' => $table,
             'login' => $_COOKIE['login'],
             'hotels' => $hotelsModel->get(),
+            'current_hotel_id' => $hotel['id'],
             'last_year_number' => substr(date('y'), 1)
         ];
 
