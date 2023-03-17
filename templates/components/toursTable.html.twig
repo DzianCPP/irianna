@@ -111,5 +111,13 @@
     </tr>
     {% endfor %}
 </table>
-<script type="text/javascript" src="/assets/scripts/tours/pressEnter.js"></script>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        document.body.addEventListener("keypress", function (event) {
+            if (event.keyCode === 13) {
+                document.getElementById("find-tour").click();
+            }
+        });
+    });
+</script>
 {% endblock %}
