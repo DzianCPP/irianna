@@ -9,6 +9,16 @@
 <div class="container container-sm container-md container-xl mt-1 mb-5 w-100">
 	<div class="row w-auto">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
+			<div class="input-group mb-2">
+				<select class="form-select text-secondary text-center w-50" id="hotels">
+					{% for hotel in hotels %}
+					<option value="{{ hotel.id }}" class="btn btn-outline-secondary" {% if current_hotel_id == hotel.id %}{{ 'selected="selected"' }}{% endif %}>
+						{{ hotel.name }}
+					</option>
+					{% endfor %}
+				</select>
+				<button class="btn btn-success w-50" id="hotels-btn">Найти</button>
+			</div>
 			<div class="table-responsive w-100">
 				{% use 'components/netTable.html.twig' %}
 				{% block table %}

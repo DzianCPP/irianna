@@ -69,17 +69,34 @@
     {% for tour in tours %}
     <tr>
         <td><input name="select" type="checkbox" value="{{ tour.id }}" /></td>
-        {% for hotel in hotels %}{% if hotel.id == tour.hotel_id %}
+        {% for hotel in hotels %}
+        {% if hotel.id == tour.hotel_id %}
         <td>{{ hotel.name }}</td>
-        {% endif %}{% endfor %}
+        {% endif %}
+        {% endfor %}
+        {% if tour.hotel_id == 0 %}
+        <td>{{ 'Нет' }}</td>
+        {% endif %}
         {% for bus in buses %}{% if bus.id == tour.bus_id %}
         <td>{{ bus.name}}{{ ': ' }}{{ bus.route }}</td>
         {% endif %}{% endfor %}
         <td>{{ tour.from_minsk_date }}</td>
-        <td>{{ tour.to_minsk_date }}</td>
+        <td>
+            {% if tour.to_minsk_date != 0 %}
+            {{ tour.to_minsk_date }}
+            {% endif %}
+            {% if tour.to_minsk_date == 0 %}
+            {{ '<p style="background-color: yellow; border-radius: 3px; padding-left: 2px;">Прибытие в Минск: ' }}
+                {{ tour.arrival_to_minsk }}
+                {{ '</p>' }}
+            {% endif %}
+        </td>
         {% for room in rooms %}{% if room.id == tour.room_id %}
         <td>{{ room.description|trim(', ') }}</td>
         {% endif %}{% endfor %}
+        {% if tour.room_id == 0 %}
+        <td>{{ 'Нет' }}</td>
+        {% endif %}
         {% for client in clients %}{% if client.id == tour.owner_id %}
         <td>{{ client.name }}</td>
         {% set count = 1 %}
@@ -98,7 +115,8 @@
         </td>
         <td>
             <div class="input-group w-100 mb-1">
-                <a class="btn btn-sm btn-warning w-50 {# disabled #}" href="/tours/edit/{{ tour.id }}">Изменить<br>тур</a>
+                <a class="btn btn-sm btn-warning w-50 {# disabled #}"
+                    href="/tours/edit/{{ tour.id }}">Изменить<br>тур</a>
                 <a class="btn btn-sm btn-success w-50" href="/tours/printContract/{{ tour.id }}">Печать<br>Договора</a>
             </div>
             <div class="input-group w-100">
