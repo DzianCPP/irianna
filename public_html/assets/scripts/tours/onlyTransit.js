@@ -10,7 +10,7 @@ function setOnlyTransit() {
         let only_transit_option = document.createElement('option');
         let option_text = document.createTextNode('---');
         only_transit_option.setAttribute('selected', 'true');
-        only_transit_option.setAttribute('value', 'only-transit');
+        only_transit_option.setAttribute('value', '0');
         only_transit_option.appendChild(option_text);
         document.getElementById("hotels").appendChild(only_transit_option);
         document.getElementById("hotels").disabled = true;
@@ -18,7 +18,7 @@ function setOnlyTransit() {
         let checkin_date_option = document.createElement('option');
         let checkin_date_option_text = document.createTextNode('---');
         checkin_date_option.setAttribute('selected', 'true');
-        checkin_date_option.setAttribute('value', 'only-transit');
+        checkin_date_option.setAttribute('value', '0');
         checkin_date_option.appendChild(checkin_date_option_text);
         document.getElementById("room-checkin-date").appendChild(checkin_date_option);
         document.getElementById("room-checkin-date").disabled = true;
@@ -26,7 +26,7 @@ function setOnlyTransit() {
         let checkout_date_option = document.createElement('option');
         let checkout_date_option_text = document.createTextNode('---');
         checkout_date_option.setAttribute('selected', 'true');
-        checkout_date_option.setAttribute('value', 'only-transit');
+        checkout_date_option.setAttribute('value', '0');
         checkout_date_option.appendChild(checkout_date_option_text);
         document.getElementById("room-checkout-date").appendChild(checkout_date_option);
         document.getElementById("room-checkout-date").disabled = true;
@@ -34,7 +34,7 @@ function setOnlyTransit() {
         let rooms_option = document.createElement('option');
         let rooms_option_text = document.createTextNode('---');
         rooms_option.setAttribute('selected', 'true');
-        rooms_option.setAttribute('value', 'only-transit');
+        rooms_option.setAttribute('value', '0');
         rooms_option.appendChild(rooms_option_text);
         document.getElementById("rooms").appendChild(rooms_option);
         document.getElementById("rooms").disabled = true;
