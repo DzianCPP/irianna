@@ -16,9 +16,9 @@ class ContractMaker
         $new_contract = str_replace('year', $contractData['year'] . '</b>', $new_contract);
         $new_contract = str_replace('resort_name', $contractData['resort_name'], $new_contract);
         if ($transit) {
-            $new_contract = str_replace('hotel_name', $contractData['hotel_name'], $new_contract);
-        } else {
             $new_contract = str_replace('hotel_name', '', $new_contract);
+        } else {
+            $new_contract = str_replace('hotel_name', $contractData['hotel_name'], $new_contract);
         }
         $new_contract = str_replace('from_minsk_date', '<b>' . str_replace('-', '.', $contractData['from_minsk_date']), $new_contract);
         $new_contract = str_replace('arrival_to_minsk', str_replace('-', '.', $contractData['arrival_to_minsk']) . '</b>', $new_contract);
