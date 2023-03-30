@@ -8,14 +8,14 @@ use core\services\Archiver;
 
 $day = date('D');
 
-if ($day == 'Thu') {
-    $archiver = new Archiver();
-    try {
-        $archiver->archiveClient();
-    } catch (ErrorException $e) {
-        echo "Не получилось выполнить архивирование клиентов";
-    }
-}
+// if ($day == 'Thu') {
+//     $archiver = new Archiver();
+//     try {
+//         $archiver->archiveClient();
+//     } catch (ErrorException $e) {
+//         echo "Не получилось выполнить архивирование клиентов";
+//     }
+// }
 
 $app = new Application();
 $app->run();
