@@ -604,7 +604,7 @@ class ToursController extends BaseController implements ControllerInterface
 
         if (count($sub_clients) < 1) {
             $sub_clients = "----";
-        } else if (count($sub_clients) > 1) {
+        } else if (count($sub_clients) >= 1) {
             $str = "";
             foreach ($sub_clients as &$s) {
                 $str .= $s['name'] . ', ' . $s['passport'] . ', ' . $s['birth_date'] . '<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
