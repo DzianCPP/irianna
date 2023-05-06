@@ -102,7 +102,13 @@ class ContractMaker
         $new_v = str_replace('today_date', $d['today_date'], $new_v);
         $new_v = str_replace('hotel_name', $d['hotel_name'], $new_v);
         $new_v = str_replace('resort_name', $d['resort_name'], $new_v);
-        $new_v = str_replace('room_comforts', rtrim($d['room_comforts'], ','), $new_v);
+
+        $room_comforts_array = explode(',', $d['room_comforts']);
+
+        for ($i = 0; $i < 3; ++$i) {
+            $room_comforts_str .= $room_comforts_array[$i] . ', ';
+        }
+        $new_v = str_replace('room_comforts', rtrim($room_comforts_str, ', '), $new_v);
         $new_v = str_replace('sub_clients', rtrim($d['sub_clients'], ','), $new_v);
 
         return $new_v;
