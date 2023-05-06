@@ -662,7 +662,7 @@ class ToursController extends BaseController implements ControllerInterface
             'hotel_name' => $hotel['name'],
             'resort_name' => $resort['name'],
             'transfer_type' => $tour['is_only_transit'],
-            'today_date' => date('d-m-yy'),
+            'today_date' => date('d.m.Y'),
             'sub_clients' => $sub_clients
         ];
 
