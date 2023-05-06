@@ -109,6 +109,9 @@ class ContractMaker
             $room_comforts_str .= $room_comforts_array[$i] . ', ';
         }
         $new_v = str_replace('room_comforts', rtrim($room_comforts_str, ', '), $new_v);
+        if ($d['sub_clients'] == '') {
+            $d['sub_clients'] = '<br><br><br>';
+        }
         $new_v = str_replace('sub_clients', rtrim($d['sub_clients'], ','), $new_v);
 
         return $new_v;
