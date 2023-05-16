@@ -2,13 +2,13 @@
 {% set main = passengers.main_clients %}
 {% set subs = passengers.sub_clients %}
 {% if main|length > 0 %}
-<table class="table table-responsive table-sm table-xl table-md table-xs table-hover text-center w-100" id="table">
+<table class="table table-responsive table-striped table-sm table-xl table-md table-xs table-hover text-center w-100" id="table">
     <tr>
         <th></th>
-        <th style="min-width: 200px;">Имя</th>
+        <th style="min-width: 200px;">ФИО</th>
+        <th style="min-width: 200px;">Дата рождения</th>
         <th style="min-width: 200px;">Паспорт</th>
         <th style="min-width: 200px;">Телефон</th>
-        <th style="min-width: 200px;">Дата рождения</th>
         <th style="min-width: 100px;"></th>
     </tr>
     {% set i = 1 %}
@@ -16,9 +16,9 @@
     <tr>
         <td>{{ i }}{% set i = i + 1 %}</td>
         <td>{{ m.name }}</td>
-        <td>{{ m.passport }}</td>
-        <td>{{ m.main_phone }}</td>
         <td>{{ m.birth_date }}</td>
+        <td>{{ m.passport }}</td>
+        <td>{{ m.main_phone }}{% if (m.second_phone) %}{{ ' ' }}{{ m.second_phone }}{% endif %}</td>
         <td><input type="checkbox" class="checkbox">На месте</input></td>
     </tr>
     {% for sub in subs %} {% set s = sub %}
@@ -26,9 +26,9 @@
     <tr>
         <td>{{ i }}{% set i = i + 1 %}</td>
         <td>{{ c.name }}</td>
-        <td>{{ c.passport}}</td>
+        <td>{{ c.birth_date }}</td>
         <td></td>
-        <td>{{ c.birth_date }}  </td>
+        <td>{{ c.main_phone }}  </td>
         <td class="text-center"><input type="checkbox" class="checkbox">На месте</input></td>
     </tr>
     {% endif %}{% endfor %}{% endfor %}
