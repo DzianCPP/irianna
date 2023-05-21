@@ -43,12 +43,8 @@ class StatementController extends BaseController
             ]
         );
 
-        $rub_total = 0;
-        $usd_total = 0;
-        foreach ($tours as $t) {
-            $rub_total += (int) substr($t['total_travel_cost_byn'], 0, strpos($t['total_travel_cost_byn'], ' RUB', 0));
-            $usd_total += (int) substr($t['total_travel_cost_currency'], 0, strpos($t['total_travel_cost_currency'], ' USD', 0));
-        }
+        $rub_total = $this->count_rub_total($tours);
+        $usd_total = $this->count_usd_total($tours);
         $clients = $this->clientsModel->get();
         $data = [
             'tours' => $tours,
@@ -79,5 +75,25 @@ class StatementController extends BaseController
         fclose($f);
 
         http_response_code(200);
+    }
+
+    private function count_rub_total(array $tours): int
+    {
+        $rub_total = 0;
+        foreach ($tours as $t) {
+            $rub_total += (int) substr($t['total_travel_cost_byn'], 0, strpos($t['total_travel_cost_byn'], ' RUB', 0));
+        }
+
+        return $rub_total;
+    }
+
+    private function count_usd_total(array $tours): int
+    {
+        $usd_total = 0;
+        foreach ($tours as $t) {
+            $usd_total += (int) substr($t['total_travel_cost_currency'], 0, strpos($t['total_travel_cost_currency'], ' USD', 0));
+        }
+
+        return $usd_total;
     }
 }
