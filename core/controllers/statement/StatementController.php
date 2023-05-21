@@ -37,8 +37,7 @@ class StatementController extends BaseController
     {
         $params = json_decode(file_get_contents(BASE_PATH . 'static/search/request.json'), true);
         $tours = $this->toursModel->list(
-            columnsValues:
-            [
+            columnsValues: [
                 'columns' => ['bus_id', 'from_minsk_date', 'arrival_to_minsk'],
                 'values' => [$params['bus_id'], $params['from_minsk_date'], $params['to_minsk_date']]
             ]
@@ -50,7 +49,6 @@ class StatementController extends BaseController
             $rub_total += (int) substr($t['total_travel_cost_byn'], 0, strpos($t['total_travel_cost_byn'], ' RUB', 0));
             $usd_total += (int) substr($t['total_travel_cost_currency'], 0, strpos($t['total_travel_cost_currency'], ' USD', 0));
         }
-
         $clients = $this->clientsModel->get();
         $data = [
             'tours' => $tours,
