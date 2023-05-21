@@ -297,6 +297,8 @@ class ToursController extends BaseController implements ControllerInterface
         $managers = new ManagersModel();
         $buses = new BusesModel();
 
+        $params = json_decode(file_get_contents(BASE_PATH . "static/search/request.json"), true);
+
         $page = Paginator::getPage();
         $pages = (int) ceil(count($tours) / parent::PER_PAGE);
 
@@ -330,7 +332,12 @@ class ToursController extends BaseController implements ControllerInterface
                 'login' => $_COOKIE['login'],
                 'currentPage' => $page,
                 'pages' => $pages,
-                'message' => 'Found tours'
+                'message' => 'Found tours',
+                'bus_id' => isset($params['bus_id']) ? $params['bus_id'] : 0,
+                'hotel_id' => isset($params['hotel_id']) ? $params['hotel_id'] : 0,
+                'from_minsk_date' => isset($params['from_minsk_date']) ? $params['from_minsk_date'] : 0,
+                'to_minsk_date' => isset($params['to_minsk_date']) ? $params['to_minsk_date'] : 0,
+                'name' => isset($params['name']) ? $params['name'] : 0
             ];
         }
 
