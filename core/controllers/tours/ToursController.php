@@ -317,7 +317,7 @@ class ToursController extends BaseController implements ControllerInterface
         if ($tours != []) {
             $data = [
                 'tours' => $tours,
-                'entity' => 'tours',
+                'entity' => 'tours/search',
                 'clients' => $clients,
                 'hotels' => $hotels->get(),
                 'rooms' => $rooms->get(),
@@ -335,7 +335,7 @@ class ToursController extends BaseController implements ControllerInterface
         }
 
         $this->setView(ToursView::class);
-        $this->view->render("tours/tours.html.twig", $data);
+        $this->view->render("tours/search.html.twig", $data);
     }
 
     public function update(int $id = 0): void
