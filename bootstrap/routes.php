@@ -12,6 +12,7 @@ use core\controllers\periods\PeriodsController;
 use core\controllers\managers\ManagersController;
 use core\controllers\rooms\RoomsController;
 use core\controllers\clients\ClientsController;
+use core\controllers\statement\StatementController;
 use core\controllers\tours\ToursController;
 use core\controllers\contracts\ContractsController;
 use core\controllers\currencies\CurrenciesController;
@@ -616,6 +617,24 @@ return [
     'net' => [
         'controller' => NetController::class,
         'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'statement/form' => [
+        'controller' => StatementController::class,
+        'action' => 'form',
+        'method' => 'GET'
+    ],
+
+    'statement/prepare' => [
+        'controller' => StatementController::class,
+        'action' => 'prepare',
+        'method' => 'POST'
+    ],
+
+    'statement/doc' => [
+        'controller' => StatementController::class,
+        'action' => 'doc',
         'method' => 'GET'
     ]
 ];

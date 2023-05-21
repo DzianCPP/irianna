@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div class="row w-100 mt-2 mb-2">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
+        <h1 class="h1 m-1" id="main-page-h1">{{ header }}</h1>
+    </div>
+</div>
+
+<div class="container container-sm container-md container-xl mt-1 mb-5">
+    <textarea id="tinyMCE" placeholder="Введите текст документа">
+    {% use 'statement/table.html.twig' %}
+          {% block table %}
+          {{ parent() }}
+          {% endblock %}</textarea>
+    <div class="input-group mt-2">
+
+        <p hidden id="document-name">{{ document_name }}</p>
+        <p hidden id="document-label">{{ document_label }}</p>
+        <p hidden id="document-id">{{ document_id }}</p>
+    </div>
+    <p id="error-field" style="color: red;"></p>
+    <script>
+        tinymce.init({
+            selector: '#tinyMCE',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | print | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            height: 800,
+            menu: {
+                file: { title: 'File', items: 'newdocument restoredraft | preview | export print | deleteallconversations' },
+                edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
+                view: { title: 'View', items: 'code | visualaid visualchars visualblocks | spellchecker | preview fullscreen | showcomments' },
+                insert: { title: 'Insert', items: 'image link media addcomment pageembed template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor tableofcontents | insertdatetime' },
+                format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript codeformat | styles blocks fontfamily fontsize align lineheight | forecolor backcolor | language | removeformat' },
+                tools: { title: 'Tools', items: 'spellchecker spellcheckerlanguage | a11ycheck code wordcount' },
+                table: { title: 'Table', items: 'inserttable | cell row column | advtablesort | tableprops deletetable' },
+                help: { title: 'Help', items: 'help' }
+            },
+            block_formats: 'Абзацы=p; Заголовок 1=h1; Заголовок 2=h2; Заголовок 3=h3; Текст=div'
+        });
+    </script>
+</div>
+<script type="text/javascript" src="/assets/scripts/contracts/update.js"></script>
+{% endblock %}
