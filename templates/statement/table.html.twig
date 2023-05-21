@@ -1,0 +1,30 @@
+{% block table %}
+	<h1>Ведомость</h1>
+	<h1>{{ bus.name }}{{ ' - ' }}{{ bus.route }}</h1>
+	<h4>{{ from_minsk_date }}{{ ' - ' }}{{ to_minsk_date }}</h4>
+	<table class="table table-striped w-100">
+		<tr>
+			<th style="width: 350px;">ФИО</th>
+			<th style="width: 150px;">Сумма</th>
+			<th style="width: 150px;">Сумма</th>
+		</tr>
+		{% for t in tours %}
+			<tr>
+				<td>
+					{% for c in clients %}
+						{% if c.id == t.owner_id %}
+							{{ c.name }}
+						{% endif %}
+					{% endfor %}
+				</td>
+				<td>{{ t.total_travel_cost_byn }}</td>
+				<td>{{ t.total_travel_cost_currency }}</td>
+			</tr>
+		{% endfor %}
+		<tr>
+			<td><b>Итого:</b></td>
+			<td>{{ rub_total }}</td>
+			<td>{{ usd_total }}</td>
+		</tr>
+	</table>
+{% endblock %}
