@@ -332,7 +332,6 @@ class RoomsController extends BaseController implements ControllerInterface
                 $checkout_dates[] = $checkin_checkout_dates[$i];
             }
         }
-        $checkout_dates[] = "02.02.2023";
     }
 
     private function sortDates(array $dates): array
