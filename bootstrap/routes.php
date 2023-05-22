@@ -636,5 +636,11 @@ return [
         'controller' => StatementController::class,
         'action' => 'doc',
         'method' => 'GET'
+    ],
+
+    'rooms/dates' => [
+        'controller' => RoomsController::class,
+        'action' => 'dates',
+        'method' => 'GET'
     ]
 ];
