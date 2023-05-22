@@ -4,8 +4,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function addDates() {
-    let rooms_sets = JSON.parse(document.getElementById("rooms-sets").innerHTML);
+async function addDates() {
+    let url = "/rooms/dates/" + document.getElementById("hotel").value;
+    let response = await fetch(url);
+
+    if (!response.ok) {
+        alert("Ошибка! Не удалось получить даты номеров");
+        return;
+    }
+
+    let json_dates = await response.json();
+
     for (let i = document.getElementById("checkin-date").length; i >= 0; i--) {
         document.getElementById("checkin-date").remove(i);
     }
@@ -13,21 +22,11 @@ function addDates() {
     for (let i = document.getElementById("checkout-date").length; i >= 0; i--) {
         document.getElementById("checkout-date").remove(i);
     }
-    let checkin_dates = [];
-    let checkout_dates = [];
 
-    for (let rooms of rooms_sets) {
-        for (let room of rooms) {
-            if (room.hotel_id == document.getElementById("hotel").value) {
+    let dates = json_dates;
 
-                for (let i = 0; i < room.checkin_checkout_dates.length; i+=2) {
-                    checkin_dates.push(room.checkin_checkout_dates[i].substr(1));
-                    checkout_dates.push(room.checkin_checkout_dates[i+1].substr(1));
-                }
-                console.log(room.hotel_id)
-            }
-        }
-    }
+    let checkin_dates = dates.checkin_dates;
+    let checkout_dates = dates.checkout_dates;
 
     for (let _in of checkin_dates) {
         let new_option = document.createElement('option');
