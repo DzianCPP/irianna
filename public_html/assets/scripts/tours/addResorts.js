@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("country").addEventListener("change", addResorts);
+    document.getElementById("country").addEventListener("focusout", addResorts);
 })
 
 function addResorts() {
