@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("country").addEventListener("change", function () {
-        alert(1);
         addResorts();
     });
 })
