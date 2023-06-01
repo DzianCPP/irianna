@@ -1,0 +1,36 @@
+[01-Jun-2023 11:27:34 Europe/Minsk] PHP Fatal error:  Uncaught Error: Call to protected method core\controllers\BaseController::notFound() from scope core\application\Application in /home/iriannax/public_html/core/application/Application.php:53
+Stack trace:
+#0 /home/iriannax/public_html/system/app.php(21): core\application\Application->run()
+#1 /home/iriannax/public_html/public_html/index.php(3): require_once('/home/iriannax/...')
+#2 {main}
+  thrown in /home/iriannax/public_html/core/application/Application.php on line 53
+[01-Jun-2023 11:28:14 Europe/Minsk] PHP Fatal error:  Uncaught Error: Call to protected method core\controllers\BaseController::notFound() from scope core\application\Application in /home/iriannax/public_html/core/application/Application.php:53
+Stack trace:
+#0 /home/iriannax/public_html/system/app.php(21): core\application\Application->run()
+#1 /home/iriannax/public_html/public_html/index.php(3): require_once('/home/iriannax/...')
+#2 {main}
+  thrown in /home/iriannax/public_html/core/application/Application.php on line 53
+[01-Jun-2023 11:29:38 Europe/Minsk] PHP Fatal error:  Uncaught Error: Call to protected method core\controllers\BaseController::notFound() from scope core\application\Application in /home/iriannax/public_html/core/application/Application.php:53
+Stack trace:
+#0 /home/iriannax/public_html/system/app.php(21): core\application\Application->run()
+#1 /home/iriannax/public_html/public_html/index.php(3): require_once('/home/iriannax/...')
+#2 {main}
+  thrown in /home/iriannax/public_html/core/application/Application.php on line 53
+[01-Jun-2023 11:41:20 Europe/Minsk] PHP Fatal error:  Uncaught Error: Call to protected method core\controllers\BaseController::notFound() from scope core\application\Application in /home/iriannax/public_html/core/application/Application.php:53
+Stack trace:
+#0 /home/iriannax/public_html/system/app.php(21): core\application\Application->run()
+#1 /home/iriannax/public_html/public_html/index.php(3): require_once('/home/iriannax/...')
+#2 {main}
+  thrown in /home/iriannax/public_html/core/application/Application.php on line 53
+[01-Jun-2023 11:45:46 Europe/Minsk] PHP Fatal error:  Uncaught Error: Call to protected method core\controllers\BaseController::notFound() from scope core\application\Application in /home/iriannax/public_html/core/application/Application.php:53
+Stack trace:
+#0 /home/iriannax/public_html/system/app.php(21): core\application\Application->run()
+#1 /home/iriannax/public_html/public_html/index.php(3): require_once('/home/iriannax/...')
+#2 {main}
+  thrown in /home/iriannax/public_html/core/application/Application.php on line 53
+[01-Jun-2023 12:52:54 Europe/Minsk] PHP Fatal error:  Uncaught Error: Call to protected method core\controllers\BaseController::notFound() from scope core\application\Application in /home/iriannax/public_html/core/application/Application.php:53
+Stack trace:
+#0 /home/iriannax/public_html/system/app.php(21): core\application\Application->run()
+#1 /home/iriannax/public_html/public_html/index.php(3): require_once('/home/iriannax/...')
+#2 {main}
+  thrown in /home/iriannax/public_html/core/application/Application.php on line 53
