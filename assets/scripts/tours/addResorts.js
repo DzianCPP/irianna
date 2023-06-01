@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("country").addEventListener("click", addResorts);
+    document.getElementById("country").addEventListener("change", addResorts);
 })
 
 function addResorts() {

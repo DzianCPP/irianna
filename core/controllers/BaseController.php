@@ -1,6 +1,7 @@
 <?php
 
 namespace core\controllers;
+use core\views\NotFoundView;
 
 class BaseController
 {
@@ -37,12 +38,13 @@ class BaseController
         return false;
     }
 
-    protected function notFound(): void
+    public function notFound(): void
     {
+        $this->setView(NotFoundView::class);
         $data = [
             'title' => 'Add User App',
             'author' => 'Author: DzianCPP',
-            'message' => '404: page not found'
+            'message' => '404: страница не найдена'
         ];
         $this->view->render("notFound/404.html.twig", $data);
         http_response_code(404);
