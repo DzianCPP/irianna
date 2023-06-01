@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("country").addEventListener("click", addResorts);
+    document.getElementById("country").addEventListener("change", function () {
+        addResorts();
+    });
 })
 
 function addResorts() {
@@ -16,10 +18,10 @@ function addResorts() {
     }
 
     var newOption = document.createElement('option');
-            var optionText = document.createTextNode('');
-            newOption.appendChild(optionText);
-            newOption.setAttribute('value', 0);
-            resortsSelect.appendChild(newOption);
+    var optionText = document.createTextNode('');
+    newOption.appendChild(optionText);
+    newOption.setAttribute('value', 0);
+    resortsSelect.appendChild(newOption);
 
     for (var resort of resorts) {
         if (resort.country_id == country) {
