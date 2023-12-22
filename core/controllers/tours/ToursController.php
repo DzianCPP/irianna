@@ -7,6 +7,7 @@ use core\controllers\ControllerInterface;
 use core\controllers\rooms\helpers\RoomsHelper;
 use core\models\contracts\ContractsModel;
 use core\services\Paginator;
+use core\services\ToursDateGetter;
 use core\views\tours\ToursView;
 use core\models\tours\ToursModel;
 use core\models\hotels\HotelsModel;
@@ -21,7 +22,7 @@ use core\services\ContractMaker;
 
 class ToursController extends BaseController implements ControllerInterface
 {
-    public function new (string $resortName = "", int $is_active = 0): void
+    public function new(string $resortName = "", int $is_active = 0): void
     {
         $managers = new ManagersModel();
         $countries = new CountriesModel();
@@ -383,7 +384,7 @@ class ToursController extends BaseController implements ControllerInterface
                 return;
             }
 
-            if (!$clientsModel->delete(columnValues:['column' =>  'id', 'values' => [$tour['owner_id']]])) {
+            if (!$clientsModel->delete(columnValues: ['column' =>  'id', 'values' => [$tour['owner_id']]])) {
                 http_response_code(500);
                 return;
             }
@@ -444,9 +445,9 @@ class ToursController extends BaseController implements ControllerInterface
         $contractData = [
             'resort_name' => $resort['name'],
             'hotel_name' => $hotel['name'],
-            'day' => date('d'),
-            'month' => date('m'),
-            'year' => date('Y'),
+            'day' => ToursDateGetter::getTourDay($tour),
+            'month' => ToursDateGetter::getTourMonth($tour),
+            'year' => ToursDateGetter::getTourYear($tour),
             'from_minsk_date' => $tour['from_minsk_date'],
             'arrival_to_minsk' => $tour['arrival_to_minsk'],
             'to_minsk_date' => $tour['to_minsk_date'],
@@ -468,8 +469,7 @@ class ToursController extends BaseController implements ControllerInterface
         ];
 
         $contract = ContractMaker::prepareContract($contract, $contractData);
-        $contract = '{% block contract %}' . $contract . '{% endblock %}'
-        ;
+        $contract = '{% block contract %}' . $contract . '{% endblock %}';
         $fileName = 'contract.html.twig';
         $contractFileName = 'templates/components/' . $fileName;
 
@@ -674,8 +674,7 @@ class ToursController extends BaseController implements ControllerInterface
         ];
 
         $voucher = ContractMaker::prepareVoucher($voucher, $documentData);
-        $voucher = '{% block voucher %}' . $voucher . '{% endblock %}'
-        ;
+        $voucher = '{% block voucher %}' . $voucher . '{% endblock %}';
         $fileName = 'voucher.html.twig';
         $fullFileName = 'templates/components/' . $fileName;
 
