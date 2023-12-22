@@ -75,9 +75,9 @@ class ClientsController extends BaseController implements ControllerInterface
         }
 
         $data = [
-            'title' => 'Клиенты',
+            'title' => 'Туристы',
             'entity' => 'clients',
-            'header' => 'Клиенты',
+            'header' => 'Туристы',
             'login' => $_COOKIE['login'],
             'currentPage' => $page,
             'pages' => $pages,
