@@ -20,7 +20,7 @@ final class ClientArchiverCommand
     {
         echo "execute start" . PHP_EOL;
         if (!$this->archiveClients() || !$this->archiveSubClients()) {
-            echo "failed to archive clients or sub_clients";
+            echo "failed to archive clients or sub_clients" . PHP_EOL;
             return;
         }
 
