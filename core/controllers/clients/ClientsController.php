@@ -63,7 +63,13 @@ class ClientsController extends BaseController implements ControllerInterface
     public function read(int $id = 0): void
     {
         $this->setModel(ClientsModel::class);
-        $clients = $this->model->get();
+        $archived = $this->getArchived();
+        $clients = $this->model->get(
+            columnValue: [
+                'column' => 'archived',
+                'value' => $archived
+            ]
+        );
 
         $page = Paginator::getPage();
         $pages = (int) ceil(count($clients) / parent::PER_PAGE);
@@ -334,5 +340,22 @@ class ClientsController extends BaseController implements ControllerInterface
         $this->setView(ClientsView::class);
         $data = json_decode(file_get_contents(BASE_PATH . "static/passengers/passengers.json"), true);
         $this->view->render("passengers/passengers.html.twig", $data);
+    }
+
+    private function getArchived(): bool
+    {
+        parse_str(parse_url($_SERVER['REQUEST_URI'])['query'], $archived);
+
+        if (!$archived) {
+            return false;
+        }
+
+        $archived = $archived['archived'];
+
+        if ($archived == 'true') {
+            return true;
+        }
+
+        return false;
     }
 }

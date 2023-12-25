@@ -1,149 +1,157 @@
 {% block table %}
-	<table class="table table-sm table-secondary table-striped table-hover" id="table">
-		<tr>
-			<th scope="col"></th>
-			<th style="min-width: 125px;" class="align-middle" scope="col">
-				<div class="input-group w-100 align-middle">
-					<select class="form-select" id="search-hotel">
-						<option value="0">Выбрать</option>
-						{% for hotel in hotels %}
-							<option value="{{ hotel.id }}" {% if hotel_id == hotel.id %} {{ 'selected="selected"' }} {% endif %}>{{ hotel.name }}</option>
-						{% endfor %}
-					</select>
-				</div>
-			</th>
-			<th style="min-width: 95px;" scope="col" class="align-middle">
-				<div class="input-group w-100 align-middle">
-					<select class="form-select" id="search-bus">
-						<option value="0">Выбрать</option>
-						{% for bus in buses %}
-							<option value="{{ bus.id }}" {% if bus_id == bus.id %} {{ 'selected="selected"' }} {% endif %}>{{ bus.name }}{{ ': ' }}{{ bus.route }}</option>
-						{% endfor %}
-					</select>
-				</div>
-			</th>
-			<th style="min-width: 95px;" scope="col" class="align-middle">
-				<div class="input-group w-100 align-middle">
-					<select class="form-select" id="search-from-minsk-date">
-						<option value="0">Выбрать</option>
-						{% for bus in buses %}
-							{% for date in bus.departure_from_minsk|split('\n') %}
-								<option value="{{ date }}" {% if from_minsk_date == date %} {{ 'selected="selected"' }} {% endif %}>{{ date }}</option>
-							{% endfor %}
-						{% endfor %}
-					</select>
-				</div>
-			</th>
-			<th style="min-width: 95px;" scope="col" class="align-middle">
-				<div class="input-group w-100 align-middle">
-					<select class="form-select" id="search-to-minsk-date">
-						<option value="0">Выбрать</option>
-						{% for bus in buses %}
-							{% for date in bus.arrival_to_minsk|split('\n') %}
-								<option value="{{ date }}" {% if to_minsk_date == date %} {{ 'selected="selected"' }} {% endif %}>{{ date }}</option>
-							{% endfor %}
-						{% endfor %}
-					</select>
-				</div>
-			</th>
-			<th style="min-width: 95px;" scope="col" class="align-middle"></th>
-			<th style="min-width: 140px;" scope="col" class="align-middle">
-				<input type="text" placeholder="Фамилия" class="form-control" id="search-name" {% if name|length > 1 %} value="{{ name }}" {% endif %}>
-			</th>
-			<th scope="col"></th>
-			<th style="min-width: 110px;" scope="col" class="align-middle"></th>
-			<th style="min-width: 120px;" scope="col" class="align-middle"></th>
-			<th scope="col" style="min-width: 200px;" class="align-middle">
-				<button class="btn btn-success w-100" id="find-tour">Найти</button>
-			</th>
-		</tr>
-		<tr>
-			<th scope="col" class="align-middle"><input type="checkbox" id="check-all"/></th>
-			<th style="min-width: 125px;" scope="col" class="align-middle">Гостиница</th>
-			<th style="min-width: 120px;" scope="col" class="align-middle">Автобус</th>
-			<th style="min-width: 95px;" scope="col" class="align-middle">Выезд из Минска</th>
-			<th style="min-width: 95px;" scope="col" class="align-middle">Выезд из курорта</th>
-			<th style="min-width: 95px;" scope="col" class="align-middle">Номер</th>
-			<th style="min-width: 90px;" scope="col" class="align-middle">Клиент</th>
-			<th scope="col" class="align-middle">Всего человек</th>
-			<th style="min-width: 110px;" scope="col" class="align-middle">Стоимость тур.услуги</th>
-			<th style="min-width: 120px;" scope="col" class="align-middle">Стоимость тура</th>
-			<th scope="col" style="min-width: 200px;" class="align-middle"></th>
-		</tr>
-		{% for tour in tours %}
-			<tr>
-				<td><input name="select" type="checkbox" value="{{ tour.id }}"/></td>
-				{% for hotel in hotels %}
-					{% if hotel.id == tour.hotel_id %}
-						<td>{{ hotel.name }}</td>
-					{% endif %}
-				{% endfor %}
-				{% if tour.hotel_id == 0 %}
-					<td>{{ 'Нет' }}</td>
-				{% endif %}
-				{% for bus in buses %}
-					{% if bus.id == tour.bus_id %}
-						<td>{{ bus.name}}{{ ': ' }}{{ bus.route }}</td>
-					{% endif %}
-				{% endfor %}
-				<td>{{ tour.from_minsk_date }}</td>
-				<td>
-					{% if tour.to_minsk_date != 0 %}
-						{{ tour.to_minsk_date }}
-					{% endif %}
-					{% if tour.to_minsk_date == 0 %}
-						{{ '<p style="background-color: yellow; border-radius: 3px; padding-left: 2px;">Прибытие в Минск: ' }}
-						{{ tour.arrival_to_minsk }}
-						{{ '</p>' }}
-					{% endif %}
-				</td>
-				{% for room in rooms %}
-					{% if room.id == tour.room_id %}
-						<td>{{ room.description|trim(', ') }}</td>
-					{% endif %}
-				{% endfor %}
-				{% if tour.room_id == 0 %}
-					<td>{{ 'Нет' }}</td>
-				{% endif %}
-				{% for client in clients %}
-					{% if client.id == tour.owner_id %}
-						<td>{{ client.name }}</td>
-						{% set count = 1 %}
-						{% for sc in sub_clients %}
-							{% if sc.main_client_id == client.id %}
-								{% set count = count + 1 %}
-							{% endif %}
-						{% endfor %}
-						<td>{{ count }}</td>
-					{% endif %}
-				{% endfor %}
-				<td>{{ tour.total_travel_service_byn }}
-					BYN</td>
-				<td>
-					<span>{{ tour.total_travel_cost_byn }}</span>
-					<br>
-					<span>{{ tour.total_travel_service_currency }}</span>
-				</td>
-				<td>
-					<div class="input-group w-100 mb-1">
-						<a class="btn btn-sm btn-warning w-50 {# disabled #}" href="/tours/edit/{{ tour.id }}">Изменить<br>тур</a>
-						<a class="btn btn-sm btn-success w-50" href="/tours/printContract/{{ tour.id }}">Печать<br>Договора</a>
-					</div>
-					<div class="input-group w-100">
-						<a class="btn btn-sm btn-success w-50" href="/tours/printAttachmentTwo/{{ tour.id }}">Печать<br>Приложения 2</a>
-						<a class="btn btn-sm btn-outline-success w-50" href="/tours/printVoucher/{{ tour.id }}">Печать<br>Путевки</a>
-					</div>
-				</td>
-			</tr>
+<table class="table table-sm table-secondary table-striped table-hover" id="table">
+	<tr>
+		<th scope="col"></th>
+		<th style="min-width: 125px;" class="align-middle" scope="col">
+			<div class="input-group w-100 align-middle">
+				<select class="form-select" id="search-hotel">
+					<option value="0">Выбрать</option>
+					{% for hotel in hotels %}
+					<option value="{{ hotel.id }}" {% if hotel_id==hotel.id %} {{ 'selected="selected"' }} {% endif %}>
+						{{ hotel.name }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</th>
+		<th style="min-width: 95px;" scope="col" class="align-middle">
+			<div class="input-group w-100 align-middle">
+				<select class="form-select" id="search-bus">
+					<option value="0">Выбрать</option>
+					{% for bus in buses %}
+					<option value="{{ bus.id }}" {% if bus_id==bus.id %} {{ 'selected="selected"' }} {% endif %}>{{
+						bus.name }}{{ ': ' }}{{ bus.route }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</th>
+		<th style="min-width: 95px;" scope="col" class="align-middle">
+			<div class="input-group w-100 align-middle">
+				<select class="form-select" id="search-from-minsk-date">
+					<option value="0">Выбрать</option>
+					{% for bus in buses %}
+					{% for date in bus.departure_from_minsk|split('\n') %}
+					<option value="{{ date }}" {% if from_minsk_date==date %} {{ 'selected="selected"' }} {% endif %}>{{
+						date }}</option>
+					{% endfor %}
+					{% endfor %}
+				</select>
+			</div>
+		</th>
+		<th style="min-width: 95px;" scope="col" class="align-middle">
+			<div class="input-group w-100 align-middle">
+				<select class="form-select" id="search-to-minsk-date">
+					<option value="0">Выбрать</option>
+					{% for bus in buses %}
+					{% for date in bus.arrival_to_minsk|split('\n') %}
+					<option value="{{ date }}" {% if to_minsk_date==date %} {{ 'selected="selected"' }} {% endif %}>{{
+						date }}</option>
+					{% endfor %}
+					{% endfor %}
+				</select>
+			</div>
+		</th>
+		<th style="min-width: 95px;" scope="col" class="align-middle"></th>
+		<th style="min-width: 140px;" scope="col" class="align-middle">
+			<input type="text" placeholder="Фамилия" class="form-control" id="search-name" {% if name|length> 1 %}
+			value="{{ name }}" {% endif %}>
+		</th>
+		<th scope="col"></th>
+		<th style="min-width: 110px;" scope="col" class="align-middle"></th>
+		<th style="min-width: 120px;" scope="col" class="align-middle"></th>
+		<th scope="col" style="min-width: 200px;" class="align-middle">
+			<button class="btn btn-success w-100" id="find-tour">Найти</button>
+		</th>
+	</tr>
+	<tr>
+		<th scope="col" class="align-middle"><input type="checkbox" id="check-all" /></th>
+		<th style="min-width: 125px;" scope="col" class="align-middle">Гостиница</th>
+		<th style="min-width: 120px;" scope="col" class="align-middle">Автобус</th>
+		<th style="min-width: 95px;" scope="col" class="align-middle">Выезд из Минска</th>
+		<th style="min-width: 95px;" scope="col" class="align-middle">Выезд из курорта</th>
+		<th style="min-width: 95px;" scope="col" class="align-middle">Номер</th>
+		<th style="min-width: 90px;" scope="col" class="align-middle">Клиент</th>
+		<th scope="col" class="align-middle">Всего человек</th>
+		<th style="min-width: 110px;" scope="col" class="align-middle">Стоимость тур.услуги</th>
+		<th style="min-width: 120px;" scope="col" class="align-middle">Стоимость тура</th>
+		<th scope="col" style="min-width: 200px;" class="align-middle"></th>
+	</tr>
+	{% for tour in tours %}
+	<tr>
+		<td><input name="select" type="checkbox" value="{{ tour.id }}" /></td>
+		{% for hotel in hotels %}
+		{% if hotel.id == tour.hotel_id %}
+		<td>{{ hotel.name }}</td>
+		{% endif %}
 		{% endfor %}
-	</table>
-	<script type="text/javascript">
-		document.addEventListener("DOMContentLoaded", function () {
-document.body.addEventListener("keypress", function (event) {
-if (event.keyCode === 13) {
-document.getElementById("find-tour").click();
-}
-});
-});
-	</script>
+		{% if tour.hotel_id == 0 %}
+		<td>{{ 'Нет' }}</td>
+		{% endif %}
+		{% for bus in buses %}
+		{% if bus.id == tour.bus_id %}
+		<td>{{ bus.name}}{{ ': ' }}{{ bus.route }}</td>
+		{% endif %}
+		{% endfor %}
+		<td>{{ tour.from_minsk_date }}</td>
+		<td>
+			{% if tour.to_minsk_date != 0 %}
+			{{ tour.to_minsk_date }}
+			{% endif %}
+			{% if tour.to_minsk_date == 0 %}
+			{{ '<p style="background-color: yellow; border-radius: 3px; padding-left: 2px;">Прибытие в Минск: ' }}
+				{{ tour.arrival_to_minsk }}
+				{{ '</p>' }}
+			{% endif %}
+		</td>
+		{% for room in rooms %}
+		{% if room.id == tour.room_id %}
+		<td>{{ room.description|trim(', ') }}</td>
+		{% endif %}
+		{% endfor %}
+		{% if tour.room_id == 0 %}
+		<td>{{ 'Нет' }}</td>
+		{% endif %}
+		{% for client in clients %}
+		{% if client.id == tour.owner_id %}
+		<td>{{ client.name }}</td>
+		{% set count = 1 %}
+		{% for sc in sub_clients %}
+		{% if sc.main_client_id == client.id %}
+		{% set count = count + 1 %}
+		{% endif %}
+		{% endfor %}
+		<td>{{ count }}</td>
+		{% endif %}
+		{% endfor %}
+		<td>{{ tour.total_travel_service_byn }}
+			BYN</td>
+		<td>
+			<span>{{ tour.total_travel_cost_byn }}</span>
+			<br>
+			<span>{{ tour.total_travel_service_currency }}</span>
+		</td>
+		<td>
+			<div class="input-group w-100 mb-1">
+				<a class="btn btn-sm btn-warning w-50 {# disabled #}"
+					href="/tours/edit/{{ tour.id }}">Изменить<br>тур</a>
+				<a class="btn btn-sm btn-success w-50" href="/tours/printContract/{{ tour.id }}">Печать<br>Договора</a>
+			</div>
+			<div class="input-group w-100">
+				<a class="btn btn-sm btn-success w-50"
+					href="/tours/printAttachmentTwo/{{ tour.id }}">Печать<br>Приложения 2</a>
+				<a class="btn btn-sm btn-outline-success w-50"
+					href="/tours/printVoucher/{{ tour.id }}">Печать<br>Путевки</a>
+			</div>
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function () {
+		document.body.addEventListener("keypress", function (event) {
+			if (event.keyCode === 13) {
+				document.getElementById("find-tour").click();
+			}
+		});
+	});
+</script>
 {% endblock %}
