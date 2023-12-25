@@ -10,7 +10,11 @@
         <th scope="col">Прописка</th>
         <th scope="col">
             <div class="archived-check">
-                <input class="form-check-input" type="checkbox" value="" id="archived-clients">
+                <input class="form-check-input" type="checkbox" value="{{ archived }}" id="archived-clients"
+                    {% if archived %}
+                        {{ ' checked' }}
+                    {% endif %}
+                >
                 <label class="form-check-label" for="flexCheckDefault">
                     В архиве
                 </label>
