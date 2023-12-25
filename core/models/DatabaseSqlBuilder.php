@@ -9,7 +9,7 @@ class DatabaseSqlBuilder
 {
     protected PDO $conn;
     protected Database $database;
-    
+
     public function __construct()
     {
         $this->database = Database::getInstance();
@@ -32,15 +32,25 @@ class DatabaseSqlBuilder
         return true;
     }
 
-    public function select(string $tableName, array $columnValue = [], array $columnsValues = []): array
-    {
+    public function select(
+        string $tableName,
+        array $columnValue = [],
+        array $columnsValues = [],
+        array $joins = []
+    ): array {
         $sqlQuery = "SELECT * FROM $tableName";
+
+        if ($joins != []) {
+            $joins = $this->setJoins($joins);
+            $sqlQuery .= ' ' . $joins;
+        }
 
         if ($columnValue != []) {
             $column = $columnValue['column'];
             $value = $columnValue['value'];
             $sqlQuery .= " WHERE ${column}='${value}'";
         }
+
 
         if ($columnsValues != []) {
             $where_clause = $this->setWhereClause($columnsValues);
@@ -49,7 +59,7 @@ class DatabaseSqlBuilder
 
         $query = $this->conn->prepare($sqlQuery);
         try {
-        $query->execute();
+            $query->execute();
         } catch (\PDOException $e) {
             return [];
         }
@@ -100,7 +110,7 @@ class DatabaseSqlBuilder
             return 0;
         }
 
-        return $query->fetchAll(); 
+        return $query->fetchAll();
     }
 
     public function lastId(string $tableName, string $column): int|array
@@ -184,5 +194,20 @@ class DatabaseSqlBuilder
         }
 
         return $query->fetchAll();
+    }
+
+    private function setJoins(array $joins = []): string
+    {
+        if (!$joins) {
+            return "";
+        }
+
+        $joins_str = '';
+
+        foreach ($joins as $join) {
+            $joins_str .= 'LEFT JOIN ' . $join['table'] . ' ON ' . $join['left_table'] . '.' . $join['left_table_column'] . ' ' . $join['condition'] . ' ' . $join['table'] . '.' . $join['right_table_column'] . ' ';
+        }
+
+        return $joins_str;
     }
 }

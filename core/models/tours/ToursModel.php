@@ -42,7 +42,19 @@ class ToursModel extends Model implements ModelInterface
             return $this->databaseSqlBuilder->select(self::TABLE_NAME);
         }
 
-        return $this->databaseSqlBuilder->select(self::TABLE_NAME, $columnValue);
+        return $this->databaseSqlBuilder->select(
+            tableName: self::TABLE_NAME,
+            columnValue: $columnValue,
+            joins: [
+                [
+                    'table' => 'clients_table',
+                    'left_table' => 'tours_table',
+                    'left_table_column' => 'owner_id',
+                    'right_table_column' => 'id',
+                    'condition' => '='
+                ]
+            ]
+        );
     }
 
     public function search(): array
