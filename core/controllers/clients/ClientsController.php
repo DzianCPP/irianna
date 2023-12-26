@@ -343,6 +343,25 @@ class ClientsController extends BaseController implements ControllerInterface
         $this->view->render("passengers/passengers.html.twig", $data);
     }
 
+    public function autofill(): void
+    {
+        $client = null;
+
+        $client_name = json_decode(file_get_contents("php://input"), true);
+
+        if (!$client_name || strlen($client_name)) {
+            echo "";
+            return;
+        }
+
+        $client = $this->model->getLike([
+            'column' => 'name',
+            'value' => $client_name
+        ]);
+
+        echo json_encode($client);
+    }
+
     private function getArchived(): bool
     {
         parse_str(parse_url($_SERVER['REQUEST_URI'])['query'], $archived);

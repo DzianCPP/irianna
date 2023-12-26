@@ -67,6 +67,33 @@ class DatabaseSqlBuilder
         return $query->fetchAll();
     }
 
+    public function selectLike(
+        string $tableName,
+        array $columnValue = []
+    ): array {
+        $sqlQuery = "SELECT * FROM " . $tableName;
+
+        if (
+            isset($columnValue)
+            && $columnValue != []
+            && !empty($columnValue)
+        ) {
+            $sqlQuery .= " WHERE " . $columnValue['column'] . ' LIKE \'%' . $columnValue['value'] . '%\'';
+        }
+
+        $sqlQuery .= ' LIMIT 1';
+
+        $query = $this->conn->prepare($sqlQuery);
+
+        try {
+            $query->execute();
+        } catch (\PDOException $e) {
+            return [];
+        }
+
+        return $query->fetchAll();
+    }
+
     public function update(string $tableName, array $fields, array $recordInfo, $column): bool
     {
         $sets = $this->getSets($fields);
