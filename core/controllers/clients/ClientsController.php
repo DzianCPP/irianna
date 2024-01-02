@@ -19,7 +19,7 @@ use core\views\tours\ToursView;
 
 class ClientsController extends BaseController implements ControllerInterface
 {
-    public function new (): void
+    public function new(): void
     {
         $data = [
             'title' => 'Добавить клиента',
@@ -347,17 +347,33 @@ class ClientsController extends BaseController implements ControllerInterface
     {
         $client = null;
 
-        $client_name = json_decode(file_get_contents("php://input"), true);
+        $client_name = $this->getClientNameFromInput();
 
-        if (!$client_name || strlen($client_name)) {
+        if (
+            !$client_name
+            || strlen($client_name) < 3
+        ) {
             echo "";
             return;
         }
 
-        $client = $this->model->getLike([
-            'column' => 'name',
-            'value' => $client_name
-        ]);
+        $this->setModel(ClientsModel::class);
+
+        $client = $this->model->getByName(
+            [
+                'column' => 'name',
+                'value' => $client_name
+            ]
+        );
+
+        if (!$client || empty($client)) {
+            http_response_code(200);
+            echo json_encode(['status' => '404', 'message' => 'No such client']);
+
+            return;
+        }
+
+        $client['status'] = '200';
 
         echo json_encode($client);
     }
@@ -377,5 +393,10 @@ class ClientsController extends BaseController implements ControllerInterface
         }
 
         return false;
+    }
+
+    private function getClientNameFromInput(): string
+    {
+        return json_decode(file_get_contents("php://input"), true)['name'] ?? '';
     }
 }
