@@ -19,7 +19,7 @@ use core\views\tours\ToursView;
 
 class ClientsController extends BaseController implements ControllerInterface
 {
-    public function new (): void
+    public function new(): void
     {
         $data = [
             'title' => 'Добавить клиента',
@@ -63,7 +63,13 @@ class ClientsController extends BaseController implements ControllerInterface
     public function read(int $id = 0): void
     {
         $this->setModel(ClientsModel::class);
-        $clients = $this->model->get();
+        $archived = $this->getArchived();
+        $clients = $this->model->get(
+            columnValue: [
+                'column' => 'archived',
+                'value' => $archived
+            ]
+        );
 
         $page = Paginator::getPage();
         $pages = (int) ceil(count($clients) / parent::PER_PAGE);
@@ -75,9 +81,10 @@ class ClientsController extends BaseController implements ControllerInterface
         }
 
         $data = [
-            'title' => 'Клиенты',
+            'title' => 'Туристы',
             'entity' => 'clients',
-            'header' => 'Клиенты',
+            'header' => 'Туристы',
+            'archived' => $archived,
             'login' => $_COOKIE['login'],
             'currentPage' => $page,
             'pages' => $pages,
@@ -334,5 +341,62 @@ class ClientsController extends BaseController implements ControllerInterface
         $this->setView(ClientsView::class);
         $data = json_decode(file_get_contents(BASE_PATH . "static/passengers/passengers.json"), true);
         $this->view->render("passengers/passengers.html.twig", $data);
+    }
+
+    public function autofill(): void
+    {
+        $client = null;
+
+        $client_name = $this->getClientNameFromInput();
+
+        if (
+            !$client_name
+            || strlen($client_name) < 3
+        ) {
+            echo "";
+            return;
+        }
+
+        $this->setModel(ClientsModel::class);
+
+        $client = $this->model->getByName(
+            [
+                'column' => 'name',
+                'value' => $client_name
+            ]
+        );
+
+        if (!$client || empty($client)) {
+            http_response_code(200);
+            echo json_encode(['status' => '404', 'message' => 'No such client']);
+
+            return;
+        }
+
+        $client['status'] = '200';
+
+        echo json_encode($client);
+    }
+
+    private function getArchived(): bool
+    {
+        parse_str(parse_url($_SERVER['REQUEST_URI'])['query'], $archived);
+
+        if (!$archived) {
+            return false;
+        }
+
+        $archived = $archived['archived'];
+
+        if ($archived == 'true') {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function getClientNameFromInput(): string
+    {
+        return json_decode(file_get_contents("php://input"), true)['name'] ?? '';
     }
 }

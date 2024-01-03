@@ -5,10 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function addDates() {
-    // let free_dates = JSON.parse(document.getElementById("free-dates").innerHTML);
-
     let json_dates_raw = await getFreeDates();
-    
+
     let free_dates = json_dates_raw;
     let checkin_dates = free_dates['in_dates'];
     let checkout_dates = free_dates['out_dates'];
