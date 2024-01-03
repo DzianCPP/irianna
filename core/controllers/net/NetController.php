@@ -50,7 +50,7 @@ class NetController extends BaseController
         $room = (new RoomsModel)->get(
             columnValue: [
                 'column' => 'id',
-                'value' => $this->getCurrentRoomId($rooms) ?? $rooms[0]['id']
+                'value' => $this->getCurrentRoomId($rooms) != false ? $this->getCurrentRoomId($rooms) : $rooms[0]['id']
             ]
         );
 
@@ -82,13 +82,17 @@ class NetController extends BaseController
     private function getHotel(): bool|array
     {
         $hotelsModel = new HotelsModel();
+        $parsed_url = parse_url($_SERVER['REQUEST_URI']);
+        $hotel_id = 0;
+        if (isset($parsed_url['query'])) {
+            parse_str(
+                $parsed_url['query'],
+                $hotel_id
+            );
 
-        parse_str(
-            parse_url($_SERVER['REQUEST_URI'])['query'],
-            $hotel_id
-        );
+            $hotel_id = $hotel_id['hotel'];
+        }
 
-        $hotel_id = $hotel_id['hotel'];
         $hotel = [];
 
         if ($hotel_id == 0) {
@@ -108,12 +112,16 @@ class NetController extends BaseController
 
     private function getCurrentRoomId(array $rooms): int|false
     {
-        parse_str(
-            parse_url($_SERVER['REQUEST_URI'])['query'],
-            $room_id_array
-        );
+        $parsed_url = parse_url($_SERVER['REQUEST_URI']);
+        $room_id = false;
+        if (isset($parsed_url['query'])) {
+            parse_str(
+                $parsed_url['query'],
+                $room_id_array
+            );
 
-        $room_id = $room_id_array['room'] ?? false;
+            $room_id = $room_id_array['room'] ?? false;
+        }
 
         $found = false;
 
