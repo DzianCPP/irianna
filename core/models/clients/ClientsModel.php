@@ -19,12 +19,25 @@ class ClientsModel extends Model implements ModelInterface
         $clients = [];
 
         if ($columnValue != []) {
-            $clients  = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], columnValue: $columnValue);
+            $clients  = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], $columnValue);
         } else {
             $clients = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], $columnValue);
         }
 
         return ClientsHelper::denormalizeClients($clients);
+    }
+
+    public function getByName(array $columnValue = []): array
+    {
+        $client = [];
+
+        if ($columnValue != []) {
+            $client = $this->databaseSqlBuilder->selectLike(self::TABLE_NAMES[0], $columnValue);
+        } else {
+            $client = $this->databaseSqlBuilder->selectLike(self::TABLE_NAMES[0], $columnValue);
+        }
+
+        return $client;
     }
 
     public function update(array $newInfo): bool
@@ -37,7 +50,7 @@ class ClientsModel extends Model implements ModelInterface
         $newInfo = $newInfo['main_client'];
 
         $this->dataSanitizer->SanitizeData($newInfo);
-        
+
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAMES[0], $this->fields[0], $newInfo, 'id')) {
             return false;
         }

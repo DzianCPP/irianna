@@ -50,6 +50,7 @@ function createButton(_class, _text) {
 function createRow() {
     const _row = document.createElement('div');
     _row.setAttribute("class", "row mb-2");
+    _row.setAttribute("name", "sub-client");
 
     return _row;
 }
