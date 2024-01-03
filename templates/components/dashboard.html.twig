@@ -1,106 +1,115 @@
 {% block dashboard %}
 
-	<div class="container w-100 mb-5">
+<div class="container w-100 mb-5">
 
-		<div class="row w-100">
+	<div class="row w-100">
 
 
-			<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
-				<div class="btn-group-vertical w-100 m-1">
-					<a class="btn btn-lg btn-secondary w-100 p-4" id="countries-btn" href="/countries">Страны</a>
-					<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="countries-add" href="/countries/new">Добавить</a>
-				</div>
+		<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
+			<div class="btn-group-vertical w-100 m-1">
+				<a class="btn btn-lg btn-secondary w-100 p-4" id="countries-btn" href="/countries">Страны</a>
+				<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="countries-add"
+					href="/countries/new">Добавить</a>
 			</div>
-			<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
-				<div class="btn-group-vertical w-100 m-1">
-					<a class="btn btn-lg btn-secondary w-100 p-4" id="resorts-btn" href="/resorts">Курорты</a>
-					<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="resorts-add" href="/resorts/new">Добавить</a>
-				</div>
+		</div>
+		<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
+			<div class="btn-group-vertical w-100 m-1">
+				<a class="btn btn-lg btn-secondary w-100 p-4" id="resorts-btn" href="/resorts">Курорты</a>
+				<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="resorts-add" href="/resorts/new">Добавить</a>
 			</div>
-
-			<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
-				<div class="btn-group-vertical w-100 m-1">
-					<a class="btn btn-lg btn-secondary w-100 p-4" id="hotels-btn" href="/hotels">Гостиницы</a>
-					<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="hotels-add" href="/hotels/new">Добавить</a>
-				</div>
-			</div>
-
-
 		</div>
 
-
-		<div class="row w-100">
-
-
-			<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
-				<div class="btn-group-vertical w-100 m-1">
-					<a class="btn btn-lg btn-secondary w-100 p-4" id="tours-btn" href="/rooms">Номера</a>
-					<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="tours-add" href="/rooms/pickHotel">Добавить</a>
-				</div>
+		<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
+			<div class="btn-group-vertical w-100 m-1">
+				<a class="btn btn-lg btn-secondary w-100 p-4" id="hotels-btn" href="/hotels">Гостиницы</a>
+				<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="hotels-add" href="/hotels/new">Добавить</a>
 			</div>
-
-			<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
-				<div class="btn-group-vertical w-100 m-1">
-					<a class="btn btn-lg btn-secondary w-100 p-4" id="tours-btn" href="/tours">Туры</a>
-					<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="tours-add" href="/tours/new">Добавить</a>
-				</div>
-			</div>
-			<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
-				<div class="btn-group-vertical w-100 m-1">
-					<a class="btn btn-lg btn-secondary w-100 p-4" id="buses-btn" href="/buses">Автобусы</a>
-					<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="buses-add" href="/buses/new">Добавить</a>
-				</div>
-			</div>
-
-
-		</div>
-
-
-		<div class="row w-100">
-
-
-			<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
-				<div class="btn-group-vertical w-100 m-1">
-					<a class="btn btn-lg btn-secondary w-100 p-4" id="clients-btn" href="/clients/passengers">Список пассажиров</a>
-					<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="clients-add" href="/clients/guests">Расселение</a>
-				</div>
-			</div>
-
-			<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
-				<div class="btn-group-vertical w-100 m-1">
-					<a class="btn btn-lg btn-secondary w-100 p-4" id="managers-btn" href="/managers">Менеджеры</a>
-					<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="managers-add" href="/managers/new">Добавить</a>
-				</div>
-
-			</div>
-			<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
-				<div class="btn-group-vertical w-100 m-1">
-					<a class="btn btn-lg btn-secondary w-100 p-4" id="templates-btn" href="/contracts">Шаблоны</a>
-					<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="templates-add" href="/contracts/new">Добавить</a>
-				</div>
-			</div>
-
-		</div>
-
-		<div class="row w-100">
-
-			<div class="col-xs-12 col-sm-12 col-md-6 col-xl-6">
-				<div class="btn-group-vertical w-100 m-1">
-					<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="currencies-set" href="/currencies/new">Валюты</a>
-				</div>
-			</div>
-
-
-			<div class="col-xs-12 col-sm-12 col-md-6 col-xl-6">
-				<div class="btn-group w-100 m-1">
-					<a class="btn btn-lg btn-secondary w-50 p-4" id="room-net" href="/net">Сетка номеров</a>
-					<a class="btn btn-lg btn-outline-secondary w-50 p-4" id="statement" href="/statement/form">Ведомость</a>
-				</div>
-			</div>
-
 		</div>
 
 
 	</div>
+
+
+	<div class="row w-100">
+
+
+		<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
+			<div class="btn-group-vertical w-100 m-1">
+				<a class="btn btn-lg btn-secondary w-100 p-4" id="tours-btn" href="/rooms">Номера</a>
+				<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="tours-add"
+					href="/rooms/pickHotel">Добавить</a>
+			</div>
+		</div>
+
+		<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
+			<div class="btn-group-vertical w-100 m-1">
+				<a class="btn btn-lg btn-secondary w-100 p-4" id="tours-btn" href="/tours">Туры</a>
+				<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="tours-add" href="/tours/new">Добавить</a>
+			</div>
+		</div>
+		<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
+			<div class="btn-group-vertical w-100 m-1">
+				<a class="btn btn-lg btn-secondary w-100 p-4" id="buses-btn" href="/buses">Автобусы</a>
+				<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="buses-add" href="/buses/new">Добавить</a>
+			</div>
+		</div>
+
+
+	</div>
+
+
+	<div class="row w-100">
+
+
+		<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
+			<div class="btn-group-vertical w-100 m-1">
+				<a class="btn btn-lg btn-secondary w-100 p-4" id="clients-btn" href="/clients/passengers">Список
+					пассажиров</a>
+				<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="clients-add"
+					href="/clients/guests">Расселение</a>
+			</div>
+		</div>
+
+		<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
+			<div class="btn-group-vertical w-100 m-1">
+				<a class="btn btn-lg btn-secondary w-100 p-4" id="managers-btn" href="/managers">Менеджеры</a>
+				<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="managers-add"
+					href="/managers/new">Добавить</a>
+			</div>
+
+		</div>
+		<div class="col-xs-4 col-sm-4 col-md-4 col-xl-4">
+			<div class="btn-group-vertical w-100 m-1">
+				<a class="btn btn-lg btn-secondary w-100 p-4" id="templates-btn" href="/contracts">Шаблоны</a>
+				<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="templates-add"
+					href="/contracts/new">Добавить</a>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row w-100">
+
+		<div class="col-xs-12 col-sm-12 col-md-6 col-xl-6">
+			<div class="btn-group w-100 m-1">
+				<a class="btn btn-lg btn-outline-secondary w-100 p-4" id="currencies-set"
+					href="/currencies/new">Валюты</a>
+				<a class="btn btn-lg btn-secondary w-100 p-4" id="clients" href="/clients">
+					{{ 'Туристы' }}
+				</a>
+			</div>
+		</div>
+
+
+		<div class="col-xs-12 col-sm-12 col-md-6 col-xl-6">
+			<div class="btn-group w-100 m-1">
+				<a class="btn btn-lg btn-secondary w-50 p-4" id="room-net" href="/net">Сетка номеров</a>
+				<a class="btn btn-lg btn-outline-secondary w-50 p-4" id="statement" href="/statement/form">Ведомость</a>
+			</div>
+		</div>
+
+	</div>
+
+</div>
 
 {% endblock %}

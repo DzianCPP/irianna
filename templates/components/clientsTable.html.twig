@@ -1,14 +1,25 @@
 {% block table %}
 <table class="table table-sm table-secondary table-striped table-hover" id="table">
     <tr>
-        <th scope="col"><input type="checkbox" id="check-all"/></th>
+        <th scope="col"><input type="checkbox" id="check-all" /></th>
         <th scope="col">id</th>
         <th scope="col">ФИО</th>
         <th scope="col">Паспорт</th>
         <th scope="col">Телефон</th>
         <th scope="col">Доп.телефон</th>
         <th scope="col">Прописка</th>
-        <th scope="col"></th>
+        <th scope="col">
+            <div class="archived-check">
+                <input class="form-check-input" type="checkbox" value="{{ archived }}" id="archived-clients"
+                    {% if archived %}
+                        {{ ' checked' }}
+                    {% endif %}
+                >
+                <label class="form-check-label" for="flexCheckDefault">
+                    В архиве
+                </label>
+            </div>
+        </th>
     </tr>
     {% for client in clients %}
     <tr>
@@ -25,4 +36,6 @@
     </tr>
     {% endfor %}
 </table>
+
+<script src="/assets/scripts/clients/archivedClients.js" type="text/javascript"></script>
 {% endblock %}

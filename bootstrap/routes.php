@@ -380,6 +380,12 @@ return [
         'method' => 'GET'
     ],
 
+    'clients_autofill' => [
+        'controller' => ClientsController::class,
+        'action' => 'autofill',
+        'method' => 'POST'
+    ],
+
     'clients/find' => [
         'controller' => ClientsController::class,
         'action' => 'find',
