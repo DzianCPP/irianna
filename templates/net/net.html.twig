@@ -12,12 +12,31 @@
 			<div class="input-group mb-2">
 				<select class="form-select text-secondary text-center w-50" id="hotels">
 					{% for hotel in hotels %}
-					<option value="{{ hotel.id }}" class="btn btn-outline-secondary" {% if current_hotel_id == hotel.id %}{{ 'selected="selected"' }}{% endif %}>
+					<option
+						value="{{ hotel.id }}"
+						class="btn btn-outline-secondary"
+						{% if current_hotel_id == hotel.id %}{{ 'selected="selected"' }}{% endif %}
+					>
 						{{ hotel.name }}
 					</option>
 					{% endfor %}
 				</select>
 				<button class="btn btn-success w-50" id="hotels-btn">Найти</button>
+			</div>
+			<div class="input-group mb-2">
+				<select class="form-select text-secondary text-center w-50" id="rooms">
+					{% for room in rooms %}
+						<option
+							value="{{ room.id }}"
+							class="btn btn-outline-secondary"
+							{% if current_room_id != false %}
+								{% if current_room_id == room.id %}{{ 'selected="selected"' }}{% endif %}
+							{% endif %}
+						>
+							{{ room.description }}
+						</option>
+					{% endfor %}
+				</select>
 			</div>
 			<div class="table-responsive w-100">
 				{% use 'components/netTable.html.twig' %}
@@ -41,4 +60,5 @@
 	</div>
 </div>
 
+<script type="text/javascript" src="/assets/scripts/net/net.js">
 {% endblock %}

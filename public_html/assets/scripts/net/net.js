@@ -1,6 +1,26 @@
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("hotels-btn").addEventListener("click", function () {
-        let url = "/net/" + document.getElementById("hotels").value;
-        window.location = url;
-    })
-})
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        document
+            .getElementById("hotels-btn")
+            .addEventListener(
+                "click",
+                function () {
+                    let url = buildUrl();
+                    window.location = url;
+                }
+            )
+    }
+);
+
+function buildUrl() {
+    return "/net?hotel="
+        + document
+            .getElementById("hotels")
+            .value
+        + "&room="
+        + document
+            .getElementById("rooms")
+            .value
+        ;
+}
