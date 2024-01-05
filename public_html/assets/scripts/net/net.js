@@ -24,3 +24,12 @@ function buildUrl() {
             .value
         ;
 }
+
+document
+    .getElementById("rooms")
+    .addEventListener(
+        "change",
+        function () {
+            window.location = buildUrl();
+        }
+    );
