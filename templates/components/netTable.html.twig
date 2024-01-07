@@ -1,25 +1,36 @@
 {% block table %}
 
-<table class="table table-sm table-secondary table-bordered border-light table-hover" id="table">
-    <tr>
-        <th>Описание номеров --></th>
-        {% for th in table.headers %}
-        <th style="width: fit-content;">{{ th }}</th>
-        {% endfor %}
-    </tr>
+	<table class="table table-sm table-secondary table-bordered border-light" id="table">
+		<tr>
+			{% for date in table.dates %}
+				<th>
+                    <small>
+                        {{ date.from }}{{ '-' }}{{ date.to }}
+                    </small>
+                </th>
+			{% endfor %}
+		</tr>
+		<tr>
+			{% for row in table.tours %}
+				{% if row.busy == true %}
+                    <td class="bg-danger text-center text-light">
+                        <small>
+                            {{ row.owner.name }}
+                            {{ '<br>' }}
+                            {{ 'Всего гостей: ' }}{{ row.guests_count }}
+                        </small>
+                    </td>
+				{% endif %}
+                {% if row.busy == false %}
+                    <td class="bg-success text-light text-center">
+                        <small class="m-auto">
+                            {{ 'Свободно' }}
+                        </small>
+                    </td>
+                {% endif %}
+			{% endfor %}
+		</tr>
+	</table>
 
-    {% for tr in table.rows %}
-    <tr>
-        {% for td in tr %}
-        <td {% if td == 'недоступно' %} {{ 'class="bg-dark text-light"' }}{% endif %}{% if td == 'свободно' %} {{ 'class="bg-success text-light"' }} {% else %}{% if td|last != last_year_number %} {{ 'class="bg-danger text-light"' }}{% endif %}{% endif %}>
-        {% if td|split(' ')|length <2 %}{{ td }}{% endif %}
-        {% if td|split(' ')|length == 2 %}{% for n in td|split(' ') %}{{ n }}{{ '<br>' }}{% endfor %}{% endif %}
-        {% if td|split(' ')|length >= 3 %}{{ td }}{% endif %}
-        </td>
-        {% endfor %}
-    </tr>
-    {% endfor %}
-</table>
-
-<script type="text/javascript" src="/assets/scripts/net/net.js"></script>
+	 <script type="text/javascript" src="/assets/scripts/net/net.js"></script>
 {% endblock %}
