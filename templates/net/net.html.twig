@@ -12,12 +12,31 @@
 			<div class="input-group mb-2">
 				<select class="form-select text-secondary text-center w-50" id="hotels">
 					{% for hotel in hotels %}
-					<option value="{{ hotel.id }}" class="btn btn-outline-secondary" {% if current_hotel_id == hotel.id %}{{ 'selected="selected"' }}{% endif %}>
+					<option
+						value="{{ hotel.id }}"
+						class="btn btn-outline-secondary"
+						{% if current_hotel_id == hotel.id %}{{ 'selected="selected"' }}{% endif %}
+					>
 						{{ hotel.name }}
 					</option>
 					{% endfor %}
 				</select>
 				<button class="btn btn-success w-50" id="hotels-btn">Найти</button>
+			</div>
+			<div class="input-group mb-2">
+				<select class="form-select text-secondary text-center w-50" id="rooms">
+					{% for room in rooms %}
+						<option
+							value="{{ room.id }}"
+							class="btn btn-outline-secondary"
+							{% if current_room_id != false %}
+								{% if current_room_id == room.id %}{{ 'selected="selected"' }}{% endif %}
+							{% endif %}
+						>
+							{{ room.description }}
+						</option>
+					{% endfor %}
+				</select>
 			</div>
 			<div class="table-responsive w-100">
 				{% use 'components/netTable.html.twig' %}
@@ -32,7 +51,7 @@
 		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
 		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
 			<div>
-				<a class="btn btn-success w-100 mb-1" id="main-page" href="/tours/new">
+				<a class="btn btn-success w-100 mb-1 mt-2" id="main-page" href="/tours/new">
 					Главная страница
 				</a>
 			</div>
@@ -41,4 +60,5 @@
 	</div>
 </div>
 
+<script type="text/javascript" src="/assets/scripts/net/net.js">
 {% endblock %}
