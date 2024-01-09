@@ -401,6 +401,27 @@ class ToursController extends BaseController implements ControllerInterface
         return;
     }
 
+    public function getContractHTML(): void
+    {
+        if (!file_exists(BASE_PATH . 'templates/components/contract.html.twig')) {
+            http_response_code(500);
+
+            return;
+        }
+
+        $contractHtmlTwig = file_get_contents(BASE_PATH . 'templates/components/contract.html.twig');
+        if (!$contractHtmlTwig) {
+            http_response_code(500);
+
+            return;
+        }
+
+        $contractHtml = trim($contractHtmlTwig, '{% block contract %}');
+        $contractHtml = rtrim($contractHtml, '{% endblock %}');
+
+        echo $contractHtml;
+    }
+
     public function printContract(): void
     {
         $this->setModel(ToursModel::class);
