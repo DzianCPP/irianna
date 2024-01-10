@@ -5,15 +5,11 @@ document
     });
 
 async function savePDF() {
-    var docDefinition = {
-        content: [
-            {
-                text: await getContractHTML()
-            }
-        ],
-        defaultStyle: {}
-    };
-    pdfMake.createPdf(docDefinition).download();
+    pdfMake
+        .createPdf({
+            content: htmlToPdfmake(await getContractHTML())
+        })
+        .download();
 }
 
 async function getContractHTML() {
@@ -30,5 +26,5 @@ async function getContractHTML() {
         return;
     }
 
-    return await response.body;
+    return response.text();
 }

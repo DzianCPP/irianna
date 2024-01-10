@@ -19,6 +19,7 @@ use core\models\resorts\ResortsModel;
 use core\models\rooms\RoomsModel;
 use core\services\IdGetter;
 use core\services\ContractMaker;
+use Dompdf\Dompdf;
 
 class ToursController extends BaseController implements ControllerInterface
 {
