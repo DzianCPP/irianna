@@ -47,6 +47,32 @@ class ContractMaker
         $new_contract = str_replace('будет производиться отстой автобуса в течение 9 часов', '<b>будет производиться отстой автобуса в течение 9 часов</b>', $new_contract);
         $new_contract = str_replace('"Исполнитель"', '<b>"Исполнитель"</b>', $new_contract);
         $new_contract = str_replace('"Заказчик"', '<b>"Заказчик"</b>', $new_contract);
+        $new_contract = str_replace(
+            'stamp',
+            '<img
+                src="/assets/images/stamp.png"
+                style="
+                    aspect-ratio: 1 / 1;
+                    width: 200px;
+                    position: relative;
+                    z-index: 2;
+                "
+            >',
+            $new_contract)
+        ;
+        $new_contract = str_replace(
+            'signature',
+            '<img
+                src="/assets/images/signature.png"
+                style="
+                    aspect-ratio: 1 / 1;
+                    width: 200px;
+                    position: relative;
+                    z-index: 2;
+                "
+            >',
+            $new_contract
+        );
 
         return $new_contract;
     }
