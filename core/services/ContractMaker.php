@@ -58,8 +58,8 @@ class ContractMaker
                     z-index: 2;
                 "
             >',
-            $new_contract)
-        ;
+            $new_contract
+        );
         $new_contract = str_replace(
             'signature',
             '<img
