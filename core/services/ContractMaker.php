@@ -66,7 +66,7 @@ class ContractMaker
                 src="/assets/images/signature.png"
                 style="
                     aspect-ratio: 1 / 1;
-                    width: 200px;
+                    width: 100px;
                     position: relative;
                     z-index: 2;
                 "
