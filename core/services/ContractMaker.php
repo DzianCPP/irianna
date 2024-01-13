@@ -47,6 +47,32 @@ class ContractMaker
         $new_contract = str_replace('будет производиться отстой автобуса в течение 9 часов', '<b>будет производиться отстой автобуса в течение 9 часов</b>', $new_contract);
         $new_contract = str_replace('"Исполнитель"', '<b>"Исполнитель"</b>', $new_contract);
         $new_contract = str_replace('"Заказчик"', '<b>"Заказчик"</b>', $new_contract);
+        $new_contract = str_replace(
+            'stamp',
+            '<img
+                src="/assets/images/stamp.png"
+                style="
+                    aspect-ratio: 1 / 1;
+                    width: 200px;
+                    position: relative;
+                    z-index: 2;
+                "
+            >',
+            $new_contract
+        );
+        $new_contract = str_replace(
+            'signature',
+            '<img
+                src="/assets/images/signature.png"
+                style="
+                    aspect-ratio: 1 / 1;
+                    width: 100px;
+                    position: relative;
+                    z-index: 2;
+                "
+            >',
+            $new_contract
+        );
 
         return $new_contract;
     }
@@ -54,7 +80,7 @@ class ContractMaker
     public static function prepareAttachment2(string $att, array $data): string
     {
         $new_att = $att;
-        
+
         $new_att = str_replace('hotel_name', $data['hotel_name'], $new_att);
         $new_att = str_replace('resort_name', $data['resort_name'], $new_att);
         $new_att = str_replace('hotel_area', $data['hotel_area'], $new_att);
@@ -79,7 +105,7 @@ class ContractMaker
     public static function prepareVoucher(string $v, array $d): string
     {
         $new_v = $v;
-        
+
         $new_v = str_replace('irianna_logo', '<img src="/assets/images/logos/logo.png">', $new_v);
         $new_v = str_replace('client_name', $d['client_name'], $new_v);
         $new_v = str_replace('client_birthdate', $d['client_birthdate'], $new_v);
@@ -104,6 +130,7 @@ class ContractMaker
         $new_v = str_replace('resort_name', $d['resort_name'], $new_v);
 
         $room_comforts_array = explode(',', $d['room_comforts']);
+        $room_comforts_str = '';
 
         for ($i = 0; $i < 3; ++$i) {
             $room_comforts_str .= $room_comforts_array[$i] . ', ';

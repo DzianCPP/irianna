@@ -19,6 +19,7 @@ use core\models\resorts\ResortsModel;
 use core\models\rooms\RoomsModel;
 use core\services\IdGetter;
 use core\services\ContractMaker;
+use Dompdf\Dompdf;
 
 class ToursController extends BaseController implements ControllerInterface
 {
@@ -401,13 +402,34 @@ class ToursController extends BaseController implements ControllerInterface
         return;
     }
 
+    public function getContractHTML(): void
+    {
+        if (!file_exists(BASE_PATH . 'templates/components/contract.html.twig')) {
+            http_response_code(500);
+
+            return;
+        }
+
+        $contractHtmlTwig = file_get_contents(BASE_PATH . 'templates/components/contract.html.twig');
+        if (!$contractHtmlTwig) {
+            http_response_code(500);
+
+            return;
+        }
+
+        $contractHtml = trim($contractHtmlTwig, '{% block contract %}');
+        $contractHtml = rtrim($contractHtml, '{% endblock %}');
+
+        echo $contractHtml;
+    }
+
     public function printContract(): void
     {
         $this->setModel(ToursModel::class);
         $id = IdGetter::getId();
         $tour = [];
         if ($id) {
-            $tour = $this->model->get(['column' => 'id', 'value' => $id])[0];
+            $tour = $this->model->get(['column' => 'tours_table.id', 'value' => $id])[0];
         } else {
             $tour = $this->model->getLastTour();
         }
