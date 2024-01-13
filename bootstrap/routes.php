@@ -386,6 +386,12 @@ return [
         'method' => 'POST'
     ],
 
+    'contract-html' => [
+        'controller' => ToursController::class,
+        'action' => 'getContractHTML',
+        'method' => 'GET'
+    ],
+
     'clients/find' => [
         'controller' => ClientsController::class,
         'action' => 'find',
