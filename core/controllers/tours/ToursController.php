@@ -428,14 +428,16 @@ class ToursController extends BaseController implements ControllerInterface
         $this->setModel(ToursModel::class);
         $id = IdGetter::getId();
         $tour = [];
+
         if ($id) {
             $tour = $this->model->get(['column' => 'tours_table.id', 'value' => $id])[0];
         } else {
             $tour = $this->model->getLastTour();
         }
+
         $clientsModel = new ClientsModel();
         $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
-        echo 'got client';
+
         $contractsModel = new ContractsModel();
 
         $resortsModel = new ResortsModel();
@@ -462,6 +464,7 @@ class ToursController extends BaseController implements ControllerInterface
         $contractFileName = 'templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $contractFileName, 'w');
+        var_dump($fp); die();
         fwrite($fp, $contract, strlen($contract));
         fclose($fp);
 
