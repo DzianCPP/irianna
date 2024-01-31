@@ -467,7 +467,7 @@ class ToursController extends BaseController implements ControllerInterface
         fwrite($fp, $contract, strlen($contract));
         fclose($fp);
 
-        $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
+        $age_of_children = $tour['ages'] ?? $tour['ages'] || '--'; echo 'here';
 
         $contractData = [
             'resort_name' => $resort['name'],
@@ -493,7 +493,7 @@ class ToursController extends BaseController implements ControllerInterface
             'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
             'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name'],
             'only_transit' => $tour['is_only_transit']
-        ]; var_dump($contractData); die();
+        ];
 
         $contract = ContractMaker::prepareContract($contract, $contractData);
         $contract = '{% block contract %}' . $contract . '{% endblock %}';
