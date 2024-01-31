@@ -425,6 +425,7 @@ class ToursController extends BaseController implements ControllerInterface
 
     public function printContract(): void
     {
+        echo json_encode(['message' => 'Start print contract']);
         $this->setModel(ToursModel::class);
         $id = IdGetter::getId();
         $tour = [];
