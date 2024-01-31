@@ -493,14 +493,14 @@ class ToursController extends BaseController implements ControllerInterface
             'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
             'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name'],
             'only_transit' => $tour['is_only_transit']
-        ];
+        ]; var_dump($contractData); die();
 
         $contract = ContractMaker::prepareContract($contract, $contractData);
         $contract = '{% block contract %}' . $contract . '{% endblock %}';
         $fileName = 'contract.html.twig';
         $contractFileName = 'templates/components/' . $fileName;
 
-        $fp = fopen(BASE_PATH . $contractFileName, 'w'); echo $fp; die();
+        $fp = fopen(BASE_PATH . $contractFileName, 'w');
         fwrite($fp, $contract, strlen($contract));
         fclose($fp);
 
