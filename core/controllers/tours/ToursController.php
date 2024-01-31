@@ -435,6 +435,7 @@ class ToursController extends BaseController implements ControllerInterface
             $tour = $this->model->getLastTour();
         }
 
+        var_dump($id);
         var_dump($tour);
 
         $clientsModel = new ClientsModel();
