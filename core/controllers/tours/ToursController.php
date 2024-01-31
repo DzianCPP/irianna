@@ -467,8 +467,7 @@ class ToursController extends BaseController implements ControllerInterface
 
         $fp = fopen(BASE_PATH . $contractFileName, 'w');
         fwrite($fp, $contract, strlen($contract));
-        $close = fclose($fp);
-        var_dump($close);
+        fclose($fp);
 
         $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
 
@@ -505,7 +504,10 @@ class ToursController extends BaseController implements ControllerInterface
 
         echo $contractFileName . PHP_EOL;
 
-        $fc = fopen(BASE_PATH . $contractFileName, 'w');
+        if (($fc = fopen(BASE_PATH . $contractFileName, 'w')) != true) {
+            echo 'wtf';
+        }
+
         echo json_encode(error_get_last());
         fwrite($fc, $contract, strlen($contract));
         fclose($fc);
