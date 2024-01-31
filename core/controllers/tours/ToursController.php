@@ -467,9 +467,9 @@ class ToursController extends BaseController implements ControllerInterface
         $contractFileName = 'templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $contractFileName, 'w');
-        chmod($contractFileName, '0777');
         fwrite($fp, $contract, strlen($contract));
         fclose($fp);
+        chmod($contractFileName, 0777);
 
         $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
 
