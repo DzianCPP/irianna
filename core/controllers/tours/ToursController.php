@@ -467,6 +467,7 @@ class ToursController extends BaseController implements ControllerInterface
         $contractFileName = 'templates/components/' . $fileName;
 
         $fp = fopen(BASE_PATH . $contractFileName, 'w');
+        chmod($contractFileName, '0777');
         fwrite($fp, $contract, strlen($contract));
         fclose($fp);
 
