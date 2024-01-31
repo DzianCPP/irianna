@@ -431,7 +431,7 @@ class ToursController extends BaseController implements ControllerInterface
         $tour = [];
 
         if ($id) {
-            $tour = $toursModel->get(['column' => 'id', 'value' => $id])[0];
+            $tour = $toursModel->get(['column' => 'tours_table.id', 'value' => $id])[0];
         } else {
             $tour = $this->model->getLastTour();
         }
