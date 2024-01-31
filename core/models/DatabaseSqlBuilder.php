@@ -38,7 +38,7 @@ class DatabaseSqlBuilder
         array $columnsValues = [],
         array $joins = []
     ): array {
-        $sqlQuery = "SELECT * FROM $tableName";
+        $sqlQuery = "SELECT $tableName.* FROM $tableName";
 
         if ($joins != []) {
             $joins = $this->setJoins($joins);
