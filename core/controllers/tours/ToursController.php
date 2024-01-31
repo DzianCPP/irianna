@@ -472,8 +472,7 @@ class ToursController extends BaseController implements ControllerInterface
 
         $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
 
-        try {
-            $contractData = [
+        $contractData = [
             'resort_name' => $resort['name'],
             'hotel_name' => $hotel['name'],
             'day' => ToursDateGetter::getTourDay($tour),
@@ -498,9 +497,6 @@ class ToursController extends BaseController implements ControllerInterface
             'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name'],
             'only_transit' => $tour['is_only_transit']
         ];
-        } catch (Error $e) {
-            echo $e->getMessage();
-        }
 
         $contract = ContractMaker::prepareContract($contract, $contractData);
         $contract = '{% block contract %}' . $contract . '{% endblock %}';
