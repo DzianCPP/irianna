@@ -461,14 +461,13 @@ class ToursController extends BaseController implements ControllerInterface
         $contract = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'contract'])[0];
         $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
         $contract = $contract['html'];
-        echo $contract; die();
+
         $fileName = 'contract.html.twig';
         $contractFileName = 'templates/components/' . $fileName;
 
-        $fp = fopen(BASE_PATH . $contractFileName, 'w');
+        $fp = fopen(BASE_PATH . $contractFileName, 'w'); var_dump($fp); die();
         fwrite($fp, $contract, strlen($contract));
         fclose($fp);
-        chmod(BASE_PATH . $contractFileName, 0777);
 
         $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
 
