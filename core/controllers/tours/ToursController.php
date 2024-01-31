@@ -435,6 +435,8 @@ class ToursController extends BaseController implements ControllerInterface
             $tour = $this->model->getLastTour();
         }
 
+        var_dump($tour);
+
         $clientsModel = new ClientsModel();
         $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
 
