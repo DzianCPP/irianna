@@ -504,9 +504,8 @@ class ToursController extends BaseController implements ControllerInterface
             $fileName = 'contract.html.twig';
             $contractFileName = 'templates/components/' . $fileName;
 
-            echo BASE_PATH . $contractFileName;
-
             $fp = fopen(BASE_PATH . $contractFileName, 'w');
+            echo error_get_last();
             fwrite($fp, $contract, strlen($contract));
             fclose($fp);
 
