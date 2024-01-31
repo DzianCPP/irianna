@@ -425,7 +425,6 @@ class ToursController extends BaseController implements ControllerInterface
 
     public function printContract(): void
     {
-        echo json_encode(['message' => 'Start print contract']);
         $this->setModel(ToursModel::class);
         $id = IdGetter::getId();
         $tour = [];
@@ -436,7 +435,7 @@ class ToursController extends BaseController implements ControllerInterface
         }
         $clientsModel = new ClientsModel();
         $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
-
+        echo 'got client';
         $contractsModel = new ContractsModel();
 
         $resortsModel = new ResortsModel();
