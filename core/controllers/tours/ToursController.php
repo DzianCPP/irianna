@@ -249,11 +249,6 @@ class ToursController extends BaseController implements ControllerInterface
             'value' => 0
         ]);
 
-        foreach ($tours as $t) {
-            if ($t['id'] == 66) {
-                echo '<pre>'.json_encode($t).'</pre>'; die(200);
-            }
-        }
         $clients = new ClientsModel();
         $sub_clients = $clients->getSubClients();
         $clients = $clients->get();
@@ -437,7 +432,8 @@ class ToursController extends BaseController implements ControllerInterface
         $tour = [];
 
         if ($id) {
-            $tour = $toursModel->get(['column' => 'tours_table.id', 'value' => $id])[0];
+            $tour = $toursModel->get(['column' => 'tours_table.id', 'value' => $id]);
+            var_dump($tour); die();
         } else {
             $tour = $this->model->getLastTour();
         }
