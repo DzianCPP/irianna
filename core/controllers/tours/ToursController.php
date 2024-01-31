@@ -426,95 +426,99 @@ class ToursController extends BaseController implements ControllerInterface
 
     public function printContract(): void
     {
-        $this->setModel(ToursModel::class);
-        $toursModel = new ToursModel();
-        $id = IdGetter::getId();
-        $tour = [];
+        try {
+            $this->setModel(ToursModel::class);
+            $toursModel = new ToursModel();
+            $id = IdGetter::getId();
+            $tour = [];
 
-        if ($id) {
-            $tour = $toursModel->get(['column' => 'tours_table.id', 'value' => $id])[0];
-            // echo "<pre>" . json_encode($tour, JSON_PRETTY_PRINT) . "</pre>";
-        } else {
-            $tour = $this->model->getLastTour();
+            if ($id) {
+                $tour = $toursModel->get(['column' => 'tours_table.id', 'value' => $id])[0];
+                // echo "<pre>" . json_encode($tour, JSON_PRETTY_PRINT) . "</pre>";
+            } else {
+                $tour = $this->model->getLastTour();
+            }
+
+            $clientsModel = new ClientsModel();
+            $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
+
+            $contractsModel = new ContractsModel();
+
+            $resortsModel = new ResortsModel();
+            $resort = $resortsModel->get(['column' => 'id', 'value' => $tour['resort_id']])[0];
+
+            $hotelsModel = new HotelsModel();
+            $hotel = $hotelsModel->get(['column' => 'id', 'value' => $tour['hotel_id']])[0];
+
+            $busesModel = new BusesModel();
+            $bus = $busesModel->get(['column' => 'id', 'value' => $tour['bus_id']])[0];
+
+            $countriesModel = new CountriesModel();
+
+            $managersModel = new ManagersModel();
+            $manager = $managersModel->get(['column' => 'id', 'value' => $tour['manager_id']])[0];
+
+            $sub_clients = $clientsModel->getSubClients(['column' => 'main_client_id', 'value' => $client['id']]);
+
+            $contract = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'contract'])[0];
+            $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
+            $contract = $contract['html'];
+
+            $fileName = 'contract.html.twig';
+            $contractFileName = 'templates/components/' . $fileName;
+
+            $fp = fopen(BASE_PATH . $contractFileName, 'w');
+            fwrite($fp, $contract, strlen($contract));
+            fclose($fp);
+
+            $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
+
+            $contractData = [
+                'resort_name' => $resort['name'],
+                'hotel_name' => $hotel['name'],
+                'day' => ToursDateGetter::getTourDay($tour),
+                'month' => ToursDateGetter::getTourMonth($tour),
+                'year' => ToursDateGetter::getTourYear($tour),
+                'from_minsk_date' => $tour['from_minsk_date'],
+                'arrival_to_minsk' => $tour['arrival_to_minsk'],
+                'to_minsk_date' => $tour['to_minsk_date'],
+                'manager_name' => $manager['name'],
+                'client_name' => $client['name'],
+                'total_people' => 1 + count($sub_clients),
+                'number_of_children' => $tour['number_of_children'],
+                'age_of_children' => $age_of_children,
+                'passport_number' => $client['passport'],
+                'main_phone' => $client['main_phone'],
+                'second_phone' => $client['second_phone'],
+                'service_cost_in_BYN' => $tour['total_travel_service_byn'],
+                'tour_price_in_curr' => explode(' ', $tour['total_travel_cost_currency'])[0],
+                'total_travel_cost_curr_1' => explode(' ', $tour['total_travel_cost_byn'])[0],
+                'currency_1' => explode(' ', $tour['total_travel_cost_byn'])[1],
+                'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
+                'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name'],
+                'only_transit' => $tour['is_only_transit']
+            ];
+
+            $contract = ContractMaker::prepareContract($contract, $contractData);
+            $contract = '{% block contract %}' . $contract . '{% endblock %}';
+            $fileName = 'contract.html.twig';
+            $contractFileName = 'templates/components/' . $fileName;
+
+            $fp = fopen(BASE_PATH . $contractFileName, 'w');
+            fwrite($fp, $contract, strlen($contract));
+            fclose($fp);
+
+            $data = [
+                'title' => 'Печать договора',
+                'header' => 'Печать договора',
+                'login' => $_COOKIE['login']
+            ];
+
+            $this->setView(ToursView::class);
+            $this->view->render("tours/print.html.twig", $data);
+        } catch (Error $e) {
+            echo $e->getMessage();
         }
-
-        $clientsModel = new ClientsModel();
-        $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
-
-        $contractsModel = new ContractsModel();
-
-        $resortsModel = new ResortsModel();
-        $resort = $resortsModel->get(['column' => 'id', 'value' => $tour['resort_id']])[0];
-
-        $hotelsModel = new HotelsModel();
-        $hotel = $hotelsModel->get(['column' => 'id', 'value' => $tour['hotel_id']])[0];
-
-        $busesModel = new BusesModel();
-        $bus = $busesModel->get(['column' => 'id', 'value' => $tour['bus_id']])[0];
-
-        $countriesModel = new CountriesModel();
-
-        $managersModel = new ManagersModel();
-        $manager = $managersModel->get(['column' => 'id', 'value' => $tour['manager_id']])[0];
-
-        $sub_clients = $clientsModel->getSubClients(['column' => 'main_client_id', 'value' => $client['id']]);
-
-        $contract = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'contract'])[0];
-        $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
-        $contract = $contract['html'];
-
-        $fileName = 'contract.html.twig';
-        $contractFileName = 'templates/components/' . $fileName;
-
-        $fp = fopen(BASE_PATH . $contractFileName, 'w');
-        fwrite($fp, $contract, strlen($contract));
-        fclose($fp);
-
-        $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
-
-        $contractData = [
-            'resort_name' => $resort['name'],
-            'hotel_name' => $hotel['name'],
-            'day' => ToursDateGetter::getTourDay($tour),
-            'month' => ToursDateGetter::getTourMonth($tour),
-            'year' => ToursDateGetter::getTourYear($tour),
-            'from_minsk_date' => $tour['from_minsk_date'],
-            'arrival_to_minsk' => $tour['arrival_to_minsk'],
-            'to_minsk_date' => $tour['to_minsk_date'],
-            'manager_name' => $manager['name'],
-            'client_name' => $client['name'],
-            'total_people' => 1 + count($sub_clients),
-            'number_of_children' => $tour['number_of_children'],
-            'age_of_children' => $age_of_children,
-            'passport_number' => $client['passport'],
-            'main_phone' => $client['main_phone'],
-            'second_phone' => $client['second_phone'],
-            'service_cost_in_BYN' => $tour['total_travel_service_byn'],
-            'tour_price_in_curr' => explode(' ', $tour['total_travel_cost_currency'])[0],
-            'total_travel_cost_curr_1' => explode(' ', $tour['total_travel_cost_byn'])[0],
-            'currency_1' => explode(' ', $tour['total_travel_cost_byn'])[1],
-            'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
-            'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name'],
-            'only_transit' => $tour['is_only_transit']
-        ];
-
-        $contract = ContractMaker::prepareContract($contract, $contractData);
-        $contract = '{% block contract %}' . $contract . '{% endblock %}';
-        $fileName = 'contract.html.twig';
-        $contractFileName = 'templates/components/' . $fileName;
-
-        $fp = fopen(BASE_PATH . $contractFileName, 'w');
-        fwrite($fp, $contract, strlen($contract));
-        fclose($fp);
-
-        $data = [
-            'title' => 'Печать договора',
-            'header' => 'Печать договора',
-            'login' => $_COOKIE['login']
-        ];
-
-        $this->setView(ToursView::class);
-        $this->view->render("tours/print.html.twig", $data);
     }
 
     public function printAttachmentTwo(): void
