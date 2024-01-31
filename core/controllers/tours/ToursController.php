@@ -496,7 +496,6 @@ class ToursController extends BaseController implements ControllerInterface
 
         touch(BASE_PATH . $contractFileName);
         $fc = fopen(BASE_PATH . $contractFileName, 'w');
-        echo json_encode(error_get_last());
         fwrite($fc, $contract, strlen($contract));
         fclose($fc);
 
