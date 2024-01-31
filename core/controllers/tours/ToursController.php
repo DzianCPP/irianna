@@ -244,10 +244,13 @@ class ToursController extends BaseController implements ControllerInterface
     {
         $this->setModel(ToursModel::class);
         $this->setView(ToursView::class);
-        $tours = $this->model->get(columnValue: [
-            'column' => 'archived',
-            'value' => 0
-        ]);
+        $tours = array_reverse($this->model->get(
+                columnValue: [
+                    'column' => 'archived',
+                    'value' => 0
+                ]
+            )
+        );
 
         $clients = new ClientsModel();
         $sub_clients = $clients->getSubClients();
