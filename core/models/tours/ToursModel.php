@@ -38,6 +38,7 @@ class ToursModel extends Model implements ModelInterface
 
     public function get(array $columnValue = []): array
     {
+        var_dump($columnValue);
         if (!$columnValue) {
             return $this->databaseSqlBuilder->select(self::TABLE_NAME);
         }

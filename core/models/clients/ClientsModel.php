@@ -9,8 +9,8 @@ use core\models\ModelInterface;
 class ClientsModel extends Model implements ModelInterface
 {
     protected array $fields = [
-        ["name", "main_phone", "second_phone", "passport", "birth_date", "address", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "id"],
-        ["name", "passport", "birth_date", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "main_client_id", "id"]
+        ["archived", "name", "main_phone", "second_phone", "passport", "birth_date", "address", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "id"],
+        ["archived", "name", "passport", "birth_date", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "main_client_id", "id"]
     ];
     private const TABLE_NAMES = ["clients_table", "subclients_table"];
 
