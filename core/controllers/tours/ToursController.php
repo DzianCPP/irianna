@@ -248,6 +248,12 @@ class ToursController extends BaseController implements ControllerInterface
             'column' => 'archived',
             'value' => 0
         ]);
+
+        foreach ($tours as $t) {
+            if ($t['id'] == 66) {
+                var_dump($t); die(200);
+            }
+        }
         $clients = new ClientsModel();
         $sub_clients = $clients->getSubClients();
         $clients = $clients->get();
