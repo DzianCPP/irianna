@@ -36,6 +36,11 @@ class ToursModel extends Model implements ModelInterface
     ];
     private const TABLE_NAME = "tours_table";
 
+    public static function getTableName(): string
+    {
+        return self::TABLE_NAME;
+    }
+
     public function get(array $columnValue = []): array
     {
         if (!$columnValue) {
