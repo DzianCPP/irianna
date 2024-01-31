@@ -19,7 +19,7 @@ use core\models\resorts\ResortsModel;
 use core\models\rooms\RoomsModel;
 use core\services\IdGetter;
 use core\services\ContractMaker;
-use Dompdf\Dompdf;
+use Error;
 
 class ToursController extends BaseController implements ControllerInterface
 {
@@ -467,9 +467,10 @@ class ToursController extends BaseController implements ControllerInterface
         fwrite($fp, $contract, strlen($contract));
         fclose($fp);
 
-        $age_of_children = $tour['ages'] ?? $tour['ages'] || '--'; echo 'here';
+        $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
 
-        $contractData = [
+        try {
+            $contractData = [
             'resort_name' => $resort['name'],
             'hotel_name' => $hotel['name'],
             'day' => ToursDateGetter::getTourDay($tour),
@@ -494,6 +495,9 @@ class ToursController extends BaseController implements ControllerInterface
             'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name'],
             'only_transit' => $tour['is_only_transit']
         ];
+        } catch (Error $e) {
+            echo $e->getMessage();
+        }
 
         $contract = ContractMaker::prepareContract($contract, $contractData);
         $contract = '{% block contract %}' . $contract . '{% endblock %}';
