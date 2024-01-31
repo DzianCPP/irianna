@@ -251,7 +251,7 @@ class ToursController extends BaseController implements ControllerInterface
 
         foreach ($tours as $t) {
             if ($t['id'] == 66) {
-                var_dump($t); die(200);
+                echo '<pre>'.json_encode($t).'</pre>'; die(200);
             }
         }
         $clients = new ClientsModel();
