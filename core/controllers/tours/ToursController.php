@@ -468,7 +468,6 @@ class ToursController extends BaseController implements ControllerInterface
             $contractFileName = 'templates/components/' . $fileName;
 
             $fp = fopen(BASE_PATH . $contractFileName, 'w');
-            echo $fp;
             fwrite($fp, $contract, strlen($contract));
             fclose($fp);
 
@@ -506,6 +505,7 @@ class ToursController extends BaseController implements ControllerInterface
             $contractFileName = 'templates/components/' . $fileName;
 
             $fp = fopen(BASE_PATH . $contractFileName, 'w');
+            echo $fp;
             fwrite($fp, $contract, strlen($contract));
             fclose($fp);
 
