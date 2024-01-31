@@ -119,7 +119,7 @@ class ToursController extends BaseController implements ControllerInterface
     {
         $this->setModel(ToursModel::class);
         $this->setView(ToursView::class);
-        $tour = $this->model->get(columnValue: ['column' => 'id', 'value' => IdGetter::getId()])[0];
+        $tour = $this->model->get(columnValue: ['column' => $this->model->getTableName() . '.id', 'value' => IdGetter::getId()])[0];
         $managers = new ManagersModel();
         $countries = new CountriesModel();
         $resorts = new ResortsModel();
