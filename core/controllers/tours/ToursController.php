@@ -469,7 +469,7 @@ class ToursController extends BaseController implements ControllerInterface
         $fp = fopen(BASE_PATH . $contractFileName, 'w');
         fwrite($fp, $contract, strlen($contract));
         fclose($fp);
-        chmod($contractFileName, 0777);
+        chmod(BASE_PATH . $contractFileName, 0777);
 
         $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
 
