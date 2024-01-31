@@ -433,7 +433,7 @@ class ToursController extends BaseController implements ControllerInterface
 
         if ($id) {
             $tour = $toursModel->get(['column' => 'tours_table.id', 'value' => $id])[0];
-            echo "<pre>" . json_encode($tour, JSON_PRETTY_PRINT) . "</pre>"; die();
+            // echo "<pre>" . json_encode($tour, JSON_PRETTY_PRINT) . "</pre>";
         } else {
             $tour = $this->model->getLastTour();
         }
