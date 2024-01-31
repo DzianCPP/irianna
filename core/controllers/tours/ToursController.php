@@ -461,14 +461,6 @@ class ToursController extends BaseController implements ControllerInterface
         $contract = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'contract'])[0];
         $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
         $contract = $contract['html'];
-
-        // $fileName = 'contract.html.twig';
-        // $contractFileName = 'templates/components/' . $fileName;
-
-        // $fp = fopen(BASE_PATH . $contractFileName, 'w');
-        // fwrite($fp, $contract, strlen($contract));
-        // fclose($fp);
-
         $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
 
         $contractData = [
@@ -502,10 +494,8 @@ class ToursController extends BaseController implements ControllerInterface
         $fileName = 'contract.html.twig';
         $contractFileName = 'templates/components/' . $fileName;
 
-        echo $contractFileName . PHP_EOL;
-
         if (($fc = fopen(BASE_PATH . $contractFileName, 'w')) != true) {
-            echo 'wtf';
+            echo 'wtf'; die();
         }
 
         echo json_encode(error_get_last());
