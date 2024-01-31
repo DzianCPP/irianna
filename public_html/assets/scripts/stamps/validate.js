@@ -1,8 +1,8 @@
-document.addEventListener(
-        "mouseover",
-        () => { validate() }
-    )
-;
+document
+.addEventListener(
+    "mouseover",
+    () => { validate() }
+);
 
 function validate() {
     let filesLength = document.getElementById("stamp-file").files.length;
