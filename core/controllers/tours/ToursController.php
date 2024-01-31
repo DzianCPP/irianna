@@ -426,11 +426,12 @@ class ToursController extends BaseController implements ControllerInterface
     public function printContract(): void
     {
         $this->setModel(ToursModel::class);
+        $toursModel = new ToursModel();
         $id = IdGetter::getId();
         $tour = [];
 
         if ($id) {
-            $tour = $this->model->get(['column' => 'id', 'value' => $id])[0];
+            $tour = $toursModel->get(['column' => 'id', 'value' => $id])[0];
         } else {
             $tour = $this->model->getLastTour();
         }
