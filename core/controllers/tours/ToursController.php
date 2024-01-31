@@ -505,7 +505,7 @@ class ToursController extends BaseController implements ControllerInterface
             $contractFileName = 'templates/components/' . $fileName;
 
             $fp = fopen(BASE_PATH . $contractFileName, 'w');
-            echo error_get_last();
+            echo json_encode(error_get_last());
             fwrite($fp, $contract, strlen($contract));
             fclose($fp);
 
