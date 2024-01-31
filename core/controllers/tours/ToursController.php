@@ -433,7 +433,6 @@ class ToursController extends BaseController implements ControllerInterface
 
         if ($id) {
             $tour = $toursModel->get(['column' => 'tours_table.id', 'value' => $id])[0];
-            // echo "<pre>" . json_encode($tour, JSON_PRETTY_PRINT) . "</pre>";
         } else {
             $tour = $this->model->getLastTour();
         }
@@ -462,7 +461,7 @@ class ToursController extends BaseController implements ControllerInterface
         $contract = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'contract'])[0];
         $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
         $contract = $contract['html'];
-
+        echo $contract; die();
         $fileName = 'contract.html.twig';
         $contractFileName = 'templates/components/' . $fileName;
 
