@@ -38,12 +38,11 @@ class ToursModel extends Model implements ModelInterface
 
     public function get(array $columnValue = []): array
     {
-        var_dump($columnValue);
         if (!$columnValue) {
             return $this->databaseSqlBuilder->select(self::TABLE_NAME);
         }
 
-        $res =  $this->databaseSqlBuilder->select(
+        return $this->databaseSqlBuilder->select(
             tableName: self::TABLE_NAME,
             columnValue: $columnValue,
             joins: [
@@ -56,10 +55,6 @@ class ToursModel extends Model implements ModelInterface
                 ]
             ]
         );
-
-        var_dump($res);
-
-        return $res;
     }
 
     public function search(): array

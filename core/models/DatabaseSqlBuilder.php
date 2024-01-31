@@ -57,6 +57,8 @@ class DatabaseSqlBuilder
             $sqlQuery .= " WHERE $where_clause";
         }
 
+        echo $sqlQuery;
+
         $query = $this->conn->prepare($sqlQuery);
         try {
             $query->execute();
