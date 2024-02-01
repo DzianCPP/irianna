@@ -89,7 +89,7 @@ class RoomsController extends BaseController implements ControllerInterface
                     'value' => $hotelId
                 ]);
         } else {
-            $rooms = $this->model->get();
+            $rooms = $this->model->get(['column' => 'archived', 'value' => 0]);
         }
 
         if ($hotelId) {
@@ -103,6 +103,14 @@ class RoomsController extends BaseController implements ControllerInterface
         }
 
         $rooms = $roomsHelper->normalizeRooms($rooms);
+        $filteredRooms = [];
+        foreach ($rooms as $room) {
+            if ($room['archived'] != true) {
+                $filteredRooms[] = $room;
+            }
+        }
+
+        $rooms = $filteredRooms;
 
         $toursModel = new ToursModel();
         $tours_set = [];
@@ -131,7 +139,7 @@ class RoomsController extends BaseController implements ControllerInterface
 
         $data = [
             'title' => 'Номера',
-            'hotel' => $hotel,
+            'hotel' => $hotel['archived'] == 1 ? false : $hotel,
             'hotels' => $hotelsModel->get(),
             'rooms' => $rooms,
             'header' => 'Номера',
