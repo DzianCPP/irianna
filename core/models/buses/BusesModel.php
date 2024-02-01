@@ -13,6 +13,7 @@ class BusesModel extends Model implements ModelInterface
         'places',
         'departure_from_minsk',
         'arrival_to_minsk',
+        'archived',
         'id'
     ];
 
