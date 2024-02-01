@@ -16,7 +16,7 @@ class m27_alter_buses extends BaseMigration
         $sqlQueries = [
             <<<SQL
                 ALTER TABLE buses_table
-                ADD COLUMN IF NOT archived BOOL
+                ADD COLUMN IF NOT EXISTS archived BOOL
             SQL
         ];
 
