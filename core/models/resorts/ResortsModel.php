@@ -30,7 +30,7 @@ class ResortsModel extends Model implements ModelInterface
         return true;
     }
 
-    public function create(): bool
+    public function create(array $data = []): bool
     {
         $resort = file_get_contents("php://input");
         $resort = json_decode($resort, true);
@@ -54,7 +54,7 @@ class ResortsModel extends Model implements ModelInterface
         )) {
             return false;
         }
-        
+
         return true;
     }
 }

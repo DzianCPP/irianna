@@ -40,7 +40,7 @@ class BusesModel extends Model implements ModelInterface
         $bus['arrival_to_minsk'] = str_replace("\n", "", $bus['arrival_to_minsk']);
         $bus['arrival_to_minsk'] = str_split($bus['arrival_to_minsk'], 10);
         $bus['arrival_to_minsk'] = implode("\n", $bus['arrival_to_minsk']);
-        
+
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $bus, 'id')) {
             return false;
         }
@@ -48,7 +48,7 @@ class BusesModel extends Model implements ModelInterface
         return true;
     }
 
-    public function create(): bool
+    public function create(array $data = []): bool
     {
         $bus = json_decode(file_get_contents("php://input"), true);
         $this->dataSanitizer->SanitizeData($bus);
@@ -64,7 +64,7 @@ class BusesModel extends Model implements ModelInterface
     if (!$this->databaseSqlBuilder->insert($bus, $this->fields, self::TABLE_NAME)) {
             return false;
         }
-        
+
         return true;
     }
 

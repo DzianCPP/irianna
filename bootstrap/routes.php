@@ -667,5 +667,11 @@ return [
         'controller' => StampsController::class,
         'action' => 'new',
         'method' => 'GET'
+    ],
+
+    'stamps/create' => [
+        'controller' => StampsController::class,
+        'action' => 'create',
+        'method' => 'POST'
     ]
 ];

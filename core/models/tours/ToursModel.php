@@ -114,7 +114,7 @@ class ToursModel extends Model implements ModelInterface
         return true;
     }
 
-    public function create(): bool
+    public function create(array $data = []): bool
     {
         $tour = json_decode(file_get_contents("php://input"), true);
         $this->dataSanitizer->SanitizeData($tour);

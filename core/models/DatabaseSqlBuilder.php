@@ -20,8 +20,8 @@ class DatabaseSqlBuilder
     {
         $tableColumns = $this->getTableFields($columns);
         $values = $this->getValues($recordInfo);
-        $sqlQuery = "INSERT INTO ${tableName} (${tableColumns})
-                    VALUES (${values})";
+        $sqlQuery = "INSERT INTO $tableName ($tableColumns)
+                    VALUES ($values)";
         $query = $this->conn->prepare($sqlQuery);
         try {
             $query->execute();
