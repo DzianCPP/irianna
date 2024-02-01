@@ -27,5 +27,6 @@ return [
     ['m23' => 'm23_modify_subclients_table_add_travel_cost_currency_2_column'],
     ['m24' => 'm24_modify_clients_and_subclients_tables_drop_archive_tables'],
     ['m25' => 'm25_create_table_stamps'],
-    ['m26' => 'm26_alter_hotels_and_rooms']
+    ['m26' => 'm26_alter_hotels_and_rooms'],
+    ['m27' => 'm27_alter_buses']
 ];
