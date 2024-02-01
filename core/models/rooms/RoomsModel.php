@@ -7,7 +7,7 @@ use core\models\ModelInterface;
 
 class RoomsModel extends Model implements ModelInterface
 {
-    protected array $fields = ['hotel_id', 'description', 'checkin_checkout_dates', 'comforts', 'food', 'id'];
+    protected array $fields = ['hotel_id', 'description', 'checkin_checkout_dates', 'comforts', 'food', 'archived', 'id'];
     private const TABLE_NAME = "rooms_table";
     protected array $comforts = ['Телевизор', 'Холодильник', 'Кондиционер', 'Душ', 'Ванна', 'Джакузи', 'Туалет', 'Балкон', 'Чайник', 'Кухня'];
     protected array $food = ['Без питания', 'Завтрак', 'Обед', 'Ужин'];

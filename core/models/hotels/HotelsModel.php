@@ -21,6 +21,7 @@ class HotelsModel extends Model implements ModelInterface
         'features',
         'description',
         'is_active',
+        'archived',
         'id'
     ];
     private const TABLE_NAME = "hotels_table";
