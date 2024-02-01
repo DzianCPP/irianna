@@ -9,6 +9,8 @@ use core\controllers\BaseController;
 use core\models\managers\ManagersModel;
 use core\models\stamps\StampsModel;
 use core\views\stamps\StampsView;
+use core\services\Paginator;
+use core\controllers\AppController;
 
 final class StampsController extends BaseController implements ControllerInterface
 {
@@ -81,7 +83,43 @@ final class StampsController extends BaseController implements ControllerInterfa
 
     public function read(int $id = 0): void
     {
+        $this->setModel(StampsModel::class);
+        $stamps = $this->model->get();
+        $page = Paginator::getPage();
+        $pages = (int) ceil(count($stamps) / self::PER_PAGE);
+        if ($page) {
+            Paginator::limitRange($stamps, self::PER_PAGE, $page);
+        } else {
+            Paginator::limitRange($stamps, self::PER_PAGE);
+        }
 
+        $data = [
+            'stamps' => $stamps,
+            'entity' => 'stamps',
+            'currentPage' => $page,
+            'pages' => $pages,
+            'countStamps' => count($stamps),
+            'title' => 'IriANNA',
+            'author' => 'IriANNA',
+            'header' => 'Страны',
+            'login' => $_COOKIE['login']
+        ];
+
+        $this->setView(StampsView::class);
+        if (count($stamps) === 0) {
+            $this->view->render("stamps/stamps.html.twig", $data);
+
+            return;
+        }
+
+        if ($page > $pages || $page < 1) {
+            $appController = new AppController();
+            $appController->notFound();
+
+            return;
+        }
+
+        $this->view->render("stamps/stamps.html.twig", $data);
     }
 
     public function update(int $id = 0): void{}

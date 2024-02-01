@@ -13,7 +13,7 @@ final class StampsModel extends Model implements ModelInterface
     private string $table = 'stamps';
     public function get(array $columnValue = []): array
     {
-        return [];
+        return $this->databaseSqlBuilder->select($this->table, $columnValue);
     }
 
     public function update(array $newInfo): bool
