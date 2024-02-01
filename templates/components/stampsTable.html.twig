@@ -1,0 +1,24 @@
+{% block table %}
+
+<table class="table table-sm table-secondary table-striped table-hover" id="table">
+  <tr>
+    <th scope="col"><input type="checkbox" id="check-all" /></th>
+    <th scope="col">id</th>
+    <th scope="col">Менеджер</th>
+    <th scope="col"></th>
+  </tr>
+  {% for stamp in stamps %}
+  <tr>
+    <td><input name="select" type="checkbox" value="{{ stamp.id }}" /></td>
+    <td>{{ stamp.id }}</td>
+    <td>{{ stamp.manager_id }}</td>
+    <td>
+      <a class="btn btn-success" href="/stamps/edit/{{ stamp.id }}"
+        >Исправить</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

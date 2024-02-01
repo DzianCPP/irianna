@@ -13,9 +13,7 @@ use core\services\DateConverter;
 use core\services\Paginator;
 use core\views\clients\ClientsView;
 use core\models\clients\ClientsModel;
-use core\models\clients\helpers\ClientsHelper;
 use core\services\IdGetter;
-use core\views\tours\ToursView;
 
 class ClientsController extends BaseController implements ControllerInterface
 {

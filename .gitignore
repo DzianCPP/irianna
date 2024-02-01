@@ -1,4 +1,4 @@
-assets
+./assets
 .vscode
 /vendor/
 node_modules/

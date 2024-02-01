@@ -37,7 +37,7 @@ class HotelsModel extends Model implements ModelInterface
     public function update(array $newInfo): bool
     {
         $this->dataSanitizer->SanitizeData($newInfo);
-        
+
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, "id")) {
             return false;
         }
@@ -45,7 +45,7 @@ class HotelsModel extends Model implements ModelInterface
         return true;
     }
 
-    public function create(): bool
+    public function create(array $data = []): bool
     {
         $hotel = json_decode(file_get_contents("php://input"), true);
         $columns = array_keys($hotel);

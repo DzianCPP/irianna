@@ -27,11 +27,11 @@ class RoomsModel extends Model implements ModelInterface
 
         $room['comforts'] = str_replace("\n", ", ", $room['comforts']);
         $room['food'] = str_replace("\n", ", ", $room['food']);
-        $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");        
+        $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
 
         $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
         $room['checkin_checkout_dates'] = str_split($room['checkin_checkout_dates'], 10);
-        
+
         foreach ($room['checkin_checkout_dates'] as &$date) {
             $date = "f" . $date;
         }
@@ -46,7 +46,7 @@ class RoomsModel extends Model implements ModelInterface
         return true;
     }
 
-    public function create(): bool
+    public function create(array $data = []): bool
     {
         $rooms = json_decode(file_get_contents("php://input"), true);
         foreach ($rooms as &$room) {
@@ -62,7 +62,7 @@ class RoomsModel extends Model implements ModelInterface
 
             $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
             $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
-    
+
             foreach ($room as $attribute) {
                 if ($attribute == NULL || $attribute == "") {
                     continue 2;
