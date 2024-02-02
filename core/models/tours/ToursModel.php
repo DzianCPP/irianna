@@ -52,8 +52,8 @@ class ToursModel extends Model implements ModelInterface
             columnValue: $columnValue,
             joins: [
                 [
-                    'table' => 'clients_table',
-                    'left_table' => 'tours_table',
+                    'table' => 'clients',
+                    'left_table' => 'tours',
                     'left_table_column' => 'owner_id',
                     'right_table_column' => 'id',
                     'condition' => '='

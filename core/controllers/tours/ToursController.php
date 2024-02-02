@@ -246,7 +246,7 @@ class ToursController extends BaseController implements ControllerInterface
         $this->setView(ToursView::class);
         $tours = array_reverse($this->model->get(
                 columnValue: [
-                    'column' => 'archived',
+                    'column' => 'tours.archived',
                     'value' => 0
                 ]
             )
