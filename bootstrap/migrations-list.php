@@ -29,5 +29,7 @@ return [
     ['m25' => 'm25_create_table_stamps'],
     ['m26' => 'm26_alter_hotels_and_rooms'],
     ['m27' => 'm27_alter_buses'],
-    ['m28' => 'm28_rename_all_table']
+    ['m28' => 'm28_rename_all_table'],
+    ['m29' => 'm29_add_archived_to_tours_alter_created_to_date'],
+    ['m30' => 'm30_add_create_table_entries']
 ];
