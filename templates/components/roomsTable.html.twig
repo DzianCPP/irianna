@@ -65,6 +65,7 @@
 		<td style="min-width: 350px;">
 			<div class="btn-group-vertical">
 				{% for entry in room.entries %}
+				{% if entry.archived != false %}
 				<div class="btn-group">
 					<button class=
 						"
@@ -91,6 +92,7 @@
 						{{ entry.dateTo }}
 					</button>
 				</div>
+				{% endif %}
 				{% endfor %}
 			</div>
 		</td>
