@@ -58,6 +58,10 @@ class RoomsController extends BaseController implements ControllerInterface
         $roomsHelper = new RoomsHelper();
         $room = $roomsHelper->normalizeRoom($room);
 
+        $room['entries'] = (new EntryModel())->getByRoomId($room['id']);
+
+        $this->convertEntries($room);
+
         $data = [
             'title' => 'Изменить номер',
             'header' => 'Изменить номер',
@@ -91,61 +95,6 @@ class RoomsController extends BaseController implements ControllerInterface
             unset($hotels);
         }
 
-        // if ($hotelId) {
-        //     $rooms = $this->model->get(columnValue:
-        //         [
-        //             'column' => 'hotel_id',
-        //             'value' => $hotelId
-        //         ]);
-        // } else {
-        //     $rooms = $this->model->get(['column' => 'archived', 'value' => 0]);
-        // }
-
-        // if ($hotelId) {
-        //     $hotel = $hotelsModel->get(columnValue:
-        //         [
-        //             'column' => 'id',
-        //             'value' => $hotelId
-        //         ])[0];
-        // } else {
-        //     $hotel = $hotelsModel->get()[0];
-        // }
-
-        // $rooms = $roomsHelper->normalizeRooms($rooms);
-        // $filteredRooms = [];
-        // foreach ($rooms as $room) {
-        //     if ($room['archived'] != true) {
-        //         $filteredRooms[] = $room;
-        //     }
-        // }
-
-        // $rooms = $filteredRooms;
-
-        // $toursModel = new ToursModel();
-        // $tours_set = [];
-
-        // foreach ($rooms as $room) {
-        //     $tours_set[] = $toursModel->get(columnValue: ['column' => 'room_id', 'value' => $room['id']]);
-        // }
-
-        // foreach ($rooms as &$room) {
-        //     for ($l = 1; $l < count($room['checkin_checkout_dates']); $l += 2) {
-        //         $date = &$room['checkin_checkout_dates'][$l];
-        //         foreach ($tours_set as $tours) {
-        //             foreach ($tours as $tour) {
-        //                 if (($d = 'f' . $tour['checkout_date']) == $date && $room['id'] == $tour['room_id']) {
-        //                     $date = str_replace('f', 'b', $date);
-        //                     for ($i = 1; $i < count($room['checkin_checkout_dates']); $i += 2) {
-        //                         if ($room['checkin_checkout_dates'][$i] == $date) {
-        //                             $room['checkin_checkout_dates'][$i - 1] = str_replace('f', 'b', $room['checkin_checkout_dates'][$i - 1]);
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
         $rooms = [];
         $hotel = $hotel ?? $hotelsModel->get(['column' => 'id', 'value' => $hotelId])[0];
 
@@ -161,6 +110,7 @@ class RoomsController extends BaseController implements ControllerInterface
         foreach ($rooms as &$room) {
             $room['comforts'] = explode(',', $room['comforts']);
             $room['food'] = explode(',', $room['food']);
+            $this->convertEntries($room);
         }
 
         $data = [
@@ -263,6 +213,8 @@ class RoomsController extends BaseController implements ControllerInterface
         $room = json_decode(file_get_contents("php://input"), true);
         $this->setModel(RoomsModel::class);
         $this->model->update($room);
+        $entryModel = new EntryModel();
+        $entryModel->create($room);
     }
 
     public function delete(int $id = 0): void
@@ -386,5 +338,20 @@ class RoomsController extends BaseController implements ControllerInterface
         }
 
         return $sorted_dates;
+    }
+
+    private function convertEntries(array &$room): void
+    {
+        foreach ($room['entries'] as &$entry) {
+            $entry['dateFrom'] = $this->convertDate($entry['dateFrom']);
+            $entry['dateTo'] = $this->convertDate($entry['dateTo']);
+        }
+    }
+
+    private function convertDate(string $date): string
+    {
+        [$year, $month, $day] = explode('-', $date);
+
+        return $day . '.' . $month . '.' . $year;
     }
 }

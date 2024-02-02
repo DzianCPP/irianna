@@ -16,6 +16,50 @@ final class EntryModel
     public const FREE = 'free';
     public const BUSY = 'busy';
 
+    public function create(array $room): bool
+    {
+        $conn = Database::getInstance()->getConnection();
+        $dates = str_split(
+            str_replace(
+                "\n",
+                "",
+                rtrim(
+                    $room['checkin_checkout_dates'],
+                    ", "
+                )
+            ),
+            10
+        );
+
+        $entries = [];
+
+        for ($i = 0; $i < count($dates);) {
+            $entries[] = [
+                'room_id' => (int) $room['id'],
+                'dateFrom' => $this->convertDate($dates[$i]),
+                'dateTo' => $this->convertDate($dates[$i + 1])
+            ];
+
+            $i += 2;
+        }
+
+        foreach ($entries as $entry) {
+            $sql = "
+                INSERT INTO $this->table (room_id, dateFrom, dateTo)
+                VALUES (" . $entry['room_id'] . ", '" . $entry['dateFrom'] . "', '" . $entry['dateTo'] . "')
+            ";
+
+            try {
+                $query = $conn->prepare($sql);
+                $query->execute();
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function getByRoomId(int $roomId): array
     {
         $conn = Database::getInstance()->getConnection();
@@ -54,5 +98,12 @@ final class EntryModel
         } catch (PDOException $e) {
             return false;
         }
+    }
+
+    private function convertDate(string $date): string
+    {
+        [$day, $month, $year] = explode('.', $date);
+
+        return $year . '-' . $month . '-' . $day;
     }
 }
