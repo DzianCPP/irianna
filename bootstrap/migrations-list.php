@@ -33,5 +33,6 @@ return [
     ['m29' => 'm29_add_archived_to_tours_alter_created_to_date'],
     ['m30' => 'm30_add_create_table_entries'],
     ['m31' => 'm31_move_rooms_dates_into_entries'],
-    ['m32' => 'm32_add_archived_to_entries']
+    ['m32' => 'm32_add_archived_to_entries'],
+    ['m33' => 'm33_add_status_to_entries']
 ];

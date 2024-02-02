@@ -10,10 +10,10 @@ class RoomsHelper
     {
         $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
         $room['checkin_checkout_dates'] = explode(", ", $room['checkin_checkout_dates'], strlen($room['checkin_checkout_dates']));
-        
+
         $checkins = [];
-        
-        
+
+
         for ($i = 0; $i < count($room['checkin_checkout_dates']) / 2; $i++) {
             $checkins[] = $room['checkin_checkout_dates'][$i];
         }
@@ -32,7 +32,7 @@ class RoomsHelper
 
         $room['comforts'] = explode(",", trim($room['comforts'], ", "), strlen($room['comforts']));
         $room['food'] = explode(",", trim($room['food'], ", "), strlen($room['food']));
-        
+
         return $room;
     }
 
@@ -52,7 +52,7 @@ class RoomsHelper
         if ($hotelId != "") {
             return $hotelId;
         }
-        
+
         return 0;
     }
 }

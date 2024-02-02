@@ -11,6 +11,7 @@ use core\views\rooms\RoomsView;
 use core\services\IdGetter;
 use core\controllers\rooms\helpers\RoomsHelper;
 use DateTime;
+use core\models\entries\EntryModel;
 
 class RoomsController extends BaseController implements ControllerInterface
 {
@@ -82,64 +83,89 @@ class RoomsController extends BaseController implements ControllerInterface
         $roomsHelper = new RoomsHelper();
         $hotelId = $roomsHelper->getHotelId();
 
+        if (!$hotelId) {
+            $hotels = $hotelsModel->get();
+
+            $hotelId = $hotels[0]['id'];
+            $hotel = $hotels[0];
+            unset($hotels);
+        }
+
+        // if ($hotelId) {
+        //     $rooms = $this->model->get(columnValue:
+        //         [
+        //             'column' => 'hotel_id',
+        //             'value' => $hotelId
+        //         ]);
+        // } else {
+        //     $rooms = $this->model->get(['column' => 'archived', 'value' => 0]);
+        // }
+
+        // if ($hotelId) {
+        //     $hotel = $hotelsModel->get(columnValue:
+        //         [
+        //             'column' => 'id',
+        //             'value' => $hotelId
+        //         ])[0];
+        // } else {
+        //     $hotel = $hotelsModel->get()[0];
+        // }
+
+        // $rooms = $roomsHelper->normalizeRooms($rooms);
+        // $filteredRooms = [];
+        // foreach ($rooms as $room) {
+        //     if ($room['archived'] != true) {
+        //         $filteredRooms[] = $room;
+        //     }
+        // }
+
+        // $rooms = $filteredRooms;
+
+        // $toursModel = new ToursModel();
+        // $tours_set = [];
+
+        // foreach ($rooms as $room) {
+        //     $tours_set[] = $toursModel->get(columnValue: ['column' => 'room_id', 'value' => $room['id']]);
+        // }
+
+        // foreach ($rooms as &$room) {
+        //     for ($l = 1; $l < count($room['checkin_checkout_dates']); $l += 2) {
+        //         $date = &$room['checkin_checkout_dates'][$l];
+        //         foreach ($tours_set as $tours) {
+        //             foreach ($tours as $tour) {
+        //                 if (($d = 'f' . $tour['checkout_date']) == $date && $room['id'] == $tour['room_id']) {
+        //                     $date = str_replace('f', 'b', $date);
+        //                     for ($i = 1; $i < count($room['checkin_checkout_dates']); $i += 2) {
+        //                         if ($room['checkin_checkout_dates'][$i] == $date) {
+        //                             $room['checkin_checkout_dates'][$i - 1] = str_replace('f', 'b', $room['checkin_checkout_dates'][$i - 1]);
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
+        $rooms = [];
+        $hotel = $hotel ?? $hotelsModel->get(['column' => 'id', 'value' => $hotelId])[0];
+
         if ($hotelId) {
-            $rooms = $this->model->get(columnValue:
-                [
-                    'column' => 'hotel_id',
-                    'value' => $hotelId
-                ]);
-        } else {
-            $rooms = $this->model->get(['column' => 'archived', 'value' => 0]);
+            $rooms = $this->model->getRoomsByHotelId($hotelId);
         }
 
-        if ($hotelId) {
-            $hotel = $hotelsModel->get(columnValue:
-                [
-                    'column' => 'id',
-                    'value' => $hotelId
-                ])[0];
-        } else {
-            $hotel = $hotelsModel->get()[0];
-        }
-
-        $rooms = $roomsHelper->normalizeRooms($rooms);
-        $filteredRooms = [];
-        foreach ($rooms as $room) {
-            if ($room['archived'] != true) {
-                $filteredRooms[] = $room;
-            }
-        }
-
-        $rooms = $filteredRooms;
-
-        $toursModel = new ToursModel();
-        $tours_set = [];
-
-        foreach ($rooms as $room) {
-            $tours_set[] = $toursModel->get(columnValue: ['column' => 'room_id', 'value' => $room['id']]);
+        $entryModel = new EntryModel();
+        foreach ($rooms as &$room) {
+            $room['entries'] = $entryModel->getByRoomId($room['id']);
         }
 
         foreach ($rooms as &$room) {
-            for ($l = 1; $l < count($room['checkin_checkout_dates']); $l += 2) {
-                $date = &$room['checkin_checkout_dates'][$l];
-                foreach ($tours_set as $tours) {
-                    foreach ($tours as $tour) {
-                        if (($d = 'f' . $tour['checkout_date']) == $date && $room['id'] == $tour['room_id']) {
-                            $date = str_replace('f', 'b', $date);
-                            for ($i = 1; $i < count($room['checkin_checkout_dates']); $i += 2) {
-                                if ($room['checkin_checkout_dates'][$i] == $date) {
-                                    $room['checkin_checkout_dates'][$i - 1] = str_replace('f', 'b', $room['checkin_checkout_dates'][$i - 1]);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            $room['comforts'] = explode(',', $room['comforts']);
+            $room['food'] = explode(',', $room['food']);
         }
 
         $data = [
             'title' => 'Номера',
-            'hotel' => $hotel['archived'] == 1 ? false : $hotel,
+            'hotel' => $hotel['archived'] === 0 ? $hotel : false,
             'hotels' => $hotelsModel->get(),
             'rooms' => $rooms,
             'header' => 'Номера',

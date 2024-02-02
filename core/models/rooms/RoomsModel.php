@@ -4,6 +4,8 @@ namespace core\models\rooms;
 
 use core\models\Model;
 use core\models\ModelInterface;
+use PDO;
+use core\application\Database;
 
 class RoomsModel extends Model implements ModelInterface
 {
@@ -101,5 +103,25 @@ class RoomsModel extends Model implements ModelInterface
     public function getFood(): array
     {
         return $this->food;
+    }
+
+    public function getRoomsByHotelId(int $hotelId = 0): array
+    {
+        $conn = Database::getInstance()->getConnection();
+
+        $query = $conn->prepare(<<<SQL
+            SELECT *
+            FROM rooms
+            WHERE hotel_id = $hotelId
+        SQL);
+
+        try {
+            $query->execute();
+            $rooms = $query->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            return [];
+        }
+
+        return $rooms;
     }
 }

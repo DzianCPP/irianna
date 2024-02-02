@@ -62,26 +62,35 @@
 		<th>Заезды/Выезды</th>
 		{% for room in rooms %}
 		{% if room.hotel_id == hotel.id %}
-		{% set dates = room.checkin_checkout_dates %}
 		<td style="min-width: 350px;">
 			<div class="btn-group-vertical">
-				{% set i = 0 %}
-				{% for date in dates %}
-				{% if i == 0 %}
+				{% for entry in room.entries %}
 				<div class="btn-group">
-					<button {% set dateStatus=date|first %}
-						class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-light disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
-						{{ date|trim(dateStatus) }}
+					<button class=
+						"
+							{% if entry.status == 'free' %}
+								{{ 'btn btn-success' }}
+							{% endif %}
+							{% if entry.status == 'busy' %}
+								{{ 'btn btn-danger' }}
+							{% endif %}
+						"
+					>
+						{{ entry.dateFrom }}
 					</button>
-					{% endif %}
-					{% if i == 1 %}
-					<button {% set dateStatus=date|first %}
-						class="btn {% if dateStatus == 'b' %}{{ 'bg-danger text-light disabled border-1 border-dark' }}{% endif %}{% if dateStatus == 'f' %}{{ 'bg-success text-light border-1 border-light' }}{% else %}{{ 'bg-secondary text-light disabled border-1 border-light' }}{% endif %}">
-						{{ date|trim(dateStatus) }}
+					<button class=
+						"
+							{% if entry.status == 'free' %}
+								{{ 'btn btn-success' }}
+							{% endif %}
+							{% if entry.status == 'busy' %}
+								{{ 'btn btn-danger' }}
+							{% endif %}
+						"
+					>
+						{{ entry.dateTo }}
 					</button>
 				</div>
-				{% endif %}
-				{% if i == 0 %} {% set i = 1 %} {% else %} {% set i = 0 %} {% endif %}
 				{% endfor %}
 			</div>
 		</td>
