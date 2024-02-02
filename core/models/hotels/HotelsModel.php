@@ -24,7 +24,7 @@ class HotelsModel extends Model implements ModelInterface
         'archived',
         'id'
     ];
-    private const TABLE_NAME = "hotels_table";
+    private const TABLE_NAME = "hotels";
 
     public function get(array $columnValue = []): array
     {

@@ -79,7 +79,7 @@ class Archiver
 
     private function getOldTours(): array
     {
-        $sql = "SELECT * FROM tours_table";
+        $sql = "SELECT * FROM tours";
         $query = $this->conn->prepare($sql);
         $query->execute();
         $all_tours = $query->fetchAll();

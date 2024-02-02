@@ -10,7 +10,7 @@ use RtfHtmlPhp\Html\HtmlFormatter;
 class ContractsModel extends Model implements ModelInterface
 {
     protected array $fields = ['name', 'label', 'html', 'id'];
-    private const TABLE_NAME = "contracts_table";
+    private const TABLE_NAME = "contracts";
 
     public function get(array $columnValue = []): array
     {

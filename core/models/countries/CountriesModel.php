@@ -8,7 +8,7 @@ use core\models\ModelInterface;
 class CountriesModel extends Model implements ModelInterface
 {
     protected array $fields = ['name', 'is_active', 'id'];
-    private const TABLE_NAME = "countries_table";
+    private const TABLE_NAME = "countries";
 
     public function get(array $columnValue = []): array
     {

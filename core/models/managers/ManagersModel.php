@@ -9,7 +9,7 @@ class ManagersModel extends Model implements ModelInterface
 {
     protected array $fields = ['name', 'id'];
 
-    private const TABLE_NAME = "managers_table";
+    private const TABLE_NAME = "managers";
 
     public function get(array $columnValue = []): array
     {

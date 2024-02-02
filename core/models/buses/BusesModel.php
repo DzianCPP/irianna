@@ -17,7 +17,7 @@ class BusesModel extends Model implements ModelInterface
         'id'
     ];
 
-    private const TABLE_NAME = "buses_table";
+    private const TABLE_NAME = "buses";
 
     public function get(array $columnValue = []): array
     {

@@ -9,7 +9,7 @@ use core\services\DataSanitizer;
 class AdminsModel extends Model implements ModelInterface
 {
     protected array $fields = ['email', 'login', 'password', 'privileges', 'id'];
-    private const TABLE_NAME = "admins_table";
+    private const TABLE_NAME = "admins";
 
     public function get(array $columnValue = []): array
     {

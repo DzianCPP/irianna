@@ -8,7 +8,7 @@ use core\models\ModelInterface;
 class ResortsModel extends Model implements ModelInterface
 {
     protected $fields = ['name', 'country_id', 'is_active', 'id'];
-    private const TABLE_NAME = "resorts_table";
+    private const TABLE_NAME = "resorts";
 
     public function get(array $columnValue = []): array
     {
