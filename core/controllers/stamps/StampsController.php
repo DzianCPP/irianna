@@ -43,7 +43,7 @@ final class StampsController extends BaseController implements ControllerInterfa
 
 
         $manager_id = $_POST['manager_id'];
-        $uploadDir = BASE_PATH . "static/";
+        $uploadDir = BASE_PATH . "public_html/assets/images/stamps/";
         $targetFile = $uploadDir . basename($stampFile['name']);
         $moveResult = move_uploaded_file($stampFile['tmp_name'], $targetFile);
 
@@ -93,6 +93,10 @@ final class StampsController extends BaseController implements ControllerInterfa
             Paginator::limitRange($stamps, self::PER_PAGE);
         }
 
+        $this->normalizeStampPath($stamps);
+
+        $this->addManagerNameToStamp($stamps);
+
         $data = [
             'stamps' => $stamps,
             'entity' => 'stamps',
@@ -129,5 +133,35 @@ final class StampsController extends BaseController implements ControllerInterfa
     private function setContentTypeApplicationJsonHeader(): void
     {
         header('Content-Type: application/json');
+    }
+
+    private function normalizeStampPath(array &$stamps = []): void
+    {
+        foreach ($stamps as &$stamp) {
+            $assetsPosition = strpos(
+                haystack: $stamp['path'],
+                needle: 'assets',
+                offset: 0
+            );
+
+            $stamp['path'] = substr(
+                string: $stamp['path'],
+                offset: $assetsPosition ?? 0,
+                length: null
+            );
+        }
+    }
+
+    private function addManagerNameToStamp(array &$stamps = []): void
+    {
+        $managersModel = new ManagersModel();
+        foreach ($stamps as &$stamp) {
+            $stamp['manager'] = $managersModel->get(
+                [
+                    'column' => 'id',
+                    'value' => $stamp['manager_id']
+                ]
+            )[0]['name'];
+        }
     }
 }
