@@ -678,6 +678,8 @@ class ToursController extends BaseController implements ControllerInterface
         $fp = fopen(BASE_PATH . $fullFileName, 'w');
         fwrite($fp, $voucher, strlen($voucher));
         fclose($fp);
+
+        $stamp = (new StampsModel())->get(['column' => 'manager_id', 'value' => $tour['manager_id']])[0];
         $documentData = [
             'client_name' => $client['name'],
             'client_birthdate' => $client['birth_date'],
@@ -701,7 +703,8 @@ class ToursController extends BaseController implements ControllerInterface
             'resort_name' => $resort['name'],
             'transfer_type' => $tour['is_only_transit'],
             'today_date' => date('d.m.Y'),
-            'sub_clients' => $sub_clients
+            'sub_clients' => $sub_clients,
+            'stamp' => $stamp
         ];
 
         $voucher = ContractMaker::prepareVoucher($voucher, $documentData);
