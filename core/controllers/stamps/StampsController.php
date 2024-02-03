@@ -11,6 +11,7 @@ use core\models\stamps\StampsModel;
 use core\views\stamps\StampsView;
 use core\services\Paginator;
 use core\controllers\AppController;
+use core\services\IdGetter;
 
 final class StampsController extends BaseController implements ControllerInterface
 {
@@ -140,7 +141,18 @@ final class StampsController extends BaseController implements ControllerInterfa
 
     public function update(int $id = 0): void{}
 
-    public function delete(int $id = 0): void{}
+    public function delete(int $id = 0): void
+    {
+        $this->setModel(StampsModel::class);
+
+        if (!$id) {
+            $id = IdGetter::getId();
+        }
+
+        if (!$this->model->delete(['column' => 'id', 'value' => $id])) {
+            echo "Could not delete stamp $id";
+        }
+    }
 
     private function setContentTypeApplicationJsonHeader(): void
     {

@@ -2,17 +2,29 @@
 
 <table class="table table-sm table-secondary table-striped table-hover" id="table">
   <tr>
-    <th scope="col"><input type="checkbox" id="check-all" /></th>
     <th scope="col">id</th>
     <th scope="col">Менеджер</th>
     <th scope="col">Печать</th>
+    <th scope="col"></th>
   </tr>
   {% for stamp in stamps %}
   <tr>
-    <td><input name="select" type="checkbox" value="{{ stamp.id }}" /></td>
     <td>{{ stamp.id }}</td>
     <td>{{ stamp.manager }}</td>
-    <td><img src="{{ stamp.path }}" class="img-thumbnail rounded d-block mx-auto" style="width: 200px;"></td>
+    <td>
+      <img
+        src="{{ '/' ~ stamp.path }}"
+        class="img-thumbnail rounded d-block mx-auto"
+        style="width: 200px;">
+    </td>
+    <td>
+      <a
+        class="btn btn-danger"
+        href="/stamps/delete/{{ stamp.id }}"
+      >
+        Удалить
+      </a>
+    </td>
   </tr>
   {% endfor %}
 </table>

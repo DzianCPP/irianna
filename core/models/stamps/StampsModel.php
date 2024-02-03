@@ -6,6 +6,8 @@ namespace core\models\stamps;
 
 use core\models\Model;
 use core\models\ModelInterface;
+use core\application\Database;
+use PDOException;
 
 final class StampsModel extends Model implements ModelInterface
 {
@@ -39,6 +41,21 @@ final class StampsModel extends Model implements ModelInterface
         string $column = "",
         mixed $value = NULL
     ): bool {
+        $conn = Database::getInstance()->getConnection();
+        $sql = <<<SQL
+            DELETE FROM stamps
+            WHERE id = $columnValues[value]
+        SQL;
+
+        try {
+            $query = $conn->prepare($sql);
+            $query->execute();
+        } catch (PDOException $e) {
+            echo "Could not delete stamp";
+
+            return false;
+        }
+
         return true;
     }
 
