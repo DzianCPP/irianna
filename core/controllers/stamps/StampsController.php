@@ -151,7 +151,11 @@ final class StampsController extends BaseController implements ControllerInterfa
 
         if (!$this->model->delete(['column' => 'id', 'value' => $id])) {
             echo "Could not delete stamp $id";
+
+            return;
         }
+
+        header('Location: /stamps');
     }
 
     private function setContentTypeApplicationJsonHeader(): void
