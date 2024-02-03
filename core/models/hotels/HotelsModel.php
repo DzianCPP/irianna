@@ -38,7 +38,7 @@ class HotelsModel extends Model implements ModelInterface
     public function update(array $newInfo): bool
     {
         $this->dataSanitizer->SanitizeData($newInfo);
-
+        $newInfo['archived'] = 0;
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, "id")) {
             return false;
         }
