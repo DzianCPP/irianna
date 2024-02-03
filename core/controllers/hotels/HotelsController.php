@@ -60,7 +60,7 @@ class HotelsController extends BaseController implements ControllerInterface
     {
         $this->setModel(HotelsModel::class);
         $resortsModel = new ResortsModel();
-        $hotels = $this->model->get(['column' => 'archived', 'value' => 0]);
+        $hotels = array_reverse($this->model->get(['column' => 'archived', 'value' => 0]));
         $this->setView(HotelsView::class);
         $page = Paginator::getPage();
         $pages = (int) ceil(count($hotels) / parent::PER_PAGE);
