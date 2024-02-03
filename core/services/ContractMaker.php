@@ -50,23 +50,15 @@ class ContractMaker
         $new_contract = str_replace(
             'stamp',
             '<img
-                src="/assets/images/stamp.png"
+                src="'. substr(
+                    $contractData['stamp']['path'],
+                    strpos($contractData['stamp']['path'],
+                    'assets',
+                    0) - 1
+                    ) .'"
                 style="
                     aspect-ratio: 1 / 1;
                     width: 200px;
-                    position: relative;
-                    z-index: 2;
-                "
-            >',
-            $new_contract
-        );
-        $new_contract = str_replace(
-            'signature',
-            '<img
-                src="/assets/images/signature.png"
-                style="
-                    aspect-ratio: 1 / 1;
-                    width: 100px;
                     position: relative;
                     z-index: 2;
                 "

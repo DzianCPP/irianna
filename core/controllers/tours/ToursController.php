@@ -6,6 +6,7 @@ use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\controllers\rooms\helpers\RoomsHelper;
 use core\models\contracts\ContractsModel;
+use core\models\stamps\StampsModel;
 use core\services\Paginator;
 use core\services\ToursDateGetter;
 use core\views\tours\ToursView;
@@ -465,6 +466,10 @@ class ToursController extends BaseController implements ControllerInterface
         $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
         $contract = $contract['html'];
         $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
+        $stamp = (new StampsModel())->get([
+            'column' => 'manager_id',
+            'value' => $manager['id']
+        ])[0];
 
         $contractData = [
             'resort_name' => $resort['name'],
@@ -489,7 +494,8 @@ class ToursController extends BaseController implements ControllerInterface
             'currency_1' => explode(' ', $tour['total_travel_cost_byn'])[1],
             'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
             'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name'],
-            'only_transit' => $tour['is_only_transit']
+            'only_transit' => $tour['is_only_transit'],
+            'stamp' => $stamp
         ];
 
         $contract = ContractMaker::prepareContract($contract, $contractData);

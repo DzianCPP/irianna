@@ -58,5 +58,4 @@ final class StampsModel extends Model implements ModelInterface
 
         return true;
     }
-
 }
