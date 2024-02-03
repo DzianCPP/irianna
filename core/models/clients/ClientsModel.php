@@ -92,6 +92,7 @@ class ClientsModel extends Model implements ModelInterface
         foreach ($sub_clients as $sc) {
             $sc['main_client_id'] = $clientId;
             $this->dataSanitizer->SanitizeData($sc);
+            $sc['archived'] = 0;
             if (!$this->databaseSqlBuilder->insert($sc, $this->fields[1], self::TABLE_NAMES[1])) {
                 return false;
             }
