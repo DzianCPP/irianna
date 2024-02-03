@@ -60,6 +60,8 @@ class RoomsModel extends Model implements ModelInterface
                 $date = "f" . $date;
             }
 
+            $room['archived'] = 0;
+
             $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
             $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
 
