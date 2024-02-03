@@ -20,6 +20,7 @@ use core\models\rooms\RoomsModel;
 use core\services\IdGetter;
 use core\services\ContractMaker;
 use Error;
+use core\models\entries\EntryModel;
 
 class ToursController extends BaseController implements ControllerInterface
 {
@@ -251,6 +252,18 @@ class ToursController extends BaseController implements ControllerInterface
                 ]
             )
         );
+
+        $entryModel = new EntryModel();
+        foreach ($tours as &$tour) {
+            $tour['entries'] = $entryModel->getEntryById($tour['entry_id']);
+            $convertDate = function (string $date) {
+                [$year, $month, $day] = explode('-', $date);
+                return $day . '.' . $month . '.' . $year;
+            };
+
+            $tour['entries']['dateFrom'] = $convertDate($tour['entries']['dateFrom']);
+            $tour['entries']['dateTo'] = $convertDate($tour['entries']['dateTo']);
+        }
 
         $clients = new ClientsModel();
         $sub_clients = $clients->getSubClients();

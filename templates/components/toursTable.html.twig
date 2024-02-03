@@ -93,8 +93,8 @@
 		{% endfor %}
 		<td>{{ tour.from_minsk_date }}</td>
 		<td>
-			{% if tour.to_minsk_date != 0 %}
-			{{ tour.to_minsk_date }}
+			{% if tour.entries.dateTo != 0 %}
+			{{ tour.entries.dateTo }}
 			{% endif %}
 			{% if tour.to_minsk_date == 0 %}
 			{{ '<p style="background-color: yellow; border-radius: 3px; padding-left: 2px;">Прибытие в Минск: ' }}

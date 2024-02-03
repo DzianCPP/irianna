@@ -100,6 +100,20 @@ final class EntryModel
         }
     }
 
+    public function getEntryById(int $id): array
+    {
+        $conn = Database::getInstance()->getConnection();
+        $sql = "SELECT * FROM $this->table WHERE id = $id";
+
+        try {
+            $query = $conn->prepare($sql);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC)[0];
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
     private function convertDate(string $date): string
     {
         [$day, $month, $year] = explode('.', $date);
