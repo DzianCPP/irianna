@@ -57,7 +57,7 @@ class BusesModel extends Model implements ModelInterface
         $bus['departure_from_minsk'] = str_replace("\n", "", $bus['departure_from_minsk']);
         $bus['departure_from_minsk'] = str_split($bus['departure_from_minsk'], 10);
         $bus['departure_from_minsk'] = implode("\n", $bus['departure_from_minsk']);
-
+        $bus['archived'] = 0;
         $bus['arrival_to_minsk'] = str_replace("\n", "", $bus['arrival_to_minsk']);
         $bus['arrival_to_minsk'] = str_split($bus['arrival_to_minsk'], 10);
         $bus['arrival_to_minsk'] = implode("\n", $bus['arrival_to_minsk']);
