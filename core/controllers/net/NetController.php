@@ -37,7 +37,7 @@ class NetController extends BaseController
                 'title' => 'Сетка номеров',
                 'header' => 'Сетка номеров',
                 'login' => $_COOKIE['login'],
-                'hotels' => (new HotelsModel())->get(),
+                'hotels' => (new HotelsModel())->get(['column' => 'archived', 'value' => 0]),
                 'table' => [
                     'dates' => ($dates = $this->buildTableDates($rooms)),
                     'tours' => $this->buildTableRows($current_hotel_id, $dates)
@@ -127,7 +127,7 @@ class NetController extends BaseController
         $hotel = [];
 
         if ($hotel_id == 0) {
-            $hotel = $hotelsModel->get();
+            $hotel = $hotelsModel->get(['column' => 'archived', 'value' => 0]);
         }
 
         if ($hotel_id != 0) {
