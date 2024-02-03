@@ -7,18 +7,16 @@
         <th scope="col">Паспорт</th>
         <th scope="col">Телефон</th>
         <th scope="col">Доп.телефон</th>
-        <th scope="col">Прописка</th>
         <th scope="col">
-            <div class="archived-check">
-                <input class="form-check-input" type="checkbox" value="{{ archived }}" id="archived-clients"
-                    {% if archived %}
-                        {{ ' checked' }}
-                    {% endif %}
-                >
-                <label class="form-check-label" for="flexCheckDefault">
-                    В архиве
-                </label>
-            </div>
+            Прописка
+            <input class="form-check-input" type="checkbox" value="{{ archived }}" id="archived-clients"
+                {% if archived %}
+                    {{ ' checked' }}
+                {% endif %}
+            >
+            <label class="form-check-label" for="flexCheckDefault">
+                В архиве
+            </label>
         </th>
     </tr>
     {% for client in clients %}
@@ -30,9 +28,6 @@
         <td>{% if client.main_phone|length < 1 %}{{ '---' }}{% else %}{{ client.main_phone }}{% endif %}</td>
         <td>{% if client.second_phone|length < 1 %}{{ '---' }}{% else %}{{ client.second_phone }}{% endif %}</td>
         <td>{% if client.address|length < 1 %}{{ '---' }}{% else %}{{ client.address }}{% endif %}</td>
-        <td>
-            <a class="btn btn-success" href="/clients/edit/{{ client.id }}">Исправить</a>
-        </td>
     </tr>
     {% endfor %}
 </table>
