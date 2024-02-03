@@ -34,5 +34,7 @@ return [
     ['m30' => 'm30_add_create_table_entries'],
     ['m31' => 'm31_move_rooms_dates_into_entries'],
     ['m32' => 'm32_add_archived_to_entries'],
-    ['m33' => 'm33_add_status_to_entries']
+    ['m33' => 'm33_add_status_to_entries'],
+    ['m34' => 'm34_add_entry_id_to_tours'],
+    ['m35' => 'm35_set_entry_id_to_tours']
 ];
