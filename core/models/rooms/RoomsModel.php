@@ -28,7 +28,7 @@ class RoomsModel extends Model implements ModelInterface
         $room['comforts'] = str_replace("\n", ", ", $room['comforts']);
         $room['food'] = str_replace("\n", ", ", $room['food']);
         $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
-
+        $room['archived'] = 0;
         $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
         $room['checkin_checkout_dates'] = str_split($room['checkin_checkout_dates'], 10);
 
