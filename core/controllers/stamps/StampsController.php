@@ -42,15 +42,20 @@ final class StampsController extends BaseController implements ControllerInterfa
         }
 
         $manager_id = $_POST['manager_id'];
-        $uploadDir = BASE_PATH . "public_html/assets/images/stamps/";
+        $uploadDir = BASE_PATH . "public_html/assets/images/uploadedStamps/";
 
         if (!is_dir($uploadDir)) {
-            mkdir(
+            $result = mkdir(
                 directory: $uploadDir,
                 permissions: 0777,
                 recursive: true
             );
+
+            if (!$result) {
+                echo "failed to create dir";
+            }
         }
+
         $targetFile = $uploadDir . basename($stampFile['name']);
         $moveResult = move_uploaded_file($stampFile['tmp_name'], $targetFile);
 
