@@ -65,11 +65,11 @@ class RoomsModel extends Model implements ModelInterface
             $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
             $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
 
-            foreach ($room as $attribute) {
-                if ($attribute == NULL || $attribute == "") {
-                    continue 2;
-                }
-            }
+            // foreach ($room as $attribute) {
+            //     if ($attribute == NULL || $attribute == "") {
+            //         continue 2;
+            //     }
+            // }
 
             $this->dataSanitizer->SanitizeData($room);
             if (!$this->databaseSqlBuilder->insert($room, $this->fields, self::TABLE_NAME)) {
