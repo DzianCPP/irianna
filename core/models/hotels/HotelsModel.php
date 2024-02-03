@@ -49,6 +49,7 @@ class HotelsModel extends Model implements ModelInterface
     public function create(array $data = []): bool
     {
         $hotel = json_decode(file_get_contents("php://input"), true);
+        $hotel['archived'] = 0;
         $columns = array_keys($hotel);
         $this->dataSanitizer->SanitizeData($hotel);
         $hotel['archived'] = 0;
