@@ -118,7 +118,7 @@ final class StampsController extends BaseController implements ControllerInterfa
             'countStamps' => count($stamps),
             'title' => 'IriANNA',
             'author' => 'IriANNA',
-            'header' => 'Страны',
+            'header' => 'Печати',
             'login' => $_COOKIE['login']
         ];
 
