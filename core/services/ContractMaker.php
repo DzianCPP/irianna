@@ -120,6 +120,24 @@ class ContractMaker
         $new_v = str_replace('today_date', $d['today_date'], $new_v);
         $new_v = str_replace('hotel_name', $d['hotel_name'], $new_v);
         $new_v = str_replace('resort_name', $d['resort_name'], $new_v);
+        $new_v = str_replace(
+            'stamp',
+            '<img
+                src="'. substr(
+                    $d['stamp']['path'],
+                    strpos($d['stamp']['path'],
+                    'assets',
+                    0) - 1
+                    ) .'"
+                style="
+                    aspect-ratio: 1 / 1;
+                    width: 200px;
+                    position: relative;
+                    z-index: 2;
+                "
+            >',
+            $new_v
+        );
 
         $room_comforts_array = explode(',', $d['room_comforts']);
         $room_comforts_str = '';
