@@ -156,7 +156,7 @@ class ClientsController extends BaseController implements ControllerInterface
     public function passengers(): void
     {
         $busesModel = new BusesModel();
-        $buses = $busesModel->get();
+        $buses = $busesModel->get(['column' => 'archived', 'value' => 0]);
 
         $this->setView(ClientsView::class);
         $data = [
