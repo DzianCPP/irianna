@@ -133,7 +133,6 @@ class RoomsController extends BaseController implements ControllerInterface
         $room = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
         $room = json_encode($room);
         echo $room;
-
     }
 
     public function free(): void
@@ -149,7 +148,19 @@ class RoomsController extends BaseController implements ControllerInterface
             $room = $roomsHelper->normalizeRoom($room);
         }
 
+        $convertDate = function (string $date) {
+            [$year, $month, $day] = explode('-', $date);
+            return $day . '.' . $month . '.' . $year;
+        };
+
         foreach ($rooms as &$room) {
+            $entries = (new EntryModel())->getFreeEntriesByRoomId($room['id']);
+            foreach ($entries as $entry) {
+                $checkin_checkout_dates[] = 'f' . $convertDate($entry['dateFrom']);
+                $checkin_checkout_dates[] = 'f' . $convertDate($entry['dateTo']);
+            }
+
+            $room['checkin_checkout_dates'] = $checkin_checkout_dates;
 
             $checkin_dates = [];
             $checkout_dates = [];
@@ -333,7 +344,7 @@ class RoomsController extends BaseController implements ControllerInterface
 
         sort($sorted_dates);
 
-        foreach($sorted_dates as &$date) {
+        foreach ($sorted_dates as &$date) {
             $date = gmdate("d.m.Y", $date);
         }
 

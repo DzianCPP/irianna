@@ -41,7 +41,19 @@ class ToursController extends BaseController implements ControllerInterface
             $room = $roomsHelper->normalizeRoom($room);
         }
 
+        $convertDate = function (string $date) {
+            [$year, $month, $day] = explode('-', $date);
+            return $day . '.' . $month . '.' . $year;
+        };
+
         foreach ($rooms as &$room) {
+            $entries = (new EntryModel())->getFreeEntriesByRoomId($room['id']);
+            foreach ($entries as $entry) {
+                $checkin_checkout_dates[] = 'f' . $convertDate($entry['dateFrom']);
+                $checkin_checkout_dates[] = 'f' . $convertDate($entry['dateTo']);
+            }
+
+            $room['checkin_checkout_dates'] = $checkin_checkout_dates;
 
             $checkin_dates = [];
             $checkout_dates = [];

@@ -114,6 +114,20 @@ final class EntryModel
         }
     }
 
+    public function getFreeEntriesByRoomId(int $roomId): array
+    {
+        $conn = Database::getInstance()->getConnection();
+        $sql = "SELECT * FROM $this->table WHERE room_id = $roomId AND status = 'free'";
+
+        try {
+            $query = $conn->prepare($sql);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+                return [];
+        }
+    }
+
     private function convertDate(string $date): string
     {
         [$day, $month, $year] = explode('.', $date);
