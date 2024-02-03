@@ -71,7 +71,7 @@ class BusesController extends BaseController implements ControllerInterface
     public function read(int $id = 0): void
     {
         $this->setModel(BusesModel::class);
-        $buses = $this->model->get();
+        $buses = array_reverse($this->model->get());
         $filteredBuses = [];
 
         foreach ($buses as $bus) {
