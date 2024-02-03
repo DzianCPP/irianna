@@ -234,9 +234,13 @@ class RoomsController extends BaseController implements ControllerInterface
 
     public function update(int $id = 0): void
     {
-        $room = json_decode(file_get_contents("php://input"), true);
-        $this->setModel(RoomsModel::class);
-        $this->model->update($room);
+        try {
+            $room = json_decode(file_get_contents("php://input"), true);
+            $this->setModel(RoomsModel::class);
+            $this->model->update($room);
+        } catch (\Throwable $e) {
+            echo $e->getMessage() . PHP_EOL;
+        }
     }
 
     public function delete(int $id = 0): void
