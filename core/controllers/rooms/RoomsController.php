@@ -82,14 +82,16 @@ class RoomsController extends BaseController implements ControllerInterface
         $roomsHelper = new RoomsHelper();
         $hotelId = $roomsHelper->getHotelId();
 
+        if (!$hotelId) {
+            $hotelId = $hotelsModel->get(['column' => 'archived', 'value' => 0])[0]['id'];
+        }
+
         if ($hotelId) {
             $rooms = $this->model->get(columnValue:
                 [
                     'column' => 'hotel_id',
                     'value' => $hotelId
                 ]);
-        } else {
-            $rooms = $this->model->get(['column' => 'archived', 'value' => 0]);
         }
 
         if ($hotelId) {
@@ -140,7 +142,7 @@ class RoomsController extends BaseController implements ControllerInterface
         $data = [
             'title' => 'Номера',
             'hotel' => $hotel['archived'] == 1 ? false : $hotel,
-            'hotels' => $hotelsModel->get(),
+            'hotels' => $hotelsModel->get(['column' => 'archived', 'value' => 0]),
             'rooms' => $rooms,
             'header' => 'Номера',
             'login' => $_COOKIE['login']
