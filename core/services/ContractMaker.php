@@ -34,7 +34,7 @@ class ContractMaker
         $new_contract = str_replace('service_cost_in_BYN', '<b>' . $contractData['service_cost_in_BYN'] . '</b>', $new_contract);
         $new_contract = str_replace('tour_price_in_curr_2', '<b>' . $contractData['tour_price_in_curr'], $new_contract);
         $new_contract = str_replace('currency_2', $contractData['currency'] . '</b>', $new_contract);
-        $new_contract = str_replace('irianna_logo', '<img src="/assets/images/logos/logo.png">', $new_contract);
+        $new_contract = str_replace('irianna_logo', '<img src="/assets/images/logos/logo.png" style="width: 100px;>', $new_contract);
         $new_contract = str_replace('country', '<b>' . $contractData['country'] . '</b>', $new_contract);
         $new_contract = str_replace('чем за 20 дней до его начала', '<b>чем за 20 дней до его начала</b>', $new_contract);
         $new_contract = str_replace('Заказчик имеет право', '<b>Заказчик имеет право</b>', $new_contract);
@@ -58,7 +58,7 @@ class ContractMaker
                     ) .'"
                 style="
                     aspect-ratio: 1 / 1;
-                    width: 200px;
+                    width: 150px;
                     position: relative;
                     z-index: 2;
                 "
@@ -131,7 +131,7 @@ class ContractMaker
                     ) .'"
                 style="
                     aspect-ratio: 1 / 1;
-                    width: 200px;
+                    width: 150px;
                     position: relative;
                     z-index: 2;
                 "
