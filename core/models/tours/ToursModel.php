@@ -32,6 +32,7 @@ class ToursModel extends Model implements ModelInterface
         'to_minsk_date',
         'arrival_to_minsk',
         'room_id',
+        'created_at',
         'id'
     ];
     private const TABLE_NAME = "tours_table";
@@ -107,6 +108,10 @@ class ToursModel extends Model implements ModelInterface
     {
         $this->dataSanitizer->SanitizeData($newInfo);
 
+        if (!$newInfo['created_at'] || empty($newInfo['created_at'])) {
+            $newInfo['created_at'] = date('Y-m-d', strtotime('now'));
+        }
+
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, 'id')) {
             return false;
         }
@@ -118,6 +123,7 @@ class ToursModel extends Model implements ModelInterface
     {
         $tour = json_decode(file_get_contents("php://input"), true);
         $this->dataSanitizer->SanitizeData($tour);
+        $tour['created_at'] = date('Y-m-d', strtotime('now'));
         if (!$this->databaseSqlBuilder->insert($tour, $this->fields, self::TABLE_NAME)) {
             return false;
         }
