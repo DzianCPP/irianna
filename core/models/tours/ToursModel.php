@@ -66,6 +66,7 @@ class ToursModel extends Model implements ModelInterface
     public function search(): array
     {
         $params = json_decode(file_get_contents(BASE_PATH . "static/search/request.json"), true);
+        $params['archived'] = 0;
         $new_tours = $columnsValues = $columns = $values = [];
         foreach ($params as $k => $v) {
             if ($k != 'name') {
@@ -77,9 +78,6 @@ class ToursModel extends Model implements ModelInterface
         if (count($columns) > 0) {
             $columnsValues = ['columns' => $columns, 'values' => $values];
         }
-
-        $columnsValues['columns'][] = 'archived';
-        $columnsValues['values'][] = 0;
 
         $tours = $this->databaseSqlBuilder->select(self::TABLE_NAME, columnsValues: $columnsValues);
         $clientsModel = new ClientsModel();
