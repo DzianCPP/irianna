@@ -88,7 +88,7 @@ class ToursModel extends Model implements ModelInterface
             }
         }
 
-        $tours = $filtered_tours;
+        $tours = array_reverse($filtered_tours);
         $clientsModel = new ClientsModel();
 
         if (isset($params['name'])) {
