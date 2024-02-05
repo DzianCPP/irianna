@@ -66,7 +66,6 @@ class ToursModel extends Model implements ModelInterface
     public function search(): array
     {
         $params = json_decode(file_get_contents(BASE_PATH . "static/search/request.json"), true);
-        $params['archived'] = 0;
         $new_tours = $columnsValues = $columns = $values = [];
         foreach ($params as $k => $v) {
             if ($k != 'name') {
