@@ -276,7 +276,7 @@ class ToursController extends BaseController implements ControllerInterface
             'tours' => $tours,
             'entity' => 'tours',
             'clients' => $clients,
-            'hotels' => $hotels->get(),
+            'hotels' => $hotels->get(['column' => 'archived', 'value' => 0]),
             'rooms' => $rooms->get(),
             'resorts' => $resorts->get(),
             'managers' => $managers->get(),
