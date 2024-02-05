@@ -45,7 +45,7 @@ class StatementController extends BaseController
 
         $rub_total = $this->count_rub_total($tours);
         $usd_total = $this->count_usd_total($tours);
-        $clients = $this->clientsModel->get();
+        $clients = $this->clientsModel->get(['column' => 'archived', 'value' => 0]);
         $data = [
             'tours' => $tours,
             'clients' => $clients,

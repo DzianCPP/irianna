@@ -172,7 +172,7 @@ class ClientsController extends BaseController implements ControllerInterface
     public function guests(): void
     {
         $hotelsModel = new HotelsModel();
-        $hotels = $hotelsModel->get();
+        $hotels = $hotelsModel->get(['column' => 'archived', 'value' => 0]);
 
         $roomsModel = new RoomsModel();
         $rooms_sets = [];
