@@ -1,33 +1,25 @@
 {% block table %}
 
 	<table class="table table-sm table-secondary table-bordered border-light" id="table">
-		<tr>
-			{% for date in table.dates %}
-				<th>
+        <tr>
+            {% for header in table.tableHeaders %}
+                <th>
                     <small>
-                        {{ date.from }}{{ '-' }}{{ date.to }}
+                        {{ header }}
                     </small>
                 </th>
-			{% endfor %}
-		</tr>
+            {% endfor %}
+        </tr>
 		<tr>
-			{% for row in table.tours %}
-				{% if row.busy == true %}
-                    <td class="bg-danger text-center text-light">
-                        <small>
-                            {{ row.owner.name }}
-                            {{ '<br>' }}
-                            {{ 'Всего гостей: ' }}{{ row.guests_count }}
-                        </small>
+			{% for row in table.tableRows %}
+				<td>
+                    {{ row.date }}
+                </td>
+                {% for status in row.statuses %}
+                    <td>
+                        {{ status }}
                     </td>
-				{% endif %}
-                {% if row.busy == false %}
-                    <td class="bg-success text-light text-center">
-                        <small class="m-auto">
-                            {{ 'Свободно' }}
-                        </small>
-                    </td>
-                {% endif %}
+                {% endfor %}
 			{% endfor %}
 		</tr>
 	</table>

@@ -39,8 +39,8 @@ class NetController extends BaseController
                 'login' => $_COOKIE['login'],
                 'hotels' => (new HotelsModel())->get(['column' => 'archived', 'value' => 0]),
                 'table' => [
-                    'dates' => ($dates = $this->buildTableDates($rooms)),
-                    'tours' => $this->buildTableRows($current_hotel_id, $dates)
+                    'tableHeaders' => $this->buildTableHeaders($rooms),
+                    'tableRows' => $this->buildTableRows($rooms)
                 ],
                 'current_hotel_id' => $hotel['id'],
                 'rooms' => $this->removeF($this->roomsHelper->normalizeRooms($rooms)),
@@ -73,42 +73,42 @@ class NetController extends BaseController
         return $dates;
     }
 
-    private function buildTableRows(int $current_room_id, array $dates): array
-    {
-        $tours = $this->getTours($current_room_id);
-        $tableRows = [];
+    // private function buildTableRows(int $current_room_id, array $dates): array
+    // {
+    //     $tours = $this->getTours($current_room_id);
+    //     $tableRows = [];
 
-        foreach ($dates as $date) {
-            $busy = $owner = $guests_count = false;
+    //     foreach ($dates as $date) {
+    //         $busy = $owner = $guests_count = false;
 
-            foreach ($tours as &$tour) {
-                if ($date['from'] == $tour['checkin_date'] && $date['to'] == $tour['checkout_date']) {
-                    $busy = true;
-                    $owner = (new ClientsModel())->get(columnValue: [
-                        'column' => 'id',
-                        'value' => $tour['owner_id']
-                    ])[0];
+    //         foreach ($tours as &$tour) {
+    //             if ($date['from'] == $tour['checkin_date'] && $date['to'] == $tour['checkout_date']) {
+    //                 $busy = true;
+    //                 $owner = (new ClientsModel())->get(columnValue: [
+    //                     'column' => 'id',
+    //                     'value' => $tour['owner_id']
+    //                 ])[0];
 
-                    $guests = (new ClientsModel())->getSubClients(
-                        columnValue: [
-                            'column' => 'main_client_id',
-                            'value' => $owner['id']
-                        ]
-                    );
+    //                 $guests = (new ClientsModel())->getSubClients(
+    //                     columnValue: [
+    //                         'column' => 'main_client_id',
+    //                         'value' => $owner['id']
+    //                     ]
+    //                 );
 
-                    $guests_count = count($guests) + 1;
-                }
-            }
+    //                 $guests_count = count($guests) + 1;
+    //             }
+    //         }
 
-            $tableRows[] = [
-                'busy' => $busy,
-                'owner' => $owner,
-                'guests_count' => $guests_count
-            ];
-        }
+    //         $tableRows[] = [
+    //             'busy' => $busy,
+    //             'owner' => $owner,
+    //             'guests_count' => $guests_count
+    //         ];
+    //     }
 
-        return $tableRows;
-    }
+    //     return $tableRows;
+    // }
 
     private function getHotel(): bool|array
     {
@@ -216,5 +216,40 @@ class NetController extends BaseController
         }
 
         return $rooms;
+    }
+
+    private function buildTableHeaders(array $rooms): array
+    {
+        $tableHeaders = [];
+        $tableHeaders[] = 'Сроки';
+        foreach ($rooms as $room) {
+            $tableHeaders[] = $room['description'];
+        }
+
+        return $tableHeaders;
+    }
+
+    private function buildTableRows(array $rooms): array
+    {
+        $tableRows = [];
+
+        foreach ($rooms as $room) {
+            $tableRows[] = [
+                'date' => $this->buildTableRowDate($room),
+                'status' => $this->buildTableRowStatuses($room)
+            ];
+        }
+
+        return $tableRows();
+    }
+
+    private function buildTableRowDate(array $room): string
+    {
+        return '';
+    }
+
+    private function buildTableRowStatuses(array $room): array
+    {
+        return [];
     }
 }
