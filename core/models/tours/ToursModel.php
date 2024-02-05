@@ -78,8 +78,10 @@ class ToursModel extends Model implements ModelInterface
             $columnsValues = ['columns' => $columns, 'values' => $values];
         }
 
-        $tours = $this->databaseSqlBuilder->select(self::TABLE_NAME, columnsValues: $columnsValues);
+        $columnsValues['columns'][] = 'archived';
+        $columnsValues['values'][] = 0;
 
+        $tours = $this->databaseSqlBuilder->select(self::TABLE_NAME, columnsValues: $columnsValues);
         $clientsModel = new ClientsModel();
 
         if (isset($params['name'])) {
