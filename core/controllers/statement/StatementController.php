@@ -25,7 +25,7 @@ class StatementController extends BaseController
     public function form(): void
     {
         $data = [
-            'buses' => $this->busesModel->get(),
+            'buses' => $this->busesModel->get(['column' => 'archived', 'value' => 0]),
             'title' => 'Ведомость',
             'header' => 'Ведомость'
         ];
