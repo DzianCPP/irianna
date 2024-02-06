@@ -31,6 +31,8 @@ class NetController extends BaseController
 
         $current_hotel_id = $this->getCurrentRoomId($rooms) != false ? $this->getCurrentRoomId($rooms) : $rooms[0]['id'];
 
+        $datePeriods = $this->buildDatePeriods($rooms);
+
         $this->view->render(
             "net/net.html.twig",
             [
@@ -49,66 +51,6 @@ class NetController extends BaseController
             ]
         );
     }
-
-    private function buildTableDates(array $rooms): array
-    {
-        $room = (new RoomsModel)->get(
-            columnValue: [
-                'column' => 'id',
-                'value' => $this->getCurrentRoomId($rooms) != false ? $this->getCurrentRoomId($rooms) : $rooms[0]['id']
-            ]
-        );
-
-        $room = $this->removeF($this->roomsHelper->normalizeRooms($room));
-
-        $dates = [];
-
-        for ($i = 0; $i < count($room[0]['checkin_checkout_dates']); $i++) {
-            $dates[] = [
-                'from' => $room[0]['checkin_checkout_dates'][$i],
-                'to' => $room[0]['checkin_checkout_dates'][++$i]
-            ];
-        }
-
-        return $dates;
-    }
-
-    // private function buildTableRows(int $current_room_id, array $dates): array
-    // {
-    //     $tours = $this->getTours($current_room_id);
-    //     $tableRows = [];
-
-    //     foreach ($dates as $date) {
-    //         $busy = $owner = $guests_count = false;
-
-    //         foreach ($tours as &$tour) {
-    //             if ($date['from'] == $tour['checkin_date'] && $date['to'] == $tour['checkout_date']) {
-    //                 $busy = true;
-    //                 $owner = (new ClientsModel())->get(columnValue: [
-    //                     'column' => 'id',
-    //                     'value' => $tour['owner_id']
-    //                 ])[0];
-
-    //                 $guests = (new ClientsModel())->getSubClients(
-    //                     columnValue: [
-    //                         'column' => 'main_client_id',
-    //                         'value' => $owner['id']
-    //                     ]
-    //                 );
-
-    //                 $guests_count = count($guests) + 1;
-    //             }
-    //         }
-
-    //         $tableRows[] = [
-    //             'busy' => $busy,
-    //             'owner' => $owner,
-    //             'guests_count' => $guests_count
-    //         ];
-    //     }
-
-    //     return $tableRows;
-    // }
 
     private function getHotel(): bool|array
     {
@@ -227,6 +169,22 @@ class NetController extends BaseController
         }
 
         return $tableHeaders;
+    }
+
+    private function buildDatePeriods(array $rooms): array
+    {
+        $rooms = $this->removeF($rooms);
+        $roomsHelper = new RoomsHelper();
+        foreach ($rooms as &$room) {
+            $room = $roomsHelper->normalizeRoom($room);
+        }
+        $datePeriods = [];
+
+        foreach ($rooms as $room) {
+            $a = 5;
+        }
+
+        return $datePeriods;
     }
 
     private function buildTableRows(array $rooms): array
