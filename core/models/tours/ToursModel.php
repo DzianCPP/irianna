@@ -80,6 +80,15 @@ class ToursModel extends Model implements ModelInterface
 
         $tours = $this->databaseSqlBuilder->select(self::TABLE_NAME, columnsValues: $columnsValues);
 
+        $filtered_tours = [];
+
+        foreach ($tours as $t) {
+            if ($t['archived'] == 0) {
+                $filtered_tours[] = $t;
+            }
+        }
+
+        $tours = array_reverse($filtered_tours);
         $clientsModel = new ClientsModel();
 
         if (isset($params['name'])) {
