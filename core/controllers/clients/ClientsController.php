@@ -365,6 +365,15 @@ class ClientsController extends BaseController implements ControllerInterface
         );
 
         if (!$client || empty($client)) {
+            $client = $this->model->getSubclientByName(
+                [
+                    'column' => 'name',
+                    'value' => $client_name
+                ]
+            );
+        }
+
+        if (!$client || empty($client)) {
             http_response_code(200);
             echo json_encode(['status' => '404', 'message' => 'No such client']);
 

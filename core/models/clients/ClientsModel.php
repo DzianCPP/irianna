@@ -40,6 +40,15 @@ class ClientsModel extends Model implements ModelInterface
         return $client;
     }
 
+    public function getSubclientByName(array $columnValue = []): array
+    {
+        if (!$columnValue) {
+            return [];
+        }
+
+        return $this->databaseSqlBuilder->selectLike(self::TABLE_NAMES[1], $columnValue);
+    }
+
     public function update(array $newInfo): bool
     {
         $newInfo['sub_client']['_main_client_ids'] = [$newInfo['main_client']['id']];
