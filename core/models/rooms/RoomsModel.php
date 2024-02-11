@@ -2,8 +2,11 @@
 
 namespace core\models\rooms;
 
+use core\application\Database;
 use core\models\Model;
 use core\models\ModelInterface;
+use PDO;
+use PDOException;
 
 class RoomsModel extends Model implements ModelInterface
 {
@@ -65,12 +68,6 @@ class RoomsModel extends Model implements ModelInterface
             $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
             $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
 
-            // foreach ($room as $attribute) {
-            //     if ($attribute == NULL || $attribute == "") {
-            //         continue 2;
-            //     }
-            // }
-
             $this->dataSanitizer->SanitizeData($room);
             if (!$this->databaseSqlBuilder->insert($room, $this->fields, self::TABLE_NAME)) {
                 return false;
@@ -103,5 +100,29 @@ class RoomsModel extends Model implements ModelInterface
     public function getFood(): array
     {
         return $this->food;
+    }
+
+    public function getDatesByHotelId(?int $hotelId): array|false
+    {
+        $table = self::TABLE_NAME;
+        $sql = <<<SQL
+            SELECT checkin_checkout_dates
+            FROM $table
+            WHERE hotel_id = $hotelId
+        SQL;
+
+        $conn = Database::getInstance()->getConnection();
+
+        try {
+            $query = $conn->prepare($sql);
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_NUM);
+        } catch (PDOException $e) {
+            echo json_encode(['status' => '500', 'message' => $e->getMessage()]);
+            http_response_code(500);
+
+            return false;
+        }
     }
 }

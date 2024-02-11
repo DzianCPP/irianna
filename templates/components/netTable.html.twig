@@ -2,26 +2,58 @@
 
 	<table class="table table-sm table-secondary table-bordered border-light" id="table">
         <tr>
-            {% for header in table.tableHeaders %}
+            <th>
+                <small>
+                    {{ 'Сроки' }}
+                </small>
+            </th>
+            {% for room in rooms %}
                 <th>
                     <small>
-                        {{ header }}
+                        {{ room.description }}
                     </small>
                 </th>
             {% endfor %}
         </tr>
-		<tr>
-			{% for row in table.tableRows %}
-				<td>
-                    {{ row.date }}
+        {% for row in rows %}
+            <tr>
+                <td>
+                    {{ row.checkin_date ~ '-' ~ row.checkout_date }}
                 </td>
-                {% for status in row.statuses %}
-                    <td>
-                        {{ status }}
-                    </td>
+                {% for room_status in row.room_statuses %}
+                    {% if room_status.status == 'free' %}
+                        <td class="bg-success text-light">
+                            <small>
+                                {{ 'Свободно' }}
+                            </small>
+                        </td>
+                    {% endif %}
+                    {% if room_status.status == 'busy' %}
+                        <td class="bg-danger text-light">
+                            <small>
+                                {{ room_status.client.name }}
+                            </small>
+                            <br>
+                            {% if room_status.count == 1 %}
+                                <small>
+                                    {{ room_status.count ~ ' турист' }}
+                                </small>
+                            {% endif %}
+                            {% if room_status.count >= 2 and room_status.count <= 3 %}
+                                <small>
+                                    {{ room_status.count ~ ' туриста' }}
+                                </small>
+                            {% endif %}
+                            {% if room_status.count > 3 %}
+                                <small>
+                                    {{ room_status.count ~ ' туристов' }}
+                                </small>
+                            {% endif %}
+                        </td>
+                    {% endif %}
                 {% endfor %}
-			{% endfor %}
-		</tr>
+            </tr>
+        {% endfor %}
 	</table>
 
 	 <script type="text/javascript" src="/assets/scripts/net/net.js"></script>
