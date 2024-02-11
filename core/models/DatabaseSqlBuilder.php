@@ -48,7 +48,7 @@ class DatabaseSqlBuilder
         if ($columnValue != []) {
             $column = $columnValue['column'];
             $value = $columnValue['value'];
-            $sqlQuery .= " WHERE ${column}='${value}'";
+            $sqlQuery .= " WHERE {$column}='{$value}'";
         }
 
 
@@ -97,9 +97,9 @@ class DatabaseSqlBuilder
     public function update(string $tableName, array $fields, array $recordInfo, $column): bool
     {
         $sets = $this->getSets($fields);
-        $sqlQuery = "UPDATE ${tableName}
-            SET ${sets}
-            WHERE ${column}={$recordInfo[$column]}
+        $sqlQuery = "UPDATE {$tableName}
+            SET {$sets}
+            WHERE {$column}={$recordInfo[$column]}
         ";
         $query = $this->conn->prepare($sqlQuery);
 
@@ -116,7 +116,7 @@ class DatabaseSqlBuilder
     {
         $values = implode(", ", $columnValues['values']);
         $column = $columnValues['column'];
-        $sqlQuery = "DELETE FROM ${tableName} WHERE ${column} IN (${values})";
+        $sqlQuery = "DELETE FROM {$tableName} WHERE {$column} IN ({$values})";
         $query = $this->conn->prepare($sqlQuery);
         try {
             $query->execute();
