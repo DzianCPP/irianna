@@ -20,10 +20,30 @@ class NetController extends BaseController
     {
         $hotel = $this->getHotel();
         $dates = $this->getDates($hotel);
+
+        if (!$dates) {
+            $this->renderEmptyPage('Не удалось найти отель/номера');
+
+            return;
+        }
+
+        $dates['checkinDates'] = array_slice(
+            array: $dates['checkinDates'],
+            offset: 0,
+            length: count($dates['checkinDates']) / 2
+        );
+
+        $dates['checkoutDates'] = array_slice(
+            array: $dates['checkoutDates'],
+            offset: 0,
+            length: count($dates['checkoutDates']) / 2
+        );
+
         $rooms = $this->getRooms($hotel, $dates);
 
         if (!$hotel || !$rooms || !$dates) {
             $this->renderEmptyPage('Не удалось найти отель/номера');
+
             return;
         }
 
@@ -289,5 +309,4 @@ class NetController extends BaseController
 
         $this->view->render("net/net.html.twig", $data);
     }
-
 }
