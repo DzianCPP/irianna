@@ -29,6 +29,12 @@ class NetController extends BaseController
 
         $this->normalizeRooms($rooms);
 
+        $rooms = array_slice(
+            array: $rooms,
+            offset: 0,
+            length: count($rooms) / 2
+        );
+
         $this->view->render(
             "net/net.html.twig",
             [
