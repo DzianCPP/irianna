@@ -27,17 +27,17 @@ class NetController extends BaseController
             return;
         }
 
-        $dates['checkinDates'] = array_slice(
-            array: $dates['checkinDates'],
-            offset: 0,
-            length: count($dates['checkinDates']) / 2
-        );
+        // $dates['checkinDates'] = array_slice(
+        //     array: $dates['checkinDates'],
+        //     offset: 0,
+        //     length: count($dates['checkinDates']) / 2
+        // );
 
-        $dates['checkoutDates'] = array_slice(
-            array: $dates['checkoutDates'],
-            offset: 0,
-            length: count($dates['checkoutDates']) / 2
-        );
+        // $dates['checkoutDates'] = array_slice(
+        //     array: $dates['checkoutDates'],
+        //     offset: 0,
+        //     length: count($dates['checkoutDates']) / 2
+        // );
 
         $rooms = $this->getRooms($hotel, $dates);
 
@@ -49,11 +49,11 @@ class NetController extends BaseController
 
         $this->normalizeRooms($rooms);
 
-        $rooms = array_slice(
-            array: $rooms,
-            offset: 0,
-            length: count($rooms) / 2
-        );
+        // $rooms = array_slice(
+        //     array: $rooms,
+        //     offset: 0,
+        //     length: count($rooms) / 2
+        // );
 
         $this->view->render(
             "net/net.html.twig",
