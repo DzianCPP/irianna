@@ -36,17 +36,17 @@
                             <br>
                             {% if room_status.count == 1 %}
                                 <small>
-                                    {{ room_status.count ~ ' турист' }}
+                                    {{ '(' ~ room_status.count ~ ' турист' ~ ')' }}
                                 </small>
                             {% endif %}
                             {% if room_status.count >= 2 and room_status.count <= 3 %}
                                 <small>
-                                    {{ room_status.count ~ ' туриста' }}
+                                    {{ '(' ~ room_status.count ~ ' туриста' ~ ')' }}
                                 </small>
                             {% endif %}
                             {% if room_status.count > 3 %}
                                 <small>
-                                    {{ room_status.count ~ ' туристов' }}
+                                    {{ '(' ~ room_status.count ~ ' туристов' ~ ')' }}
                                 </small>
                             {% endif %}
                         </td>
