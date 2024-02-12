@@ -203,9 +203,13 @@ class ToursModel extends Model implements ModelInterface
 
     public function getTourByRoomIdAndDates(
         int $room_id,
-        string $checkin_date,
-        string $checkout_date
+        ?string $checkin_date,
+        ?string $checkout_date
     ): array|false {
+        if (!$room_id || !$checkin_date || !$checkout_date) {
+            return false;
+        }
+
         $table = self::TABLE_NAME;
         $sql = <<<SQL
             SELECT *

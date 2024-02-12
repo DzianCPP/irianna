@@ -51,6 +51,13 @@
                             {% endif %}
                         </td>
                     {% endif %}
+                    {% if room_status.status == 'no date' %}
+                        <td class="bg-dark text-light">
+                            <small>
+                                {{ 'Нет заездов' }}
+                            </small>
+                        </td>
+                    {% endif %}
                 {% endfor %}
             </tr>
         {% endfor %}

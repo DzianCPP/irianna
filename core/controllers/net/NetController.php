@@ -3,13 +3,11 @@
 namespace core\controllers\net;
 
 use core\controllers\BaseController;
-use core\controllers\rooms\helpers\RoomsHelper;
 use core\models\clients\ClientsModel;
 use core\models\hotels\HotelsModel;
 use core\models\rooms\RoomsModel;
 use core\models\tours\ToursModel;
 use core\views\net\NetView;
-use Google\Service\Genomics\CheckInRequest;
 
 class NetController extends BaseController
 {
@@ -127,15 +125,17 @@ class NetController extends BaseController
         }
     }
 
-    private function normalizeRoomDates(array $rawDates): array
+    private function normalizeRoomDates(array $rawDates): array|false
     {
         foreach ($rawDates as &$rawDatesList) {
             $rawDatesList[0] = explode(', ', str_replace('f', '', $rawDatesList[0]));
         }
 
+        unset($rawDatesList);
+
         $checkinDates = $checkoutDates = [];
 
-        foreach ($rawDates as $rawDatesList) {
+        foreach ($rawDates as &$rawDatesList) {
             $checkinDates = array_merge(
                 $checkinDates,
                 array_slice(
@@ -163,8 +163,8 @@ class NetController extends BaseController
         }
 
         return [
-            'checkinDates' => $checkinDates,
-            'checkoutDates' => $checkoutDates
+            'checkinDates' => array_values($checkinDates),
+            'checkoutDates' => array_values($checkoutDates)
         ];
     }
 
@@ -202,12 +202,36 @@ class NetController extends BaseController
                     ];
                 }
 
-                if (!$tour) {
+                if (
+                    !$tour
+                    && $this->roomHasDates(
+                        room: $room,
+                        checkinDate: $dates['checkinDates'][$i],
+                        checkoutDate: $dates['checkoutDates'][$i]
+                    )
+                ) {
                     $room_statuses[] = [
                         'room' => $room,
                         'checkin_date' => $dates['checkinDates'][$i],
                         'checkout_date' => $dates['checkoutDates'][$i],
                         'status' => 'free',
+                        'client' => false
+                    ];
+                }
+
+                if (
+                    !$tour
+                    && !$this->roomHasDates(
+                        room: $room,
+                        checkinDate: $dates['checkinDates'][$i],
+                        checkoutDate: $dates['checkoutDates'][$i]
+                    )
+                ) {
+                    $room_statuses[] = [
+                        'room' => $room,
+                        'checkin_date' => $dates['checkinDates'][$i],
+                        'checkout_date' => $dates['checkoutDates'][$i],
+                        'status' => 'no date',
                         'client' => false
                     ];
                 }
@@ -236,6 +260,19 @@ class NetController extends BaseController
         return $rows;
     }
 
+    private function roomHasDates(array $room, string $checkinDate, string $checkoutDate): bool
+    {
+        $result = false;
+
+        if (
+            in_array($checkinDate, $room['dates']['checkinDates'])
+            && in_array($checkoutDate, $room['dates']['checkoutDates'])
+        ) {
+            $result = true;
+        }
+
+        return $result;
+    }
     private function renderEmptyPage(string $message): void
     {
         $data = [
@@ -246,4 +283,5 @@ class NetController extends BaseController
 
         $this->view->render("net/net.html.twig", $data);
     }
+
 }
