@@ -30,11 +30,14 @@ class NetController extends BaseController
 
         $rooms = $this->getRooms($hotel, $dates);
 
+
         if (!$hotel || !$rooms || !$dates) {
             $this->renderEmptyPage('Не удалось найти отель/номера');
 
             return;
         }
+
+        $rooms = $this->sortRooms($rooms);
 
         $this->normalizeRooms($rooms);
 
@@ -276,6 +279,38 @@ class NetController extends BaseController
         }
 
         return $rows;
+    }
+
+    private function sortRooms(array $rooms): array
+    {
+        $sortedRooms = [];
+
+        foreach ($rooms as $room) {
+            if (empty($sortedRooms)) {
+                $sortedRooms[] = $room;
+
+                continue;
+            }
+
+            $roomFirstChar = substr($room['description'], 0, 1);
+
+            for ($i = 0; $i < count($sortedRooms); $i++) {
+                $sortedRoomFirstChar = substr($sortedRooms[$i]['description'], 0, 1);
+
+                if ($roomFirstChar >= $sortedRoomFirstChar) {
+                    $leftHalf = array_slice($sortedRooms, 0, $i);
+                    $rightHalf = array_slice($sortedRooms, $i);
+
+                    array_push($leftHalf, $room);
+
+                    $sortedRooms = array_merge($leftHalf, $rightHalf);
+
+                    break;
+                }
+            }
+        }
+
+        return array_reverse($sortedRooms);
     }
 
     private function roomHasDates(array $room, string $checkinDate, string $checkoutDate): bool
