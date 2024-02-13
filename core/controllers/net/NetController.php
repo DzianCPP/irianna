@@ -8,6 +8,7 @@ use core\models\hotels\HotelsModel;
 use core\models\rooms\RoomsModel;
 use core\models\tours\ToursModel;
 use core\views\net\NetView;
+use DateTime;
 
 class NetController extends BaseController
 {
@@ -27,18 +28,6 @@ class NetController extends BaseController
             return;
         }
 
-        // $dates['checkinDates'] = array_slice(
-        //     array: $dates['checkinDates'],
-        //     offset: 0,
-        //     length: count($dates['checkinDates']) / 2
-        // );
-
-        // $dates['checkoutDates'] = array_slice(
-        //     array: $dates['checkoutDates'],
-        //     offset: 0,
-        //     length: count($dates['checkoutDates']) / 2
-        // );
-
         $rooms = $this->getRooms($hotel, $dates);
 
         if (!$hotel || !$rooms || !$dates) {
@@ -48,12 +37,6 @@ class NetController extends BaseController
         }
 
         $this->normalizeRooms($rooms);
-
-        // $rooms = array_slice(
-        //     array: $rooms,
-        //     offset: 0,
-        //     length: count($rooms) / 2
-        // );
 
         $this->view->render(
             "net/net.html.twig",
@@ -188,9 +171,18 @@ class NetController extends BaseController
             return false;
         }
 
+        $sort_dates = function (string $date1, string $date2) {
+            return DateTime::createFromFormat('d.m.Y', $date1) <=> DateTime::createFromFormat('d.m.Y', $date2);
+        };
+
+        $checkinDates = array_values($checkinDates);
+        $checkoutDates = array_values($checkoutDates);
+        usort($checkinDates, $sort_dates);
+        usort($checkoutDates, $sort_dates);
+
         return [
-            'checkinDates' => array_values($checkinDates),
-            'checkoutDates' => array_values($checkoutDates)
+            'checkinDates' => $checkinDates,
+            'checkoutDates' => $checkoutDates
         ];
     }
 
