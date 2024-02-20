@@ -37,9 +37,7 @@
 				{% for row in rows %}
 					<tr>
 						<td class="text-dark bg-light border-light">
-							{{ row.checkin_date }}
-							{{ '-' }}
-							{{ row.checkout_date }}
+							{{ row.checkin_date ~ '-' ~ row.checkout_date }}
 						</td>
 						{% for room_status in row.room_statuses %}
 							{% if room_status.status == 'free' %}
