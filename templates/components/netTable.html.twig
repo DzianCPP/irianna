@@ -1,67 +1,90 @@
 {% block table %}
 
-	<table class="table table-sm table-secondary table-bordered border-light" id="table">
-        <tr>
-            <th>
-                <small>
-                    {{ 'Сроки' }}
-                </small>
-            </th>
-            {% for room in rooms %}
-                <th>
-                    <small>
-                        {{ room.description }}
-                    </small>
-                </th>
-            {% endfor %}
-        </tr>
-        {% for row in rows %}
-            <tr>
-                <td>
-                    {{ row.checkin_date ~ '-' ~ row.checkout_date }}
-                </td>
-                {% for room_status in row.room_statuses %}
-                    {% if room_status.status == 'free' %}
-                        <td class="bg-success text-light">
-                            <small>
-                                {{ 'Свободно' }}
-                            </small>
-                        </td>
-                    {% endif %}
-                    {% if room_status.status == 'busy' %}
-                        <td class="bg-danger text-light">
-                            <small>
-                                {{ room_status.client.name }}
-                            </small>
-                            <br>
-                            {% if room_status.count == 1 %}
-                                <small>
-                                    {{ '(' ~ room_status.count ~ ' турист' ~ ')' }}
-                                </small>
-                            {% endif %}
-                            {% if room_status.count >= 2 and room_status.count <= 3 %}
-                                <small>
-                                    {{ '(' ~ room_status.count ~ ' туриста' ~ ')' }}
-                                </small>
-                            {% endif %}
-                            {% if room_status.count > 3 %}
-                                <small>
-                                    {{ '(' ~ room_status.count ~ ' туристов' ~ ')' }}
-                                </small>
-                            {% endif %}
-                        </td>
-                    {% endif %}
-                    {% if room_status.status == 'no date' %}
-                        <td class="bg-dark text-light">
-                            <small>
-                                {{ 'Нет заездов' }}
-                            </small>
-                        </td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-        {% endfor %}
-	</table>
+	<style>
+		table {
+			text-align: center;
+			position: relative;
+			border-collapse: collapse;
+            width: 100%;
+		}
+
+		th {
+			position: sticky;
+			top: 0;
+			box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+		}
+	</style>
+
+	<div style="height: 250px;">
+		<table id="table">
+			<thead>
+				<tr>
+					<th class="bg-light">
+						<small>
+							{{ 'Сроки' }}
+						</small>
+					</th>
+					{% for room in rooms %}
+						<th class="bg-light">
+							<small>
+								{{ room.description }}
+							</small>
+						</th>
+					{% endfor %}
+				</tr>
+			</thead>
+			<tbody class="text-light">
+				{% for row in rows %}
+					<tr>
+						<td class="text-dark bg-light">
+							{{ row.checkin_date }}
+							{{ '-' }}
+							{{ row.checkout_date }}
+						</td>
+						{% for room_status in row.room_statuses %}
+							{% if room_status.status == 'free' %}
+								<td class="bg-success">
+									<small>
+										{{ 'Свободно' }}
+									</small>
+								</td>
+							{% endif %}
+							{% if room_status.status == 'busy' %}
+								<td class="bg-danger">
+									<small>
+										{{ room_status.client.name }}
+									</small>
+									<br>
+									{% if room_status.count == 1 %}
+										<small>
+											{{ '(' ~ room_status.count ~ ' турист' ~ ')' }}
+										</small>
+									{% endif %}
+									{% if room_status.count >= 2 and room_status.count <= 3 %}
+										<small>
+											{{ '(' ~ room_status.count ~ ' туриста' ~ ')' }}
+										</small>
+									{% endif %}
+									{% if room_status.count > 3 %}
+										<small>
+											{{ '(' ~ room_status.count ~ ' туристов' ~ ')' }}
+										</small>
+									{% endif %}
+								</td>
+							{% endif %}
+							{% if room_status.status == 'no date' %}
+								<td class="bg-dark">
+									<small>
+										{{ 'Нет заездов' }}
+									</small>
+								</td>
+							{% endif %}
+						{% endfor %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
 	 <script type="text/javascript" src="/assets/scripts/net/net.js"></script>
 {% endblock %}
