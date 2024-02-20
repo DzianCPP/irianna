@@ -36,7 +36,7 @@
 			<tbody class="text-light">
 				{% for row in rows %}
 					<tr>
-						<td class="text-dark bg-light border-light">
+						<td class="text-dark bg-light border-light" style="width: 200px;">
 							{{ row.checkin_date ~ '-' ~ row.checkout_date }}
 						</td>
 						{% for room_status in row.room_statuses %}
