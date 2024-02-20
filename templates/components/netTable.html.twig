@@ -4,22 +4,21 @@
 		table {
 			text-align: center;
 			position: relative;
-			border-collapse: collapse;
-            width: 100%;
+			width: 100%;
 		}
 
 		th {
 			position: sticky;
 			top: 0;
-			box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+			box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
 		}
 	</style>
 
 	<div style="height: 350px;">
-		<table id="table">
+		<table class="table" id="table">
 			<thead>
 				<tr>
-					<th class="bg-light border-dark" style="width: 200px;">
+					<th class="bg-light" style="width: 200px;">
 						<small>
 							{{ 'Сроки' }}
 						</small>
@@ -36,19 +35,19 @@
 			<tbody class="text-light">
 				{% for row in rows %}
 					<tr>
-						<td class="text-dark bg-light border-light" style="width: 200px;">
+						<td class="text-dark bg-light" style="width: 200px;">
 							{{ row.checkin_date ~ '-' ~ row.checkout_date }}
 						</td>
 						{% for room_status in row.room_statuses %}
 							{% if room_status.status == 'free' %}
-								<td class="bg-success border-light">
+								<td class="bg-success">
 									<small>
 										{{ 'Свободно' }}
 									</small>
 								</td>
 							{% endif %}
 							{% if room_status.status == 'busy' %}
-								<td class="bg-danger border-light">
+								<td class="bg-danger">
 									<small>
 										{{ room_status.client.name }}
 									</small>
@@ -71,7 +70,7 @@
 								</td>
 							{% endif %}
 							{% if room_status.status == 'no date' %}
-								<td class="bg-dark border-light">
+								<td class="bg-dark">
 									<small>
 										{{ 'Нет заездов' }}
 									</small>
