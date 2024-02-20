@@ -36,21 +36,21 @@
 			<tbody class="text-light">
 				{% for row in rows %}
 					<tr>
-						<td class="text-dark bg-light">
+						<td class="text-dark bg-light border-light">
 							{{ row.checkin_date }}
 							{{ '-' }}
 							{{ row.checkout_date }}
 						</td>
 						{% for room_status in row.room_statuses %}
 							{% if room_status.status == 'free' %}
-								<td class="bg-success">
+								<td class="bg-success border-light">
 									<small>
 										{{ 'Свободно' }}
 									</small>
 								</td>
 							{% endif %}
 							{% if room_status.status == 'busy' %}
-								<td class="bg-danger">
+								<td class="bg-danger border-light">
 									<small>
 										{{ room_status.client.name }}
 									</small>
@@ -73,7 +73,7 @@
 								</td>
 							{% endif %}
 							{% if room_status.status == 'no date' %}
-								<td class="bg-dark">
+								<td class="bg-dark border-light">
 									<small>
 										{{ 'Нет заездов' }}
 									</small>
