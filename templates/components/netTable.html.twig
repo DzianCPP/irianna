@@ -10,6 +10,7 @@
 		th {
 			position: sticky;
 			top: 0;
+			z-index: 2;
 			box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
 		}
 
@@ -17,6 +18,15 @@
 			position: sticky;
 			left: 0;
 			overflow: auto;
+			z-index: 3;
+		}
+
+		.sticky-dates {
+			z-index: 4;
+			overflow: auto;
+			top: 0;
+			position: sticky;
+			left: 0;
 		}
 	</style>
 
@@ -24,7 +34,7 @@
 		<table class="table table-sm table-bordered" id="table">
 			<thead>
 				<tr>
-					<th class="bg-light sticky-column" style="width: 200px;">
+					<th class="bg-light sticky-column sticky-dates" style="width: 200px;">
 						<small>
 							{{ 'Сроки' }}
 						</small>
