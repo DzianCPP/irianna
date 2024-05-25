@@ -7,14 +7,10 @@ final class ToursDateGetter
     public static function getTourDay(array $tour = []): string
     {
         if (!$tour) {
-            return '';
+            return date('d', strtotime('now'));
         }
 
-        $day = substr(
-            $tour['created'],
-            0,
-            strpos($tour['created'], '-', '0')
-        );
+        $day = explode('-', $tour['created_at'])[2];
 
         if (strlen($day) < 2) {
             $day = '0' . $day;
@@ -26,14 +22,10 @@ final class ToursDateGetter
     public static function getTourMonth(array $tour = []): string
     {
         if (!$tour) {
-            return '';
+            return date('m', strtotime('now'));
         }
 
-        $month = substr(
-            $tour['created'],
-            strpos($tour['created'], '-', 0) + 1,
-            strrpos($tour['created'], '-', 0) - 2
-        );
+        $month = explode('-', $tour['created_at'])[1];
 
         if (strlen($month) < 2) {
             $month = '0' . $month;
@@ -45,14 +37,10 @@ final class ToursDateGetter
     public static function getTourYear(array $tour = []): string
     {
         if (!$tour) {
-            return '';
+            return date('Y', strtotime('now'));
         }
 
-        $year = substr(
-            $tour['created'],
-            -4,
-            4
-        );
+        $year = explode('-', $tour['created_at'])[0];
 
         return $year;
     }

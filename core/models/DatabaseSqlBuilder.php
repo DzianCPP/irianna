@@ -20,8 +20,8 @@ class DatabaseSqlBuilder
     {
         $tableColumns = $this->getTableFields($columns);
         $values = $this->getValues($recordInfo);
-        $sqlQuery = "INSERT INTO ${tableName} (${tableColumns})
-                    VALUES (${values})";
+        $sqlQuery = "INSERT INTO $tableName ($tableColumns)
+                    VALUES ($values)";
         $query = $this->conn->prepare($sqlQuery);
         try {
             $query->execute();
@@ -38,7 +38,7 @@ class DatabaseSqlBuilder
         array $columnsValues = [],
         array $joins = []
     ): array {
-        $sqlQuery = "SELECT * FROM $tableName";
+        $sqlQuery = "SELECT $tableName.* FROM $tableName";
 
         if ($joins != []) {
             $joins = $this->setJoins($joins);
@@ -48,7 +48,7 @@ class DatabaseSqlBuilder
         if ($columnValue != []) {
             $column = $columnValue['column'];
             $value = $columnValue['value'];
-            $sqlQuery .= " WHERE ${column}='${value}'";
+            $sqlQuery .= " WHERE {$column}='{$value}'";
         }
 
 
@@ -97,9 +97,9 @@ class DatabaseSqlBuilder
     public function update(string $tableName, array $fields, array $recordInfo, $column): bool
     {
         $sets = $this->getSets($fields);
-        $sqlQuery = "UPDATE ${tableName}
-            SET ${sets}
-            WHERE ${column}={$recordInfo[$column]}
+        $sqlQuery = "UPDATE {$tableName}
+            SET {$sets}
+            WHERE {$column}={$recordInfo[$column]}
         ";
         $query = $this->conn->prepare($sqlQuery);
 
@@ -116,7 +116,7 @@ class DatabaseSqlBuilder
     {
         $values = implode(", ", $columnValues['values']);
         $column = $columnValues['column'];
-        $sqlQuery = "DELETE FROM ${tableName} WHERE ${column} IN (${values})";
+        $sqlQuery = "DELETE FROM {$tableName} WHERE {$column} IN ({$values})";
         $query = $this->conn->prepare($sqlQuery);
         try {
             $query->execute();

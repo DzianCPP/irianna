@@ -2,12 +2,15 @@
 
 namespace core\models\rooms;
 
+use core\application\Database;
 use core\models\Model;
 use core\models\ModelInterface;
+use PDO;
+use PDOException;
 
 class RoomsModel extends Model implements ModelInterface
 {
-    protected array $fields = ['hotel_id', 'description', 'checkin_checkout_dates', 'comforts', 'food', 'id'];
+    protected array $fields = ['hotel_id', 'description', 'checkin_checkout_dates', 'comforts', 'food', 'archived', 'id'];
     private const TABLE_NAME = "rooms_table";
     protected array $comforts = ['Телевизор', 'Холодильник', 'Кондиционер', 'Душ', 'Ванна', 'Джакузи', 'Туалет', 'Балкон', 'Чайник', 'Кухня'];
     protected array $food = ['Без питания', 'Завтрак', 'Обед', 'Ужин'];
@@ -27,11 +30,11 @@ class RoomsModel extends Model implements ModelInterface
 
         $room['comforts'] = str_replace("\n", ", ", $room['comforts']);
         $room['food'] = str_replace("\n", ", ", $room['food']);
-        $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");        
-
+        $room['checkin_checkout_dates'] = rtrim($room['checkin_checkout_dates'], ", ");
+        $room['archived'] = 0;
         $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
         $room['checkin_checkout_dates'] = str_split($room['checkin_checkout_dates'], 10);
-        
+
         foreach ($room['checkin_checkout_dates'] as &$date) {
             $date = "f" . $date;
         }
@@ -46,7 +49,7 @@ class RoomsModel extends Model implements ModelInterface
         return true;
     }
 
-    public function create(): bool
+    public function create(array $data = []): bool
     {
         $rooms = json_decode(file_get_contents("php://input"), true);
         foreach ($rooms as &$room) {
@@ -60,14 +63,10 @@ class RoomsModel extends Model implements ModelInterface
                 $date = "f" . $date;
             }
 
+            $room['archived'] = 0;
+
             $room['checkin_checkout_dates'] = implode(", ", $room['checkin_checkout_dates']);
             $room['checkin_checkout_dates'] = str_replace("\n", "", $room['checkin_checkout_dates']);
-    
-            foreach ($room as $attribute) {
-                if ($attribute == NULL || $attribute == "") {
-                    continue 2;
-                }
-            }
 
             $this->dataSanitizer->SanitizeData($room);
             if (!$this->databaseSqlBuilder->insert($room, $this->fields, self::TABLE_NAME)) {
@@ -101,5 +100,29 @@ class RoomsModel extends Model implements ModelInterface
     public function getFood(): array
     {
         return $this->food;
+    }
+
+    public function getDatesByHotelId(?int $hotelId): array|false
+    {
+        $table = self::TABLE_NAME;
+        $sql = <<<SQL
+            SELECT checkin_checkout_dates
+            FROM $table
+            WHERE hotel_id = $hotelId
+        SQL;
+
+        $conn = Database::getInstance()->getConnection();
+
+        try {
+            $query = $conn->prepare($sql);
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_NUM);
+        } catch (PDOException $e) {
+            echo json_encode(['status' => '500', 'message' => $e->getMessage()]);
+            http_response_code(500);
+
+            return false;
+        }
     }
 }

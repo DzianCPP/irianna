@@ -3,33 +3,43 @@
 namespace core\controllers\net;
 
 use core\controllers\BaseController;
-use core\controllers\rooms\helpers\RoomsHelper;
 use core\models\clients\ClientsModel;
 use core\models\hotels\HotelsModel;
-use core\models\tours\ToursModel;
 use core\models\rooms\RoomsModel;
+use core\models\tours\ToursModel;
 use core\views\net\NetView;
+use DateTime;
 
 class NetController extends BaseController
 {
-    private ?RoomsHelper $roomsHelper = null;
-
     public function __construct()
     {
-        $this->roomsHelper = new RoomsHelper();
         $this->setView(NetView::class);
     }
 
     public function read(): void
     {
         $hotel = $this->getHotel();
-        $rooms = $this->getRooms($hotel['id']);
-        if (!$hotel || !$rooms) {
+        $dates = $this->getDates($hotel);
+
+        if (!$dates) {
             $this->renderEmptyPage('Не удалось найти отель/номера');
+
             return;
         }
 
-        $current_hotel_id = $this->getCurrentRoomId($rooms) != false ? $this->getCurrentRoomId($rooms) : $rooms[0]['id'];
+        $rooms = $this->getRooms($hotel, $dates);
+
+
+        if (!$hotel || !$rooms || !$dates) {
+            $this->renderEmptyPage('Не удалось найти отель/номера');
+
+            return;
+        }
+
+        $rooms = $this->sortRooms($rooms);
+
+        $this->normalizeRooms($rooms);
 
         $this->view->render(
             "net/net.html.twig",
@@ -37,80 +47,22 @@ class NetController extends BaseController
                 'title' => 'Сетка номеров',
                 'header' => 'Сетка номеров',
                 'login' => $_COOKIE['login'],
-                'hotels' => (new HotelsModel())->get(),
-                'table' => [
-                    'dates' => ($dates = $this->buildTableDates($rooms)),
-                    'tours' => $this->buildTableRows($current_hotel_id, $dates)
-                ],
+                'hotels' => (new HotelsModel())->get(
+                    [
+                        'column' => 'archived',
+                        'value' => 0
+                    ]
+                ),
+                'dates' => $dates,
+                'rooms' => $rooms,
+                'rows' => $this->buildRows($dates, $rooms),
                 'current_hotel_id' => $hotel['id'],
-                'rooms' => $this->removeF($this->roomsHelper->normalizeRooms($rooms)),
-                'current_room_id' => $current_hotel_id,
                 'last_year_number' => substr(date('y'), 1)
             ]
         );
     }
 
-    private function buildTableDates(array $rooms): array
-    {
-        $room = (new RoomsModel)->get(
-            columnValue: [
-                'column' => 'id',
-                'value' => $this->getCurrentRoomId($rooms) != false ? $this->getCurrentRoomId($rooms) : $rooms[0]['id']
-            ]
-        );
-
-        $room = $this->removeF($this->roomsHelper->normalizeRooms($room));
-
-        $dates = [];
-
-        for ($i = 0; $i < count($room[0]['checkin_checkout_dates']); $i++) {
-            $dates[] = [
-                'from' => $room[0]['checkin_checkout_dates'][$i],
-                'to' => $room[0]['checkin_checkout_dates'][++$i]
-            ];
-        }
-
-        return $dates;
-    }
-
-    private function buildTableRows(int $current_room_id, array $dates): array
-    {
-        $tours = $this->getTours($current_room_id);
-        $tableRows = [];
-
-        foreach ($dates as $date) {
-            $busy = $owner = $guests_count = false;
-
-            foreach ($tours as &$tour) {
-                if ($date['from'] == $tour['checkin_date'] && $date['to'] == $tour['checkout_date']) {
-                    $busy = true;
-                    $owner = (new ClientsModel())->get(columnValue: [
-                        'column' => 'id',
-                        'value' => $tour['owner_id']
-                    ])[0];
-
-                    $guests = (new ClientsModel())->getSubClients(
-                        columnValue: [
-                            'column' => 'main_client_id',
-                            'value' => $owner['id']
-                        ]
-                    );
-
-                    $guests_count = count($guests) + 1;
-                }
-            }
-
-            $tableRows[] = [
-                'busy' => $busy,
-                'owner' => $owner,
-                'guests_count' => $guests_count
-            ];
-        }
-
-        return $tableRows;
-    }
-
-    private function getHotel(): bool|array
+    private function getHotel(): array|false
     {
         $hotelsModel = new HotelsModel();
         $parsed_url = parse_url($_SERVER['REQUEST_URI']);
@@ -127,7 +79,7 @@ class NetController extends BaseController
         $hotel = [];
 
         if ($hotel_id == 0) {
-            $hotel = $hotelsModel->get();
+            $hotel = $hotelsModel->get(['column' => 'archived', 'value' => 0]);
         }
 
         if ($hotel_id != 0) {
@@ -141,61 +93,239 @@ class NetController extends BaseController
         return false;
     }
 
-    private function getCurrentRoomId(array $rooms): int|false
+    private function getDates(array $hotel): array|false
     {
-        $parsed_url = parse_url($_SERVER['REQUEST_URI']);
-        $room_id = false;
-        if (isset($parsed_url['query'])) {
-            parse_str(
-                $parsed_url['query'],
-                $room_id_array
-            );
-
-            $room_id = $room_id_array['room'] ?? false;
+        if (!$hotel) {
+            return false;
         }
 
-        $found = false;
+        $rawDates = (new RoomsModel())->getDatesByHotelId($hotel['id']);
 
-        if ($room_id) {
-            foreach ($rooms as $room) {
-                if ($room['id'] == $room_id) {
-                    $found = true;
+        return $this->normalizeRoomDates($rawDates);
+    }
+
+    private function getRooms(array $hotel, array $dates): array|false
+    {
+        if (
+            !$hotel
+            || !$hotel['id']
+            || !$dates
+        ) {
+            return false;
+        }
+
+        $rooms = (new RoomsModel())->get(
+            columnValue: [
+                'column' => 'hotel_id',
+                'value' => $hotel['id']
+            ]
+        );
+
+        if (!$rooms) {
+            return false;
+        }
+
+        return $rooms;
+    }
+
+    private function normalizeRooms(array &$rooms): void
+    {
+        foreach ($rooms as &$room) {
+            $room['dates'] = $this->normalizeRoomDates([
+                [$room['checkin_checkout_dates']]
+            ]);
+        }
+    }
+
+    private function normalizeRoomDates(array $rawDates): array|false
+    {
+        foreach ($rawDates as &$rawDatesList) {
+            $rawDatesList[0] = explode(', ', str_replace('f', '', $rawDatesList[0]));
+        }
+
+        unset($rawDatesList);
+
+        $checkinDates = $checkoutDates = [];
+
+        foreach ($rawDates as &$rawDatesList) {
+            $checkinDates = array_merge(
+                $checkinDates,
+                array_slice(
+                    array: $rawDatesList[0],
+                    offset: 0,
+                    length: count($rawDatesList[0]) / 2
+                )
+            );
+
+            $checkoutDates = array_merge(
+                $checkoutDates,
+                array_slice(
+                    array: $rawDatesList[0],
+                    offset: count($rawDatesList[0]) / 2,
+                    length: count($rawDatesList[0]) / 2
+                )
+            );
+        }
+
+        $checkinDates = array_unique($checkinDates);
+        $checkoutDates = array_unique($checkoutDates);
+
+        if (empty($checkinDates) && empty($checkoutDates)) {
+            return false;
+        }
+
+        $sort_dates = function (string $date1, string $date2) {
+            return DateTime::createFromFormat('d.m.Y', $date1) <=> DateTime::createFromFormat('d.m.Y', $date2);
+        };
+
+        $checkinDates = array_values($checkinDates);
+        $checkoutDates = array_values($checkoutDates);
+        usort($checkinDates, $sort_dates);
+        usort($checkoutDates, $sort_dates);
+
+        return [
+            'checkinDates' => $checkinDates,
+            'checkoutDates' => $checkoutDates
+        ];
+    }
+
+    private function buildRows(array $dates, array $rooms): array
+    {
+        $room_statuses = $rows = [];
+        foreach ($rooms as $room) {
+            for ($i = 0; $i < count($dates['checkinDates']); $i++) {
+                $tour = (new ToursModel())->getTourByRoomIdAndDates(
+                    room_id: $room['id'],
+                    checkin_date: $dates['checkinDates'][$i],
+                    checkout_date: $dates['checkoutDates'][$i]
+                );
+
+                if ($tour) {
+                    $room_statuses[] = [
+                        'room' => $room,
+                        'checkin_date' => $dates['checkinDates'][$i],
+                        'checkout_date' => $dates['checkoutDates'][$i],
+                        'status' => 'busy',
+                        'client' => ($client = (new ClientsModel())->get(
+                            [
+                                'column' => 'id',
+                                'value' => $tour['owner_id']
+                            ]
+                        )[0]),
+                        'count' => count(
+                            (new ClientsModel())->getSubClients(
+                                [
+                                    'column' => 'main_client_id',
+                                    'value' => $client['id']
+                                ]
+                            )
+                        ) + 1
+                    ];
+                }
+
+                if (
+                    !$tour
+                    && $this->roomHasDates(
+                        room: $room,
+                        checkinDate: $dates['checkinDates'][$i],
+                        checkoutDate: $dates['checkoutDates'][$i]
+                    )
+                ) {
+                    $room_statuses[] = [
+                        'room' => $room,
+                        'checkin_date' => $dates['checkinDates'][$i],
+                        'checkout_date' => $dates['checkoutDates'][$i],
+                        'status' => 'free',
+                        'client' => false
+                    ];
+                }
+
+                if (
+                    !$tour
+                    && !$this->roomHasDates(
+                        room: $room,
+                        checkinDate: $dates['checkinDates'][$i],
+                        checkoutDate: $dates['checkoutDates'][$i]
+                    )
+                ) {
+                    $room_statuses[] = [
+                        'room' => $room,
+                        'checkin_date' => $dates['checkinDates'][$i],
+                        'checkout_date' => $dates['checkoutDates'][$i],
+                        'status' => 'no date',
+                        'client' => false
+                    ];
+                }
+            }
+        }
+
+        for ($i = 0; $i < count($dates['checkinDates']); $i++) {
+            $row = [
+                'checkin_date' => $dates['checkinDates'][$i],
+                'checkout_date' => $dates['checkoutDates'][$i],
+                'room_statuses' => []
+            ];
+
+            foreach ($room_statuses as $room_status) {
+                if (
+                    $row['checkin_date'] == $room_status['checkin_date']
+                    && $row['checkout_date'] == $room_status['checkout_date']
+                ) {
+                    $row['room_statuses'][] = $room_status;
+                }
+            }
+
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
+
+    private function sortRooms(array $rooms): array
+    {
+        $sortedRooms = [];
+
+        foreach ($rooms as $room) {
+            if (empty($sortedRooms)) {
+                $sortedRooms[] = $room;
+
+                continue;
+            }
+
+            $roomFirstChar = substr($room['description'], 0, 1);
+
+            for ($i = 0; $i < count($sortedRooms); $i++) {
+                $sortedRoomFirstChar = substr($sortedRooms[$i]['description'], 0, 1);
+
+                if ($roomFirstChar >= $sortedRoomFirstChar) {
+                    $leftHalf = array_slice($sortedRooms, 0, $i);
+                    $rightHalf = array_slice($sortedRooms, $i);
+
+                    array_push($leftHalf, $room);
+
+                    $sortedRooms = array_merge($leftHalf, $rightHalf);
+
                     break;
                 }
             }
         }
 
-        if (!$found) {
-            return false;
-        }
-
-        return $room_id;
+        return array_reverse($sortedRooms);
     }
 
-    private function getTours(int $current_room_id): array
+    private function roomHasDates(array $room, string $checkinDate, string $checkoutDate): bool
     {
-        return (new ToursModel())->get([
-            'column' => 'room_id',
-            'value' => $current_room_id
-        ]);
-    }
+        $result = false;
 
-    private function getRooms(int $hotel_id): bool|array
-    {
-        if ($hotel_id == 0) {
-            return false;
+        if (
+            in_array($checkinDate, $room['dates']['checkinDates'])
+            && in_array($checkoutDate, $room['dates']['checkoutDates'])
+        ) {
+            $result = true;
         }
 
-        $roomsModel = new RoomsModel();
-        $rooms = $roomsModel->get(columnValue: ['column' => 'hotel_id', 'value' => $hotel_id]);
-
-        if (count($rooms) > 0) {
-            return $rooms;
-        }
-
-        return false;
+        return $result;
     }
-
     private function renderEmptyPage(string $message): void
     {
         $data = [
@@ -205,16 +335,5 @@ class NetController extends BaseController
         ];
 
         $this->view->render("net/net.html.twig", $data);
-    }
-
-    private function removeF(array $rooms): array
-    {
-        foreach ($rooms as &$room) {
-            foreach ($room['checkin_checkout_dates'] as &$date) {
-                $date = ltrim($date, 'f');
-            }
-        }
-
-        return $rooms;
     }
 }

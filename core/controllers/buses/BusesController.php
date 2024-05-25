@@ -71,7 +71,16 @@ class BusesController extends BaseController implements ControllerInterface
     public function read(int $id = 0): void
     {
         $this->setModel(BusesModel::class);
-        $buses = $this->model->get();
+        $buses = array_reverse($this->model->get(['column' => 'archived', 'value' => 0]));
+        $filteredBuses = [];
+
+        foreach ($buses as $bus) {
+            if ($bus['archived'] != 1) {
+                $filteredBuses[] = $bus;
+            }
+        }
+
+        $buses = $filteredBuses;
         $this->setView(BusesView::class);
         $page = Paginator::getPage();
         $pages = (int) ceil(count($buses) / self::PER_PAGE);

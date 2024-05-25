@@ -9,8 +9,8 @@ use core\models\ModelInterface;
 class ClientsModel extends Model implements ModelInterface
 {
     protected array $fields = [
-        ["name", "main_phone", "second_phone", "passport", "birth_date", "address", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "id"],
-        ["name", "passport", "birth_date", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "main_client_id", "id"]
+        ["name", "main_phone", "second_phone", "passport", "birth_date", "address", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "id", "archived"],
+        ["name", "passport", "birth_date", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "main_client_id", "id", "archived"]
     ];
     private const TABLE_NAMES = ["clients_table", "subclients_table"];
 
@@ -38,6 +38,15 @@ class ClientsModel extends Model implements ModelInterface
         }
 
         return $client;
+    }
+
+    public function getSubclientByName(array $columnValue = []): array
+    {
+        if (!$columnValue) {
+            return [];
+        }
+
+        return $this->databaseSqlBuilder->selectLike(self::TABLE_NAMES[1], $columnValue);
     }
 
     public function update(array $newInfo): bool
@@ -75,10 +84,11 @@ class ClientsModel extends Model implements ModelInterface
         return true;
     }
 
-    public function create(): bool
+    public function create(array $data = []): bool
     {
         $clients = json_decode(file_get_contents("php://input"), true);
         $main_client = $clients['main_client'];
+        $main_client['archived'] = 0;
         $this->dataSanitizer->SanitizeData($main_client);
         $sub_clients = ClientsHelper::normalizeSubClients($clients['sub_client']);
 
@@ -91,6 +101,7 @@ class ClientsModel extends Model implements ModelInterface
         foreach ($sub_clients as $sc) {
             $sc['main_client_id'] = $clientId;
             $this->dataSanitizer->SanitizeData($sc);
+            $sc['archived'] = 0;
             if (!$this->databaseSqlBuilder->insert($sc, $this->fields[1], self::TABLE_NAMES[1])) {
                 return false;
             }

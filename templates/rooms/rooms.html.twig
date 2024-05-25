@@ -6,13 +6,12 @@
 	<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
 		<h1 class="h1 m-1" id="main-page-h1">{{ header }}</h1>
 		<p class="h5 m-auto text-center mb-3">{{ hotel.name }}</p>
-
 	</div>
 </div>
 
 
 <div class="container container-sm container-md container-xl mt-1 mb-5">
-
+{% if hotel != false %}
 	<div class="row mb-2">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
 			<div class="dropdown w-100">
@@ -29,7 +28,7 @@
 			</div>
 		</div>
 	</div>
-
+{% endif %}
 	{% if rooms|length > 0 %}
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 mx-auto">
@@ -59,7 +58,7 @@
 		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>
 		<div class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
 			<div>
-				<h1 class="h1 w-100 m-1 text-dark">{{ "Не удалось найти номера в этой гостинице" }}</h1>
+				<h1 class="h1 w-100 m-1 text-dark">{{ "Не удалось найти номера" }}</h1>
 			</div>
 		</div>
 		<div class="col-xs-0 col-sm-0 col-md-1 col-xl-3"></div>

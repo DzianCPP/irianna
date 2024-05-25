@@ -1,4 +1,4 @@
-assets
+./assets
 .vscode
 /vendor/
 node_modules/
@@ -13,3 +13,5 @@ templates/components/attachment2.html.twig
 config/currencies.json
 static/search/
 todo.php
+./public_html/assets/images/stamps/
+./public_html/assets/images/uploadedStamps/

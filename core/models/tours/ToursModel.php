@@ -2,9 +2,12 @@
 
 namespace core\models\tours;
 
+use core\application\Database;
 use core\models\clients\ClientsModel;
 use core\models\Model;
 use core\models\ModelInterface;
+use PDO;
+use PDOException;
 
 class ToursModel extends Model implements ModelInterface
 {
@@ -32,9 +35,15 @@ class ToursModel extends Model implements ModelInterface
         'to_minsk_date',
         'arrival_to_minsk',
         'room_id',
+        'created_at',
         'id'
     ];
     private const TABLE_NAME = "tours_table";
+
+    public static function getTableName(): string
+    {
+        return self::TABLE_NAME;
+    }
 
     public function get(array $columnValue = []): array
     {
@@ -74,6 +83,15 @@ class ToursModel extends Model implements ModelInterface
 
         $tours = $this->databaseSqlBuilder->select(self::TABLE_NAME, columnsValues: $columnsValues);
 
+        $filtered_tours = [];
+
+        foreach ($tours as $t) {
+            if ($t['archived'] == 0) {
+                $filtered_tours[] = $t;
+            }
+        }
+
+        $tours = array_reverse($filtered_tours);
         $clientsModel = new ClientsModel();
 
         if (isset($params['name'])) {
@@ -102,6 +120,10 @@ class ToursModel extends Model implements ModelInterface
     {
         $this->dataSanitizer->SanitizeData($newInfo);
 
+        if (!$newInfo['created_at'] || empty($newInfo['created_at'])) {
+            $newInfo['created_at'] = date('Y-m-d', strtotime('now'));
+        }
+
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, 'id')) {
             return false;
         }
@@ -109,10 +131,11 @@ class ToursModel extends Model implements ModelInterface
         return true;
     }
 
-    public function create(): bool
+    public function create(array $data = []): bool
     {
         $tour = json_decode(file_get_contents("php://input"), true);
         $this->dataSanitizer->SanitizeData($tour);
+        $tour['created_at'] = date('Y-m-d', strtotime('now'));
         if (!$this->databaseSqlBuilder->insert($tour, $this->fields, self::TABLE_NAME)) {
             return false;
         }
@@ -176,5 +199,49 @@ class ToursModel extends Model implements ModelInterface
     public function list(array $columnsValues = []): array
     {
         return $this->databaseSqlBuilder->select(tableName: self::TABLE_NAME, columnsValues: $columnsValues);
+    }
+
+    public function getTourByRoomIdAndDates(
+        int $room_id,
+        ?string $checkin_date,
+        ?string $checkout_date
+    ): array|false {
+        if (!$room_id || !$checkin_date || !$checkout_date) {
+            return false;
+        }
+
+        $table = self::TABLE_NAME;
+        $sql = <<<SQL
+            SELECT *
+            FROM {$table}
+            WHERE room_id = '{$room_id}'
+                AND checkin_date LIKE '%{$checkin_date}%'
+                AND checkout_date LIKE '%{$checkout_date}%'
+            LIMIT 1
+        SQL;
+
+        $conn = Database::getInstance()->getConnection();
+
+        try {
+            $query = $conn->prepare($sql);
+            $query->execute();
+            $tour = $query->fetch(PDO::FETCH_ASSOC);
+
+            if (!$tour) {
+                return false;
+            }
+
+            return $tour;
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(
+                [
+                    'status' => 500,
+                    'message' => $e->getMessage()
+                ]
+            );
+
+            return false;
+        }
     }
 }

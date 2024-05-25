@@ -82,14 +82,16 @@ class RoomsController extends BaseController implements ControllerInterface
         $roomsHelper = new RoomsHelper();
         $hotelId = $roomsHelper->getHotelId();
 
+        if (!$hotelId) {
+            $hotelId = $hotelsModel->get(['column' => 'archived', 'value' => 0])[0]['id'];
+        }
+
         if ($hotelId) {
             $rooms = $this->model->get(columnValue:
                 [
                     'column' => 'hotel_id',
                     'value' => $hotelId
                 ]);
-        } else {
-            $rooms = $this->model->get();
         }
 
         if ($hotelId) {
@@ -103,6 +105,14 @@ class RoomsController extends BaseController implements ControllerInterface
         }
 
         $rooms = $roomsHelper->normalizeRooms($rooms);
+        $filteredRooms = [];
+        foreach ($rooms as $room) {
+            if ($room['archived'] != true) {
+                $filteredRooms[] = $room;
+            }
+        }
+
+        $rooms = $filteredRooms;
 
         $toursModel = new ToursModel();
         $tours_set = [];
@@ -131,8 +141,8 @@ class RoomsController extends BaseController implements ControllerInterface
 
         $data = [
             'title' => 'Номера',
-            'hotel' => $hotel,
-            'hotels' => $hotelsModel->get(),
+            'hotel' => $hotel['archived'] == 1 ? false : $hotel,
+            'hotels' => $hotelsModel->get(['column' => 'archived', 'value' => 0]),
             'rooms' => $rooms,
             'header' => 'Номера',
             'login' => $_COOKIE['login']
@@ -226,9 +236,13 @@ class RoomsController extends BaseController implements ControllerInterface
 
     public function update(int $id = 0): void
     {
-        $room = json_decode(file_get_contents("php://input"), true);
-        $this->setModel(RoomsModel::class);
-        $this->model->update($room);
+        try {
+            $room = json_decode(file_get_contents("php://input"), true);
+            $this->setModel(RoomsModel::class);
+            $this->model->update($room);
+        } catch (\Throwable $e) {
+            echo $e->getMessage() . PHP_EOL;
+        }
     }
 
     public function delete(int $id = 0): void

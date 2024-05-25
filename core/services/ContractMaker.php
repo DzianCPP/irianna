@@ -34,7 +34,7 @@ class ContractMaker
         $new_contract = str_replace('service_cost_in_BYN', '<b>' . $contractData['service_cost_in_BYN'] . '</b>', $new_contract);
         $new_contract = str_replace('tour_price_in_curr_2', '<b>' . $contractData['tour_price_in_curr'], $new_contract);
         $new_contract = str_replace('currency_2', $contractData['currency'] . '</b>', $new_contract);
-        $new_contract = str_replace('irianna_logo', '<img src="/assets/images/logos/logo.png">', $new_contract);
+        $new_contract = str_replace('irianna_logo', '<img src="/assets/images/logos/logo.png" style="width: 100px;>', $new_contract);
         $new_contract = str_replace('country', '<b>' . $contractData['country'] . '</b>', $new_contract);
         $new_contract = str_replace('чем за 20 дней до его начала', '<b>чем за 20 дней до его начала</b>', $new_contract);
         $new_contract = str_replace('Заказчик имеет право', '<b>Заказчик имеет право</b>', $new_contract);
@@ -50,23 +50,15 @@ class ContractMaker
         $new_contract = str_replace(
             'stamp',
             '<img
-                src="/assets/images/stamp.png"
+                src="'. substr(
+                    $contractData['stamp']['path'],
+                    strpos($contractData['stamp']['path'],
+                    'assets',
+                    0) - 1
+                    ) .'"
                 style="
                     aspect-ratio: 1 / 1;
-                    width: 200px;
-                    position: relative;
-                    z-index: 2;
-                "
-            >',
-            $new_contract
-        );
-        $new_contract = str_replace(
-            'signature',
-            '<img
-                src="/assets/images/signature.png"
-                style="
-                    aspect-ratio: 1 / 1;
-                    width: 100px;
+                    width: 150px;
                     position: relative;
                     z-index: 2;
                 "
@@ -128,6 +120,24 @@ class ContractMaker
         $new_v = str_replace('today_date', $d['today_date'], $new_v);
         $new_v = str_replace('hotel_name', $d['hotel_name'], $new_v);
         $new_v = str_replace('resort_name', $d['resort_name'], $new_v);
+        $new_v = str_replace(
+            'stamp',
+            '<img
+                src="'. substr(
+                    $d['stamp']['path'],
+                    strpos($d['stamp']['path'],
+                    'assets',
+                    0) - 1
+                    ) .'"
+                style="
+                    aspect-ratio: 1 / 1;
+                    width: 150px;
+                    position: relative;
+                    z-index: 2;
+                "
+            >',
+            $new_v
+        );
 
         $room_comforts_array = explode(',', $d['room_comforts']);
         $room_comforts_str = '';

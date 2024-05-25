@@ -13,9 +13,7 @@ use core\services\DateConverter;
 use core\services\Paginator;
 use core\views\clients\ClientsView;
 use core\models\clients\ClientsModel;
-use core\models\clients\helpers\ClientsHelper;
 use core\services\IdGetter;
-use core\views\tours\ToursView;
 
 class ClientsController extends BaseController implements ControllerInterface
 {
@@ -158,7 +156,7 @@ class ClientsController extends BaseController implements ControllerInterface
     public function passengers(): void
     {
         $busesModel = new BusesModel();
-        $buses = $busesModel->get();
+        $buses = $busesModel->get(['column' => 'archived', 'value' => 0]);
 
         $this->setView(ClientsView::class);
         $data = [
@@ -174,7 +172,7 @@ class ClientsController extends BaseController implements ControllerInterface
     public function guests(): void
     {
         $hotelsModel = new HotelsModel();
-        $hotels = $hotelsModel->get();
+        $hotels = $hotelsModel->get(['column' => 'archived', 'value' => 0]);
 
         $roomsModel = new RoomsModel();
         $rooms_sets = [];
@@ -365,6 +363,29 @@ class ClientsController extends BaseController implements ControllerInterface
                 'value' => $client_name
             ]
         );
+
+        if (!$client || empty($client)) {
+            $client = $this->model->getSubclientByName(
+                [
+                    'column' => 'name',
+                    'value' => $client_name
+                ]
+            );
+
+            $client[0][1] = $client[0]['name'];
+
+            $formattedClient = [
+                0 => $client[0]['id'],
+                1 => $client[0]['name'],
+                2 => $client[0]['main_phone'] ?? null,
+                3 => $client[0]['second_phone'] ?? null,
+                5 => $client[0]['birth_date'] ?? null,
+                4 => $client[0]['passport'] ?? null,
+                6 => $client[0]['address'] ?? null
+            ];
+
+            $client[0] = $formattedClient;
+        }
 
         if (!$client || empty($client)) {
             http_response_code(200);
