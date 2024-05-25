@@ -18,18 +18,5 @@ function buildUrl() {
         + document
             .getElementById("hotels")
             .value
-        + "&room="
-        + document
-            .getElementById("rooms")
-            .value
         ;
 }
-
-document
-    .getElementById("rooms")
-    .addEventListener(
-        "change",
-        function () {
-            window.location = buildUrl();
-        }
-    );
