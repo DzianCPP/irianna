@@ -1,36 +1,103 @@
 {% block table %}
 
-	<table class="table table-sm table-secondary table-bordered border-light" id="table">
-		<tr>
-			{% for date in table.dates %}
-				<th>
-                    <small>
-                        {{ date.from }}{{ '-' }}{{ date.to }}
-                    </small>
-                </th>
-			{% endfor %}
-		</tr>
-		<tr>
-			{% for row in table.tours %}
-				{% if row.busy == true %}
-                    <td class="bg-danger text-center text-light">
-                        <small>
-                            {{ row.owner.name }}
-                            {{ '<br>' }}
-                            {{ 'Всего гостей: ' }}{{ row.guests_count }}
-                        </small>
-                    </td>
-				{% endif %}
-                {% if row.busy == false %}
-                    <td class="bg-success text-light text-center">
-                        <small class="m-auto">
-                            {{ 'Свободно' }}
-                        </small>
-                    </td>
-                {% endif %}
-			{% endfor %}
-		</tr>
-	</table>
+	<style>
+		table {
+			text-align: center;
+			position: relative;
+			width: 100%;
+		}
+
+		th {
+			position: sticky;
+			top: 0;
+			z-index: 2;
+			box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+		}
+
+		.sticky-column {
+			position: sticky;
+			left: 0;
+			overflow: auto;
+			z-index: 3;
+		}
+
+		.sticky-dates {
+			z-index: 4;
+			overflow: auto;
+			top: 0;
+			position: sticky;
+			left: 0;
+		}
+	</style>
+
+	<div style="height: 350px;">
+		<table class="table table-sm table-bordered" id="table">
+			<thead>
+				<tr>
+					<th class="bg-light sticky-column sticky-dates" style="width: 200px;">
+						<small>
+							{{ 'Сроки' }}
+						</small>
+					</th>
+					{% for room in rooms %}
+						<th class="bg-light">
+							<small>
+								{{ room.description }}
+							</small>
+						</th>
+					{% endfor %}
+				</tr>
+			</thead>
+			<tbody class="text-light">
+				{% for row in rows %}
+					<tr>
+						<td class="text-dark bg-light sticky-column" style="width: 200px;">
+							{{ row.checkin_date ~ '-' ~ row.checkout_date }}
+						</td>
+						{% for room_status in row.room_statuses %}
+							{% if room_status.status == 'free' %}
+								<td class="bg-success">
+									<small>
+										{{ 'Свободно' }}
+									</small>
+								</td>
+							{% endif %}
+							{% if room_status.status == 'busy' %}
+								<td class="bg-danger">
+									<small>
+										{{ room_status.client.name }}
+									</small>
+									<br>
+									{% if room_status.count == 1 %}
+										<small>
+											{{ '(' ~ room_status.count ~ ' турист' ~ ')' }}
+										</small>
+									{% endif %}
+									{% if room_status.count >= 2 and room_status.count <= 3 %}
+										<small>
+											{{ '(' ~ room_status.count ~ ' туриста' ~ ')' }}
+										</small>
+									{% endif %}
+									{% if room_status.count > 3 %}
+										<small>
+											{{ '(' ~ room_status.count ~ ' туристов' ~ ')' }}
+										</small>
+									{% endif %}
+								</td>
+							{% endif %}
+							{% if room_status.status == 'no date' %}
+								<td class="bg-dark">
+									<small>
+										{{ 'Нет заездов' }}
+									</small>
+								</td>
+							{% endif %}
+						{% endfor %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
 	 <script type="text/javascript" src="/assets/scripts/net/net.js"></script>
 {% endblock %}

@@ -17,6 +17,7 @@ use core\controllers\tours\ToursController;
 use core\controllers\contracts\ContractsController;
 use core\controllers\currencies\CurrenciesController;
 use core\controllers\net\NetController;
+use core\controllers\stamps\StampsController;
 
 
 return [
@@ -653,6 +654,30 @@ return [
     'rooms/dates' => [
         'controller' => RoomsController::class,
         'action' => 'dates',
+        'method' => 'GET'
+    ],
+
+    'stamps' => [
+        'controller' => StampsController::class,
+        'action' => 'read',
+        'method' => 'GET'
+    ],
+
+    'stamps/new' => [
+        'controller' => StampsController::class,
+        'action' => 'new',
+        'method' => 'GET'
+    ],
+
+    'stamps/create' => [
+        'controller' => StampsController::class,
+        'action' => 'create',
+        'method' => 'POST'
+    ],
+
+    'stamps/delete' => [
+        'controller' => StampsController::class,
+        'action' => 'delete',
         'method' => 'GET'
     ]
 ];

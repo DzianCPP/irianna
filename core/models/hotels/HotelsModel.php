@@ -21,6 +21,7 @@ class HotelsModel extends Model implements ModelInterface
         'features',
         'description',
         'is_active',
+        'archived',
         'id'
     ];
     private const TABLE_NAME = "hotels_table";
@@ -37,7 +38,7 @@ class HotelsModel extends Model implements ModelInterface
     public function update(array $newInfo): bool
     {
         $this->dataSanitizer->SanitizeData($newInfo);
-        
+        $newInfo['archived'] = 0;
         if (!$this->databaseSqlBuilder->update(self::TABLE_NAME, $this->fields, $newInfo, "id")) {
             return false;
         }
@@ -45,11 +46,13 @@ class HotelsModel extends Model implements ModelInterface
         return true;
     }
 
-    public function create(): bool
+    public function create(array $data = []): bool
     {
         $hotel = json_decode(file_get_contents("php://input"), true);
+        $hotel['archived'] = 0;
         $columns = array_keys($hotel);
         $this->dataSanitizer->SanitizeData($hotel);
+        $hotel['archived'] = 0;
         if (!$this->databaseSqlBuilder->insert($hotel, $columns, self::TABLE_NAME)) {
             http_response_code(500);
             return false;

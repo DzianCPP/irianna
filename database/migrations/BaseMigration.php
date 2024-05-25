@@ -20,6 +20,8 @@ abstract class BaseMigration
             $query->execute();
             $this->migrationHistoryHandler->addMigrationToHistory($conn, $className);
         } catch (\PDOException $e) {
+            echo $e->getMessage() . PHP_EOL;
+            echo $e->getTrace() . PHP_EOL;
             return false;
         }
 

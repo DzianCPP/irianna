@@ -6,6 +6,7 @@ use core\controllers\BaseController;
 use core\controllers\ControllerInterface;
 use core\controllers\rooms\helpers\RoomsHelper;
 use core\models\contracts\ContractsModel;
+use core\models\stamps\StampsModel;
 use core\services\Paginator;
 use core\services\ToursDateGetter;
 use core\views\tours\ToursView;
@@ -19,7 +20,7 @@ use core\models\resorts\ResortsModel;
 use core\models\rooms\RoomsModel;
 use core\services\IdGetter;
 use core\services\ContractMaker;
-use Dompdf\Dompdf;
+use Error;
 
 class ToursController extends BaseController implements ControllerInterface
 {
@@ -105,8 +106,8 @@ class ToursController extends BaseController implements ControllerInterface
             'managers' => $managers->get(),
             'countries' => $countries->get(),
             'resorts' => json_encode($resorts->get()),
-            'hotels' => json_encode($hotels->get()),
-            'buses' => $buses->get(),
+            'hotels' => json_encode($hotels->get(['column' => 'archived', 'value' => 0])),
+            'buses' => $buses->get(['column' => 'archived', 'value' => 0]),
             'rooms' => json_encode($rooms),
             'currencies' => json_decode(file_get_contents(BASE_PATH . "config/currencies.json"), true),
             'free_dates' => json_encode($free_dates)
@@ -119,7 +120,7 @@ class ToursController extends BaseController implements ControllerInterface
     {
         $this->setModel(ToursModel::class);
         $this->setView(ToursView::class);
-        $tour = $this->model->get(columnValue: ['column' => 'id', 'value' => IdGetter::getId()])[0];
+        $tour = $this->model->get(columnValue: ['column' => $this->model->getTableName() . '.id', 'value' => IdGetter::getId()])[0];
         $managers = new ManagersModel();
         $countries = new CountriesModel();
         $resorts = new ResortsModel();
@@ -211,12 +212,12 @@ class ToursController extends BaseController implements ControllerInterface
             'managers' => $managers->get(),
             'countries' => $countries->get(),
             'resorts' => json_encode($resorts->get()),
-            'hotels' => json_encode($hotels->get()),
+            'hotels' => json_encode($hotels->get(['column' => 'archived', 'value' => 0])),
             'rooms' => json_encode($rooms),
             'resorts_array' => $resorts->get(),
-            'hotels_array' => $hotels->get(),
+            'hotels_array' => $hotels->get(['column' => 'archived', 'value' => 0]),
             'rooms_array' => $rooms,
-            'buses' => $buses->get(),
+            'buses' => $buses->get(['column' => 'archived', 'value' => 0]),
             'client' => $client,
             'sub_clients' => $sub_clients,
             'currencies' => json_decode(file_get_contents(BASE_PATH . "config/currencies.json"), true),
@@ -244,10 +245,14 @@ class ToursController extends BaseController implements ControllerInterface
     {
         $this->setModel(ToursModel::class);
         $this->setView(ToursView::class);
-        $tours = $this->model->get(columnValue: [
-            'column' => 'archived',
-            'value' => 0
-        ]);
+        $tours = array_reverse($this->model->get(
+                columnValue: [
+                    'column' => 'archived',
+                    'value' => 0
+                ]
+            )
+        );
+
         $clients = new ClientsModel();
         $sub_clients = $clients->getSubClients();
         $clients = $clients->get();
@@ -271,11 +276,11 @@ class ToursController extends BaseController implements ControllerInterface
             'tours' => $tours,
             'entity' => 'tours',
             'clients' => $clients,
-            'hotels' => $hotels->get(),
+            'hotels' => $hotels->get(['column' => 'archived', 'value' => 0]),
             'rooms' => $rooms->get(),
             'resorts' => $resorts->get(),
             'managers' => $managers->get(),
-            'buses' => $buses->get(),
+            'buses' => $buses->get(['column' => 'archived', 'value' => 0]),
             'sub_clients' => $sub_clients,
             'header' => 'Туры',
             'title' => 'Туры',
@@ -326,11 +331,11 @@ class ToursController extends BaseController implements ControllerInterface
                 'tours' => $tours,
                 'entity' => 'tours/search',
                 'clients' => $clients,
-                'hotels' => $hotels->get(),
+                'hotels' => $hotels->get(['column' => 'archived', 'value' => 0]),
                 'rooms' => $rooms->get(),
                 'resorts' => $resorts->get(),
                 'managers' => $managers->get(),
-                'buses' => $buses->get(),
+                'buses' => $buses->get(['column' => 'archived', 'value' => 0]),
                 'sub_clients' => $sub_clients,
                 'header' => 'Туры',
                 'title' => 'Туры',
@@ -426,13 +431,16 @@ class ToursController extends BaseController implements ControllerInterface
     public function printContract(): void
     {
         $this->setModel(ToursModel::class);
+        $toursModel = new ToursModel();
         $id = IdGetter::getId();
         $tour = [];
+
         if ($id) {
-            $tour = $this->model->get(['column' => 'tours_table.id', 'value' => $id])[0];
+            $tour = $toursModel->get(['column' => 'tours_table.id', 'value' => $id])[0];
         } else {
             $tour = $this->model->getLastTour();
         }
+
         $clientsModel = new ClientsModel();
         $client = $clientsModel->get(columnValue: ['column' => 'id', 'value' => $tour['owner_id']])[0];
 
@@ -457,15 +465,11 @@ class ToursController extends BaseController implements ControllerInterface
         $contract = $contractsModel->get(columnValue: ['column' => 'label', 'value' => 'contract'])[0];
         $contract['html'] = htmlspecialchars_decode($contract['html'], ENT_QUOTES);
         $contract = $contract['html'];
-
-        $fileName = 'contract.html.twig';
-        $contractFileName = 'templates/components/' . $fileName;
-
-        $fp = fopen(BASE_PATH . $contractFileName, 'w');
-        fwrite($fp, $contract, strlen($contract));
-        fclose($fp);
-
         $age_of_children = $tour['ages'] ?? $tour['ages'] || '--';
+        $stamp = (new StampsModel())->get([
+            'column' => 'manager_id',
+            'value' => $manager['id']
+        ])[0];
 
         $contractData = [
             'resort_name' => $resort['name'],
@@ -490,7 +494,8 @@ class ToursController extends BaseController implements ControllerInterface
             'currency_1' => explode(' ', $tour['total_travel_cost_byn'])[1],
             'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
             'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name'],
-            'only_transit' => $tour['is_only_transit']
+            'only_transit' => $tour['is_only_transit'],
+            'stamp' => $stamp
         ];
 
         $contract = ContractMaker::prepareContract($contract, $contractData);
@@ -498,9 +503,10 @@ class ToursController extends BaseController implements ControllerInterface
         $fileName = 'contract.html.twig';
         $contractFileName = 'templates/components/' . $fileName;
 
-        $fp = fopen(BASE_PATH . $contractFileName, 'w');
-        fwrite($fp, $contract, strlen($contract));
-        fclose($fp);
+        touch(BASE_PATH . $contractFileName);
+        $fc = fopen(BASE_PATH . $contractFileName, 'w');
+        fwrite($fc, $contract, strlen($contract));
+        fclose($fc);
 
         $data = [
             'title' => 'Печать договора',
@@ -517,7 +523,7 @@ class ToursController extends BaseController implements ControllerInterface
         $this->setModel(ToursModel::class);
         $id = IdGetter::getId();
         if ($id) {
-            $tour = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
+            $tour = $this->model->get(columnValue: ['column' => $this->model->getTableName() . '.id', 'value' => $id])[0];
         } else {
             $tour = $this->model->getLastTour();
         }
@@ -624,7 +630,7 @@ class ToursController extends BaseController implements ControllerInterface
         $this->setModel(ToursModel::class);
         $id = IdGetter::getId();
         if ($id) {
-            $tour = $this->model->get(columnValue: ['column' => 'id', 'value' => $id])[0];
+            $tour = $this->model->get(columnValue: ['column' => $this->model->getTableName() . '.id', 'value' => $id])[0];
         } else {
             $tour = $this->model->getLastTour();
         }
@@ -672,6 +678,8 @@ class ToursController extends BaseController implements ControllerInterface
         $fp = fopen(BASE_PATH . $fullFileName, 'w');
         fwrite($fp, $voucher, strlen($voucher));
         fclose($fp);
+
+        $stamp = (new StampsModel())->get(['column' => 'manager_id', 'value' => $tour['manager_id']])[0];
         $documentData = [
             'client_name' => $client['name'],
             'client_birthdate' => $client['birth_date'],
@@ -695,7 +703,8 @@ class ToursController extends BaseController implements ControllerInterface
             'resort_name' => $resort['name'],
             'transfer_type' => $tour['is_only_transit'],
             'today_date' => date('d.m.Y'),
-            'sub_clients' => $sub_clients
+            'sub_clients' => $sub_clients,
+            'stamp' => $stamp
         ];
 
         $voucher = ContractMaker::prepareVoucher($voucher, $documentData);
