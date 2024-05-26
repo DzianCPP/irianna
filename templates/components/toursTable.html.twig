@@ -41,11 +41,15 @@
 			<div class="input-group w-100 align-middle">
 				<select class="form-select" id="search-to-minsk-date">
 					<option value="0">Выбрать</option>
-					{% for bus in buses %}
-					{% for date in bus.arrival_to_minsk|split('\n') %}
-					<option value="{{ date }}" {% if to_minsk_date==date %} {{ 'selected="selected"' }} {% endif %}>{{
-						date }}</option>
-					{% endfor %}
+					{% for tour in tours %}
+					<option
+						value="{{ tour.checkout_date }}"
+						{% if to_minsk_date == tour.checkout_date %}
+							{{ 'selected="selected"' }}
+						{% endif %}
+					>
+						{{ tour.checkout_date }}
+					</option>
 					{% endfor %}
 				</select>
 			</div>
