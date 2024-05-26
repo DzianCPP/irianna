@@ -289,7 +289,6 @@ class ToursController extends BaseController implements ControllerInterface
             'pages' => $pages
         ];
 
-
         $this->view->render("tours/tours.html.twig", $data);
     }
 
