@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function addFromMinskDates() {
     let bus_id = document.getElementById("bus").value;
-    
+
     for (let i = document.getElementById("from-minsk-date").length; i >= 0; --i) {
         document.getElementById("from-minsk-date").remove(i);
     }
@@ -28,6 +28,14 @@ async function addFromMinskDates() {
 
     let from_minsk_dates = bus.departure_from_minsk.split("\n");
 
+    let empty_option = document.createElement("option");
+    let empty_option_text = document.createTextNode("");
+    empty_option.appendChild(empty_option_text);
+    empty_option.setAttribute("value", "empty");
+    empty_option.setAttribute("class", "bg-light text-success");
+
+    document.getElementById("from-minsk-date").appendChild(empty_option);
+
     for (let date of from_minsk_dates) {
         let new_option = document.createElement("option");
         let option_text = document.createTextNode(date);
@@ -38,6 +46,13 @@ async function addFromMinskDates() {
     }
 
     let to_minsk_dates = bus.arrival_to_minsk.split("\n");
+
+    let to_minsk_empty_option = document.createElement("option");
+    let to_minsk_empty_option_text = document.createTextNode("");
+    to_minsk_empty_option.appendChild(to_minsk_empty_option_text);
+    to_minsk_empty_option.setAttribute("value", "empty");
+    to_minsk_empty_option.setAttribute("class", "bg-light text-success");
+    document.getElementById("to-minsk-date").appendChild(to_minsk_empty_option);
 
     for (let date of to_minsk_dates) {
         let new_option = document.createElement("option");
