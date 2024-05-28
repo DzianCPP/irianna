@@ -14,6 +14,8 @@ use core\services\Paginator;
 use core\views\clients\ClientsView;
 use core\models\clients\ClientsModel;
 use core\services\IdGetter;
+use Google\Service\ShoppingContent\Resource\Returnaddress;
+use Google\Service\ShoppingContent\ReturnPricingInfo;
 
 class ClientsController extends BaseController implements ControllerInterface
 {
@@ -271,12 +273,15 @@ class ClientsController extends BaseController implements ControllerInterface
     public function list(): void
     {
         $this->setModel(ClientsModel::class);
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode(
+            file_get_contents("php://input"),
+            true
+        );
         $toursModel = new ToursModel();
-        $tours = $toursModel->list(columnsValues: [
-            'columns' => ['bus_id', 'from_minsk_date', 'arrival_to_minsk'],
-            'values' => [$data['bus_id'], $data['from_minsk_date'], $data['to_minsk_date']]
-        ]);
+
+        $tours = $toursModel->list(
+            columnsValues: ($this->getColumnsValuesForPassengersList($data))
+        );
 
         $main_clients = [];
 
@@ -419,5 +424,66 @@ class ClientsController extends BaseController implements ControllerInterface
     private function getClientNameFromInput(): string
     {
         return json_decode(file_get_contents("php://input"), true)['name'] ?? '';
+    }
+
+    private function getColumnsValuesForPassengersList(array $data): array
+    {
+        if (
+            $data['from_minsk_date'] != "empty"
+            && $data['to_minsk_date'] != "empty"
+        ) {
+            return [
+                'columns' => [
+                    'bus_id',
+                    'from_minsk_date',
+                    'arrival_to_minsk'
+                ],
+                'values' => [
+                    $data['bus_id'],
+                    $data['from_minsk_date'],
+                    $data['to_minsk_date']
+                ]
+            ];
+        }
+
+        if (
+            $data['from_minsk_date'] == "empty"
+            && $data['to_minsk_date'] != "empty"
+        ) {
+            return [
+                'columns' => [
+                    'bus_id',
+                    'arrival_to_minsk'
+                ],
+                'values' => [
+                    $data['bus_id'],
+                    $data['to_minsk_date']
+                ]
+            ];
+        }
+
+        if (
+            $data['from_minsk_date'] != "empty"
+            && $data['to_minsk_date'] == "empty"
+        ) {
+            return [
+                'columns' => [
+                    'bus_id',
+                    'from_minsk_date'
+                ],
+                'values' => [
+                    $data['bus_id'],
+                    $data['from_minsk_date']
+                ]
+            ];
+        }
+        return [
+            'columns' => [
+                'bus_id'
+            ],
+            'values' => [
+                $data['bus_id']
+            ]
+        ];
     }
 }
