@@ -266,9 +266,9 @@ class ToursController extends BaseController implements ControllerInterface
         $pages = (int) ceil(count($tours) / parent::PER_PAGE);
 
         if ($page) {
-            Paginator::limitRange($tours, self::PER_PAGE, $page);
+            Paginator::limitRange($tours, parent::PER_PAGE, $page);
         } else {
-            Paginator::limitRange($tours, self::PER_PAGE);
+            Paginator::limitRange($tours, parent::PER_PAGE);
         }
 
 
