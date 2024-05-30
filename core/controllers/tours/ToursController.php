@@ -291,7 +291,12 @@ class ToursController extends BaseController implements ControllerInterface
             'from_minsk_dates_search_options' => $this->getFromMinskDatesSearchOptions(
                 $busesArr
             ),
-            'to_minsk_dates_search_options' => $this->getToMinskDatesSearchOptions($rooms->get()),
+            'to_minsk_dates_search_options' => $this->getToMinskDatesSearchOptions($rooms->get(
+                columnValue: [
+                    'column' => 'archived',
+                    'value' => 0,
+                ]
+            )),
         ];
 
         $this->view->render("tours/tours.html.twig", $data);
