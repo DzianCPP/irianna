@@ -245,7 +245,8 @@ class ToursController extends BaseController implements ControllerInterface
     {
         $this->setModel(ToursModel::class);
         $this->setView(ToursView::class);
-        $tours = array_reverse($this->model->get(
+        $tours = array_reverse(
+            $this->model->get(
                 columnValue: [
                     'column' => 'archived',
                     'value' => 0
@@ -266,9 +267,9 @@ class ToursController extends BaseController implements ControllerInterface
         $pages = (int) ceil(count($tours) / parent::PER_PAGE);
 
         if ($page) {
-            Paginator::limitRange($tours, self::PER_PAGE, $page);
+            Paginator::limitRange($tours, parent::PER_PAGE, $page);
         } else {
-            Paginator::limitRange($tours, self::PER_PAGE);
+            Paginator::limitRange($tours, parent::PER_PAGE);
         }
 
 
@@ -277,16 +278,20 @@ class ToursController extends BaseController implements ControllerInterface
             'entity' => 'tours',
             'clients' => $clients,
             'hotels' => $hotels->get(['column' => 'archived', 'value' => 0]),
-            'rooms' => $rooms->get(),
+            'rooms' => ($roomsArr = $rooms->get()),
             'resorts' => $resorts->get(),
             'managers' => $managers->get(),
-            'buses' => $buses->get(['column' => 'archived', 'value' => 0]),
+            'buses' => ($busesArr = $buses->get(['column' => 'archived', 'value' => 0])),
             'sub_clients' => $sub_clients,
             'header' => 'Туры',
             'title' => 'Туры',
             'login' => $_COOKIE['login'],
             'currentPage' => $page,
-            'pages' => $pages
+            'pages' => $pages,
+            'from_minsk_dates_search_options' => $this->getFromMinskDatesSearchOptions(
+                $busesArr
+            ),
+            'to_minsk_dates_search_options' => $this->getToMinskDatesSearchOptions($rooms->get()),
         ];
 
         $this->view->render("tours/tours.html.twig", $data);
@@ -745,5 +750,60 @@ class ToursController extends BaseController implements ControllerInterface
         $last = $this->model->getLastTour();
         $last_id = $last['id'];
         echo json_encode($last_id);
+    }
+
+    private function getFromMinskDatesSearchOptions(array $buses): array
+    {
+        $fromMinskDatesSearchOptions = [];
+
+        foreach ($buses as $bus) {
+            $departureFromMinskArr = explode("\n", $bus['departure_from_minsk']);
+
+            foreach ($departureFromMinskArr as $date) {
+                $fromMinskDatesSearchOptions[] = $date;
+            }
+        }
+
+        return array_unique($fromMinskDatesSearchOptions);
+    }
+
+    private function getToMinskDatesSearchOptions(array $rooms): array
+    {
+        $roomsHelper = new RoomsHelper();
+        foreach ($rooms as &$room) {
+            $room = $roomsHelper->normalizeRoom($room);
+        }
+
+        foreach ($rooms as &$room) {
+            for ($i = 0; $i < count($room['checkin_checkout_dates']); $i++) {
+                $room['checkin_checkout_dates'][$i] = ltrim($room['checkin_checkout_dates'][$i], 'f');
+            }
+        }
+
+        $toMinskDates = [];
+
+        foreach ($rooms as $room) {
+            foreach ($room['checkin_checkout_dates'] as $index => $value) {
+                if ($index % 2 == 0) {
+                    continue;
+                }
+
+                $toMinskDates[] = $value;
+            }
+        }
+
+        $toMinskDates = array_unique($toMinskDates);
+
+        foreach ($toMinskDates as &$date) {
+            $date = date("Y-m-d", strtotime($date));
+        }
+
+        sort($toMinskDates);
+
+        foreach ($toMinskDates as &$date) {
+            $date = date("d.m.Y", strtotime($date));
+        }
+
+        return $toMinskDates;
     }
 }

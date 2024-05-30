@@ -28,11 +28,15 @@
 			<div class="input-group w-100 align-middle">
 				<select class="form-select" id="search-from-minsk-date">
 					<option value="0">Выбрать</option>
-					{% for bus in buses %}
-					{% for date in bus.departure_from_minsk|split('\n') %}
-					<option value="{{ date }}" {% if from_minsk_date==date %} {{ 'selected="selected"' }} {% endif %}>{{
-						date }}</option>
-					{% endfor %}
+					{% for date in from_minsk_dates_search_options %}
+						<option
+							value="{{ date }}"
+							{% if from_minsk_date==date %}
+								{{ 'selected="selected"' }}
+							{% endif %}
+						>
+							{{ date }}
+						</option>
 					{% endfor %}
 				</select>
 			</div>
@@ -41,14 +45,14 @@
 			<div class="input-group w-100 align-middle">
 				<select class="form-select" id="search-to-minsk-date">
 					<option value="0">Выбрать</option>
-					{% for tour in tours %}
+					{% for date in to_minsk_dates_search_options %}
 					<option
-						value="{{ tour.checkout_date }}"
-						{% if to_minsk_date == tour.checkout_date %}
+						value="{{ date }}"
+						{% if to_minsk_date == date %}
 							{{ 'selected="selected"' }}
 						{% endif %}
 					>
-						{{ tour.checkout_date }}
+						{{ date }}
 					</option>
 					{% endfor %}
 				</select>
