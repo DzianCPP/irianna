@@ -809,6 +809,15 @@ class ToursController extends BaseController implements ControllerInterface
             $date = date("d.m.Y", strtotime($date));
         }
 
-        return $toMinskDates;
+        $newToMinskDates = [];
+        foreach ($toMinskDates as &$date) {
+            if (date('Y', strtotime($date)) < date('Y', strtotime('now'))) {
+                continue;
+            }
+
+            $newToMinskDates[] = $date;
+        }
+
+        return $newToMinskDates;
     }
 }
