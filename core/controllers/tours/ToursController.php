@@ -24,6 +24,25 @@ use Error;
 
 class ToursController extends BaseController implements ControllerInterface
 {
+    public function getDatesForSelectedHotel(): void
+    {
+        $departureFomMinskDates = [
+            '08.08.2024',
+            '10.08.2024'
+        ];
+        $departureFromHotelDates = [
+            '10.08.2024',
+            '20.08.2024'
+        ];
+        echo json_encode([
+            'code' => 200,
+            'dates' => [
+                'departureFromMinskDates' => $departureFomMinskDates,
+                'departureFromHotelDates' => $departureFromHotelDates,
+            ],
+        ]);
+    }
+
     public function new(string $resortName = "", int $is_active = 0): void
     {
         $managers = new ManagersModel();

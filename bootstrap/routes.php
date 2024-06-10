@@ -679,5 +679,11 @@ return [
         'controller' => StampsController::class,
         'action' => 'delete',
         'method' => 'GET'
+    ],
+
+    'tours/getDatesForSelectedHotel' => [
+        'controller' => ToursController::class,
+        'action' => 'getDatesForSelectedHotel',
+        'method' => 'GET',
     ]
 ];
