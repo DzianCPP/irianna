@@ -26,19 +26,21 @@ class ToursController extends BaseController implements ControllerInterface
 {
     public function getDatesForSelectedHotel(): void
     {
-        $departureFomMinskDates = [
-            '08.08.2024',
-            '10.08.2024'
-        ];
-        $departureFromHotelDates = [
-            '10.08.2024',
-            '20.08.2024'
-        ];
+        $this->model = new ToursModel();
+
         echo json_encode([
             'code' => 200,
             'dates' => [
-                'departureFromMinskDates' => $departureFomMinskDates,
-                'departureFromHotelDates' => $departureFromHotelDates,
+                'departureFromMinskDates' => $this
+                    ->model
+                    ->getDepartureFromMinskDatesByHotelId(
+                        IdGetter::getId()
+                    ),
+                'departureFromHotelDates' => $this
+                    ->model
+                    ->getDepartureFromHotelDatesByHotelId(
+                        IdGetter::getId()
+                ),
             ],
         ]);
     }
