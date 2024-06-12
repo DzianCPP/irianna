@@ -24,6 +24,27 @@ use Error;
 
 class ToursController extends BaseController implements ControllerInterface
 {
+    public function getDatesForSelectedHotel(): void
+    {
+        $this->model = new ToursModel();
+
+        echo json_encode([
+            'code' => 200,
+            'dates' => [
+                'departureFromMinskDates' => $this
+                    ->model
+                    ->getDepartureFromMinskDatesByHotelId(
+                        IdGetter::getId()
+                    ),
+                'departureFromHotelDates' => $this
+                    ->model
+                    ->getDepartureFromHotelDatesByHotelId(
+                        IdGetter::getId()
+                ),
+            ],
+        ]);
+    }
+
     public function new(string $resortName = "", int $is_active = 0): void
     {
         $managers = new ManagersModel();
