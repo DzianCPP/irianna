@@ -241,7 +241,7 @@ class DatabaseSqlBuilder
 
     public function selectDatesByHotelId(string $tableName, string $columnName, int $hotelId): array
     {
-        $sql = "SELECT t.$columnName FROM $tableName AS t WHERE t.hotel_id = $hotelId";
+        $sql = "SELECT DISTINCT t.$columnName FROM $tableName AS t WHERE t.hotel_id = $hotelId";
 
         $query = $this->conn->prepare($sql);
 
