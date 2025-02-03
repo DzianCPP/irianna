@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block content %}
+	<div	class="row w-100 mt-2 mb-2">
+		<div	class="col-xs-12 col-sm-12 col-md-12 col-xl-12 text-center">
+			<h1	class="h1 m-1"	id="main-page-h1">
+				{{ header }}
+			</h1>
+		</div>
+	</div>
+
+	<div	class="container container-sm container-md container-xl mt-1 mb-5">
+		<div	class="container-fluid">
+			<div	class="row w-100">
+				<div	class="col-md-1 col-xl-3"></div>
+				<div	class="col-xs-12 col-sm-12 col-md-10 col-xl-6">
+					<form action="/archive/submit" method="POST">
+						<div	class="mb-3">
+							<label	for="exampleInputEmail1"	class="form-label">
+								До какой даты перенести данные в архив
+							</label>
+							<input	type="date"	class="form-control"	id="archive-date">
+								<div	id="archive-date-describer"	class="form-text">
+									Все выбранные данные будут перенесены в архив до выбранной даты.
+								</div>
+							</div>
+							{% for key, entity in entities %}
+							<div	class="mb-3 form-check">
+								<input	type="checkbox"	class="form-check-input"	id="{{ key}}-check">
+									<label	class="form-check-label"	for="{{ key }}-check">
+										{{ entity }}
+									</label>
+								</div>
+							{% endfor %}
+								<button	type="submit"	class="btn btn-primary">
+									Архивировать
+								</button>
+							</form>
+
+						</div>
+					</div>
+				</div>
+
+				<script type="text/javascript" src="/assets/scripts/buses/create.js"></script>
+				<script type="text/javascript" src="/assets/scripts/buses/formFilled.js"></script>
+				<script type="text/javascript" src="/assets/scripts/buses/addDates.js"></script>
+			</div>
+		{% endblock %}
+		
