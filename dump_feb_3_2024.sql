@@ -19,7 +19,7 @@
 -- Current Database: `iriannax_IriAnnaDB`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `iriannax_IriAnnaDB` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE IF NOT EXISTS`iriannax_IriAnnaDB` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `iriannax_IriAnnaDB`;
 
