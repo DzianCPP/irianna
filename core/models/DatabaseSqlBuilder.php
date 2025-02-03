@@ -2,8 +2,9 @@
 
 namespace core\models;
 
-use core\application\Database;
 use PDO;
+use PDOException;
+use core\application\Database;
 
 class DatabaseSqlBuilder
 {
@@ -25,7 +26,7 @@ class DatabaseSqlBuilder
         $query = $this->conn->prepare($sqlQuery);
         try {
             $query->execute();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return false;
         }
 
@@ -60,7 +61,7 @@ class DatabaseSqlBuilder
         $query = $this->conn->prepare($sqlQuery);
         try {
             $query->execute();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return [];
         }
 
@@ -87,7 +88,7 @@ class DatabaseSqlBuilder
 
         try {
             $query->execute();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return [];
         }
 
@@ -105,7 +106,7 @@ class DatabaseSqlBuilder
 
         try {
             $query->execute($recordInfo);
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return false;
         }
 
@@ -120,7 +121,7 @@ class DatabaseSqlBuilder
         $query = $this->conn->prepare($sqlQuery);
         try {
             $query->execute();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return false;
         }
 
@@ -133,7 +134,7 @@ class DatabaseSqlBuilder
         $query = $this->conn->prepare($sqlQuery);
         try {
             $query->execute();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return 0;
         }
 
@@ -146,7 +147,7 @@ class DatabaseSqlBuilder
         $query = $this->conn->prepare($sql);
         try {
             $query->execute();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return 0;
         }
 
@@ -159,7 +160,7 @@ class DatabaseSqlBuilder
         $query = $this->conn->prepare($sql);
         try {
             $query->execute();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return [];
         }
 
@@ -216,7 +217,7 @@ class DatabaseSqlBuilder
         $query = $this->conn->prepare($sql);
         try {
             $query->execute();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return [0];
         }
 
@@ -236,5 +237,21 @@ class DatabaseSqlBuilder
         }
 
         return $joins_str;
+    }
+
+    public function selectDatesByHotelId(string $tableName, string $columnName, int $hotelId): array
+    {
+        $sql = "SELECT DISTINCT t.$columnName FROM $tableName AS t WHERE t.hotel_id = $hotelId";
+
+        $query = $this->conn->prepare($sql);
+
+        try {
+            $query->execute();
+            $result = $query->fetchAll(PDO::FETCH_COLUMN);
+        } catch (PDOException $e) {
+            return [];
+        }
+
+        return $result;
     }
 }
