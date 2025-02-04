@@ -7,6 +7,21 @@ class BaseController
 {
     protected $view;
     protected $model;
+    private string $logDir = BASE_PATH . 'var/log';
+
+    public function log(string $message): void
+    {
+        $file = scandir($this->logDir, SCANDIR_SORT_DESCENDING)[0];
+        if (!$file) {
+            $file = fopen(date('Y-m-d') . '_error.log', 'a+');
+        }
+
+        $result = fwrite($file, $message);
+
+        if (!$result) {
+            throw new \Exception('Could not write logs to file');
+        }
+    }
 
     protected const PER_PAGE = 10;
 
