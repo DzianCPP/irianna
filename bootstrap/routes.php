@@ -18,6 +18,7 @@ use core\controllers\contracts\ContractsController;
 use core\controllers\currencies\CurrenciesController;
 use core\controllers\net\NetController;
 use core\controllers\stamps\StampsController;
+use core\controllers\archive\ArchiveController;
 
 
 return [
@@ -679,5 +680,23 @@ return [
         'controller' => StampsController::class,
         'action' => 'delete',
         'method' => 'GET'
-    ]
+    ],
+
+    'tours/getDatesForSelectedHotel' => [
+        'controller' => ToursController::class,
+        'action' => 'getDatesForSelectedHotel',
+        'method' => 'GET',
+    ],
+
+    'archive/form' => [
+        'controller' => ArchiveController::class,
+        'action' => 'form',
+        'method' => 'GET',
+    ],
+
+    'archive/submit' => [
+        'controller' => ArchiveController::class,
+        'action' => 'submit',
+        'method' => 'POST',
+    ],
 ];

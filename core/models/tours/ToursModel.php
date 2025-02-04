@@ -40,6 +40,20 @@ class ToursModel extends Model implements ModelInterface
     ];
     private const TABLE_NAME = "tours_table";
 
+    public function getDepartureFromMinskDatesByHotelId(int $hotelId): array
+    {
+        $result = $this->databaseSqlBuilder->selectDatesByHotelId(self::TABLE_NAME, 'from_minsk_date', $hotelId);
+
+        return $result;
+    }
+
+    public function getDepartureFromHotelDatesByHotelId(int $hotelId): array
+    {
+        $result = $this->databaseSqlBuilder->selectDatesByHotelId(self::TABLE_NAME, 'to_minsk_date', $hotelId);
+
+        return $result;
+    }
+
     public static function getTableName(): string
     {
         return self::TABLE_NAME;
