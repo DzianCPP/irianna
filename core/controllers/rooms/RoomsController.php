@@ -86,6 +86,12 @@ class RoomsController extends BaseController implements ControllerInterface
             $hotelId = $hotelsModel->get(['column' => 'archived', 'value' => 0])[0]['id'];
         }
 
+        if ($hotelId === null) {
+            header('Location: /hotels');
+            
+            return;
+        }
+
         if ($hotelId) {
             $rooms = $this->model->get(columnValue:
                 [

@@ -20,6 +20,13 @@ class NetController extends BaseController
     public function read(): void
     {
         $hotel = $this->getHotel();
+
+        if (!$hotel) {
+            header('Location: /hotels');
+
+            return;
+        }
+        
         $dates = $this->getDates($hotel);
 
         if (!$dates) {
