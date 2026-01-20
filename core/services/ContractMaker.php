@@ -47,15 +47,36 @@ class ContractMaker
         $new_contract = str_replace('будет производиться отстой автобуса в течение 9 часов', '<b>будет производиться отстой автобуса в течение 9 часов</b>', $new_contract);
         $new_contract = str_replace('"Исполнитель"', '<b>"Исполнитель"</b>', $new_contract);
         $new_contract = str_replace('"Заказчик"', '<b>"Заказчик"</b>', $new_contract);
+        $new_contract = str_replace('70%', '<u>70% (' . $contractData['service_cost_in_BYN'] / 100 * 70 . ' BYN)</u>', $new_contract);
+        $new_contract = str_replace(
+            ' 100% стоимости туристических услуг ',
+            ' <u>100% (' . $contractData['service_cost_in_BYN'] . ' BYN)</u> стоимости туристических услуг ',
+            $new_contract,
+        );
+        $new_contract = str_replace(
+            ' 100% от фактических ',
+            ' <u>100% ('
+            . $contractData['tour_price_in_curr']
+            . ' '
+            . $contractData['currency']
+            . ' + '
+            . $contractData['total_travel_cost_curr_1']
+            . ' '
+            . $contractData['currency_1']
+            . ')</u> стоимости туристических услуг ',
+            $new_contract,
+        );
         $new_contract = str_replace(
             'stamp',
             '<img
-                src="'. substr(
+                src="' . substr(
+                $contractData['stamp']['path'],
+                strpos(
                     $contractData['stamp']['path'],
-                    strpos($contractData['stamp']['path'],
                     'assets',
-                    0) - 1
-                    ) .'"
+                    0
+                ) - 1
+            ) . '"
                 style="
                     aspect-ratio: 1 / 1;
                     width: 150px;
@@ -123,12 +144,14 @@ class ContractMaker
         $new_v = str_replace(
             'stamp',
             '<img
-                src="'. substr(
+                src="' . substr(
+                $d['stamp']['path'],
+                strpos(
                     $d['stamp']['path'],
-                    strpos($d['stamp']['path'],
                     'assets',
-                    0) - 1
-                    ) .'"
+                    0
+                ) - 1
+            ) . '"
                 style="
                     aspect-ratio: 1 / 1;
                     width: 150px;
