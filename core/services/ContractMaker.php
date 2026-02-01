@@ -4,6 +4,13 @@ namespace core\services;
 
 class ContractMaker
 {
+    private const CLIENTS_TABLE_HEADERS = [
+        'ФИО туриста',
+        'Дата рождения',
+        'Номер документа, удостоверяющего личность',
+        'Сроки действия документа',
+    ];
+
     public static function prepareContract(string $contract, array $contractData): string
     {
         $new_contract = $contract;
@@ -48,6 +55,13 @@ class ContractMaker
         $new_contract = str_replace('"Исполнитель"', '<b>"Исполнитель"</b>', $new_contract);
         $new_contract = str_replace('"Заказчик"', '<b>"Заказчик"</b>', $new_contract);
         $new_contract = str_replace('70%', '<u>70% (' . $contractData['service_cost_in_BYN'] / 100 * 70 . ' BYN)</u>', $new_contract);
+        $new_contract = static::insertClientData(
+            clients: array_merge(
+                [$contractData['client']],
+                $contractData['sub_clients'],
+            ),
+            contract: $new_contract,
+        );
         $new_contract = str_replace(
             ' 100% стоимости туристических услуг ',
             ' <u>100% (' . $contractData['service_cost_in_BYN'] . ' BYN)</u> стоимости туристических услуг ',
@@ -88,6 +102,34 @@ class ContractMaker
         );
 
         return $new_contract;
+    }
+
+    private static function insertClientData(array $clients, string $contract): string
+    {
+        $headers = self::CLIENTS_TABLE_HEADERS;
+        $table = "<table><tr>";
+
+        // add headers
+        foreach ($headers as $header) {
+            $table .= "<th>$header</th>";
+        }
+        $table .= "</tr>";
+
+        // add rows with clients
+        foreach ($clients as $client) {
+            $table .= "<tr>";
+
+            $table .= "<td>" . $client['name'] ?? ''. "</td>";
+            $table .= "<td>" . $client['birth_date'] ?? ''. "</td>";
+            $table .= "<td>" . $client['passport'] ?? '' . "</td>";
+            $table .= "<td>" . $client['passport_expiration_date'] ?? '' . "</td>";
+
+            $table .= "</tr>";
+        }
+        // close table tags
+        $table .= "</tr></table>";
+
+        return str_replace('clients_table', $table, $contract);
     }
 
     public static function prepareAttachment2(string $att, array $data): string

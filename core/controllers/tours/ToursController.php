@@ -525,7 +525,9 @@ class ToursController extends BaseController implements ControllerInterface
             'currency' => explode(' ', $tour['total_travel_cost_currency'])[1],
             'country' => $countriesModel->get(['column' => 'id', 'value' => $resort['country_id']])[0]['name'],
             'only_transit' => $tour['is_only_transit'],
-            'stamp' => $stamp
+            'stamp' => $stamp,
+            'sub_clients' => $sub_clients,
+            'client' => $client,
         ];
 
         $contract = ContractMaker::prepareContract($contract, $contractData);
