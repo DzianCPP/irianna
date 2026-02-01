@@ -11,7 +11,7 @@ class m18_modify_add_travel_service_column extends BaseMigration
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        $sqlQuery = "ALTER TABLE clients_table ADD COLUMN IF NOT EXISTS travel_service int(10);";
+        $sqlQuery = "ALTER TABLE clients_table ADD COLUMN travel_service int(10);";
 
         $query = $conn->prepare($sqlQuery);
 
