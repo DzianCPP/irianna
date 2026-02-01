@@ -16,6 +16,7 @@ function addForm() {
     _cols.appendChild(createFirstNameInputGroup());
     _cols.appendChild(createSecondNameInputGroup());
     _cols.appendChild(createPassportInputGroup());
+    _cols.appendChild(createPassportExpirationDateInputGroup());
     _cols.appendChild(createBirthDateInputGroup());
     row.appendChild(_cols);
     cont.appendChild(row);
@@ -75,6 +76,15 @@ function createPassportInputGroup() {
     _input_group.setAttribute("class", "input-group mt-2");
     _input_group.appendChild(createSpan("input-group-text w-25", "Паспорт"));
     _input_group.appendChild(createInputText("form-control", "text", "sub-client-passport", "Введите серию и номер паспорта"));
+
+    return _input_group;
+}
+
+function createPassportExpirationDateInputGroup() {
+    const _input_group = document.createElement('div');
+    _input_group.setAttribute("class", "input-group mt-2");
+    _input_group.appendChild(createSpan("input-group-text w-50", "Срок действия паспорта"));
+    _input_group.appendChild(createInputText("form-control", "date", "sub-client-passport-expiration-date", ""));
 
     return _input_group;
 }
