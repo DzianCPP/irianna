@@ -150,6 +150,7 @@ function getMainClient() {
     let _mainPhone = document.getElementById("main-client-phone-main").value;
     let _secondPhone = document.getElementById("main-client-phone-second").value;
     let _passport = document.getElementById("main-client-passport").value;
+    let _passportExpirationDate = document.getElementById("main-client-passport-expiration-date").value;
     let _birthDate = document.getElementById("main-client-birth-date").value;
     let _address = document.getElementById("main-client-address").value;
     let _travel_service = document.getElementById("main-client-service-cost").value;
@@ -161,6 +162,7 @@ function getMainClient() {
         main_phone: _mainPhone,
         second_phone: _secondPhone,
         passport: _passport,
+        passportExpirationDate: _passportExpirationDate,
         birthday: _birthDate,
         address: _address,
         travel_service: _travel_service,
@@ -172,6 +174,7 @@ function getMainClient() {
 function getSubClients() {
     let names = [];
     let passports = [];
+    let passportExpirationDates = [];
     let birthDates = [];
     let travel_services = [];
     let travel_cost_currency_1 = [];
@@ -183,6 +186,10 @@ function getSubClients() {
 
     for (var el of document.getElementsByName("sub-client-passport")) {
         passports.push(el.value);
+    }
+
+    for (var el of document.getElementsByName("sub-client-passport-expiration-date")) {
+        passportExpirationDates.push(el.value);
     }
 
     for (var el of document.getElementsByName("sub-client-birth-date")) {
@@ -204,6 +211,7 @@ function getSubClients() {
     return {
         _names: names,
         _passport: passports,
+        _passportExpirationDate: passportExpirationDates,
         _birthDates: birthDates,
         _travel_services: travel_services,
         _travel_cost_currency_1s: travel_cost_currency_1,

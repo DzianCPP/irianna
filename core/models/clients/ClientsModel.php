@@ -9,8 +9,8 @@ use core\models\ModelInterface;
 class ClientsModel extends Model implements ModelInterface
 {
     protected array $fields = [
-        ["name", "main_phone", "second_phone", "passport", "birth_date", "address", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "id", "archived"],
-        ["name", "passport", "birth_date", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "main_client_id", "id", "archived"]
+        ["name", "main_phone", "second_phone", "passport", "passport_expiration_date", "birth_date", "address", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "id", "archived"],
+        ["name", "passport", "passport_expiration_date", "birth_date", "travel_service", "travel_cost_currency_1", "travel_cost_currency_2", "main_client_id", "id", "archived"]
     ];
     private const TABLE_NAMES = ["clients_table", "subclients_table"];
 
@@ -19,7 +19,7 @@ class ClientsModel extends Model implements ModelInterface
         $clients = [];
 
         if ($columnValue != []) {
-            $clients  = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], $columnValue);
+            $clients = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], $columnValue);
         } else {
             $clients = $this->databaseSqlBuilder->select(self::TABLE_NAMES[0], $columnValue);
         }
@@ -71,7 +71,7 @@ class ClientsModel extends Model implements ModelInterface
     {
         $sub_clients = ClientsHelper::normalizeSubClients($newInfo);
         $sub_clients = ClientsHelper::addIds($sub_clients, $newInfo['_ids']);
-        $main_client_id = (int)$newInfo['_main_client_ids'][0];
+        $main_client_id = (int) $newInfo['_main_client_ids'][0];
 
         foreach ($sub_clients as &$sc) {
             $sc['main_client_id'] = $main_client_id;
@@ -130,7 +130,7 @@ class ClientsModel extends Model implements ModelInterface
 
     public function getSubClients(array $columnValue = []): array
     {
-        $sub_clients =  $this->databaseSqlBuilder->select(self::TABLE_NAMES[1], $columnValue);
+        $sub_clients = $this->databaseSqlBuilder->select(self::TABLE_NAMES[1], $columnValue);
         $sub_clients = ClientsHelper::denormalizeClients($sub_clients);
 
         return $sub_clients;
