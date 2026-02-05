@@ -17,7 +17,7 @@ class Archiver
     {
         $this->manager = new ArchiveDatabaseManager();
     }
-    
+
     /**
      * @param ArchiveFormDataDto $formDataDto
      * @throws Exception
@@ -35,7 +35,7 @@ class Archiver
         }
 
         $result = $this->manager->archive($entitiesToArchive);
-        
+
         if ($result->getCode() != ArchiveResultDto::CODE_OK) {
             throw new Exception($result->getMessage());
         }

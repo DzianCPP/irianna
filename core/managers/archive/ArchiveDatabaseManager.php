@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace core\managers\archive;
 
+use DateTimeImmutable;
 use Exception;
 use PDO;
 use core\application\Database;
@@ -27,6 +28,11 @@ class ArchiveDatabaseManager
         $this->connection = Database::getInstance()->getConnection();
     }
 
+    /**
+     * Summary of archive
+     * @param string[] $entities
+     * @return ArchiveResultDto
+     */
     public function archive(array $entities): ArchiveResultDto
     {
         $this->connection->beginTransaction();
@@ -38,6 +44,8 @@ class ArchiveDatabaseManager
                 }
 
                 $sql = 'UPDATE ' . $this->entities[$entity] . ' SET archived = 1';
+
+                $sql = $this->addWhereClause($entity, $sql);
 
                 $this->connection->prepare($sql)->execute();
             }
@@ -71,5 +79,17 @@ class ArchiveDatabaseManager
         }
 
         return $resultDto;
+    }
+
+    private function addWhereClause(string $entity, string $sql): string
+    {
+        if ($entity === 'clients') {
+            $sql .= " where id in (select owner_id from tours_table where created_at < '"
+                . (new DateTimeImmutable())->format('Y')
+                . "-01-01')"
+            ;
+        }
+
+        return $sql;
     }
 }

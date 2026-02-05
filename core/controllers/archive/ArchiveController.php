@@ -36,7 +36,7 @@ class ArchiveController extends BaseController implements ControllerInterface
         /** @var ArchiveFormDataDto */
         $formDataDto = $this->createFormDataDto();
         $archiver = new Archiver();
-        
+
         try {
             $result = $archiver->archive($formDataDto);
         } catch (Exception $e) {
