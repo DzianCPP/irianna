@@ -86,8 +86,12 @@ class ArchiveDatabaseManager
         if ($entity === 'clients') {
             $sql .= " where id in (select owner_id from tours_table where created_at < '"
                 . (new DateTimeImmutable())->format('Y')
-                . "-01-01')"
-            ;
+                . "-01-01')";
+        }
+
+        if ($entity === 'buses') {
+            $sql .= " where departure_from_minsk < '01.01."
+                . (new DateTimeImmutable())->format('Y') . "'";
         }
 
         return $sql;
