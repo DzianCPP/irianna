@@ -329,7 +329,12 @@ data to use:
 							placeholder="Введите паспорт" value="{{ s.passport }}" />
 					</div>
 					<div class="input-group mt-2">
-						<span class="input-group-text w-50">Дата рождение
+						<span class="input-group-text w-50">Срок действия паспорта</span>
+						<input type="date" class="form-control" name="sub-client-passport-expiration-date"
+							placeholder="Введите дату рождения" value="{{ s.passport_expiration_date }}" />
+					</div>
+					<div class="input-group mt-2">
+						<span class="input-group-text w-50">Дата рождения
 							<span class="text-danger">*</span>
 						</span>
 						<input type="date" class="form-control" name="sub-client-birth-date"
